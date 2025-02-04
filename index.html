@@ -132,10 +132,155 @@
     <div id="loading">Loading graph...</div>
     <div id="graph"></div>
     <div id="nodeInfo"></div>
+    
+    <div id="controls">
+        <button onclick="network.fit()">Fit Graph</button>
+        <button onclick="togglePhysics()">Toggle Physics</button>
+        <button onclick="network.stabilize()">Stabilize</button>
+    </div>
 
-    <!-- Rest of your existing script remains unchanged -->
     <script type="text/javascript">
-        // Your existing JavaScript code...
+        // Show loading indicator
+        document.getElementById('loading').style.display = 'block';
+
+        // Graph data
+        const nodes = new vis.DataSet([
+            { id: 1, label: 'Azoospermia', group: 'core', title: 'Core condition' },
+            { id: 2, label: 'CFTR', group: 'gene', title: 'Gene marker' },
+            { id: 3, label: 'SRY', group: 'gene', title: 'Gene marker' },
+            { id: 4, label: 'Medical Assessment', group: 'process', title: 'Clinical process' }
+        ]);
+
+        const edges = new vis.DataSet([
+            { from: 1, to: 2, arrows: 'to', label: 'associated with' },
+            { from: 1, to: 3, arrows: 'to', label: 'influenced by' },
+            { from: 1, to: 4, arrows: 'to', label: 'requires' }
+        ]);
+
+        // Node details for information display
+        const nodeDetails = {
+            1: {
+                title: 'Azoospermia',
+                description: 'Complete absence of sperm in ejaculate',
+                evidence: 'Multiple clinical studies',
+                impact: 'Primary cause of male infertility',
+                citation: 'Barceló et al. (2018)',
+                doi: 'https://doi.org/10.1016/j.rbmo.2018.01.006'
+            },
+            2: {
+                title: 'CFTR Gene',
+                description: 'Cystic Fibrosis Transmembrane Conductance Regulator',
+                evidence: 'Genetic studies',
+                impact: 'Associated with CBAVD',
+                citation: 'Malcher et al. (2013)',
+                doi: 'https://doi.org/10.1371/journal.pone.0056389'
+            }
+        };
+
+        // Configuration for the network
+        const options = {
+            nodes: {
+                shape: 'dot',
+                size: 20,
+                font: {
+                    size: 14,
+                    face: 'Arial'
+                },
+                borderWidth: 2,
+                shadow: true
+            },
+            edges: {
+                width: 2,
+                smooth: {
+                    type: 'dynamic'
+                },
+                length: 200
+            },
+            physics: {
+                enabled: true,
+                barnesHut: {
+                    gravitationalConstant: -2000,
+                    centralGravity: 0.3,
+                    springLength: 200,
+                    springConstant: 0.04,
+                    damping: 0.09
+                },
+                stabilization: {
+                    enabled: true,
+                    iterations: 1000,
+                    updateInterval: 100
+                }
+            },
+            interaction: {
+                hover: true,
+                navigationButtons: true,
+                keyboard: true
+            },
+            groups: {
+                core: {
+                    color: { background: '#ff7675', border: '#d63031' }
+                },
+                gene: {
+                    color: { background: '#74b9ff', border: '#0984e3' }
+                },
+                process: {
+                    color: { background: '#55efc4', border: '#00b894' }
+                }
+            }
+        };
+
+        // Create the network
+        const container = document.getElementById('graph');
+        const data = { nodes: nodes, edges: edges };
+        const network = new vis.Network(container, data, options);
+
+        // Hide loading indicator when graph is ready
+        network.on('stabilizationIterationsDone', function() {
+            document.getElementById('loading').style.display = 'none';
+        });
+
+        // Show node information when clicked
+        network.on('click', function(params) {
+            if (params.nodes.length > 0) {
+                const nodeId = params.nodes[0];
+                const details = nodeDetails[nodeId];
+                
+                if (details) {
+                    const nodeInfo = document.getElementById('nodeInfo');
+                    nodeInfo.innerHTML = `
+                        <h3>${details.title}</h3>
+                        <div class="detail-section">
+                            <span class="detail-label">Description:</span>
+                            ${details.description}
+                        </div>
+                        <div class="detail-section">
+                            <span class="detail-label">Evidence Level:</span>
+                            ${details.evidence}
+                        </div>
+                        <div class="detail-section">
+                            <span class="detail-label">Clinical Impact:</span>
+                            ${details.impact}
+                        </div>
+                        <div class="citation">
+                            Source: ${details.citation}<br>
+                            <a href="${details.doi}" target="_blank" class="doi">View Paper</a>
+                        </div>
+                    `;
+                    nodeInfo.style.display = 'block';
+                }
+            } else {
+                document.getElementById('nodeInfo').style.display = 'none';
+            }
+        });
+
+        // Toggle physics function
+        function togglePhysics() {
+            const physics = !network.physics.options.enabled;
+            network.setOptions({ physics: { enabled: physics } });
+        }
+
+        // Initial stabilization
+        network.stabilize();
     </script>
     
     <!-- Google Analytics or other tracking code can be added here -->

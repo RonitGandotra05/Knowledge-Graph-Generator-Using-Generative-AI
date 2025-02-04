@@ -1,9 +1,9 @@
-# Azoospermia Knowledge Graph
+# Knowledge Graph Generator Using Generative AI
 
 An interactive visualization of azoospermia biomarkers and their relationships, based on comprehensive research paper analysis.
 
 ## Live Demo
-Visit [https://RonitGandotra05.github.io/azoospermia-knowledge-graph](https://RonitGandotra05.github.io/azoospermia-knowledge-graph)
+Visit [https://RonitGandotra05.github.io/Knowledge-Graph-Generator-Using-Generative-AI](https://RonitGandotra05.github.io/Knowledge-Graph-Generator-Using-Generative-AI)
 
 ## Features
 
@@ -38,7 +38,7 @@ Visit [https://RonitGandotra05.github.io/azoospermia-knowledge-graph](https://Ro
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/RonitGandotra05/azoospermia-knowledge-graph.git
+git clone https://github.com/RonitGandotra05/Knowledge-Graph-Generator-Using-Generative-AI.git
 ```
 
 2. Open index.html in a modern web browser
@@ -56,12 +56,12 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 If you use this visualization in your research, please cite:
 
 ```bibtex
-@misc{azoospermia-knowledge-graph,
+@misc{knowledge-graph-generator,
   author = {Ronit Gandotra},
-  title = {Azoospermia Knowledge Graph},
+  title = {Knowledge Graph Generator Using Generative AI},
   year = {2024},
   publisher = {GitHub},
-  url = {https://github.com/RonitGandotra05/azoospermia-knowledge-graph}
+  url = {https://github.com/RonitGandotra05/Knowledge-Graph-Generator-Using-Generative-AI}
 }
 ```
 

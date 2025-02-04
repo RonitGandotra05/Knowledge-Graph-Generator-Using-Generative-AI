@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Azoospermia Knowledge Graph</title>
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style type="text/css">
+        #graph {
+            width: 100%;
+            height: 800px;
+            border: 1px solid lightgray;
+        }
+        #nodeInfo {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            width: 400px;
+            background: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: none;
+            max-height: 600px;
+            overflow-y: auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .citation {
+            font-size: 0.9em;
+            color: #666;
+            border-top: 1px solid #eee;
+            margin-top: 15px;
+            padding-top: 15px;
+        }
+        .doi {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        h3 {
+            color: #333;
+            margin-top: 0;
+        }
+        .detail-section {
+            margin-bottom: 10px;
+        }
+        .detail-label {
+            font-weight: bold;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+    <div id="graph"></div>
+    <div id="nodeInfo"></div>
+
+    <script type="text/javascript">
+        const citations = {
+            barcelo: {
+                authors: "Maria Barceló, Ana Mata, Lluís Bassas, Sara Larriba",
+                title: "Exosomal microRNAs in seminal plasma are markers of the origin of azoospermia and can predict the presence of sperm in testicular tissue",
+                journal: "Human Reproduction",
+                volume: "33",
+                issue: "6",
+                year: "2018",
+                pages: "1087-1098",
+                doi: "https://doi.org/10.1093/humrep/dey072"
+            },
+            malcher: {
+                authors: "Malcher et al.",
+                title: "Global gene expression profiling of human testicular tissue with different spermatogenic impairment",
+                journal: "Andrology",
+                year: "2013",
+                doi: "https://doi.org/10.1111/j.2047-2927.2013.00088.x"
+            }
+        };
+
+        // Node information database
+        const nodeDetails = {
+            "Azoospermia": {
+                description: "Absence of sperm in semen, affecting approximately 4% of men worldwide",
+                evidence: "Core condition being studied, accounts for >10% of male infertility cases",
+                impact: "Significant impact on male fertility and reproductive potential",
+                citations: ["barcelo", "malcher"]
+            },
+            "AKAP4": {
+                description: "A kinase anchor protein 4, critical for sperm function and motility",
+                evidence: "Down-regulated (minimum fourfold change) in infertile patients, confirmed by real-time PCR and Western blot",
+                impact: "Key protein for sperm function and motility, significant marker for infertility",
+                citations: ["malcher"]
+            },
+            "UBQLN3": {
+                description: "Ubiquilin 3, involved in cell cycle regulation through cyclin interactions",
+                evidence: "Down-regulated (P<0.0005), primarily expressed in spermatids",
+                impact: "Critical for cell cycle regulation in spermatogenesis",
+                citations: ["malcher"]
+            },
+            "CAPN11": {
+                description: "Calpain 11, involved in calcium-dependent signal transduction",
+                evidence: "Down-regulated (P<0.0001), testis-specific expression",
+                impact: "Essential for cytoskeleton remodeling during meiosis",
+                citations: ["malcher"]
+            },
+            "GGN": {
+                description: "Gametogenetin, binds to FANCL and interacts with CRISP2",
+                evidence: "Down-regulated (P<0.005), involved in primordial germ cell proliferation",
+                impact: "Critical for sperm tail development and Ca2+ regulation",
+                citations: ["malcher"]
+            },
+            "SPACA4": {
+                description: "Sperm Acrosome Associated 4, located in acrosomal membrane",
+                evidence: "Down-regulated (P<0.005), GPI-anchored protein",
+                impact: "Critical for sperm-egg interaction and fertilization",
+                citations: ["malcher"]
+            },
+            "WBSCR28": {
+                description: "Williams-Beuren syndrome chromosome region 28",
+                evidence: "Up-regulated in late maturation arrest, validated by RT-PCR",
+                impact: "Associated with chromatin remodeling and late stages of spermatogenesis",
+                citations: ["malcher"]
+            },
+            "ADCY10": {
+                description: "Adenylate Cyclase 10, involved in cAMP signaling pathway",
+                evidence: "Up-regulated in meiotic arrest, validated in multiple samples",
+                impact: "Critical for sperm capacitation and meiotic processes",
+                citations: ["malcher"]
+            },
+            "TMEM225": {
+                description: "Transmembrane Protein 225, involved in cell division",
+                evidence: "Up-regulated in early arrest, novel marker for early stage arrest",
+                impact: "Associated with premeiotic arrest and early spermatogenic development",
+                citations: ["malcher"]
+            },
+            "SPATS1": {
+                description: "Spermatogenesis Associated Serine Rich 1",
+                evidence: "Up-regulated in maturation arrest, peaks in round spermatids",
+                impact: "Critical for spermatid development and maturation",
+                citations: ["malcher"]
+            },
+            "Exosomal miRNAs": {
+                description: "MicroRNAs found in seminal plasma exosomes",
+                evidence: "Validated markers for azoospermia origin and sperm presence prediction",
+                impact: "High diagnostic accuracy for azoospermia classification",
+                citations: ["barcelo"]
+            },
+            "miR-31-5p": {
+                description: "Key diagnostic microRNA biomarker",
+                evidence: "High diagnostic accuracy (AUC: 0.957; P < 0.0001)",
+                impact: "100% sensitivity and specificity when combined with FSH",
+                citations: ["barcelo"]
+            },
+            "miR-539-5p": {
+                description: "Predictive microRNA biomarker",
+                evidence: "Significant differential expression (P = 0.026)",
+                impact: "Part of predictive model for sperm presence",
+                citations: ["barcelo"]
+            },
+            "miR-941": {
+                description: "Diagnostic microRNA biomarker",
+                evidence: "Specific expression pattern in vasectomy cases",
+                impact: "Helps distinguish between azoospermia types",
+                citations: ["barcelo"]
+            },
+            "FSH Levels": {
+                description: "Follicle Stimulating Hormone levels in blood",
+                evidence: "Elevated in some forms of azoospermia, key diagnostic marker",
+                impact: "100% diagnostic accuracy when combined with miR-31-5p",
+                citations: ["barcelo", "malcher"]
+            },
+            "Johnsen Score": {
+                description: "Histopathologic classification system for testicular tissue",
+                evidence: "Scores range from 2-9 based on spermatogenic cell presence",
+                impact: "Critical for determining severity and type of spermatogenic impairment",
+                citations: ["malcher"]
+            },
+            "Gene Expression Profile": {
+                description: "Global gene expression analysis of testicular tissue",
+                evidence: "4,946 differentially expressed genes identified",
+                impact: "Enables precise molecular classification and personalized treatment",
+                citations: ["malcher"]
+            },
+            "Testicular Volume": {
+                description: "Physical size of testicles",
+                evidence: "Often diminished in azoospermia",
+                impact: "Physical indicator",
+                citations: ["barcelo", "malcher"]
+            },
+            "Sperm Parameters": {
+                description: "Basic semen analysis metrics",
+                evidence: "Concentration, motility, morphology",
+                impact: "Primary diagnostic tool",
+                citations: ["barcelo"]
+            },
+            "Organ Function": {
+                description: "Reproductive tract organ functionality",
+                evidence: "Biochemical markers indicate organ status",
+                impact: "Diagnostic indicator",
+                citations: ["barcelo"]
+            },
+            "miR-205-5p": {
+                description: "Specific microRNA biomarker for azoospermia classification",
+                evidence: "AUC 0.843, P = 0.005, validated marker",
+                impact: "Distinguishes between OA-N and SA cases",
+                citations: ["barcelo"]
+            },
+            "Chromosome 19 Clusters": {
+                description: "Cluster of miRNAs located on chromosome 19",
+                evidence: "Down-regulated in azoospermia cases, validated by RT-qPCR",
+                impact: "Indicates spermatogenic function and development",
+                citations: ["barcelo"]
+            },
+            "miR-34b/c Clusters": {
+                description: "Related miRNA clusters involved in spermatogenesis",
+                evidence: "Reduced expression in testis with severe maturation blockade",
+                impact: "Indicates germline development status and maturation",
+                citations: ["barcelo"]
+            },
+            "miR-449 Clusters": {
+                description: "Related miRNA family clusters in testis",
+                evidence: "Associated with spermatogenic failure and development",
+                impact: "Marker for testicular function and development",
+                citations: ["barcelo"]
+            },
+            "tRNAs": {
+                description: "Transfer RNAs in seminal exosomes",
+                evidence: "Part of small non-coding RNA profile, comprises 21% of exosomal content",
+                impact: "Component of molecular signature in seminal plasma",
+                citations: ["barcelo"]
+            },
+            "piRNAs": {
+                description: "Piwi-interacting RNAs in seminal exosomes",
+                evidence: "Present in seminal exosomes, validated by RT-qPCR",
+                impact: "Indicates germline status and spermatogenic function",
+                citations: ["barcelo"]
+            },
+            "Y RNAs": {
+                description: "Small non-coding RNAs in seminal exosomes",
+                evidence: "Found in seminal exosomes, part of molecular profile",
+                impact: "Part of RNA profile indicating reproductive tract function",
+                citations: ["barcelo"]
+            },
+            "rRNAs": {
+                description: "Ribosomal RNAs in seminal exosomes",
+                evidence: "Component of exosomal content, validated marker",
+                impact: "Molecular marker for reproductive tract function",
+                citations: ["barcelo"]
+            },
+            "Prostate Markers": {
+                description: "Prostate-specific biochemical indicators",
+                evidence: "Acid phosphatase, citric acid, zinc levels in seminal plasma",
+                impact: "Indicates prostate function and potential obstructions",
+                citations: ["barcelo"]
+            },
+            "Epididymis Markers": {
+                description: "Epididymis-specific biochemical indicators",
+                evidence: "Alpha-glucosidase levels in seminal plasma",
+                impact: "Indicates epididymal function and obstruction status",
+                citations: ["barcelo"]
+            },
+            "Seminal Vesicle Markers": {
+                description: "Seminal vesicle biochemical indicators",
+                evidence: "Fructose levels in seminal plasma",
+                impact: "Indicates seminal vesicle function and secretion",
+                citations: ["barcelo"]
+            },
+            "Cell Proliferation": {
+                description: "Cell growth and division markers in testicular tissue",
+                evidence: "Associated with spermatogenesis stages and development",
+                impact: "Indicates reproductive tissue health and function",
+                citations: ["malcher"]
+            },
+            "Cell Differentiation": {
+                description: "Cell development and maturation markers",
+                evidence: "Critical for sperm cell formation and development",
+                impact: "Indicates spermatogenic potential and stage",
+                citations: ["malcher"]
+            },
+            "Apoptosis": {
+                description: "Programmed cell death markers in testicular tissue",
+                evidence: "Indicates tissue turnover and cell survival",
+                impact: "Related to sperm production efficiency",
+                citations: ["malcher"]
+            },
+            "Gene Expression": {
+                description: "Gene activity patterns in testicular tissue",
+                evidence: "Post-transcriptional regulation of spermatogenesis",
+                impact: "Controls spermatogenesis and development",
+                citations: ["malcher"]
+            },
+            "X-Chromosome miRNAs": {
+                description: "X chromosome-linked microRNAs in seminal plasma",
+                evidence: "37% of down-regulated SP exosomal miRNAs",
+                impact: "Critical for spermatogenic function and regulation",
+                citations: ["barcelo"]
+            },
+            "TNP1": {
+                description: "Transition protein 1, involved in chromatin remodeling",
+                evidence: "Down-regulated (5.97-fold change), expression at postmeiotic stage",
+                impact: "Critical for proper sperm development and DNA packaging",
+                citations: ["malcher"]
+            },
+            "PRM2": {
+                description: "Protamine 2, essential for sperm head formation",
+                evidence: "Down-regulated (6.26-fold change), expression at postmeiotic stage",
+                impact: "Critical for DNA compaction and sperm head morphology",
+                citations: ["malcher"]
+            },
+            "SYNJ2": {
+                description: "Synaptojanin 2, involved in membrane trafficking",
+                evidence: "Down-regulated (1.66-fold change), expression at postmeiotic stage",
+                impact: "Important for proper sperm formation and membrane dynamics",
+                citations: ["malcher"]
+            },
+            "ZPBP": {
+                description: "Zona pellucida binding protein, critical for fertilization",
+                evidence: "Expression at postmeiotic stage, role in sperm-egg interaction",
+                impact: "Essential for fertilization capacity and late stage development",
+                citations: ["malcher"]
+            },
+            "DAZ": {
+                description: "Deleted in azoospermia, Y chromosome-specific marker",
+                evidence: "Expression at premeiotic stage, critical for spermatogenesis",
+                impact: "Essential for premeiotic development and spermatogenesis progression",
+                citations: ["barcelo", "malcher"]
+            },
+            "TSPY1": {
+                description: "Testis-specific protein Y-linked 1",
+                evidence: "Expression at premeiotic stage, Y-chromosome specific marker",
+                impact: "Critical for early spermatogenic development",
+                citations: ["malcher"]
+            },
+            "Medical Assessment Panel": {
+                description: "Comprehensive diagnostic approach combining multiple methods",
+                evidence: "Medical history, physical examination, hormone analysis, karyotype analysis, genetic testing",
+                impact: "Standard diagnostic protocol for initial evaluation and treatment planning",
+                citations: ["barcelo", "malcher"]
+            },
+            "TESE Value": {
+                description: "Testicular sperm extraction measurement and analysis",
+                evidence: "Threshold >0.01 × 106 sperm/ml indicates retrievable sperm",
+                impact: "Critical for predicting sperm retrieval success and treatment planning",
+                citations: ["barcelo"]
+            },
+            "Infection/Inflammation": {
+                description: "Markers of reproductive tract inflammation and infection",
+                evidence: "Post-infection markers, inflammation indicators, associated with functional abnormalities",
+                impact: "Indicates underlying pathology and potential reversible causes",
+                citations: ["barcelo"]
+            }
+        };
+
+        // Create nodes and edges
+        const nodes = new vis.DataSet([
+            // Core node
+            {id: 1, label: "Azoospermia", color: "#ff4444", shape: "dot", size: 20},
+            
+            // Gene markers
+            {id: 29, label: "AKAP4", color: "#44ff88"},
+            {id: 30, label: "UBQLN3", color: "#44ff88"},
+            {id: 31, label: "CAPN11", color: "#44ff88"},
+            {id: 32, label: "GGN", color: "#44ff88"},
+            {id: 33, label: "SPACA4", color: "#44ff88"},
+            {id: 34, label: "WBSCR28", color: "#44ff88"},
+            {id: 35, label: "ADCY10", color: "#44ff88"},
+            {id: 36, label: "TMEM225", color: "#44ff88"},
+            {id: 37, label: "SPATS1", color: "#44ff88"},
+            {id: 38, label: "Johnsen Score", color: "#ff8844"},
+            
+            // Primary diagnostic markers
+            {id: 2, label: "Exosomal miRNAs", color: "#4444ff"},
+            {id: 3, label: "FSH Levels", color: "#44ff44"},
+            {id: 4, label: "Testicular Volume", color: "#44ff44"},
+            {id: 5, label: "Sperm Parameters", color: "#44ff44"},
+            
+            // Secondary markers and causes
+            {id: 6, label: "miR-31-5p", color: "#4444ff"},
+            {id: 7, label: "miR-539-5p", color: "#4444ff"},
+            {id: 8, label: "miR-941", color: "#4444ff"},
+            {id: 9, label: "Organ Function", color: "#ff8844"},
+            
+            // Organ-specific markers
+            {id: 10, label: "Prostate Markers", color: "#88ff44"},
+            {id: 11, label: "Epididymis Markers", color: "#88ff44"},
+            {id: 12, label: "Seminal Vesicle Markers", color: "#88ff44"},
+            
+            // RNA types
+            {id: 13, label: "piRNAs", color: "#4444ff"},
+            {id: 14, label: "Y RNAs", color: "#4444ff"},
+            {id: 15, label: "rRNAs", color: "#4444ff"},
+            
+            // Developmental markers
+            {id: 16, label: "Cell Proliferation", color: "#ff44ff"},
+            {id: 17, label: "Cell Differentiation", color: "#ff44ff"},
+            {id: 18, label: "Apoptosis", color: "#ff44ff"},
+            
+            // Genetic markers
+            {id: 19, label: "X-Chromosome miRNAs", color: "#4444ff"},
+            {id: 20, label: "Gene Expression", color: "#ff44ff"},
+
+            // Additional nodes from JSON
+            {id: 21, label: "TESE Value", color: "#44ff44"},
+            {id: 22, label: "Medical Assessment", color: "#ff8844"},
+            {id: 23, label: "Infection/Inflammation", color: "#ff8844"},
+            {id: 24, label: "miR-205-5p", color: "#4444ff"},
+            {id: 25, label: "Chromosome 19 Clusters", color: "#4444ff"},
+            {id: 26, label: "miR-34b/c Clusters", color: "#4444ff"},
+            {id: 27, label: "miR-449 Clusters", color: "#4444ff"},
+            {id: 28, label: "tRNAs", color: "#4444ff"},
+            
+            // New gene markers
+            {id: 39, label: "TNP1", color: "#44ff88"},
+            {id: 40, label: "PRM2", color: "#44ff88"},
+            {id: 41, label: "SYNJ2", color: "#44ff88"},
+            {id: 42, label: "ZPBP", color: "#44ff88"},
+            {id: 43, label: "DAZ", color: "#44ff88"},
+            {id: 44, label: "TSPY1", color: "#44ff88"}
+        ]);
+
+        const edges = new vis.DataSet([
+            // Gene marker connections
+            {from: 29, to: 1, arrows: "to"},
+            {from: 30, to: 1, arrows: "to"},
+            {from: 31, to: 1, arrows: "to"},
+            {from: 32, to: 1, arrows: "to"},
+            {from: 33, to: 1, arrows: "to"},
+            {from: 34, to: 1, arrows: "to"},
+            {from: 35, to: 1, arrows: "to"},
+            {from: 36, to: 1, arrows: "to"},
+            {from: 37, to: 1, arrows: "to"},
+            {from: 38, to: 1, arrows: "to"},
+            
+            // Primary connections to Azoospermia
+            {from: 2, to: 1, arrows: "to"},
+            {from: 3, to: 1, arrows: "to"},
+            {from: 4, to: 1, arrows: "to"},
+            {from: 5, to: 1, arrows: "to"},
+            
+            // miRNA relationships
+            {from: 6, to: 2, arrows: "to"},
+            {from: 7, to: 2, arrows: "to"},
+            {from: 8, to: 2, arrows: "to"},
+            
+            // Organ function relationships
+            {from: 9, to: 1, arrows: "to"},
+            {from: 10, to: 9, arrows: "to"},
+            {from: 11, to: 9, arrows: "to"},
+            {from: 12, to: 9, arrows: "to"},
+            
+            // RNA type relationships
+            {from: 13, to: 2, arrows: "to"},
+            {from: 14, to: 2, arrows: "to"},
+            {from: 15, to: 2, arrows: "to"},
+            
+            // Developmental pathway
+            {from: 16, to: 20, arrows: "to"},
+            {from: 17, to: 20, arrows: "to"},
+            {from: 18, to: 20, arrows: "to"},
+            {from: 20, to: 1, arrows: "to"},
+            
+            // Genetic markers
+            {from: 19, to: 2, arrows: "to"},
+
+            // New edges
+            {from: 21, to: 1, arrows: "to"},
+            {from: 22, to: 1, arrows: "to"},
+            {from: 23, to: 9, arrows: "to"},
+            {from: 24, to: 2, arrows: "to"},
+            {from: 25, to: 2, arrows: "to"},
+            {from: 26, to: 2, arrows: "to"},
+            {from: 27, to: 2, arrows: "to"},
+            {from: 28, to: 2, arrows: "to"},
+            
+            // New gene marker connections
+            {from: 39, to: 1, arrows: "to"},
+            {from: 40, to: 1, arrows: "to"},
+            {from: 41, to: 1, arrows: "to"},
+            {from: 42, to: 1, arrows: "to"},
+            {from: 43, to: 1, arrows: "to"},
+            {from: 44, to: 1, arrows: "to"},
+            
+            // Stage-specific relationships
+            {from: 39, to: 40, arrows: "to", label: "Postmeiotic"},
+            {from: 41, to: 42, arrows: "to", label: "Postmeiotic"},
+            {from: 43, to: 44, arrows: "to", label: "Premeiotic"},
+            
+            // Functional relationships
+            {from: 39, to: 20, arrows: "to", label: "DNA Packaging"},
+            {from: 40, to: 20, arrows: "to", label: "DNA Compaction"},
+            {from: 41, to: 20, arrows: "to", label: "Membrane Function"},
+            {from: 42, to: 20, arrows: "to", label: "Fertilization"},
+            
+            // Medical Assessment relationships
+            {from: 22, to: 3, arrows: "to", label: "Includes"},  // FSH Levels
+            {from: 22, to: 4, arrows: "to", label: "Includes"},  // Testicular Volume
+            {from: 22, to: 5, arrows: "to", label: "Includes"},  // Sperm Parameters
+            
+            // Organ Function relationships
+            {from: 23, to: 10, arrows: "to", label: "Affects"},  // Prostate
+            {from: 23, to: 11, arrows: "to", label: "Affects"},  // Epididymis
+            {from: 23, to: 12, arrows: "to", label: "Affects"},  // Seminal Vesicle
+            
+            // TESE relationships
+            {from: 21, to: 38, arrows: "to", label: "Correlates"},  // Johnsen Score
+            {from: 21, to: 20, arrows: "to", label: "Validates"},   // Gene Expression
+            
+            // RNA marker relationships
+            {from: 13, to: 19, arrows: "to", label: "Associated"},  // piRNAs to X-Chromosome
+            {from: 28, to: 19, arrows: "to", label: "Associated"},  // tRNAs to X-Chromosome
+            
+            // Gene expression relationships
+            {from: 20, to: 38, arrows: "to", label: "Validates"},   // Gene Expression to Johnsen Score
+            {from: 20, to: 2, arrows: "to", label: "Regulates"}     // Gene Expression to Exosomal miRNAs
+        ]);
+
+        // Create network
+        const container = document.getElementById('graph');
+        const data = {
+            nodes: nodes,
+            edges: edges
+        };
+        const options = {
+            nodes: {
+                shape: 'dot',
+                size: 16,
+                font: {
+                    size: 12,
+                    face: 'Arial'
+                }
+            },
+            edges: {
+                smooth: {
+                    type: 'dynamic',
+                    roundness: 0.5
+                },
+                length: 200,  // Default edge length
+                color: {
+                    inherit: 'from'
+                }
+            },
+            physics: {
+                enabled: true,
+                barnesHut: {
+                    gravitationalConstant: -2000,
+                    centralGravity: 0.3,
+                    springLength: 150,
+                    springConstant: 0.04,
+                    damping: 0.09,
+                    avoidOverlap: 0.1
+                },
+                stabilization: {
+                    enabled: true,
+                    iterations: 1000,
+                    updateInterval: 100,
+                    onlyDynamicEdges: false,
+                    fit: true
+                },
+                adaptiveTimestep: true,
+                timestep: 0.5,
+                minVelocity: 0.75,
+                maxVelocity: 30
+            },
+            interaction: {
+                dragNodes: true,
+                dragView: true,
+                hideEdgesOnDrag: false,
+                hideNodesOnDrag: false,
+                hover: true,
+                navigationButtons: true,
+                multiselect: true,
+                selectable: true,
+                selectConnectedEdges: true,
+                tooltipDelay: 300,
+                zoomView: true
+            }
+        };
+        const network = new vis.Network(container, data, options);
+
+        // Add event listeners for physics control
+        network.on("dragEnd", function (params) {
+            // Enable physics after drag
+            network.setOptions({ physics: { enabled: true } });
+        });
+
+        network.on("dragStart", function (params) {
+            // Disable physics while dragging
+            network.setOptions({ physics: { enabled: false } });
+        });
+
+        // Add stabilization progress handler
+        network.on("stabilizationProgress", function(params) {
+            // Optional: Add loading indicator here
+        });
+
+        network.on("stabilizationIterationsDone", function() {
+            // Optional: Remove loading indicator here
+        });
+
+        // Add zoom buttons and controls
+        const controls = document.createElement('div');
+        controls.style.position = 'absolute';
+        controls.style.top = '10px';
+        controls.style.left = '10px';
+        controls.innerHTML = `
+            <div style="background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <button onclick="network.fit()" style="margin: 5px;">Fit Graph</button>
+                <button onclick="togglePhysics()" style="margin: 5px;">Toggle Physics</button>
+                <button onclick="network.stabilize()" style="margin: 5px;">Stabilize</button>
+            </div>
+        `;
+        container.appendChild(controls);
+
+        // Add physics toggle function
+        function togglePhysics() {
+            const physics = network.physics.options.enabled;
+            network.setOptions({ physics: { enabled: !physics } });
+        }
+
+        // Node click handler
+        network.on("click", function (params) {
+            if (params.nodes.length > 0) {
+                const nodeId = params.nodes[0];
+                const node = nodes.get(nodeId);
+                const details = nodeDetails[node.label] || {
+                    description: "Additional information coming soon",
+                    evidence: "Under review",
+                    impact: "To be determined",
+                    citations: []
+                };
+                
+                const infoDiv = document.getElementById("nodeInfo");
+                let citationsHtml = '';
+                
+                if (details.citations && details.citations.length > 0) {
+                    citationsHtml = details.citations.map(citationKey => {
+                        const citation = citations[citationKey];
+                        return `
+                            <div class="citation">
+                                <p><span class="detail-label">Source:</span><br>
+                                ${citation.authors} (${citation.year})<br>
+                                <em>${citation.title}</em><br>
+                                ${citation.journal}${citation.volume ? `, ${citation.volume}(${citation.issue})` : ''}, ${citation.pages || ''}<br>
+                                <a href="${citation.doi}" class="doi" target="_blank">DOI: ${citation.doi}</a></p>
+                            </div>
+                        `;
+                    }).join('');
+                }
+                
+                infoDiv.innerHTML = `
+                    <h3>${node.label}</h3>
+                    <div class="detail-section">
+                        <p><span class="detail-label">Description:</span><br>${details.description}</p>
+                    </div>
+                    <div class="detail-section">
+                        <p><span class="detail-label">Evidence:</span><br>${details.evidence}</p>
+                    </div>
+                    <div class="detail-section">
+                        <p><span class="detail-label">Impact:</span><br>${details.impact}</p>
+                    </div>
+                    ${citationsHtml}
+                `;
+                infoDiv.style.display = "block";
+            } else {
+                document.getElementById("nodeInfo").style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html> 

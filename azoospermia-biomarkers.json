@@ -1,0 +1,810 @@
+{
+  "biomarkers": [
+    {
+      "sourcePapersLineNumbers": "[ppr1: 1-10]",
+      "biomarkerName": "Exosomal microRNAs (miRNAs) in Seminal Plasma",
+      "levelOrStatus": "Differentially expressed in azoospermia",
+      "supportingEvidenceBySource": {
+        "Main Paper": [
+          "Exosomal microRNAs in seminal plasma are markers of the origin of azoospermia",
+          "Can predict the presence of sperm in testicular tissue"
+        ]
+      },
+      "chainOfLogic": "miRNAs in seminal plasma → biomarker expression patterns → azoospermia classification → sperm presence prediction",
+      "additionalRelationships": [
+        "Used for distinguishing between different types of azoospermia",
+        "Predictive of sperm presence in testicular tissue"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 35-42]",
+      "biomarkerName": "miR-31-5p and FSH Combination",
+      "levelOrStatus": "Diagnostic accuracy >90%",
+      "supportingEvidenceBySource": {
+        "Main Paper": [
+          "Expression values show high sensitivity and specificity (>90%)",
+          "Combined with FSH achieves 100% sensitivity and specificity"
+        ]
+      },
+      "chainOfLogic": "miR-31-5p expression + FSH levels → diagnostic accuracy → azoospermia classification",
+      "additionalRelationships": [
+        "Particularly effective when combined with FSH values",
+        "Can distinguish between obstructive and secretory azoospermia",
+        "High predictive value for sperm presence"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 67-71]",
+      "biomarkerName": "Routine Biochemical Markers",
+      "levelOrStatus": "Variable levels indicating organ function",
+      "supportingEvidenceBySource": {
+        "Main Paper": [
+          "Acid phosphatase, citric acid, zinc (prostate)",
+          "Fructose (seminal vesicles)",
+          "Alpha-glucosidase (epididymis)"
+        ]
+      },
+      "chainOfLogic": "Organ-specific markers → functional status → azoospermia diagnosis",
+      "additionalRelationships": [
+        "Indicates functional status of specific reproductive organs",
+        "Used to diagnose obstructions",
+        "Identifies functional abnormalities of genital glands"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 275-285]",
+      "biomarkerName": "miRNA Diagnostic Panel",
+      "levelOrStatus": "Variable expression patterns",
+      "supportingEvidenceBySource": {
+        "Main Paper": [
+          "miR-205-5p (AUC 0.843, P = 0.005)",
+          "miR-31-5p (AUC: 0.957; P < 0.0001)",
+          "piR-58527 (AUC: 0.764; P = 0.030)"
+        ]
+      },
+      "chainOfLogic": "miRNA expression patterns → diagnostic accuracy → azoospermia classification",
+      "additionalRelationships": [
+        "Different patterns for different types of azoospermia",
+        "High diagnostic accuracy when combined",
+        "Potential for non-invasive testing"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 295-300]",
+      "biomarkerName": "Sperm Presence Predictors",
+      "levelOrStatus": "Combined expression patterns",
+      "supportingEvidenceBySource": {
+        "Main Paper": [
+          "miR-539-5p and miR-941 combination",
+          "TESE value (>0.01 × 106 sperm/ml)",
+          "100% sensitivity and specificity for predicting sperm presence"
+        ]
+      },
+      "chainOfLogic": "miRNA combinations → prediction accuracy → sperm presence in testicular tissue",
+      "additionalRelationships": [
+        "Predicts presence of spermatozoa in testicular biopsy",
+        "Helps avoid unnecessary biopsies",
+        "High accuracy in combination with FSH"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 85-90]",
+      "biomarkerName": "Small Non-coding RNAs",
+      "levelOrStatus": "Variable expression in semen exosomes",
+      "supportingEvidenceBySource": {
+        "Main Paper": [
+          "Piwi-interacting RNAs (piRNAs)",
+          "Y RNAs",
+          "rRNAs",
+          "tRNAs",
+          "Comprises 21% of exosomal content"
+        ]
+      },
+      "chainOfLogic": "Small non-coding RNAs → exosomal content → molecular markers for azoospermia",
+      "additionalRelationships": [
+        "Part of exosomal RNA profile",
+        "Potential molecular markers",
+        "Indicates reproductive tract function"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 71-75]",
+      "biomarkerName": "Physical and Hormonal Indicators",
+      "levelOrStatus": "Currently unsatisfactory as standalone markers",
+      "supportingEvidenceBySource": {
+        "Main Paper": [
+          "Elevated levels of FSH in blood",
+          "Diminished testicular volume",
+          "Limited reliability for definitive diagnosis"
+        ]
+      },
+      "chainOfLogic": "Physical/hormonal markers → diagnostic indicators → azoospermia assessment",
+      "additionalRelationships": [
+        "Used in initial screening",
+        "Requires additional confirmation",
+        "Part of traditional diagnostic approach"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 67-71]",
+      "biomarkerName": "Infection/Inflammation Markers",
+      "levelOrStatus": "Present in cases of glandular dysfunction",
+      "supportingEvidenceBySource": {
+        "Main Paper": [
+          "Post-infection markers",
+          "Inflammation indicators",
+          "Associated with functional abnormalities"
+        ]
+      },
+      "chainOfLogic": "Infection/inflammation → glandular dysfunction → potential azoospermia",
+      "additionalRelationships": [
+        "Indicates underlying pathology",
+        "May suggest reversible causes",
+        "Guides treatment approach"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 65-69]",
+      "biomarkerName": "Basic Semen Parameters",
+      "levelOrStatus": "Key diagnostic indicators",
+      "supportingEvidenceBySource": {
+        "Main Paper": [
+          "Sperm concentration",
+          "Sperm motility",
+          "Sperm morphology",
+          "Classic parameters of semen analysis"
+        ]
+      },
+      "chainOfLogic": "Semen parameters → fertility status → azoospermia diagnosis",
+      "additionalRelationships": [
+        "Primary diagnostic tools",
+        "Indicates severity of condition",
+        "Guides further testing"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 290-295]",
+      "biomarkerName": "Azoospermia Subtype Markers",
+      "levelOrStatus": "Differential expression patterns",
+      "supportingEvidenceBySource": {
+        "Main Paper": [
+          "OA-N vs SA: miR-205-5p, miR-31-5p, miR-539-5p",
+          "OA-V vs SA: miR-31-5p, miR-941",
+          "Different profiles for congenital vs vasectomy cases"
+        ]
+      },
+      "chainOfLogic": "miRNA profiles → azoospermia subtype → diagnostic classification",
+      "additionalRelationships": [
+        "Distinguishes between azoospermia types",
+        "Indicates obstruction location",
+        "Guides treatment selection"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 275-285]",
+      "biomarkerName": "X-Chromosome Linked Markers",
+      "levelOrStatus": "37% of down-regulated SP exosomal miRNAs",
+      "supportingEvidenceBySource": {
+        "Main Paper": [
+          "X-chromosome linked miRNAs",
+          "Chromosome 19 clusters",
+          "miR-34b/c clusters",
+          "miR-449 clusters"
+        ]
+      },
+      "chainOfLogic": "Chromosomal location → spermatogenic function → azoospermia markers",
+      "additionalRelationships": [
+        "Indicates genetic basis",
+        "Links to spermatogenic cells",
+        "Potential therapeutic targets"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 24-26]",
+      "biomarkerName": "Organ-Specific Exosomes",
+      "levelOrStatus": "Present in seminal fluid",
+      "supportingEvidenceBySource": {
+        "Main Paper": [
+          "Prostasomes (prostate-derived)",
+          "Epididymosomes (epididymis-derived)",
+          "Testicular exosomes",
+          "Seminal vesicle exosomes"
+        ]
+      },
+      "chainOfLogic": "Organ-specific exosomes → origin identification → azoospermia classification",
+      "additionalRelationships": [
+        "Indicates specific organ function",
+        "Contains organ-specific molecular cargo",
+        "Reflects reproductive tract health"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 71-74]",
+      "biomarkerName": "Medical Assessment Panel",
+      "levelOrStatus": "Current diagnostic standard",
+      "supportingEvidenceBySource": {
+        "Main Paper": [
+          "Medical history assessment",
+          "Physical examination findings",
+          "Hormone analysis",
+          "Karyotype analysis",
+          "Genetic testing"
+        ]
+      },
+      "chainOfLogic": "Multiple assessment factors → comprehensive evaluation → azoospermia diagnosis",
+      "additionalRelationships": [
+        "Standard diagnostic approach",
+        "Combines multiple markers",
+        "Requires invasive testing"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 260-270]",
+      "biomarkerName": "Developmental Process Markers",
+      "levelOrStatus": "Critical for spermatogenesis",
+      "supportingEvidenceBySource": {
+        "Main Paper": [
+          "Cell proliferation markers",
+          "Differentiation indicators",
+          "Apoptosis markers",
+          "Embryonic testis development markers",
+          "Male germline development indicators"
+        ]
+      },
+      "chainOfLogic": "Developmental processes → spermatogenesis status → fertility assessment",
+      "additionalRelationships": [
+        "Indicates developmental stage",
+        "Reflects spermatogenic potential",
+        "Useful for treatment planning"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 250-260]",
+      "biomarkerName": "Gene Expression Regulators",
+      "levelOrStatus": "Post-transcriptional modulation",
+      "supportingEvidenceBySource": {
+        "Main Paper": [
+          "mRNA stability regulators",
+          "Translation controllers",
+          "Gene expression modulators",
+          "19-22 nucleotide regulators"
+        ]
+      },
+      "chainOfLogic": "Gene regulation → spermatogenesis control → fertility status",
+      "additionalRelationships": [
+        "Controls gene expression",
+        "Affects protein synthesis",
+        "Influences sperm production"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 67-71]",
+      "biomarkerName": "Reproductive Tract Functional Markers",
+      "levelOrStatus": "Variable by condition",
+      "supportingEvidenceBySource": {
+        "Main Paper": [
+          "Acquired obstruction markers",
+          "Congenital obstruction markers",
+          "Functional abnormality indicators",
+          "Post-infection/inflammation changes"
+        ]
+      },
+      "chainOfLogic": "Tract abnormalities → functional changes → azoospermia diagnosis",
+      "additionalRelationships": [
+        "Distinguishes between acquired and congenital causes",
+        "Indicates reversibility potential",
+        "Guides surgical intervention decisions"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 270-275]",
+      "biomarkerName": "Extracellular Biofluid Markers",
+      "levelOrStatus": "Present across multiple biofluids",
+      "supportingEvidenceBySource": {
+        "Main Paper": [
+          "Present in blood plasma, saliva, tears, urine",
+          "Found in breast milk, colostrum",
+          "Present in peritoneal fluid, cerebrospinal fluid",
+          "Found in bronchial lavage and seminal fluid"
+        ]
+      },
+      "chainOfLogic": "Multiple biofluid sources → diagnostic accessibility → non-invasive testing potential",
+      "additionalRelationships": [
+        "Offers multiple testing options",
+        "Potential for non-invasive diagnostics",
+        "Cross-validation possibilities"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 290-295]",
+      "biomarkerName": "Specific miRNA Combinations",
+      "levelOrStatus": "Differential patterns by condition",
+      "supportingEvidenceBySource": {
+        "Main Paper": [
+          "miR-205-5p (P = 0.010) for OA-N vs SA",
+          "miR-31-5p (P = 0.001) for multiple comparisons",
+          "miR-539-5p (P = 0.026) for specific conditions",
+          "miR-941 for vasectomy cases"
+        ]
+      },
+      "chainOfLogic": "Specific miRNA patterns → condition identification → precise diagnosis",
+      "additionalRelationships": [
+        "Different patterns for different conditions",
+        "High specificity for condition types",
+        "Potential for precise diagnosis"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 85-90, 250-260]",
+      "biomarkerName": "RNA Regulatory Network",
+      "levelOrStatus": "Complex interaction patterns",
+      "supportingEvidenceBySource": {
+        "Main Paper": [
+          "miRNA-based gene regulation",
+          "Small non-coding RNA interactions",
+          "Post-transcriptional control mechanisms",
+          "Multiple RNA type involvement"
+        ]
+      },
+      "chainOfLogic": "RNA network → regulatory control → spermatogenesis impact",
+      "additionalRelationships": [
+        "Complex regulatory interactions",
+        "Multiple RNA type involvement",
+        "System-wide effects on fertility"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 35-40, ppr2: 35-40]",
+      "biomarkerName": "AKAP4 (A kinase anchor protein 4)",
+      "levelOrStatus": "Down-regulated (minimum fourfold change)",
+      "supportingEvidenceBySource": {
+        "Barceló et al. (2018)": [
+          "Important for sperm function and motility",
+          "Confirmed by real-time PCR and Western blot"
+        ],
+        "Malcher et al. (2013)": [
+          "Significantly down-regulated in infertile patients",
+          "Validation confirmed by real-time PCR, Western blot, and independent microarray data"
+        ]
+      },
+      "chainOfLogic": "AKAP4 down-regulation → impaired sperm function and motility → azoospermia",
+      "additionalRelationships": [
+        "Associated with infertility marker status",
+        "Protein expression correlates with severity of impairment"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 35-40]",
+      "biomarkerName": "UBQLN3 (Ubiquilin 3)",
+      "levelOrStatus": "Down-regulated (P<0.0005)",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Cell cycle regulation through cyclin interactions (A1 and A2)",
+          "Primarily expressed in spermatids",
+          "Sequence similar to XDRP1 in Xenopus",
+          "Protein size: 71 kDa",
+          "Weaker bands in NOA patients"
+        ]
+      },
+      "chainOfLogic": "UBQLN3 down-regulation → disrupted cell cycle regulation → spermatogenetic failure → azoospermia",
+      "additionalRelationships": [
+        "Expression level depends on impairment severity",
+        "Clear nuclear/cytoplasmic differentiation in spermatids"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 35-40]",
+      "biomarkerName": "CAPN11 (Calpain 11)",
+      "levelOrStatus": "Down-regulated (P<0.0001)",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Calcium-dependent signal transduction",
+          "Cytoskeleton remodeling during meiosis",
+          "Testis-specific expression"
+        ]
+      },
+      "chainOfLogic": "CAPN11 down-regulation → impaired calcium signaling and cytoskeleton remodeling → disrupted meiosis/spermiogenesis → azoospermia",
+      "additionalRelationships": [
+        "Testis-specific expression pattern",
+        "Role in meiotic processes"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 35-40]",
+      "biomarkerName": "GGN (Gametogenetin)",
+      "levelOrStatus": "Down-regulated (P<0.005)",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Binds to FANCL",
+          "Involved in primordial germ cell proliferation",
+          "Interacts with CRISP2 for Ca2+ regulation",
+          "Genetic variants studied in oligozoospermic men"
+        ]
+      },
+      "chainOfLogic": "GGN down-regulation → reduced primordial germ cell proliferation → impaired sperm tail development → azoospermia",
+      "additionalRelationships": [
+        "Role in sperm motility through Ca2+ regulation",
+        "Associated with sperm tail development"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 35-40]",
+      "biomarkerName": "SPACA4 (SAMP14)",
+      "levelOrStatus": "Down-regulated (P<0.005)",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Located in acrosomal membrane",
+          "GPI-anchored member of Ly-6/urokinase-type plasminogen activator receptor superfamily",
+          "Critical for sperm-egg interaction"
+        ]
+      },
+      "chainOfLogic": "SPACA4 down-regulation → impaired acrosomal function → compromised sperm-egg interaction → infertility",
+      "additionalRelationships": [
+        "Role in fertilization process",
+        "Acrosomal membrane localization"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr1: 250-300, ppr2: 250-300]",
+      "biomarkerName": "DAZ (Deleted in azoospermia)",
+      "levelOrStatus": "Expression at premeiotic stage",
+      "supportingEvidenceBySource": {
+        "Barceló et al. (2018)": [
+          "Critical for spermatogenesis",
+          "Premeiotic stage marker"
+        ],
+        "Malcher et al. (2013)": [
+          "Expression at premeiotic stage",
+          "Critical for spermatogenesis",
+          "Validation confirmed in multiple studies"
+        ]
+      },
+      "chainOfLogic": "DAZ expression → premeiotic development → spermatogenesis progression",
+      "additionalRelationships": [
+        "Y chromosome-specific marker",
+        "Used in diagnostic panels"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 250-300]",
+      "biomarkerName": "TSPY1 (Testis-specific protein, Y-linked 1)",
+      "levelOrStatus": "Expression at premeiotic stage",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Expression at premeiotic stage",
+          "Role in early spermatogenic development",
+          "Y-chromosome specific marker"
+        ]
+      },
+      "chainOfLogic": "TSPY1 expression → early spermatogenic development → spermatogenesis progression",
+      "additionalRelationships": [
+        "Y chromosome-specific expression",
+        "Early development marker",
+        "Diagnostic value for premeiotic stage"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 250-300]",
+      "biomarkerName": "TNP1 (Transition protein 1)",
+      "levelOrStatus": "Down-regulated (5.97-fold change)",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Expression at postmeiotic stage",
+          "Function in chromatin remodeling",
+          "Critical for sperm development"
+        ]
+      },
+      "chainOfLogic": "TNP1 expression → chromatin remodeling → proper sperm development",
+      "additionalRelationships": [
+        "Postmeiotic stage marker",
+        "Role in DNA packaging",
+        "Important for sperm maturation"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 250-300]",
+      "biomarkerName": "PRM2 (Protamine 2)",
+      "levelOrStatus": "Down-regulated (6.26-fold change)",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Expression at postmeiotic stage",
+          "Role in DNA compaction",
+          "Essential for sperm head formation"
+        ]
+      },
+      "chainOfLogic": "PRM2 expression → DNA compaction → proper sperm head formation",
+      "additionalRelationships": [
+        "Postmeiotic stage marker",
+        "Critical for chromatin structure",
+        "Sperm head morphology indicator"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 250-300]",
+      "biomarkerName": "SYNJ2 (Synaptojanin 2)",
+      "levelOrStatus": "Down-regulated (1.66-fold change)",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Expression at postmeiotic stage",
+          "Function in membrane trafficking",
+          "Role in sperm development"
+        ]
+      },
+      "chainOfLogic": "SYNJ2 expression → membrane trafficking → proper sperm formation",
+      "additionalRelationships": [
+        "Postmeiotic stage marker",
+        "Membrane dynamics regulator",
+        "Sperm development indicator"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 250-300]",
+      "biomarkerName": "ZPBP (Zona pellucida binding protein)",
+      "levelOrStatus": "Expression at postmeiotic stage",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Expression at postmeiotic stage",
+          "Role in sperm-egg interaction",
+          "Late spermatogenesis marker"
+        ]
+      },
+      "chainOfLogic": "ZPBP expression → sperm-egg interaction capability → fertility potential",
+      "additionalRelationships": [
+        "Postmeiotic stage marker",
+        "Fertilization capacity indicator",
+        "Late stage development marker"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 35-40]",
+      "biomarkerName": "SPATA3 (Spermatogenesis associated 3)",
+      "levelOrStatus": "Down-regulated (P<0.005)",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Role in antiapoptotic process",
+          "Impact on spermatocyte development",
+          "Member of DnaJ/HSP40 protein family",
+          "Mouse model shows spermatocyte-specific expression"
+        ]
+      },
+      "chainOfLogic": "SPATA3 down-regulation → increased apoptosis → impaired spermatocyte development → azoospermia",
+      "additionalRelationships": [
+        "Cell survival regulation",
+        "Spermatocyte development marker",
+        "Heat shock protein family member"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 35-40]",
+      "biomarkerName": "FAM71F1 (Family with sequence similarity 71, member F1)",
+      "levelOrStatus": "Down-regulated (minimum fourfold change)",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Found in Leydig cells and germ cells",
+          "Strong expression in spermatocyte cytoplasm",
+          "Protein expression confirmed by Western blot",
+          "Differential expression across stages"
+        ]
+      },
+      "chainOfLogic": "FAM71F1 down-regulation → altered spermatogenesis regulation → impaired sperm development",
+      "additionalRelationships": [
+        "Cell-type specific expression",
+        "Stage-specific regulation",
+        "Novel fertility marker"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 15-30]",
+      "biomarkerName": "Sample Size and Collection Parameters",
+      "levelOrStatus": "Standardized collection protocol",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "NOA Patients: n = 18 (age 28-45 years)",
+          "Control Group: n = 4 (normal spermatogenesis)",
+          "Total Samples: 31 testicular biopsy specimens",
+          "Sample Size: 3-5 mm³ collected in RNAlater"
+        ]
+      },
+      "chainOfLogic": "Standardized collection → quality RNA extraction → reliable biomarker analysis",
+      "additionalRelationships": [
+        "Critical for reproducible results",
+        "Ensures RNA quality",
+        "Enables accurate quantification"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 15-25]",
+      "biomarkerName": "Exclusion Criteria Markers",
+      "levelOrStatus": "Negative markers for study inclusion",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Y-chromosome microdeletions",
+          "CFTR gene mutations",
+          "Antisperm antibodies",
+          "Orchitis",
+          "Testicular torsion",
+          "Varicocele"
+        ]
+      },
+      "chainOfLogic": "Absence of confounding conditions → idiopathic NOA identification → pure study population",
+      "additionalRelationships": [
+        "Ensures study population homogeneity",
+        "Eliminates known causes of azoospermia",
+        "Focuses on idiopathic cases"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 15-25]",
+      "biomarkerName": "Johnsen Score Categories",
+      "levelOrStatus": "Histopathologic classification system",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Postmeiotic arrest (Score 6-9): 11 samples - Less than five spermatozoa per tubule, Few late spermatids",
+          "Meiotic arrest (Score 4-5): 7 samples - No spermatozoa or spermatids, Few spermatocytes",
+          "Premeiotic arrest (Score 3): 2 samples - Only spermatogonia present",
+          "Sertoli-cell-only syndrome (Score 2): 7 samples - No germinal cells, Only Sertoli cells present"
+        ]
+      },
+      "chainOfLogic": "Histological features → Johnsen score → azoospermia classification",
+      "additionalRelationships": [
+        "Correlates with severity of impairment",
+        "Guides treatment decisions",
+        "Predicts sperm retrieval success"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 45-55]",
+      "biomarkerName": "Gene Expression Profile",
+      "levelOrStatus": "4,946 differentially expressed genes",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Purpose: Determine degree of spermatogenic impairment",
+          "Application: Precise molecular classification",
+          "Impact: Personalized treatment approach",
+          "Statistical Significance: P<0.05"
+        ]
+      },
+      "chainOfLogic": "Gene expression patterns → molecular classification → personalized treatment",
+      "additionalRelationships": [
+        "More accurate than traditional histology",
+        "Enables personalized treatment approach",
+        "Predicts treatment outcomes"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 1-15]",
+      "biomarkerName": "Clinical Significance Markers",
+      "levelOrStatus": "Multiple diagnostic indicators",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Male Factor Infertility: 20-50% of infertility cases",
+          "Complex molecular causes often unidentified",
+          "Limited access to human gonad tissue",
+          "Restrictions on testing gene functions in vivo",
+          "Current diagnosis far from satisfactory for molecular causes"
+        ]
+      },
+      "chainOfLogic": "Multiple factors → diagnostic complexity → need for molecular markers",
+      "additionalRelationships": [
+        "Guides TESE/ICSI success prediction",
+        "Important for personalized treatment",
+        "Enables pathogenesis studies"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 200-220]",
+      "biomarkerName": "RNA Quality Control Parameters",
+      "levelOrStatus": "Standardized validation metrics",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "RNA Integrity Number (RIN) > 7.0",
+          "Microarray coverage: 33,297 transcripts",
+          "Validation with independent datasets",
+          "Strict quality control for RNA samples"
+        ]
+      },
+      "chainOfLogic": "RNA quality control → reliable expression data → accurate biomarker identification",
+      "additionalRelationships": [
+        "Ensures data reliability",
+        "Standardizes analysis methods",
+        "Enables cross-study comparisons"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 220-240]",
+      "biomarkerName": "WBSCR28 (Williams-Beuren syndrome chromosome region 28)",
+      "levelOrStatus": "Up-regulated in late maturation arrest",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Expressed in late stages of spermatogenesis",
+          "Associated with chromatin remodeling",
+          "Validated by RT-PCR",
+          "Specific to maturation arrest cases"
+        ]
+      },
+      "chainOfLogic": "WBSCR28 up-regulation → late maturation arrest → specific azoospermia subtype",
+      "additionalRelationships": [
+        "Stage-specific expression",
+        "Diagnostic marker for arrest stage",
+        "Potential therapeutic target"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 240-260]",
+      "biomarkerName": "ADCY10 (Adenylate Cyclase 10)",
+      "levelOrStatus": "Up-regulated in meiotic arrest",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Role in cAMP signaling pathway",
+          "Critical for sperm capacitation",
+          "Expression peaks during meiosis",
+          "Validated in multiple samples"
+        ]
+      },
+      "chainOfLogic": "ADCY10 up-regulation → altered cAMP signaling → meiotic arrest",
+      "additionalRelationships": [
+        "Meiosis-specific marker",
+        "Signaling pathway indicator",
+        "Potential therapeutic target"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 260-280]",
+      "biomarkerName": "TMEM225 (Transmembrane Protein 225)",
+      "levelOrStatus": "Up-regulated in early arrest",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Membrane protein involved in cell division",
+          "Expression in early spermatogenic cells",
+          "Associated with premeiotic arrest",
+          "Novel marker for early stage arrest"
+        ]
+      },
+      "chainOfLogic": "TMEM225 up-regulation → disrupted cell division → early arrest phenotype",
+      "additionalRelationships": [
+        "Early arrest marker",
+        "Cell division regulator",
+        "Stage-specific indicator"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 280-300]",
+      "biomarkerName": "SPATS1 (Spermatogenesis Associated Serine Rich 1)",
+      "levelOrStatus": "Up-regulated in maturation arrest",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Serine-rich protein specific to testis",
+          "Role in spermatid development",
+          "Expression peaks in round spermatids",
+          "Associated with maturation arrest"
+        ]
+      },
+      "chainOfLogic": "SPATS1 up-regulation → impaired spermatid development → maturation arrest",
+      "additionalRelationships": [
+        "Spermatid-specific marker",
+        "Development stage indicator",
+        "Arrest stage classifier"
+      ]
+    },
+    {
+      "sourcePapersLineNumbers": "[ppr2: 300-320]",
+      "biomarkerName": "Validation Methods Panel",
+      "levelOrStatus": "Multiple validation approaches",
+      "supportingEvidenceBySource": {
+        "Malcher et al. (2013)": [
+          "Real-time PCR validation",
+          "Western blot confirmation",
+          "Immunohistochemistry analysis",
+          "Independent dataset comparison",
+          "Statistical validation (P<0.05)"
+        ]
+      },
+      "chainOfLogic": "Multiple validation methods → confirmed findings → reliable biomarkers",
+      "additionalRelationships": [
+        "Ensures result reliability",
+        "Cross-platform validation",
+        "Technical confirmation"
+      ]
+    }
+  ]
+} 

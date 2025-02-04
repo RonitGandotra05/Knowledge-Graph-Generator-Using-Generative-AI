@@ -1,0 +1,264 @@
+AZOOSPERMIA FACTORS & BIOMARKERS MAP
+(Extracted from lines 1-300 of research paper)
+
+1. EXOSOMAL microRNAs (miRNAs)
+[Lines 1-10]
+Factor/Biomarker: Exosomal microRNAs in seminal plasma
+Context: "Exosomal microRNAs (miRNAs) in seminal plasma are markers of the origin of azoospermia and can predict the presence of sperm in testicular tissue"
+Association: miRNAs in seminal plasma -> biomarkers for azoospermia classification and sperm presence prediction
+
+2. DIAGNOSTIC METHODS & CURRENT LIMITATIONS
+[Lines 19-22]
+Factor: Non-invasive diagnostic methods
+Context: "There are no precise non-invasive diagnostic methods for classifying the origin of the sperm defects in semen and the spermatogenic reserve of the testis"
+Association: Lack of precise non-invasive methods -> reliance on biopsies for azoospermia diagnosis
+
+3. ORGAN-SPECIFIC MARKERS
+[Lines 22-24]
+Factor: Organ-specific markers in human semen
+Context: "It is reasonable to study the presence of organ-specific markers in human semen that contains fluid from the testis and the male reproductive glands"
+Association: Organ-specific markers -> potential diagnostic tools for male infertility
+
+4. SMALL EXTRACELLULAR VESICLES (sEVs)
+[Lines 24-26]
+Factor: Seminal fluid sEVs/exosomes
+Context: "Additionally, seminal fluid contains high concentrations of sEVs that are morphologically and molecularly consistent with exosomes"
+Association: sEVs in seminal fluid -> potential biomarkers from male reproductive tract
+
+5. STUDY PARAMETERS
+[Lines 27-32]
+Factors studied:
+- Normozoospermic fertile individuals (control group)
+- Azoospermia due to spermatogenic failure
+- Obstructive azoospermia with conserved spermatogenesis
+- Severe oligozoospermia (<5 × 106 sperm/ml)
+Association: Different types and conditions -> different manifestations of azoospermia
+
+6. BIOCHEMICAL MARKERS
+[Lines 33-34]
+Factor: Differential high-throughput miRNA profiling
+Context: "A differential high-throughput miRNA profiling analysis using miRNA quantitative PCR panels"
+Association: miRNA profiling -> tool for analyzing azoospermia markers
+
+7. SPECIFIC miRNAs
+[Lines 35-42]
+Factors:
+- miR-31-5p (specific biomarker)
+- Blood FSH values
+- miR-539-5p
+- miR-941
+Context: "the expression values of one miRNA (miR-31-5p) in exosomes from semen as a predictive biomarker test for the origin of azoospermia with high sensitivity and specificity (>90%)"
+Association: Specific miRNAs -> predictive biomarkers for azoospermia origin and presence of residual spermatogenesis
+
+8. CLINICAL RELEVANCE
+[Lines 47-49]
+Factor: Genetic markers
+Context: "Our findings contribute to the search for the most valuable genetic markers that are potentially useful as tools for predicting the presence of testicular sperm in azoospermic individuals"
+Association: Genetic markers -> prediction tools for testicular sperm presence
+
+9. PREVALENCE & SIGNIFICANCE
+[Lines 65-67]
+Factor: Male infertility prevalence
+Context: "Approximately 4% of men worldwide suffer from infertility"
+Association: Population prevalence -> significance of azoospermia as a medical condition
+
+10. ROUTINE BIOCHEMICAL MARKERS
+[Lines 67-71]
+Factors:
+- Acid phosphatase (prostate)
+- Citric acid (prostate)
+- Zinc (prostate)
+- Fructose (seminal vesicles)
+- Alpha-glucosidase (epididymis)
+Context: "Routine biochemical markers in semen... are used to diagnose possible acquired and congenital obstructions or to identify functional abnormalities of the genital glands"
+Association: Biochemical markers -> diagnostic tools for different types of azoospermia
+
+11. MOLECULAR RNA COMPONENTS
+[Lines 85-90]
+Factors:
+- Piwi-interacting RNAs (piRNAs)
+- Y RNAs
+- rRNAs
+- tRNAs
+Context: "Exosomes in semen contain a population of small non-coding RNAs (sncRNAs; from 20 to 100 nucleotides), including microRNAs (21%), and several other RNAs such as Piwi-interacting RNAs (piRNAs), Y RNAs, rRNAs and tRNAs"
+Association: Various RNA types in semen exosomes -> potential molecular markers for azoospermia
+
+12. MEDICAL ASSESSMENT FACTORS
+[Lines 71-74]
+Factors:
+- Medical history
+- Physical findings
+- Hormone analysis
+- Karyotype
+- Genetic tests
+Context: "At present, assessment of azoospermic patients is based on medical history, physical findings, hormone analysis, karyotype and a limited number of genetic tests"
+Association: Multiple assessment factors -> current diagnostic approach for azoospermia
+
+13. PHYSICAL INDICATORS
+[Lines 71-75]
+Factors:
+- Elevated levels of FSH in blood
+- Diminished testicular volume
+Context: "even in suspected non-obstructive azoospermia, currently available markers, such as elevated levels of FSH in blood or diminished testicular volume among others, are unsatisfactory"
+Association: Physical and hormonal markers -> indicators but unreliable for definitive diagnosis
+
+14. REPRODUCTIVE TRACT ORIGINS
+[Lines 24-26]
+Factors:
+- Prostate (prostasomes)
+- Epididymis (epididymosomes)
+- Seminal vesicles
+- Testis
+Context: "sEVs... originate from multiple cellular sources in the male reproductive tract: namely prostate (prostasomes), epididymis (epididymosomes), seminal vesicles and the testis"
+Association: Multiple organ sources -> different potential origins of azoospermia markers
+
+15. INFECTION/INFLAMMATION MARKERS
+[Lines 67-71]
+Factor: Post-infection/inflammation markers
+Context: "to identify functional abnormalities of the genital glands such as those that occur after infection or inflammation"
+Association: Infection/inflammation -> potential causes of functional abnormalities leading to azoospermia 
+
+16. GENERAL MALE INFERTILITY PARAMETERS
+[Lines 65-69]
+Factors:
+- Sperm concentration
+- Sperm motility
+- Sperm morphology
+Context: "the aetiology of infertility is closely related to alterations of the classic parameters of basic semen analysis, such as the concentration, motility and/or morphology of the spermatozoa"
+Association: Basic semen parameters -> indicators of male fertility status
+
+17. TYPES OF REPRODUCTIVE TRACT ABNORMALITIES
+[Lines 67-71]
+Factors:
+- Acquired obstructions
+- Congenital obstructions
+- Functional abnormalities of genital glands
+Context: "used to diagnose possible acquired and congenital obstructions or to identify functional abnormalities of the genital glands"
+Association: Different types of reproductive tract issues -> potential causes of male infertility
+
+18. CLINICAL SIGNIFICANCE OF AZOOSPERMIA
+[Lines 65-67]
+Factors:
+- 4% worldwide male infertility prevalence
+- Azoospermia accounts for >10% of male infertility cases
+Context: "Approximately 4% of men worldwide suffer from infertility... azoospermia, a particularly challenging condition which accounts for more than 10% cases of male infertility"
+Association: Azoospermia -> significant contributor to global male infertility
+
+19. DIAGNOSTIC CHALLENGES
+[Lines 71-76]
+Factors:
+- Limited non-invasive options
+- Reliance on invasive biopsies
+- Unsatisfactory current markers
+Context: "There are no precise non-invasive diagnostic methods... currently available markers... are unsatisfactory, and thus testis biopsy is also mandatory"
+Association: Diagnostic limitations -> challenges in male infertility assessment
+
+20. POTENTIAL CAUSES OF MALE INFERTILITY
+[Lines 67-71]
+Factors:
+- Post-infection conditions
+- Inflammatory conditions
+- Anatomical abnormalities
+- Glandular dysfunction
+Context: "functional abnormalities of the genital glands such as those that occur after infection or inflammation"
+Association: Multiple pathological conditions -> various pathways to male infertility 
+
+21. CELLULAR RNA REGULATION
+[Lines 250-260]
+Factors:
+- Gene expression modulation
+- mRNA stability
+- Translation control
+Context: "MiRNAs (19–22 nucleotides) negatively modulate gene expression at the post-transcriptional level, affecting mRNA stability and translation"
+Association: RNA regulation -> molecular mechanisms affecting spermatogenesis
+
+22. DEVELOPMENTAL PROCESSES
+[Lines 260-265]
+Factors:
+- Cell proliferation
+- Cell differentiation
+- Apoptosis
+- Carcinogenesis
+Context: "miRNAs play critical roles in a variety of biological processes such as cell proliferation, differentiation, apoptosis and carcinogenesis"
+Association: Cellular processes -> potential pathways affecting male fertility
+
+23. SPECIFIC DEVELOPMENTAL PATHWAYS
+[Lines 265-270]
+Factors:
+- Testis differentiation in embryo
+- Male germline development
+- Sperm production
+Context: "specifically, in testis differentiation in the embryo, male germline development and sperm production"
+Association: Developmental pathways -> critical processes in male fertility
+
+24. EXTRACELLULAR miRNA LOCATIONS
+[Lines 270-275]
+Factors:
+- Blood plasma
+- Saliva
+- Tears
+- Urine
+- Breast milk
+- Colostrum
+- Peritoneal fluid
+- Cerebrospinal fluid
+- Bronchial lavage
+- Seminal fluid
+Context: "miRNAs are not only present in cells but also in extracellular milieu, especially in different biofluids"
+Association: Multiple biofluid sources -> potential diagnostic markers for male infertility 
+
+25. SPECIFIC miRNA DIAGNOSTIC ACCURACY
+[Lines 275-285]
+Factors:
+- miR-205-5p (AUC 0.843, P = 0.005)
+- miR-31-5p (AUC: 0.957; P < 0.0001)
+- piR-58527 (AUC: 0.764; P = 0.030)
+Context: "The expression values of these three sncRNAs resulted in good predictive accuracy"
+Association: Specific miRNA combinations -> highly accurate diagnostic markers
+
+26. COMBINED DIAGNOSTIC MODEL
+[Lines 285-290]
+Factors:
+- FSH + miR-31-5p combination
+- 100% sensitivity and specificity
+Context: "Strikingly, an increased value of sensitivity and specificity (100%) was obtained when FSH + miR-31-5p values were included in the model"
+Association: Combined biomarkers -> improved diagnostic accuracy
+
+27. AZOOSPERMIA SUB-TYPES DIFFERENTIATION
+[Lines 290-295]
+Factors for OA-N vs SA:
+- miR-205-5p (P = 0.010)
+- miR-31-5p (P = 0.001)
+- miR-539-5p (P = 0.026)
+Factors for OA-V vs SA:
+- miR-31-5p
+- miR-941 (P < 0.003)
+Context: "This observation suggests that the profile of exosomal miRNA in semen is different in congenital obstruction of the genital tract from that obtained from the vasectomy procedure"
+Association: Different miRNA profiles -> distinction between azoospermia subtypes
+
+28. SPERM PRESENCE PREDICTION
+[Lines 295-300]
+Factors:
+- miR-539-5p and miR-941 combination
+- TESE value (>0.01 × 106 sperm/ml)
+Context: "a model that included the miR-539-5p and the miR-941 expression values... sensitivity and specificity for predicting the presence of spermatozoa in a testicular biopsy were both 100%"
+Association: miRNA combinations -> prediction of sperm presence in testicular tissue
+
+29. CHROMOSOMAL LOCATIONS
+[Lines 275-285]
+Factors:
+- X-chromosome linked miRNAs
+- Chromosome 19 clusters
+- miR-34b/c clusters
+- miR-449 clusters
+Context: "About 37% of the azoospermic down-regulated SP exosomal miRNAs were located on the X-chromosome"
+Association: Chromosomal location -> relevance to spermatogenic function
+
+30. VALIDATION METHODS
+[Lines 33-42]
+Factors:
+- RT-qPCR validation
+- miRNA qPCR arrays
+- High-throughput profiling
+Context: "A differential high-throughput miRNA profiling analysis using miRNA quantitative PCR panels was performed"
+Association: Multiple validation methods -> reliability of biomarker identification 

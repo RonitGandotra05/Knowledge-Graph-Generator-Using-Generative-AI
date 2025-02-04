@@ -3,7 +3,7 @@
 An interactive visualization of azoospermia biomarkers and their relationships, based on comprehensive research paper analysis.
 
 ## Live Demo
-Visit [https://YOUR_USERNAME.github.io/azoospermia-knowledge-graph](https://YOUR_USERNAME.github.io/azoospermia-knowledge-graph)
+Visit [https://RonitGandotra05.github.io/azoospermia-knowledge-graph](https://RonitGandotra05.github.io/azoospermia-knowledge-graph)
 
 ## Features
 
@@ -38,7 +38,7 @@ Visit [https://YOUR_USERNAME.github.io/azoospermia-knowledge-graph](https://YOUR
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/YOUR_USERNAME/azoospermia-knowledge-graph.git
+git clone https://github.com/RonitGandotra05/azoospermia-knowledge-graph.git
 ```
 
 2. Open index.html in a modern web browser
@@ -57,11 +57,11 @@ If you use this visualization in your research, please cite:
 
 ```bibtex
 @misc{azoospermia-knowledge-graph,
-  author = {Your Name},
+  author = {Ronit Gandotra},
   title = {Azoospermia Knowledge Graph},
   year = {2024},
   publisher = {GitHub},
-  url = {https://github.com/YOUR_USERNAME/azoospermia-knowledge-graph}
+  url = {https://github.com/RonitGandotra05/azoospermia-knowledge-graph}
 }
 ```
 

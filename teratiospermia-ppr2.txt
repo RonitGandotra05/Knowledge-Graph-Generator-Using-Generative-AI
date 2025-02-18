@@ -1,0 +1,2897 @@
+...........................................................................................................................
+Teratozoospermia: spotlight on the
+main genetic actors in the human
+Charles Coutton1,2,3, Jessica Escoffier1,2,4, Guillaume Martinez1,2,
+Christophe Arnoult1,2, and Pierre F. Ray1,2,5,*
+1
+Universite´ Grenoble Alpes, Grenoble, F-38000, France 2
+Equipe ‘Genetics Epigenetics and Therapies of Infertility’ Institut Albert Bonniot,
+INSERM U823, La Tronche, F-38706, France 3
+CHU de Grenoble, UF de Ge´ne´tique Chromosomique, Grenoble, F-38000, France 4
+Departments
+of Genetic Medicine and Development, University of Geneva Medical School, Geneva, Switzerland 5
+CHU de Grenoble, UF de Biochimie et
+Ge´ne´tique Mole´culaire, Grenoble, F-38000, France
+*Correspondence address. UF de Biochimie et Ge´ne´tique Mole´culaire, CHU de Grenoble, 38043 Grenoble cedex 9, France.
+Tel: +33-4-76-76-55-73; E-mail: pray@chu-grenoble.fr
+Submitted on December 5, 2014; resubmitted on March 17, 2015; accepted on March 25, 2015
+table of contents
+† Introduction
+† Methods
+† Large headed multiflagellar spermatozoa
+Aneuploidy and abnormal morphology: AURKC is the key
+AURKC function in meiotic cells: between specificities and complementarities
+AURKC mutations: the c.144delC reigns supreme
+AURKC mutational status and patient management
+† Globozoospermia
+Globozoospermia and experimental models: a relevant strategy?
+DPY19L2 mutational spectrum: toward a diagnostic strategy
+DPY19L2 functions: new insights on the physiopathology of globozoospermia
+DPY19L2, low copy repeats and copy number variations: from evolution to mutations
+Clinical management of globozoospermic patients and DPY19L2: what’s new?
+† Multiple morphological abnormalities of the flagella
+Cilia and flagellum: a common origin
+Primary ciliary dyskinesia
+Genetic investigations of MMAF
+The central pair microtubules: the central key of MMAF phenotype?
+PCD to MMAF phenotype: a phenotypic continuum?
+Clinical implications of flagellar defects: return to base
+† Translation of the genetic information to the clinic: the way forward
+background: Male infertility affects .20 million men worldwide and represents a major health concern. Although multifactorial, male
+infertility has a strong genetic basis which has so far not been extensively studied. Recent studies of consanguineous families and of small
+cohorts of phenotypically homogeneous patients have however allowed the identification of a number of autosomal recessive causes of teratozoospermia. Homozygous mutations of aurora kinase C (AURKC) were first described to be responsible for most cases of macrozoospermia.
+Other genes defects have later been identified in spermatogenesis associated 16 (SPATA16) and dpy-19-like 2 (DPY19L2) in patients with globozoospermia and more recently in dynein, axonemal, heavy chain 1 (DNAH1) in a heterogeneous group of patients presenting with flagellar abnormalities previously described as dysplasia of the fibrous sheath or short/stump tail syndromes, which we propose to call multiple morphological
+abnormalities of the flagella (MMAF).
+& The Author 2015. Published by Oxford University Press on behalf of the European Society of Human Reproduction and Embryology. All rights reserved.
+For Permissions, please email: journals.permissions@oup.com
+Human Reproduction Update, Vol.21, No.4 pp. 455–485, 2015
+Advanced Access publication on April 17, 2015 doi:10.1093/humupd/dmv020
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+methods: A comprehensive review of the scientific literature available in PubMed/Medline was conducted for studies on human genetics,
+experimental models and physiopathology related to teratozoospermia in particular globozoospermia, large headed spermatozoa and flagellar
+abnormalities. The search included all articles with an English abstract available online before September 2014.
+results: Molecular studies of numerous unrelated patients with globozoospermia and large-headed spermatozoa confirmed that mutations
+in DPY19L2 and AURKC are mainly responsible for their respective pathological phenotype. In globozoospermia, the deletion of the totality of the
+DPY19L2 gene represents 81% of the pathological alleles but point mutations affecting the protein function have also been described. In macrozoospermia only two recurrent mutations were identified in AURKC, accounting for almost all the pathological alleles, raising the possibility of a
+putative positive selection of heterozygous individuals. The recent identification of DNAH1 mutations in a proportion of patients with MMAF is
+promising but emphasizes that this phenotype is genetically heterogeneous. Moreover, the identification of mutations in a dynein strengthens the
+emerging point of view that MMAF may be a phenotypic variation of the classical forms of primary ciliary dyskinesia. Based on data from human and
+animal models, the MMAF phenotype seems to be favored by defects directly or indirectly affecting the central pair of axonemal microtubules of
+the sperm flagella.
+conclusions: The studies described here provide valuable information regarding the genetic and molecular defects causing infertility, to
+improve our understanding of the physiopathology of teratozoospermia while giving a detailed characterization of specific features of spermatogenesis. Furthermore, these findings have a significant influence on the diagnostic strategy for teratozoospermic patients allowing the clinician to
+provide the patient with informed genetic counseling, to adopt the best course of treatment and to develop personalized medicine directly targeting the defective gene products.
+Key words: male infertility / teratozoospermia / genetic diagnosis / sperm morphology / gene mutations
+Introduction
+Infertility, observed after 12 months of regular sexual intercourse, is a
+major health issue with at least 9% of couples requiring medical assistance
+to conceive a child (Boivin et al., 2007). It is therefore estimated to
+concern 72.4 million couples worldwide with 40.5 million currently
+seeking medical care (Boivin et al., 2007). In half of these cases, spermatograms identify a reduced sperm quantity or quality, suggesting that a
+male factor is present, alone, or in conjunction with a female cause, in
+half of the concerned couples (Thonneau et al., 1991; Poongothai
+et al., 2009; Krausz, 2011). The diagnosis of male infertility is often
+merely descriptive, the etiology of the sperm defect remaining idiopathic
+in 30 –50% of cases (Krausz, 2011; Tu¨ttelmann et al., 2011b). One of the
+reasons for this lack of fundamental understanding is the heterogeneity of
+causal factors, as male infertility is a typical multifactorial disorder
+(Brugo-Olmedo et al., 2001). Genetic factors are however likely to be
+very frequent as it has been estimated that a genetic origin of male infertility could be found in nearly 1 in 40 men (Tu¨ttelmann et al., 2011a).
+Chromosomal aberrations (mainly 47,XXY—Klinefelter syndrome),
+microdeletions of the Y chromosome and cystic fibrosis transmembrane
+conductance regulator (CTFR) mutations have been unambiguously
+demonstrated to be recurrent genetic causes of male infertility (Popli
+and Stewart, 2007; Vogt et al., 2008; Jungwirth et al., 2012). Despite
+this, routine screening for these well-established genetic causes (in principle justified only for patients presenting with certain specific phenotypes) results in a diagnosis in ,5% of all phenotypes (Nieschlag et al.,
+2010). We can therefore safely assume that the bulk of the genetic
+causes of male infertility is still uncharacterized, likely due to the large
+number of genes involved (Matzuk and Lamb, 2002) and the lack of ambitious studies carried out on large cohorts of affected men.
+Over the past years the genetic investigations of severe teratozoospermias has been one of the most productive areas within the topic of
+male infertility and recurrent mutations have been identified in three specific phenotypes, which are macrozoospermia, globozoospermia and
+multiple morphological abnormalities of the flagella (MMAF) (Fig. 1).
+Teratozoospermia is defined as a percentage of morphologically
+normal spermatozoa below the lower reference limit. Cut-off values
+for normality varied greatly in recent decades from 50% in the first
+World Health Organization (WHO) classification (WHO, 1980) to
+4% in the last version published in 2010 (Ombelet et al., 1995; World
+Health Organization 2010). This traditional definition of teratozoospermia is based on the identification of atypical sperm shapes in sperm
+smears thereby excluding ultrastructural defects invisible under light
+microscope (Kruger et al., 1986). Chemes and collaborators proposed
+to revisit this concept taking into consideration ultrastructural sperm
+anomalies underlying their functional incompetence. This new approach
+pushes back the limits of the definition of teratozoospermia beyond the
+mere description of spermatozoa morphology (Chemes and Rawe,
+2003; Chemes and Alvarez Sedo, 2012). Such examination is however
+not compatible with the routine semen examination carried out in reproductive clinics. Teratozoospermia represents a heterogeneous group including a wide range of abnormal sperm phenotypes affecting, solely or
+simultaneously, the head, neck, midpiece and tail. Distinctions should
+also be made between specific forms with a homogenous monomorphic
+phenotype shared between several patients and forms with heterogeneous sperm anomalies (non-specific) randomly distributed in each individual and among different patients (Chemes and Rawe, 2003).
+Oligoasthenoteratozoospermia (OAT) is one of the most common
+phenotypes of male infertility. It is defined by a combination of qualitative
+and quantitative sperm defects (Jungwirth et al., 2012). Due to a high
+phenotypic variability, genetic causes of OAT have not been clearly identified and remain so far largely unknown. Many genetic association
+studies reported numerous variants associated with OAT, the validity
+of which remains to be established. Many knockout mice have also
+been described to present with OAT (Matzuk and Lamb, 2008). No
+mutations have however been identified in their human orthologs with
+the exception of CAMK4 which was mutated in two patients with
+OAT (Khattri et al., 2012). A candidate gene approach also allowed
+the identification of a double amino-substitution in NANOS1, a gene
+that is apparently not required for spermatogenesis in the mouse
+456 Coutton et al.
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+(Haraguchi et al., 2003), in one man with OAT (Kusz-Zamelczyk et al.,
+2013). These mutations however, were not formally functionally validated and no further studies confirmed their implication in OAT.
+Abnormalities of the sperm flagella always induce asthenozoospermia.
+They present highly variable morphological defects which can also affect
+the head and are sometimes associated with oligozoospermia. As such,
+some patients can be classified as a subgroup of OAT. A mosaic of different flagellar abnormalities is usually observed within the same spermogram including absent, short, bent, angulated or irregular flagella with
+also a high incidence of head defects. This phenotype has previously
+been reported as ‘short tails’ or ‘stump tails’ (Neugebauer et al., 1990;
+Baccetti et al., 1993; Stalf et al., 1995; Da´vila Garza and Patrizio, 2013)
+or dysplasia of the fibrous sheath (David et al., 1993; Olmedo et al.,
+1997, 2000; Chemes et al., 1998; Rawe et al., 2001; Moretti et al.,
+2011; Ghedir et al., 2014). As none of the previous terms seem to accurately define this phenotype because these patients’ flagella present with a
+mosaic of ultrastructural flagellar defects as well as of morphological abnormalities including short tails but also, bent, curled, thick and missing
+flagella we previously proposed to call this heterogeneous group of subjects ‘MMAF’ for multiple morphological anomalies of the flagella (Ben
+Khelifa et al., 2014). We will use here this descriptive definition for this
+heterogeneous phenotype. These flagellum morphological defects are
+however unevenly reported or are sometimes only observed in a small
+fraction of patient’s spermatozoa. Some gene defects have been identified which seem to induce such phenotypes including mutations in solute
+carrier family 26 (SLC26A8) or septin 12 (SEPT12) identified in a subset of
+patients with asthenozoospermia and teratozoospermia including a bent
+tail and/or a round head with an abnormal acrosome (Kuo et al., 2012;
+Lin et al., 2012; Dirami et al., 2013). These genes were described as being
+involved in the organization of the septin rings forming the annulus.Other
+patients have been studied presenting a more severe phenotype with
+close to 100% abnormalities and mutations in DNAH1, a gene coding
+for an inner dynein arm protein, identified in 28% of the patients analyzed (Ben Khelifa et al., 2014).
+Other phenotypes can be considered as pure teratozoospermia with
+100% abnormal sperm and with a constant uniform pattern of anomalies,
+such as globozoospermia, large-headed multiflagellar spermatozoa or
+acephalic spermatozoa. To date, several genes were identified in most
+of these specific teratozoospermia in humans. The identification and
+study of these genes shed a much-needed light on the physiopathology
+Figure 1 Light microscopy analysis of spermatozoa from different types of genetic infertility. Sperm morphology was assessed with Harris-Shorr staining:
+nuclei are blue and mitochondria red. (A) Control spermatozoa present a normal-shaped head, a typical short midpiece followed by a long principal piece.
+(B) A typical macrospermic spermatozoon from a patient with a homozygous aurora kinase C (AURKC) c.144del mutation presents a large head and several
+flagella. (C) A typical globospermic spermatozoon from a dpy-19-like 2 (DPY19L2) deleted patient presents a round-shaped head and an absence of mitochondria in the midpiece. (D) Spermatozoa from a patient with a homozygous dynein, axonemal, heavy chain 1 (DNAH1) mutation with multiple morphological abnormalities of the flagella (MMAF) phenotype present various defects of the flagellum. Scale bars 10 mm.
+Genetic causes of teratozoospermia 457
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+of teratozoospermia, as a prerequisite to improve the patient management, to provide a basis for the development of therapeutic solutions tailored to the gene defect and to provide the patients with adequate
+genetic counseling and expected treatment outcome. Moreover, since
+the investigation of gene function in human is difficult, the elucidation
+of the function of mutated genes and identification of possible candidate
+genes in animal models is crucial for the identification of factors affecting
+male fertility. Numerous animal models, and in particular mutant mouse
+models related to teratozoospermia, have been extensively described in
+the literature (for review Yan, 2009; De Boer et al., 2015). In this review
+we focus on specific teratozoospermic phenotypes for which a recurrent
+and reliable genetic cause has been identified in human. We provide an
+update of the genetic etiology of these phenotypes, summarize their
+underlying molecular mechanisms and detail the clinical implications
+arising from these findings.
+Methods
+A computerized literature search was conducted for all publications in
+PubMed/Medline until September 2014. We searched using the following
+MeSH or key word terms: teratozoospermia (402 records) OR globozoospermia (114 records) OR large-headed spermatozoa (35 records) OR
+macrozoospermia (3 records) OR macrocephalic sperm head syndrome
+(8 records) OR short tail sperm (187 records) OR stump tail sperm (22
+records) OR dysplasia fibrous sheath (39 records) OR primary flagellar abnormalities (22 records)OR primary ciliary dyskinesia (2135 records)OR flagellum biogenesis (260 records) with a possible combination with the
+keywords genetics, animal models, knockout, diagnosis and ICSI. Any additional relevant articles identified from the bibliography of the initially
+retrieved articles and reviews were then included (24 records). Only Englishlanguage publications or articles in other languages, but with a sufficiently
+detailed abstract in English were included. Additionally, we have opted to
+focus on articles regarding specific teratozoospermia phenotypes for which
+a gene was formally identified in human in several non-related individuals
+thereby reducing the risk of erroneous diagnosis. Heterogeneous phenotypes such as OAT (249 records) or pure phenotypes but with no identified
+genetic cause such as ‘decapitated spermatozoa’ (46 records) were not
+included in this review. Last, we did not include studies describing the association between single nucleotide polymorphisms (SNPs) and a particular
+phenotype (588 records) as we believe that many of these reports may
+have a low level of evidence. Concerning animal models, we selected a restrictive list of knockout (KO) models among every mutant model described
+in the literature related to infertility and in particular teratozoospermia (1160
+records) (for exhaustive review see Yan, 2009; De Boer et al., 2015). Only
+KO mice with a globozoospermia-like phenotype (14 records), mutant
+mice with inactivated aurora kinase (Aurk)c, Aurkb and dynein axonemal
+heavy chain 1 (Dnah1) genes (17 records) and mice with central pair microtubule defects leading to flagellar abnormalities (10 records) are presented in
+this review.
+Large headed multiflagellar
+spermatozoa
+Patients with large-headed multiflagellar spermatozoa (MIM 243060),
+named also macrozoospermia or macrocephalic sperm head syndrome,
+present with a primary infertility characterized by the presence in the
+ejaculate of 100% abnormal spermatozoa with an oversized irregular
+head, abnormal midpiece and acrosome, and multiple flagella (Fig. 1B).
+Ultrastructural study of such spermatozoa revealed a 3-fold increase in
+nuclear volume and on average 3.6 flagella for each sperm head
+(Escalier, 1983). This teratozoospermia is also generally associated
+with a severe oligoasthenozoospermia (Escalier, 1983; Benzacken
+et al., 2001; Devillard et al., 2002). This spectacular phenotype has
+been regularly described in the scientific literature since its initial description 37 years ago (Nistal et al., 1977; German et al., 1981; Escalier, 1983;
+In’t Veldetal., 1997; Pieters et al., 1998;Kahraman et al., 1999;Benzacken
+et al., 2001; Devillard et al., 2002; Guthauser et al., 2006; Mateu et al.,
+2006; Perrin et al., 2008; Chelli et al., 2010; Brahem et al., 2012).
+Aneuploidy and abnormal morphology:
+AURKC is the key
+Several studies using Feulgen-stained preparations (German et al., 1981),
+spermatocyte C-banding (Pieters et al., 1998) and mainly fluorescence in
+situ hybridization (FISH) analysis showed a high rate of polyploidy and aneuploidy in spermatozoa from men with macrozoospermia. In these
+reports, the number of spermatozoa interpreted as haploid varied
+from 0 to 10.9%, as diploid from 19.8 to 60%, as triploid from 10 to
+62.4% and as tetraploid from 5.1 to 36% (Yurov et al., 1996; In’t Veld
+et al., 1997; Weissenberg et al., 1998; Viville et al., 2000; Benzacken
+et al., 2001; Devillard et al., 2002; Lewis-Jones et al., 2003; Vicari et al.,
+2003; Guthauser et al., 2006; Mateu et al., 2006; Achard et al., 2007;
+Perrin et al., 2008; Chelli et al., 2010; Brahem et al., 2012). Partial
+forms of this syndrome have been described with various percentages
+of large-headed spermatozoa. These ‘mosaic’ forms showed a percentage of euploid spermatozoa roughly correlated with their ratio of
+normally-sized gametes (Vicari et al., 2003; Achard et al., 2007;
+Brahem et al., 2012). Taken together, these observations provide evidence indicating that chromosome nondisjunction and/or cytokinesis
+defects occurring during the first, the second or both meiotic divisions
+are consistently associated with large-headed spermatozoa (Escalier
+et al., 1992; In’t Veld et al., 1997; Weissenberg et al., 1998; Benzacken
+et al., 2001; Devillard et al., 2002).
+A description of familial cases with consanguineous parents was suggestive of a genetic cause with an autosomal recessive inheritance. In
+2007, a genome-wide low-density microsatellite analysis led to the identification of a common region of homozygosity in 7 out of 10 North
+African macrozoospermic patients, located in the terminal region of
+chromosome 19 long arm. The AURKC gene, localized in the center of
+this region, appeared as the ideal candidate because it was described
+as being expressed preferentially in male germ cells and to be involved
+in chromosomal segregation and cytokinesis (Fig. 2), two functions that
+could explain the abnormal sperm morphology and cytogenetic
+content of large-headed spermatozoa (Dieterich et al., 2007). Sequencing of the AURKC coding sequence allowed the identification of the
+same homozygous deletion (c.144delC) in all 14 patients included in
+the study. This mutation introduces a frameshift resulting in a premature
+termination of translation and yielding a truncated protein lacking its conserved kinase domain (Dieterich et al., 2007). It was later demonstrated
+that the mutated transcript is in fact degraded by the mechanism of nonsense mediated mRNA decay, thus indicating that these patients do not
+even produce the truncated protein (Ben Khelifa et al., 2011). In another
+study, using flow cytometry in AURKC-mutated patients, Dieterich et al.
+(2009) demonstrated that all spermatozoa had a homogenous tetraploid
+DNA content indicating that patient’ germ cells undergo DNA synthesis
+but remain blocked without completing either of the two meiotic
+458 Coutton et al.
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+divisions (Fig. 2). These results were discordant with previous FISH
+studies, which showed a wide heterogeneity of chromosomal abnormalities. The authors indicated that this difference is mainly due to the limits
+of the FISH technique and that in these abnormal gametes the superposition of FISH signals led to a great underestimate of the number of chromosomes/chromatids (Dieterich et al., 2009). Surprisingly, in spite of
+this meiotic arrest, spermiogenesis is not blocked suggesting that
+meiotic checkpoint controls are abolished or inefficient in these patients.
+Most macrozoospermic patients however present a severely reduced
+sperm count concordant with the mathematical reduction in sperm
+number due to the absence of cell division and a partial effect of the
+meiotic checkpoints (Ben Khelifa et al., 2011).
+AURKC function in meiotic cells: between
+specificities and complementarities
+AURKC belongs to the Aurora kinases family, which are highly evolutionary conserved serine/threonine kinases playing a key role in the control
+of mitosis and meiosis. In Mammals, aurora kinases also comprise two
+other family members, aurora kinase (AURKA) and aurora kinase B
+(AURKB). The three kinases share a high sequence homology in their
+central kinase domain and have a common ortholog in Drosophila and
+yeast (Sunkel and Glover, 1988; Chan and Botstein, 1993; Glover
+et al., 1995). Despite their similarities, the three Aurora kinases have distinct localizations and functions. Divergences in the N-terminal domains
+of these proteins confer specific protein –protein interactions abilities
+(Carmena and Earnshaw, 2003). AURKA and B play distinct roles
+during mitosis: AURKA controls centrosome maturation, bipolar assembly and chromosome separation while AURKB regulates chromosome
+segregation, kinetochore –microtubule interaction and cytokinesis
+(Goldenson and Crispino, 2014). Much less is known about AURKC
+which was described more recently. AURKC recently evolved from
+AURKB after gene duplication (Brown et al., 2004), and therefore
+shares a high degree of homology with AURKB (73%). AURKC is
+expressed predominantly in testis, in particular in dividing spermatocytes, and in oocytes whereas AURKA and B are expressed ubiquitously
+(Bernard et al., 1998; Tseng et al., 1998; Assou et al., 2006; Tang et al.,
+2006; Yang et al., 2010). AURKC has also been described as highly
+expressed in early human preimplantation embryos (Avo Santos et al.,
+2011). There are several lines of evidence that strongly suggest that
+AURKC can function in place of AURKB in meiotic cells. First, AURKC
+function can overlap with AURKB as evidenced by the fact that
+AURKC could rescue AURKB-depleted somatic cells (Li et al., 2004;
+Sasai et al., 2004; Yan et al., 2005). This was also supported by the fact
+Figure 2 AURKC controls meiosis and spermatocyte cytokinesis.
+Genetic causes of teratozoospermia 459
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+that AURKC is sufficient to drive mitotic progression during early embryonic divisions in preimplantation mouse embryos lacking AURKB
+(Ferna´ndez-Miranda et al., 2011). The study of KO mice also demonstrated a respective functional compensation of both kinases during
+meiosis and embryonic development (Ferna´ndez-Miranda et al., 2011;
+Schindler et al., 2012). Moreover, it has been reported that AURKC,
+like AURKB, is a component of the chromosomal passenger complex
+(CPC) with a similar localization and interaction with other subunits
+such as inner centromere protein antigens 135/155 kDa (INCENP), survivin (BIRC5) and Borealin (CDCA8) (Chen et al., 2005; Vader et al.,
+2008).CPC is a pivotal regulator of mitotic events including chromosome
+segregation and cytokinesis (Vagnarelli and Earnshaw, 2004). During
+chromosome alignment, CPC corrects chromosome-microtubule attachment errors generating temporarily unattached kinetochores, a condition sensed by the spindle assembly checkpoint (SAC) (Vader et al.,
+2008; Carmena et al., 2012; van der Waal et al., 2012; van der Horst
+and Lens, 2014). The SAC represents one of the main mechanisms of
+cell division control ensuring fidelity in chromosome segregation. It verifies whether prerequisites for chromosome segregation have been met
+and thereby determines whether to execute or to delay chromosome
+segregation (Musacchio and Hardwick, 2002; Zhou et al., 2002). In addition it has been demonstrated that Aurora kinases could contribute to
+recruiting different mitotic checkpoint components such as BUB1
+mitotic checkpoint serine/threonine kinase (BUB1) to the kinetochore
+(Becker et al., 2010; van derWaal et al., 2012). Impairment of CPC functions results in chromosome segregation defects, altered SAC and cytokinesis failure. Such perturbations in mitosis can lead to the production of
+aneuploid/polyploid cells, which then often become malignant. By comparison, abnormalities in CPC during meiosis are expected to lead to the
+production of chromosomally unbalanced gametes (Sharif et al., 2010;
+Yang et al., 2010; van der Waal et al., 2012; van der Horst and Lens,
+2014).
+Many experimental studies tried to address AURKB and AURKC specific functions during meiosis. They have so far been largely hampered by
+the difficulty to selectively inhibit one of the two kinases (Schindler et al.,
+2012; Balboula and Schindler, 2014). Only one study supports a preponderant role of AURKB in mouse spermatogenesis based on the study of
+AURKB transgenic mice, which are shown to be subfertile due to abnormal spermatocytes, increased testicular apoptosis and spermatogenic
+arrest. The authors however acknowledged that the function of
+AURKC might also be altered in their AURKB transgenic mutants
+(Kimmins et al., 2007). KO strategies did not prove more useful because
+homozygous Aurkc KO mice do not perfectly mimic the typical human
+macrozoospermia phenotype. Unlike infertile AURKC-mutated men, KO
+Aurkc male mice are fertile but with reduced litter size. They have
+normal testis weight and sperm count but do produce abnormal spermatozoa. Sperm abnormalities include abnormal chromatin condensation,
+acrosome loss and blunted heads (Kimmins et al., 2007). It is possible
+that the milder phenotype observed in mouse compared with human
+may be due to a greater overlap of AURKB and C functions in mouse
+than in human spermatogenesis but this remains to be demonstrated.
+The function of AURKC has been extensively studied in oocytes. In
+female mice, the overexpression of a dominant negative allele inhibiting
+the AURKC activity (AURKC-DN) in oocytes was shown to cause cytokinesis failure in meiosis I resulting in the production of large polyploid
+oocytes, a pattern similar to that observed in AURKC-deficient human
+spermatozoa (Yang et al., 2010). These results are however questionable
+as AURKB might also be down-regulated in this mouse model (Schindler
+et al., 2012). Mice oocytes express both AURKB and C and this double
+expression might provide a backup ensuring the maintaining of critical
+functions (i.e. SAC and cytokinesis) in a transcriptionally quiescent cell
+(Schindler et al., 2012). Aurkc KO female mice however are subfertile
+with fewer pups per litter compared with wild type (5.5 versus 7.5
+pups, on average per liter), and furthermore their oocytes show a
+higher incidence of chromosome misalignment and often arrest at
+meiosis I or later on at the 1-cell stage (Schindler et al., 2012). Balboula
+and Schindler (2014), using a specific catalytically inactive Aurkc
+mutant (AURKC-LA), show that most AURKC-LA oocytes arrest at
+metaphase I suggesting that AURKC-CPC is not the sole CPC
+complex that regulates the SAC in female meiosis. A small percentage
+of oocytes proceeded through meiosis and induced cytokinesis normally
+but were aneuploid, indicating that AURKC-CPC is the critical CPC
+complex necessary to correct improper chromosome-microtubule
+attachments during meiosis, a central role for preventing aneuploidy
+(Balboula and Schindler, 2014). These data indicate that the absence
+of AURKC is compatible with reproduction but might have an impact
+during meiosis and/or embryonic development. In human the absence
+of AURKC is compatible with female reproduction as women with
+homozygous AURKC mutations were shown to be fertile (Dieterich
+et al., 2009). Women with homozygous AURKC mutations could
+however be subfertile and present an increased risk of miscarriages in relation to the production of aneuploid oocytes. Further studies on the fertility of women with homozygous AURKC mutations should be carried
+out to conclude on this point.
+Lastly, AURKC is expressed at a very low level in other somatic cells
+types such as brain glial cells, lung, placenta (Yan et al., 2005; Ferna´ndezMiranda et al., 2011) or the pineal gland where it has been implicated in
+circadian clock function in the rat (Price et al., 2009). Apart from infertility, homozygous AURKC-mutated patients display no other clinical features suggesting that AURKC is dispensable in somatic cells (Dieterich
+et al., 2007, 2009). AURKC is also aberrantly expressed in some
+cancer cells but its contribution to oncogenesis is not well explored
+and understood (Khan et al., 2011; Tsou et al., 2011; Zekri et al.,
+2012; Goldenson and Crispino, 2014).
+AURKC mutations: the c.144delC reigns
+supreme
+The genotype of macrozoospermic patients described in the literature is
+summarized in (Table I). The c.144delC deletion accounts for 85% of
+the mutated alleles (Ben Khelifa et al., 2012). Other mutations have been
+identified: p.C229Y, a novel missense mutation in exon 6 and c.144delC
+(Dieterich et al., 2009), p.Y248*, a new recurrent non-sense mutation
+was found in 10 unrelated individuals of European and North African
+origin (Ben Khelifa et al., 2012) and c436-2A.G, leading to a shortened
+transcript devoid of exon 5 (Ben Khelifa et al., 2011). Overall, and excluding the study of Eloualid (2014) based on an unselected population of infertile men, a positiveAURKCmutation diagnosis is found in between 50.8
+and 100% of analyzed macrozoospermic patients (Table I).
+Nearly all positive mutated AURKC patients have a typical phenotype,
+with close to 100% large-head spermatozoa, whereas negative patients
+have a lower percentage of large-headed spermatozoa (,75%) (Table II)
+(Dieterich et al., 2009). Positive hits are strongly correlated with the percentage of large-headed spermatozoa in the ejaculate (Table II). No
+460 Coutton et al.
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+...........................................................................
+.............................................................................................................................................................................................
+Table I Mutation status for the aurora kinase C (AURKC) gene in macrozoospermic men.
+References Number of patients studied (n) Geographical origin (n) AURKC mutations¤ (%; n)
+Included Analyzed Unrelated? Newly tested
+Dieterich et al. (2007) 14 14 13 14 North African (14) c.144delC +/+
+100% (13/13)
+p.Y248* +/+
+0% (0/13)
+Other
+0% (0/13)
+No mutation
+0% (0/13)
+Dieterich et al. (2009) 62 62 61 48& North African (43),
+Middle East (19)
+c.144delC +/+
+49.2% (30/61)
+p.Y248* +/+
+0% (0/61)
+Other(1)
+1.6% (1/61)
+No mutation
+49.2% (30/61)
+Ben Khelifa et al. (2011) 2 2 1 2 North African (2) c.144delC +/+
+0% (0/1)
+p.Y248* +/+
+0% (0/1)
+Other(2)
+100% (1)
+No mutation
+0 (0%)
+El Kerch et al. (2011) 18 18 18 18 North African (18) c.144delC +/+
+61.1% (11/18)
+p.Y248* +/+
+n.d
+Other
+n.d
+No mutation
+7 (only not mutated for c.144delC)
+Ben Khelifa et al. (2012) 87 87 83 44£ North African (73),
+European (14)
+c.144delC +/+
+67.5% (56/83)
+p.Y248* +/+
+9.6% (8/83)
+Other(3)
+4.8% (4/83)
+No mutation
+18.1% (15/83)
+Eloualid et al. (2014)$ 326$ 326$ 326$ 326$ North African (326) c.144delC +/+
+1.2% (4/326)$
+p.Y248* +/+
+n.d
+Other
+n.d
+No mutation
+98.8% (322/326)$
+Ounis et al. (2015) 14 14 14 14 North African (14) c.144delC +/+
+71.4% (10/14)
+p.Y248* +/+
+7.1% (1/14)
+Continued
+Genetic causes of teratozoospermia 461
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+mutation was generally found in patients with ,70% of macrocephalic
+spermatozoa (Dieterich et al., 2009; Ben Khelifa et al., 2011, 2012;
+El Kerch et al., 2011; Eloualid et al., 2014). Furthermore, although the
+large majority of men with macrozoospermia present a reduced sperm
+count, men with extreme oligozoospermia (,0.5 M/ml) were usually
+not carriers of AURKC mutations.
+To date Aurora kinase C remains the only gene where mutations were
+found in patients with a large-headed spermatozoa phenotype. The sequencing of AURKC exons 3 and 6 to search for the two recurrent mutations is appropriate as a first-line genetics test in all patients presenting
+with large-headed spermatozoa. The sequencing of the remaining
+exons should be discussed in light of the values of semen parameters.
+In fact, a sperm concentration .1 million, a percentage of large-head
+spermatozoa beyond 70% and/or a low percentage of normal spermatozoa (,1%) are in favor of a positive outcomes (Table II) (Ben Khelifa et al.,
+2012). Others parameters could be taken into account like the presence
+of multiple flagella. As an example, Molinari et al. (2013) reported a case
+of sperm macrocephaly syndrome with 95% of large-headed spermatozoa but without tail abnormalities. AURKC gene sequencing did not reveal
+any mutations in the patient, suggesting that other genes may be involved
+in determining this atypical syndrome.
+The c.144delC mutation accounts for almost all identified AURKC
+mutations, in particular in a Magrebian population where the prevalence
+of this mutation at a heterozygous state is estimated to be of 1 in 50
+(Dieterich et al., 2009; Eloualid et al., 2014). Surprisingly, it makes
+AURKC gene alterations the most frequent defect in infertile Magrebian
+men before Klinefelter syndrome and Y-microdeletions (Ounis et al.,
+2015). It is difficult to precisely calculate the p.Y248* prevalence in
+North African individuals because the c.144delC is often the only mutation studied (Dieterich et al., 2009; El Kerch et al., 2011; Eloualid et al.,
+2014). No reliable data are currently available for European individuals
+due to a small number of studied patients. However, the recently identified non-sense mutation p.Y248* appears to be the main mutation in
+individuals of European origin (Ben Khelifa et al., 2012). Both recurrent
+mutations c.144delC and p.Y248* are founding mutations and ancestral
+haplotypes were used to compute the age of the two AURKC mutations.
+It was estimated that c.144delC occurred between 1350 and 1750 AD
+and p.Y248* between 675 and 1075 AD. The fact that p.Y248* predates
+c.144delC is confirmed by the observed wider geographical distribution
+of p.Y248* (Ben Khelifa et al., 2012). It remains surprising that mutations
+with a negative effect on reproduction should reach such a high prevalence. A possible explanation lies in the assumption that the heterozygous carriers of AURKC mutations may have a selective advantage
+(Dieterich et al., 2007, 2009; Ben Khelifa et al., 2012; Ounis et al.,
+2015). No clear demonstration of this putative selective advantage has
+yet been provided and several hypotheses have been advanced.We previously described that AURKC was involved in the SAC. Men with
+AURKC heterozygous mutations could therefore have a more relaxed
+meiotic checkpoint permitting a faster meiosis turnover leading to an
+increased sperm production (Ben Khelifa et al., 2012). The produced
+gametes would however be expected to present a higher rate of aneuploidies likely to induce a high rate of spontaneous abortions. This hypothesis is supported by several observations of multiple miscarriages
+or perinatal deaths in the siblings or parents of macrozoospermic
+patients (Benzacken et al., 2001; Achard et al., 2007; Ounis et al., 2015).
+Curiously, only four different AURKCmutations have been reported so
+far, and all are involved in the complete form of the phenotype. Ben
+Khelifa et al. (2012) propose that some mutations could affect only
+some functions of the AURKC protein: the microtubule –kinetochore
+attachment and/or cytokinesis, without altering AURKC SAC function.
+The severity of the defects may depend on the level of kinase inhibition;
+some functions of the CPC are already disturbed when the complex is
+only partially inhibited (e.g. correction of microtubule –kinetochore attachment), while others (e.g. its function in the SAC) may require complete inhibition (van der Horst and Lens, 2014). This would therefore
+lead to severe quantitative defects, and what could be considered as
+‘milder’ AURKC mutations could be found in azoospermic rather than
+in macrozoospermic patients. This hypothesis has however not been
+confirmed yet.
+AURKC mutational status and patient
+management
+Although assisted reproductive technologies (ART) have revolutionized the treatment of infertile patients with severe oligoasthenoteratozoospermia, they are inefficient for patients presenting large-headed
+...........................................................................
+.............................................................................................................................................................................................
+Table I Continued
+References Number of patients studied (n) Geographical origin (n) AURKC mutations¤ (%; n)
+Included Analyzed Unrelated? Newly tested
+Other
+0 (0%)
+No mutation
+21.5% (3/14)
+n.d: not determined; n: number of patients. ?
+Indicated the number of unrelated patients among all analyzed patients.
+¤
+Mutation rate (%) is calculated only from the number of unrelated patients.
+$
+This study is based on unselected population of 326 idiopathic infertile patients with various sperm parameters and phenotypes. The proportion of patients with macrozoospermia is not
+available.
+&
+The study included 14 patients previously described in Dieterich et al. (2007). £
+The study included 41 patients previously described in Dieterich et al. (2009) and 2 patients previously described in Ben Khelifa et al. (2011). (1)Patient was compound heterozygote carrying the c.144delC and p.C229Y mutations. (2)Two brothers were compound heterozygotes carrying the c.144delC and c.436-2A.G mutations. (3)One patient was compound heterozygote carrying the c.144delC and p.C229Y mutations, two were compound heterozygotes carrying the c.144delC and c.436-2A.G mutations and
+two were compound heterozygotes carrying the c.144delC and p.Y248* mutations.
+462 Coutton et al.
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+spermatozoa due to the high frequency of sperm chromosomal abnormalities (Perrin et al., 2008). Management of patients diagnosed with
+macrozoospermia should begin with AURKC diagnosis. ICSI will then
+be formally contraindicated for all homozygous mutated patients
+who can have recourse to donor sperm or adoption (Ben Khelifa
+et al., 2011). Careful selection of ‘normal-looking spermatozoa’ by
+motile sperm organelle morphology examination (MSOME) has previously been evaluated in several AURKC c.144delC deleted patients.
+FISH analyses performed on all selected spermatozoa showed that all
+were aneuploid, confirming that ICSI should not be attempted for
+AURKC-mutated patients even after a very thorough morphological selection (Chelli et al., 2010). The prognosis is not as categorically unfavorable for patients not carrying AURKC mutations or with a
+partial/atypical phenotype. Although low, the chances of pregnancy
+are not negligible (Kahraman et al., 1999; Achard et al., 2007). For
+these men, sperm FISH should be carried out to assess the rate of
+euploid sperm and evaluate the probability of success. PGD can be
+proposed for those with an intermediate rate of aneuploid sperm
+(Kahraman et al., 2004; Dieterich et al., 2009). Careful scrutiny of the
+pregnancy and of the perinatal period is however recommended in
+case of success (Achard et al., 2007).
+Globozoospermia
+First described in human in 1971, globozoospermia (MIM 613958) is
+a rare (incidence 0.1%) and severe form of teratozoospermia
+characterized by the presence in the ejaculate of a large majority of
+round spermatozoa lacking the acrosome (Fig. 1C) (Sen et al.,
+1971; Holstein et al., 1973; Dam et al., 2007a). Globozoospermic
+sperm are unable to adhere and penetrate the zona pellucida,
+causing primary infertility (Dam et al., 2007a). The initial phenotype
+was divided into two subtypes: the globozoospermia type I characterized by the complete lack of acrosome and acrosomal enzymes
+and the globozoospermia type II characterized by a round-headed
+phenotype due to a residual cytoplasmic droplet surrounding the
+sperm head and acrosome (Anton-Lamprecht et al., 1976; Singh,
+1992). However, this nomenclature is confusing and was subsequently
+often misemployed in the literature referring to patients with a homogeneous phenotype with 100% round-headed sperm (type I) or patients
+with a mosaic of normal and round-headed sperm (type II). The terms
+‘total’ or ‘partial’ globozoospermia have been proposed and should
+be preferred to report the homogeneity of the ‘original’ type I phenotype (Lerer-Goldshtein et al., 2010; Dam et al., 2011) while the rarer,
+type II phenotype, should be referred as pseudo-globozoospermia.
+Globozoospermia and experimental models:
+a relevant strategy?
+Several familial cases of globozoospermia suggested a genetic contribution to this disorder (Kullander and Rausing, 1975; Flo¨rke-Gerloff
+et al., 1984; Dale et al., 1994; Kilani et al., 2004; Dirican et al., 2008).
+This hypothesis was strengthened by the description in the literature
+................................................................................................................
+.............................................................................................................................................................................................
+Table II Sperm parameters of macrozoospermic men genotyped for the AURKC gene.
+References AURKC genotype (n)
+§ Sperm parameters
+Nb spz 3 106 per ml Large-headed
+spz (%)
+Multiflagellar
+spz (%)
+Normal
+morphology (%)
+Dieterich et al. (2007) Deleterious mutations (14) 3.2 (0.2– 7.76) 56 (34 –100) 28.5 (16– 50) 2 (0–5)
+No mutation (0)
+Dieterich et al. (2009) Deleterious mutations (32) 7.8 (0.4– 28) 76 (34 –100) 40.3 (20– 100) 0.6 (0–15)
+No mutation (30) 116.8 (0.01– 280) 11.7 (5– 75) 8.5 (0– 28) 20 (0–37)
+Ben Khelifa et al. (2011) Deleterious mutations (2) 0.85 (0.8–0.9) 100 (100) 40 (28– 52) n.a
+No mutation (0)
+El Kerch et al. (2011) Deleterious mutations (11) n.a 94.6 (71 –100) 34.7 (4– 94) n.a
+No mutation (7 only not mutated
+for c.144delC)
+n.a 6.7 (0– 38) 0 (0) n.a
+Ben Khelifa et al. (2012) Deleterious mutations (72) 13.1 (0.01–98.7) 79.6 (34 –100) 37.9 (7– 100) 0.1 (0–1)
+No mutation (15) 11.3 (0.01–50) 35.2 (5– 75) 7.8 (0– 28) 5.1 (0–19)
+Eloualid et al. (2014)$ Deleterious mutations (4) 6 (0– 17)£ 96.7 (90 –100)£ 44.7 (12– 90)£ 0 (0)£
+No mutation (322)
+322 (98.8%)
+n.a n.a n.a n.a
+Ounis et al. (2015) Deleterious mutations (11) 7.51 (0.5–30.5) 99.5 (95 –100) + n.a
+No mutation (3) 13 (0.1–22.8) 71.7 (70 –75) + n.a
+Values are expressed as the mean with the lower and the higher values between brackets if available.
+n.a: not available; n: number of patients; spz: sperm cells; + indicated that the feature was present but no value was reported. §
+Indicate the total number of patients with a deleterious mutations including all types of reported mutations in AURKC (frameshift, splicing mutations, missense) and the total number of
+patients with no bi-allelic mutation identified.
+$
+This study is based on unselected population of 326 idiopathic infertile patients with various sperm parameters and phenotypes. The proportion of patients with macrozoospermia is not
+available.
+£
+Average was calculated from three out of the four patients because one was azoospermic.
+Genetic causes of teratozoospermia 463
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+of KO mice with a globozoospermia-like phenotype lacking different
+genes (Table III). Almost all these genes are ubiquitously expressed
+and therefore do not appear as good candidates for the human globozoospermia phenotype, which only causes primary infertility. These
+genes encode endoplasmic reticulum proteins such as heat shock
+protein 90 kDa beta 1 (Hsp90b1) and glucosidase, beta (bile acid) 2
+(Gba2) or vesicle trafficking-related proteins such as casein kinase 2,
+alpha prime polypeptide (Csnk2a2), ArfGAP with FG repeats 1
+(AGFG1 or Hrb), golgi-associated PDZ and coiled-coil motif containing
+(Gopc), protein interacting with PRKCA 1 (Pick1), TATA element modulatory factor 1 (Tmf1), vacuolar protein sorting 54 (Vps54), small
+ArfGAP 2 (Smap2) and autophagy related 7 (Atg7). All regulate proacrosomal vesicle transport from the Golgi to the acrosome (Table III
+and Fig. 3). These proteins are implicated in a common pathway and
+contribute to acrosome biogenesis and sperm head organization
+(Fig. 3). Only zona pellucida binding protein (Zpbp or Zpbp1) and
+sperm acrosome associated 1 (Spaca1) have an expression restricted
+to the testis (Lin et al., 2007; Fujihara et al., 2012). Zpbp and Spaca1
+are integral acrosomal proteins but display different functions (Lin
+et al., 2007; Fujihara et al., 2012). Zpbp is localized in the acrosomal
+matrix and is involved in the binding and penetration of the sperm
+into the zona pellucida (Yatsenko et al., 2012) while Spaca1 is a transmembrane protein located in the inner acrosomal membrane of spermatids and mature spermatozoa (Fig. 3) and plays an unsolved role in
+acrosomal morphogenesis and in sperm-egg binding and fusion (Hao
+et al., 2002; Fujihara et al., 2012). None of these mouse models perfectly mirrors the round-shaped acrosomeless spermatozoa observed in
+human globozoospermia. To date, .50 genetically modified mice
+reported in the Mouse Genome Informatics database (http://www.
+informatics.jax.org) contain in their phenotypic description a term
+related to globozoospermia. This is not surprising in view of the complexity and the multitude of proteins involved in acrosome biogenesis
+(Alvarez Sedo´ et al., 2012). In spite of this large list of mouse candidate
+genes, only a few mutations have been identified in their human orthologs. Heterozygous missense and splicing mutations in ZPBP were
+described in patients presenting with abnormal sperm head morphology, but their involvement in the disease has not been clearly demonstrated (Yatsenko et al., 2012). Similarly, a homozygous missense
+mutation (G198A) in exon 13 of the PICK1 gene was identified in a
+Chinese family (Liu et al., 2010). Again, the report of the identification
+of a relatively mild mutation without any functional validation in a single
+familial case remains somewhat unconvincing.
+DPY19L2 mutational spectrum: toward a
+diagnostic strategy
+Gene candidate approaches, even with strong animal model data, are
+often unsuccessful (Pirrello et al., 2005;Christensen et al., 2006). Homozygosity mapping using genome-wide scan analysis of a consanguineous
+Ashkenazi Jewish family with three globozoospermic brothers identified
+a homozygous mutation (c.848G.A) in SPATA16 (spermatogenesisassociated protein 16, previously named NYD-SP12) (Dam et al.,
+2007b). The SPATA16 protein localizes to the Golgi apparatus and to
+the proacrosomal vesicles which fuse to form the acrosome during spermiogenesis (Lu et al., 2006; Dam et al., 2007b). SPATA16, is highly
+expressed in human testis and contains a conserved tetratricopeptide
+repeat (TPR) domain (Xu et al., 2003) which may interact with the
+GOPC and HRB proteins (Dam et al., 2007b). No mutation was subsequently found in 30 other patients with globozoospermia originating
+from Europe or North Africa (Dam et al., 2007b), suggesting that
+SPATA16 is not the main cause of globozoospermia, which is likely genetically heterogeneous. Only recently was a new SPATA16 mutation identified in single man from a large cohort of patients with globozoospermia
+(Karaca et al., 2014). In 2011, from a cohort of 20 Tunisian patients with
+100% globozoospermic sperm, SNP-based genetic linkage analysis identified a common region of homozygosity in 12q14.2 including the
+dpy-19-like 2 (DPY19L2) gene strongly expressed in testis. A 200-kb
+homozygous deletion of the DPY19L2 gene was found in 15 of the 20
+patients analyzed (Harbuz et al., 2011). This deletion was also identified
+in a second study published simultaneously in 19% (4 out of 21) of the
+recruited globozoospermic patients (Koscinski et al., 2011). Although
+the deletion frequency is very disparate, both studies conclude that the
+DPY19L2 deletion is the main cause of globozoospermia. Subsequently,
+three large studies confirmed the high prevalence of DPY19L2 gene
+alterations, ranging from 60 to 83.3% of analyzed patients in cohorts of
+globozoospermic patients from different geographic regions and with different ethnic backgrounds (Table IV) (Coutton et al., 2012; Elinati et al.,
+2012;Zhu et al., 2013). A further two publications further strengthen this
+conclusion, reporting the presence of homozygous DPY19L2 deletion in
+patients from Macedonia and Algeria (Noveski et al., 2013; Ounis et al.,
+2015). Homozygous deletions represent 26.7 to 73.3% of the reported
+DPY19L2 mutations in the three largest studies (Table IV) (Coutton et al.,
+2012; Elinati et al., 2012; Zhu et al., 2013). This heterogeneous deletion
+rate could be explained by a possible foundereffect in some studies with a
+geographic-based recruitment accentuating the deletion prevalence
+(Harbuz et al., 2011;Coutton et al., 2012; Elinati et al., 2012). In addition,
+inclusion parameters are different and DPY19L2 mutations are mainly
+identified in type I globozoospermia with a typical morphology and a
+high percentage of affected spermatozoa (Table V) and the inclusion of
+subjects with a low level of round-headed spermatozoa might in some
+cases decrease diagnosis efficiency. The genotype-phenotype correlation is however not perfect, indicating that (i) some phenotypic variation
+exists even within DPY19L2 deleted subjects and (ii) other gene defects
+likely induce a pure globozoospermia phenotype (Table V). To enable a
+better genotype/phenotype correlation great care should be taken to
+respect the international recommendation for the examination of
+human semen to standardize the results and avoid protocol variations
+between the different laboratories (World Health Organization 2010).
+Homozygous and compound heterozygous point mutations further
+broaden the spectrum of DPY19L2-dependent globozoospermia
+(Table IV). DPY19L2 point mutations can be either missense mutations
+localized mainly in the central part of the DPY19L2 protein or nonsense/frameshift/splice-site mutations resulting in truncated proteins
+(Coutton et al., 2012; Elinati et al., 2012;Zhu et al., 2013). Small deletions
+were also reported (Table IV) indicating that exon deletions are part of
+the mutational spectrum of theDPY19L2 gene (Zhu et al., 2013). A recurrent missense mutation in exon 8, p.Arg290His, was identified in several
+unrelated patients. This mutation changes a highly conserved arginine
+into a histidine and is predicted to be deleterious by multiple prediction
+tools (Coutton et al., 2012; Elinati et al., 2012; Zhu et al., 2013). Moreover, a recent study demonstrates that DPY-19, the DPY19L2 ortholog
+in Caenorhabditis elegans, encodes a C-mannosyltransferase which is
+able to glycosylate several target proteins using the lipid-linked glycoside
+dolichol-phosphate-mannose (Dol-P-Man) as the donor substrate
+464 Coutton et al.
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+..........................................................................................................................................................................................................................................................
+Table III Mouse models with abnormalities of sperm acrosome morphogenesis and nuclear shaping.
+KO mouse
+ID
+Full name Function Localization and
+partners
+Acrosome
+In sperm
+Nuclear shape Nuclear membrane
+and lamina
+References
+Atg7 Autophagy related 7 Golgi vesicle fusion; Protein
+trafficking
+Cytoplasm Present, no hook
+shaped
+Poorly elongated
+,30% Globular or
+deformed head
+Normal Wang et al. (2014)
+Csnk2a2 Casein kinase II alpha’ catalytic
+subunit
+Kinase/phosphorylation Ubiquitous
+Acrosomal matrix
+Pick1 partner
+Partially separated
+from the nucleus
+Poorly elongated Swelling of nuclear
+membranes
+Xu et al. (1999) and
+Mannowetz et al. (2010)
+Dpy19l2 Dpy-19-like 2 (C. elegans) Glycosylase?
+Structural protein of the Inner
+Nuclear membrane
+Inner Nuclear membrane Absent Round, rod shaped Destabilization of nuclear
+lamina facing the
+acrosome.
+Nuclear membrane
+splitting off
+Pierre et al. (2012)
+Gba2 Glucosidase beta 2 Hydrolyzes glucosylceramide Endoplasmic reticulum and/or
+plasma membrane
+Partially present,
+disordered
+Not elongated and
+irregular outline
+? Yildiz et al. (2006) and
+Walden et al. (2007)
+Gopc Golgi-associated PDZ- and
+coiled-coil motif-containing
+protein)
+Golgi vesicle fusion; Vesicle
+trafficking
+Trans-Golgi
+Pick1 partner
+Fragmented Round or ovoid not
+hook shape
+Normal Yao et al. (2002) and Ito et al.
+(2004)
+Hrb
+Agfg1(official)
+HIV-1 Rev binding protein
+ArfGAP with FG repeats 1
+(official symbol)
+Golgi vesicle fusion Cytoplasmic surface of
+acrosome
+Absent
+Failure of vesicle
+fusion
+Globular Apparently normal Kang-Decker et al. (2001)
+and Kierszenbaum et al.
+(2004)
+Hsp90b1 Heat shock protein 90b1
+heat shock protein 90, beta
+(Grp94), member 1 (official
+symbol)
+Endoplasmic chaperone Endoplasmic reticulum Partially present Globular or
+deformed
+? Audouard and Christians
+(2011)
+Pick1* Protein interacting with C
+kinase 1
+Golgi vesicle fusion; Protein
+trafficking
+Trans-Golgi
+Gopc partner
+Ck2a’ partner
+Fragmented Poorly elongated, not
+hook shape
+Normal Xiao et al. (2009)
+Smap2 small ArfGAP 2
+Arf GTPase-activating small
+GTPases protein
+Golgi vesicles fusion; Protein
+trafficking
+Trans Golgi binds to both
+clathrin and the clathrin
+assembly protein
+Partially present,
+fragmented
+Poorly elongated, not
+hook shape
+Apparently normal Funaki et al. (2013)
+Spaca1 sperm acrosome associated 1 Structural protein of the
+acrosomal membrane
+Inner acrosomal membrane Partially present Round or rod shaped Loss of the nuclear lamina
+facing the acrosome
+Fujihara et al. (2012)
+Tmf1 TATA element modulatory
+factor 1
+– Trafficking of
+Golgi-derived vesicles
+and/or Golgi vesicles
+fusion
+– Cytoplasm removal
+Golgi-associated protein Absent Round or rod shaped.
+Nuclei are embedded
+in aberrant cytoplasm
+rest.
+Apparently normal
+Dense nuclear lamina is
+present at the apical
+side
+Lerer-Goldshtein et al.
+(2010)
+Vps54** Vacuolar-vesicular protein
+sorting 54 homolog
+Vesicular sorting protein
+Retrograde traffic
+Acrosome Absent
+Failure of vesicle
+fusion
+Poorly elongated and
+irregular outline
+Normal Paiardi et al. (2011)
+Zpbp1 Zona pellucida binding
+protein 1
+Binding and penetration into
+the zona pellucida
+Acrosomal matrix Bulged Shortened hook Normal Lin et al. (2007) and
+Yatsenko et al. (2012)
+Genetic causes of teratozoospermia 465
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+(Buettner et al., 2013). Interestingly, the amino acid corresponding to the
+Arg290 in C. elegans has been predicted to be involved in the binding of
+the Dol-P moiety of the substrate (Buettner et al., 2013). These data
+suggest that the arginine at position 290 could play a key role in
+DPY19L2 function. The effect of this potential glycosylation remains to
+be elucidated. On the whole, the fact that most reported missense mutations occur between exon 8 and 11 could indicate that this central
+domain of DPY19L2 may support some critical functions.
+Overall, the deletion of the totality of the DPY19L2 gene represents
+about 81% of the pathological alleles (Table IV). Different approaches
+have been described to effectively detect these DPY19L2 deletions.
+First, a long-range PCR combined with exon-specific amplification is
+the most widely used strategy to detect both homozygous and
+heterozygous deletions (Table IV) (Harbuz et al., 2011; Koscinski et al.,
+2011; Elinati et al., 2012; Noveski et al., 2013; Zhu et al., 2013). This
+cost effective strategy allows delineating with a good accuracy the breakpoints of the genomic deletion although this information is not, strictly
+speaking, useful for the diagnosis and clinically relevant. A strong shortcoming of this technique is that it does not detect the deletions with
+breakpoints falling outside the region covered by the deletion-specific
+primers therefore presenting a high risk of false-negative results
+(Coutton et al., 2012; Zhu et al., 2013). An alternative strategy is the
+use of a multiplex ligation-dependent probe amplification (MLPA) approach to determine the number of DPY19L2 alleles for each patient,
+and independently of the localization of the breakpoint (Coutton et al.,
+2012). Drawbacks of MLPA are the relatively higher cost compared
+with PCR approaches and the required experience for the design of
+the MLPA specific probes to avoid cross-hybridization with DPY19L2
+pseudogenes (Zhu et al., 2013). Considering these points, we recommend the research of homozygous and heterozygousDPY19L2 deletions
+as the first-line genetic analysis in globozoospermic by long-range PCR or
+MLPA (Coutton et al., 2012; Elinati et al., 2012; Zhu et al., 2013). Alternatively a quantitative PCR protocol could be used (Chianese et al.,
+2015). This approach does not rely on breakpoint localization and new
+robust methods are becoming available which may provide a cheap
+and fast diagnosis allowing the detection of all recombined alleles. In
+almost all cases of globozoospermic patients with a heterozygous deletion, an additional point mutation in the non-deleted allele was secondly
+identified (Coutton et al., 2012; Elinati et al., 2012; Zhu et al., 2013). This
+strongly encourages researching such a point mutation in globozoospermic patients heterozygous for the genomic deletion (Coutton et al.,
+2012). In the absence of a deletion (heterozygous or homozygous) the
+full 22 exon DPY19L2 sequencing might not be systematically realized
+as a routine analysis. Similarly, the very low rate of mutations found in
+others genes, such as SPATA16 or PICK1, questions the clinical relevance
+of molecular investigations of such genes (Coutton et al., 2012). A ‘hotspots’ restrictive strategy based on the sequencing of theDPY19L2 exons
+8–11, in which most of the point mutations were identified, could also be
+envisaged. The genetic diagnosis of globozoospermia does not yet
+provide any clear prognostic or therapeutic indications. Nonetheless, a
+molecular diagnosis remains useful to provide adequate genetic counseling and to better understand the physiopathology of globozoospermia,
+which might help to identify novel therapeutic solutions.
+DPY19L2 functions: new insights on the
+physiopathology of globozoospermia
+DPY19L2 belongs to a new family of transmembrane proteins of the
+nuclear envelope including, in Mammals, fours homologous proteins:
+DPY19L1 to DPY19L4. Initially, inactivation of DPY-19, the only
+DPY19L ortholog in C. elegans, was shown to induce a shorter
+(dumpy) than wild-type phenotype (Brenner, 1974). DPY-19 has 10 predicted transmembrane domains and was involved in Q neuroblast polarization during early development (Honigberg and Kenyon, 2000). The
+four human homologues have 9 –11 predicted transmembrane
+domains, suggesting a similar protein structure to DPY-19 (Carson
+et al., 2006). Moreover, human DPY19L proteins share a high level of sequence identity with DPY-19, consistent with a conservation of the ancestral protein function (Buettner et al., 2013). Functions of human
+DPY19L proteins are still poorly understood and in particular for
+Figure 3 Known proteins involved in acrosome biogenesis whose
+functional absence leads to globozoospermia or globlozoospermia-like
+phenotypes in mouse. Acrosome biogenesis includes several steps including protein processing within the reticulum, vesicle trafficking from
+the Golgi apparatus, vesicle fusion, interaction of the inner acrosomal
+membrane (IAMb) with the acroplaxome (Apx), interaction of the acroplaxome with the outer and inner nuclear membranes (ONM and INM)
+of the nuclear envelope and maintaining integrity of the acrosomal
+matrix. Numerous proteins are involved in these different steps and
+their absence leads to defective acrosome biogenesis and globozoospermia or globozoospermia-like phenotypes. Only the absence of
+sperm acrosome associated 1 (Spaca1) and Dpy19l2 leads to the disappearance of the nuclear dense lamina (NDL). Genes abbreviations
+are as follows: heat shock protein 90 kDa beta 1 (Hsp90b1); glucosidase, beta (bile acid) 2 (Gba2); protein interacting with PRKCA 1
+(Pick1); golgi-associated PDZ and coiled-coil motif containing (Gopc);
+casein kinase 2, alpha prime polypeptide (Csnk2a2); autophagy
+related 7 (Atg7); small ArfGAP 2 (Smap2); TATA element modulatory
+factor 1; (Tmf1 or ARA160); zona pellucida binding protein (Zpbp or
+Zpbp1); vacuolar protein sorting 54 (Vps54); ArfGAP with FG repeats
+1 (Hrb), sperm acrosome associated 1 (Spaca1).
+466 Coutton et al.
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+...............................................................
+.............................................................................................................................................................................................
+Table IV Mutation status for the DPY19L2 gene in globozoospermic men.
+References Number of patients Geographical
+origin (n)
+DPY19L2
+mutations¤
+(%; n)
+DPY19L2
+deletion
+detection
+method
+Point mutations
+identified Included Analyzed Unrelated? Newly
+tested
+Harbuz et al.
+(2011)
+20 20 19 20 North African (19)
+and Eastern Europe
+(1)
+Hm deletion
+73.7% (14/19)
+LR-PCR None
+Hm point
+mutations
+n.d
+Compound Htz
+n.d
+No mutation
+26.3% (5/19)
+Koscinski
+et al. (2011)
+28 28 21 28 North African (7),
+Middle East (6),
+European (12),
+unknown (3)
+Hm deletion
+19% (4/21)
+LR-PCR None
+Hm point
+mutations
+n.d
+Compound Htz
+n.d
+No mutation
+81% (17/21)
+Coutton et al.
+(2012)
+34 31 30 14$ North African (30),
+European (4)
+Hm deletion
+73.3% (22/30)
+MLPA p.R290H; p.Q342*;
+p.M358K
+Hm point
+mutations
+3.3% (1/30)
+Compound Htz
+6.7% (2/30)
+No mutation
+16.7% (5/30)
+Elinati et al.
+(2012)
+54 54 54 33£ North African (n.a),
+Middle East (n.a),
+European (n.a)
+Hm deletion
+46.3% (25/54)
+LR-PCR p.R290H; p.R298C;
+p.Q345*; p.S395LfsX7;
+p.T493R; p.K680*;
+c.1218+1G.A; Ex5_6del;
+Ex5_7del
+Hm point
+mutations
+7.4% (4/54)
+Compound Htz
+13% (7/54)
+No mutation
+33.3% (18/54)
+Zhu et al.
+(2013)
+16 15 15 16 Asian (16) Hm deletion
+26.7% (4/15)
+LR-PCR c.1532delA; c.[1679delT
+1681_1682delAC];
+Hm point p.R290H; p.L330P
+mutations
+33.3% (5/15)
+Compound Htz
+0% (0/15)
+No mutation*
+33.3% (5/15)
+Noveski et al.
+(2013)
+2 2 2 2 Eastern Europe (2) Hm deletion
+100% (2/2)
+LR-PCR None
+Hm point
+mutations
+0 (0%)
+Compound Htz
+0 (0%)
+No mutation
+0 (0%)
+Ounis et al.
+(2015)
+7 5 3 7 North African (7) Hm deletion
+100% (3/3)
+MLPA None
+Continued
+Genetic causes of teratozoospermia 467
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+DPY19L4 for which nothing is known. It has been demonstrated that
+down-regulation of Dpy19l1 and Dpy19l3 during neurogenesis of
+mouse embryos leads to strong neuron migration anomalies (Watanabe
+et al., 2011). DPY19L3 has also been associated with bipolar disorder
+(Smith et al., 2009). These results strengthen the possibility of a conserved function of the different DPY19L proteins. Interestingly, apart
+from DPY19L2, which presents a predominant expression in the testis,
+DPY19L proteins show a relatively ubiquitous pattern of expression
+(Carson et al., 2006).
+After its identification as the main gene involved in globozoospermia,
+study of Dpy19l2 KO mice showed that homozygous animals faithfully
+reproduced the human phenotype with a complete male infertility,
+100% of acrosomeless round-headed spermatozoa and manchette abnormalities (Table III). Study of this model led to the conclusion that
+DPY19L2 is a transmembrane protein located in the inner nuclear membrane (Fig. 3) and that it is necessary to anchor the acrosome to the
+nucleus. In the absence of Dpy19l2 the forming acrosome slowly separates from the nucleus before being removed from the sperm with the
+cytoplasm (Pierre et al., 2012). In addition to its structural function
+during acrosome biogenesis, the C-mannosyltransferase function of
+the ancestral protein DPY-19 has raised the hypothesis that DPY19L2
+may have a function in glycosylation of sperm proteins (Buettner et al.,
+...............................................................
+.............................................................................................................................................................................................
+Table IV Continued
+References Number of patients Geographical
+origin (n)
+DPY19L2
+mutations¤
+(%; n)
+DPY19L2
+deletion
+detection
+method
+Point mutations
+identified Included Analyzed Unrelated? Newly
+tested
+Hm point
+mutations
+0 (0%)
+Compound Htz
+0 (0%)
+No mutation
+0 (0%)
+n.d: not determined; n.a: not available; n: number of patients; spz: sperm cells; MLPA: multiplex ligation-dependent probes amplification; LR-PCR: long-range PCR. ?
+Indicated the number of unrelated patients among all analyzed patients.
+$
+The study included 20 patients previously described in Harbuz et al. (2011). £
+The study included 21 patients previously described in Koscinski et al. (2011). ¤
+Mutation rate (%) is calculated only from the number of unrelated patients.
+*One additional patient (1/15, 6.7%) had a heterozygous deletion in one allele but with no mutation identified in the non-deleted allele.
+.................................................................................................................
+.............................................................................................................................................................................................
+Table V Sperm parameters of globozoospermic men genotyped for the DPY19L2 gene.
+References DPY19L2 genotype (n)
+$ Sperm parameters
+Nb spz 3 106
+/ml Total sperm
+count (106
+)
+Normozoospermic?
+% (n)
+Round-headed
+spz (%)
+Harbuz et al. (2011) Deleterious mutations (15) 62.8 (0.02–154) 194.6 (0.09– 665) 86.7 (13) 99.5 (94 –100)
+No mutation (5) 9.7 (0.04–25.2) 31.2 (0.12– 68) 40 (2) 89.8 (64 –100)
+Koscinski et al. (2011) Deleterious mutations (8) 83.4 (13.2–223) n.a 100 (8) 100 (100)
+No mutation (20) 38.7 (0.35–109) n.a 30 (6) 97.6 (84 –100)
+Coutton et al. (2012) Deleterious mutations (26) 57.3 (0.6–108) 210 (n.a) n.a 88 (29 –100)
+No mutation (5) 20 (14–25) 64 (n.a) n.a 63 (12 –100)
+Elinati et al. (2012) Deleterious mutations (36) n.a n.a n.a n.a
+No mutation (18) n.a n.a n.a n.a
+Zhu et al. (2013) Deleterious mutations (9) 46.7 (0.8–90) 183.6 (n.a) n.a 100 (100)
+No mutation (5) 20 (14–25) 60 (n.a) n.a 100 (100)
+Noveski et al. (2013) Deleterious mutations (2) n.a n.a n.a 100 (100)
+No mutation (0)
+Ounis et al. (2015) Deleterious mutations (5) 64.6 (16–171) n.a 100 (5) 99 (95 –100)
+No mutation (0)
+Values are expressed as the mean with the lower and the higher values between brackets if available. n.a: not available; n: number of patients; spz: sperm cells; $
+Indicate the number of patients with a deleterious mutations including all types of reported mutations in DPY19L2 (homozygous deletions, point mutations, compound heterozygotes)
+and the number of patients with no bi-allelic mutation identified.
+?
+Indicated the total number and percentage of patients normozoospermic with a sperm concentration upper to the 5th centiles of World Health Organization 2010 values (15 × 106
+/ml
+(CI 12 –16)).
+468 Coutton et al.
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+2013). Several potential partner proteins have been proposed to interact
+with DPY19L2 during spermiogenesis, in particular the SUN proteins
+belonging to the LINC (linker of nucleoskeleton and cytoskeleton) complexes in association with KASH proteins (Pierre et al., 2012). SUN proteins appeared as the best candidate due to their abundance during
+spermiogenesis and their role in nuclear shaping during sperm head formation (Go¨b et al., 2010; Frohnert et al., 2011). This hypothesis has
+however not been confirmed and the molecular partners of DPY19L2
+remain to be characterized (Yassine et al., 2015b). Comparative testicular transcriptome studies of wild type and globozoospermic Dpy19l2 KO
+mice were also realized to attempt to identify Dpy19l2 molecular partners but no conclusive result was obtained (Karaouze`ne et al., 2013).
+DPY19L2, low copy repeats and copy number
+variations: from evolution to mutations
+Copy number variations (CNV) refer to gains by duplication or losses by
+deletion of genetic material greater than 1 kb. They can be pathogenic
+and cause Mendelian traits or be associated with complex diseases but
+can also represent benign polymorphic variants. CNVs and in particular
+gene duplications are involved as a predominant mechanism driving gene
+and genome evolution (reviewed in Zhang et al., 2009). Such a mechanism was involved in theDPY19L gene family evolution throughout the vertebrate lineage. The DPY19L family genes, encompassing four genes
+(DPY19L1, 2, 3 and 4) and six pseudogenes, derived from a common ancestor homologous to the C. elegans dpy-19 gene owing to multiple gene
+duplications and pseudogenizations throughout evolution (Carson et al.,
+2006). It is estimated that the duplication that generated DPY19L2 arose
+between 173 and 360 million years ago prior to mammalian divergence.
+Recurrent CNVs arise mostly by homologous recombination
+between repetitive DNA sequences. This process is called non-allelic
+homologous recombination (NAHR) and is well-known in human
+diseases to be responsible for many recurrent genomic syndromes
+(Stankiewicz and Lupski, 2010). The DPY19L2 locus is conducive to recurrent deletions and duplications by NAHR due to the presence of two
+homologous 28-kb low copy repeats (LCRs) located on each side of the
+gene (Harbuz et al., 2011; Koscinski et al., 2011). Such a recombination
+during the meiosis will result in the production of recombinant gametes
+having either a duplication or a deletion of the DPY19L2 locus. Sequencing analysis of the NAHR breakpoints at the DPY19L2 locus demonstrated that the recombination events occurred preferentially in the
+vicinity of a 13 nucleotide recognition motif for the PRDM9 protein localized in the center of the 28-kb LCRs (Coutton et al., 2013). PRDM9, a
+zinc finger protein that binds to DNA sequences, is a major transregulator of meiotic recombination hotspots facilitating double strand
+breaks, a prerequisite for NAHR (Baudat et al., 2010; Myers et al.,
+2010; Parvanov et al., 2010). An additional putative recombination
+hotspot within the 28-kb LCRs might constitute a second, less frequent
+recombination site (Elinati et al., 2012).
+The NAHR mechanism favors deletions over duplications because the
+inter-chromatid and inter-chromosome NAHRs create a deleted and a
+duplicated recombined allele, while intra-chromatid events only generate deletions (Liu et al., 2012). More gametes carrying a deletion are
+thus expected to be produced de novo and this was verified for several
+NAHR hotspots (Turner et al., 2008) and in particular for the
+DPY19L2 locus (Coutton et al., 2013). This is paradoxical regarding the
+overrepresentation of the duplicated DPY19L2 allele in the general
+population. In fact, the frequency of theDPY19L2 duplication and heterozygous deletion in the general population is estimated to be 1/85 and
+1/290, respectively. This can be explained by the loss of deleted alleles
+occurring during selection against sterile, homozygous deleted men,
+whereas duplications carriers are not subjected to selection. Also, heterozygous deleted men might also suffer a small fitness penalty, expediting
+the loss of the deleted allele (Coutton et al., 2013).
+Clinical management of globozoospermic
+patients and DPY19L2: what’s new?
+The relationship between sperm chromosomal abnormalities and sperm
+morphology has been widely explored. A link has been clearly established in particular for certain types of morphologically abnormal spermatozoa, such as large-headed multiflagellar spermatozoa, but remains
+controversial for many others (Sun et al., 2006). Globozoospermia is
+no exception and contradictory results were obtained. Some studies
+report an increased frequency in sperm aneuploidy compared with
+normal sperm cells while others do not observe any difference (reviewed
+inDamet al., 2007a; Perrin et al., 2013). Finally, even observed, the slightly increased aneuploidy rate in round-headed sperm is comparable to
+that commonly found in other types of infertility (Perrin et al., 2013)
+and therefore does not counter indicate the treatment of patients by
+ICSI (Kuentz et al., 2013). Despite this, many studies using ICSI for
+patients with globozoospermia reported low fertilization, pregnancy
+and live birth rates, overall estimated at 38, 20 and 14%, respectively
+(reviewed in Da´vila Garza and Patrizio, 2013). A first well-established explanation for the low efficiency of ICSI when using globozoospermic
+sperm is the reduction or absence of the sperm factor, a testis-specific
+phospholipase (phospholipase C zeta (PLCz)) involved in the oocyte activation (Yoon et al., 2008; Heytens et al., 2009; Kashir et al., 2010;
+Amdani et al., 2013; Escoffier et al., 2015). PLCz localizes to the inner
+acrosomal membrane and the nuclear theca in the post-acrosomal
+region of human sperm which is in accordance with its vanishing in
+Dpy19l2-KO globozoospermic sperm (Escoffier et al., 2015). The
+absence of oocyte activation can be overcome by artificial oocyte activation (AOA) using Ca2+ ionophore (Rybouchkin et al., 1997; Tejera et al.,
+2008;Kyonoet al., 2009;Taylor et al., 2010). In case of globozoospermia,
+AOA combined with ICSI improved the efficiency of fertilization, pregnancy and live birth rates compared with conventional ICSI and this, regardless of the genotype (DPY19L2 related or not) of the patients
+(Kuentz et al., 2013). However, the live birth rate per transfer remains
+lower in globozoospermic patients than in other infertile patients in
+the same age group (Palermo et al., 2009; Kuentz et al., 2013). This
+may be due to sperm DNA damage related to defective chromatin condensation and the DNA fragmentation described in globozoospermic
+sperm cells (Dam et al., 2007a; Brahem et al., 2011; Perrin et al., 2013;
+Yassine et al., 2015a). Abnormal chromatin condensation in globozoospermia could be linked to an altered replacement of histones by protamines (Blanchard et al., 1990; Carrell et al., 1999). Yassine et al.
+(2015a) using the dpy19l2 KO mouse models confirmed that the
+nuclear invasion by protamines during the last stage of compaction is defective. Moreover, the absence of protamine increases dramatically the
+susceptibility to DNA breaks. Altogether, epigenetics defects and
+DNA fragmentation in globozoospermic sperm nuclei impair the developmental potential of embryos generated by ICSI using Dpy19l2-
+dependent spermatozoa (Yassine et al., 2015a). In summary,
+Genetic causes of teratozoospermia 469
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+globozoospermic patients withDPY19L2 gene alterations combine a low
+oocyte activation rate and a poor development of embryos generated by
+ICSI, thus explaining the consistently disappointingly low pregnancy rate
+obtained with these patients.
+Mutational status in globozoospermic patients treated with ICSI was
+generally unknown or not investigated. Few studies reported successful
+fertilization or pregnancies in globozoospermic patients with well documented DPY19L2 or SPATA16 mutations (Dam et al., 2007b; Harbuz
+et al., 2011; Kuentz et al., 2013; Karaca et al., 2014). Due to this small
+number of cases, no evidence of a difference in pregnancy success rate
+regarding the mutational status of globozoospermic patients has currently been demonstrated. Further studies taking into account genetic mutations may influence the therapeutic strategy and facilitate improving the
+management of patients diagnosed with globozoospermia. To date, only
+the type of globozoospermia is known to have an impact on the therapeutic approach as intracytoplasmic morphologically selected sperm injection technique (IMSI) has proven effective only for patients with a
+partial globozoospermia (Sermondade et al., 2011; Kuentz et al., 2013).
+Multiple morphological
+abnormalities of the flagella
+Morphological abnormalities of the sperm flagella leading to asthenozoospermia have been reported regularly since 1984 (Escalier and
+David, 1984). Chemes and colleagues carried out much of the early
+work on this phenotype and extensively studied the ultrastructure of
+the sperm flagella of affected men (Chemes et al., 1987). They observed
+recurrent abnormalities of the fibrous sheath (FS) which defines the principal piece surrounding the axoneme and the outer dense fibers and consists of two longitudinal columns connected by circumferential ribs (Eddy
+et al., 2003) (Fig. 4). Escalier had previously identified similar flagellar
+defects and had described that abnormalities of the peri-axonemal structures (including FS, outer dense fibers, mitochondrial sheath) were
+always associated with axonemal defects (Escalier and David, 1984).
+She argued that these peri-axonemal defects might be secondary to
+the axonemal defects (Escalier and Serres, 1985). Further ultrastructural
+studies among patients with sperm flagella abnormalities showed a wide
+range of different peri-axonemal and axonemal defects (Rawe et al.,
+2001; Chemes and Rawe, 2003).
+Cilia and flagellum: a common origin
+Although the sperm flagellum and motile cilia (found in the epithelial cells
+of the airways, the Fallopian tubes, the choroid plexus and the brain ventricles) are specialized for a particular function, they share common
+structural elements as the central cytoskeletal structure called the
+axoneme, which is highly conserved throughout evolution. The
+axoneme contains 9 outer microtubules doublets and 2 central singlets
+(9+2 structure), several axonemal dyneins, radial spokes, nexin links
+and many other components that drive and regulate ciliary or flagellar
+motility. All these microtubule-associated proteins are attached along
+the axoneme in a regular 96 nm long repeated formation (Inaba, 2003;
+Satir and Christensen, 2008). The axonemal dyneins are multicomponent proteins organized along each microtubule doublet as
+inner and outer rows (Fig. 4B and C) and comprise motor multiprotein
+complexes which produce the cilia/flagella beating force (Wickstead
+and Gull, 2007). Dynein arms are composed of heavy chains (HC),
+intermediate chains (IC), light-intermediate chains (LIC) and light
+chains (LC) and numerous regulatory proteins (Bisgrove and Yost,
+2006). The structure of the inner dynein arms is more complex than
+the structure of the outer dynein arms, which, in mammals, contains
+only two different HCs repeated all along the axoneme. In mammals,
+the inner arms are organized in seven molecular complexes, viewed in
+electronic microscopy as globular heads arranged in 3-2-2 groups, thus
+corresponding to 3 types of inner dynein arms (IDA): IDA1 to IDA3
+(Vernon et al., 2005). The mammalian organization was however
+much less investigated than in Chlamydomonas (Bui et al., 2008), and
+the subunit composition of each inner arm remains to be determined. Although sperm flagella and motile cilia have a similar microtubule structure
+based on the presence of a 9+2 axoneme, they present several differences. Motile cilia are constituted almost exclusively by the axoneme,
+whereas mammalian sperm flagella are divided into three principal
+parts characterized by the presence of additional accessory structures
+surrounding the axoneme: the outer dense fiber, the mitochondrial
+sheath, the fibrous sheath (Fig. 4). Recent proteomic analysis identified
+over 700 proteins that are exclusively localized in the human sperm flagella, of which many are axonemal proteins (Baker et al., 2013). These
+data highlight the complexity of the flagella structure and biogenesis, suggesting that many genes could be linked to flagellar abnormalities and/or
+asthenozoospermia.
+Primary ciliary dyskinesia
+Primary ciliary dyskinesia (PCD) is a multisystemic disorder caused by
+motility defects of motile cilia and flagella (Afzelius and Eliasson, 1983;
+Munroet al., 1994). PCD is mainly characterized by recurrent respiratory
+tract infections with varying symptoms ranging from chronic rhinosinusitis to bronchiectasis and male infertility due to sperm immotility (Iban˜ezTallon et al., 2003). Female subfertility is less common and is caused by
+dysmotile Fallopian tubes cilia (Lyons et al., 2006). PCD is also associated
+in 50% of cases with situs invertus due to dysfunction of motile embryonic
+node cilia perturbing organ laterality (Zariwala et al., 1993). More rarely,
+hydrocephalus arises as a consequence of ependymal cilia dysmotility
+leading to a blockage of the cerebrospinal fluid flow (Iban˜ez-Tallon
+et al., 2002; Kosaki et al., 2004). PCD has an estimated incidence of 1
+per 15 000 births (Knowles et al., 2013a) but it may be underestimated
+due to diagnostic failure (Boon et al., 2013).
+A high prevalence of PCD was observed in different genetic isolates
+and consanguineous populations, a fact consistent with a mainly
+autosomal recessive mode of inheritance (Jeganathan et al., 2004;
+O’Callaghan et al., 2010). PCD is genetically heterogeneous (Horani
+et al., 2014) and research on PCD allowed the characterization of numerous proteins necessary for adequate axonemal molecular structure and
+assembly. Cilia and flagella are remarkably well conserved throughout
+evolution. Different experimental models were used to decipher the molecular composition and function of these organelles (Ostrowski et al.,
+2011). The first model was the green alga Chlamydomonas in which
+DNAI1, the first gene to be associated with PCD, was identified (Pennarun et al., 1999). The function of the genes involved in PCD was also
+efficiently assessed in other multicellular organisms, such as zebrafish,
+Xenopus, Caenorhabditis elegans or Drosophila, and protists, such as Paramecium, Tetrahymena, Trypanosoma or Leishmania, each bringing specific
+advantages to the study of cilium biology (review in Vincensini et al.,
+2011). Thereafter, various studies using a candidate gene approach
+470 Coutton et al.
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+mainly based on data from Chlamydomonas have resulted in the identification of many mutated genes in PCD patients. Different KO mice or
+inbred dogs deficient in various axonemal components have also been
+successfully described as mammalian models for PCD (review in Inaba,
+2011). Mutations in 28 genes leading to various ultrastructural defects
+have so far been described to cause PCD (Table VI) and account for
+the genetic etiology of 70% of affected individuals (Knowles et al.,
+2014). A male infertility phenotype has often been described as part of
+the clinical symptoms but this particular aspect of the physiopathology
+of the PCD is not systematically explored and is often only scarcely
+described in scientific reports (Table VI). The sperm of infertile male
+patients with PCD are usually immotile and present various ultrastructural defects of sperm flagella such as missing dynein arms, microtubular
+translocations, and lack of radial spokes. Nevertheless, in most cases the
+sperm flagellum appears morphologically normal under direct light microscopy (Table VI) thereby excluding most of these genes as a genetic
+cause of teratozoospermia or MMAF.
+Genetic investigations of MMAF
+A genetic origin of MMAF was strongly suspected based on a family clustering reported in at least 20% of patients (Chemes and Alvarez Sedo,
+2012). In 2005, Bacetti et al. (Baccetti et al., 2005a) first reported a
+partial deletion in the A kinase (PRKA) anchor protein 3 (AKAP3) and
+A kinase (PRKA) anchor protein 4 (AKAP4) genes in a patient presenting
+with short-tail spermatozoa. Ultrastructural sperm evaluation showed
+MMAF and an altered axonemal structure lacking dynein arms and microtubular doublets including the central pair. A kinase (PRKA) anchor
+protein 3 (AKAP3) and A kinase (PRKA) anchor protein 3 (AKAP4)
+encode two A-kinase anchoring proteins interacting with the regulatory
+subunits of cAMP-dependent protein kinase A. AKAP3 and AKAP4 are
+the most abundant structural proteins of the fibrous sheath. AKAP3 is
+involved in organizing the basic structure of the fibrous sheath while
+AKAP4 has a major role in completing fibrous sheath assembly (Brown
+et al., 2003). Akap4 KO mice are infertile with half-length flagella with a
+Figure 4 Structure of sperm flagellum and localization of proteins whose functional absence leads to a defective flagellar structure and MMAF-like phenotype. (A) Mammalian sperm flagellum is structurally divided into three areas: midpiece, principal piece and end piece. (B) Schematic cross section through a
+representative segment of the principal piece showing the plasma membrane (PM) surrounding 7 outer dense fibers (ODF, there are 9 ODF in the midpiece). The fibrous sheath (FS) is composed of two longitudinal columns (LC) which are connected by transverse ribs (TR). Within the ODF are the components of the axoneme. (C) The axoneme is enlarged and the offset shows: the 9 outer microtubule doublets of the axoneme (MTs) with associated inner
+dynein arms (IDA), outer dynein arms (ODA), radial spokes (RS), nexin-dynein regulator complex (N-DRC), nexin links (NL) and the central pair of microtubule doublets (CP). Projections are represented on the CP (gray bow) but not detailed. Genes formally identified for the MMAF phenotype in human are
+reported in red. Candidate genes for the MMAF phenotype identified in animal models and in humans are reported in green and gray, respectively. Genes
+abbreviations are as follows: A kinase (PRKA) anchor protein 4 (AKAP4; coiled-coil domain containing 39 (CCDC39); coiled-coil domain containing 40
+(CCDC40); radial spoke head 1 homolog (RSPH1), radial spoke head 4 homolog A (RSPH4A), radial spoke head 9 homolog RSPH9; HYDIN, axonemal
+central pair apparatus protein (HYDIN); sperm associated antigen 6 (Spag6); Sperm associated antigen 16 (Spag16); Sperm flagellar 2 (Spef2); Enolase 4
+(Eno4); Tubulin tyrosine ligase-like 1 (Ttll1); Tubulin polyglutamylase complex subunit 1 (Psg1).
+Genetic causes of teratozoospermia 471
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+..........................................................................................................................................................................................................................................................
+Table VI Primary ciliary dyskinesia gene mutations and their consequences for axonemal ultrastucture and sperm phenotype.
+Gene ID Full name MIM
+number
+Axonemal localization Axonemal defects Infertility phenotype References
+ARMC4 Armadillo repeat
+containing 4
+615408 Assembly of ODA Reduced outer dynein arms No data available Hjeij et al. (2013) and Onoufriadis
+et al. (2014a)
+C21orf59 Chromosome 21 open
+reading frame 59
+615494 Dynein arm assembly Absence of both outer and inner dynein
+arm components
+No data available Austin-Tse et al. (2013)
+CCDC103 Coiled-coil domain
+containing 103
+614677 Assembly of ODA Reduced outer dynein arms No data available Panizzi et al. (2012)
+CCDC114 Coiled-coil domain
+containing 114
+615038 DCC2, an ODA
+microtubule-docking complex
+Ciliary outer dynein arm defects Male are fertile Knowles et al. (2013b) and
+Onoufriadis et al. (2013)
+CCDC151 Coiled-coil domain
+containing 151
+615956 ODA docking complex Outer dynein arm defect No data available Hjeij et al. (2014) and Jerber et al.
+(2014)
+CCDC164
+(DRC1)
+Coiled-coil domain
+containing 164
+615288 Nexin-dynein regulatory complex Absence of nexin links, disruption of the
+nexin-dynein regulatory complex
+No data available Wirschell et al. (2013)
+CCDC39 Coiled-coil domain
+containing 39
+613798 Assembly of IDA, N-DRC and
+Radial spokes
+– absence of inner dynein arms and nexin
+links
+– axonemal disorganization with
+mislocalized peripheral doublet
+– displacement or absence of the central
+pair
+Oligoasthenozoospermia
+midpiece is narrowed
+flagellum is shortened
+Merveille et al. (2011), Blanchon et al.
+(2012) and Antony et al. (2013)
+CCDC40 Coiled-coil domain
+containing 40
+613799 Govern the assembly of N-DRC
+and inner dynein arm complexes,
+but not outer dynein arm
+complexes
+– reduction of inner dynein arms
+– axonemal disorganization with
+mislocalized peripheral doublet,
+displacement or absence of the central
+pair
+– abnormal radial spokes and nexin links
+No data available Becker-Heck et al. 2011, Blanchon
+et al. (2012) and Antony et al. (2013)
+CCDC65 Coiled-coil domain
+containing 65
+611088 Assembly of the N-DRC Reduction in inner dynein arms and nexin
+links
+No data available Austin-Tse et al. (2013) and Horani
+et al. (2013b)
+DNAAF1
+(LRRC50)
+Dynein, axonemal,
+assembly factor 1
+613190 Assembly of dynein arm complexes
+in the cytoplasm
+Absence of both outer and inner dynein
+arms
+Male infertility reported but no
+details were provided
+Duquesnoy et al. (2009) and Loges
+et al. (2009)
+DNAAF2
+(KTU)
+Dynein, axonemal,
+assembly factor 2
+612517 Assembly of dynein arm complexes
+in the cytoplasm
+Absence of both outer and inner dynein
+arms
+Asthenozoospermia Omran et al. (2008)
+DNAAF3 Dynein, axonemal,
+assembly factor 3
+614566 Assembly of dynein arm complexes
+in the cytoplasm
+Absence of both outer and inner dynein
+arms
+Male infertility reported but no
+details were provided
+Mitchison et al. (2012)
+DNAH11 Dynein, axonemal,
+heavy chain 11
+603339 Outer dynein arm heavy chain Ultrastructure respiratory cilia is normal
+and outer dynein arms are intact
+Male are fertile Bartoloni et al. (2002), Schwabe et al.
+(2008), Knowles et al. (2012) and
+Lucas et al. (2012)
+DNAH5 Dynein, axonemal,
+heavy chain 5
+603335 Outer dynein arm heavy chain Outer dynein arm defect Asthenozoospermia Olbrich et al. (2002), Fliegauf et al.
+(2005), Hornef et al. (2006) and Failly
+et al. (2009)
+DNAI1 Dynein, axonemal,
+intermediate chain 1
+604366 Outer dynein arm intermediate
+chain
+The outer dynein arms are shortened or
+missing.
+Asthenozoospermia Pennarun et al. (1999), Guichard
+et al. (2001); Zariwala et al. (2001)
+DNAI2 Dynein, axonemal,
+intermediate chain 2
+605483 Outer dynein arm intermediate
+chain
+Outer dynein arm defect Male infertility reported but no
+details were provided
+Loges et al. (2008)
+472 Coutton et al.
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+DNAL1 Dynein, axonemal, light
+chain 1
+610062 Outer dynein arm light chain The outer dynein arms are shortened or
+missing
+No data available Mazor et al. (2011)
+DYX1C1
+(DNAAF4)
+Dyslexia susceptibility 1
+candidate 1
+608706 Assembly of dynein arm complexes
+in the cytoplasm
+Absence of both outer and inner dynein
+arms
+Asthenozoospermia Tarkar et al. (2013)
+HEATR2 HEAT repeat containing
+2
+614864 Assembly or stability of axonemal
+dynein arms
+Absence of outer dynein arms and partial
+lack of inner dynein arms
+Male infertility reported but no
+details were provided
+Horani et al. (2012)
+HYDIN HYDIN, axonemal
+central pair apparatus
+protein
+610812 C2b projection Lack the C2b projection of the central pair Asthenozoospermia Olbrich et al. (2012)
+LRRC6 Leucine rich repeat
+containing 6
+614930 Assembly of dynein arm complexes
+in the cytoplasm
+Absence of both outer and inner dynein
+arms
+Asthenozoospermia Kott et al. (2012) and Horani et al.
+(2013a)
+RGPR Retinitis pigmentosa
+GTPase regulator gene
+312610 Involved in the transitional zone of
+motile cilia in airway epithelia/
+localized to centrioles
+Variable. From normal structure to lack of
+both dynein arms an abnormal
+microtubular
+Disorganization.
+No data available Moore et al. (2006) and
+Bukowy-Bieryłło et al. (2013)
+RSPH1 Radial spoke head 1
+homolog
+609314 Radial spoke component Central pair microtubule complex and
+radial spoke defects
+Male infertility reported but no
+details were provided
+Kott et al. (2013), Knowles et al.
+(2014) and Onoufriadis et al. (2014b)
+RSPH4A Radial spoke head 4A
+homolog
+612647 Radial spoke component Central pair microtubule complex and
+radial spoke defects
+Male infertility reported but no
+details were provided
+Castleman et al. (2009) and Daniels
+et al. (2013)
+RSPH9 Radial spoke head 9
+homolog
+612648 Radial spoke component Central pair microtubule complex and
+radial spoke defects
+Male infertility reported but no
+details were provided
+Castleman et al. (2009)
+SPAG1 Sperm associated
+antigen 1
+603395 Assembly of dynein arm complexes
+in the cytoplasm
+Defects of both outer and inner dynein
+arms
+No data available Knowles et al. (2013c)
+TXNDC3 Thioredoxin domain
+containing 3
+607421 Non precisely determined Shortened or absent outer dynein arms No data available Duriez et al. (2007)
+ZMYND10 Zinc finger,
+MYND-type containing
+10
+607070 Assembly of dynein arm complexes
+in the cytoplasm
+Lack of outer and inner dynein arms Male infertility reported but no
+details were provided
+Moore et al. (2013) and Zariwala
+et al. (2013)
+Genetic causes of teratozoospermia 473
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+thinner principal piece and a tip sometimes curled or splayed into fine filaments. The size and integrity of mutant mitochondrial sheaths are also
+reduced. However, other cytoskeletal structures, namely the outer
+dense fibers and the axoneme, remain intact (Miki et al., 2002). Mouse
+models thus present strong evidence that Akap3 and 4 are involved in
+MMAF phenotype. Evidence of their implication in the human phenotype
+is however weaker. A deletion of AKAP3 and AKAP4 was described in a
+MMAF patient but it was only detected using conventional PCR and
+the genomic breakpoints were not identified (Baccetti et al., 2005a).
+Moreover, no quantitative analyses of DNA or mRNA were used to
+confirm the observed deletions and exclude a false negative PCR
+result. The authors then demonstrated an absence of staining in patient’s
+spermatozoa using immunofluorescence with AKAP4 antibodies (Baccetti et al., 2005a). The absence of the AKAP4 protein in mature
+sperm may however be secondary to another defect disorganizing the
+whole sperm flagella structure (Baccetti et al., 2004). Additionally,
+Turner et al. (2001) did not find any mutation in these two genes in 9
+MMAF patients.
+More recently homozygous mutations in the DNAH1 gene were identified in several patients with MMAF (Ben Khelifa et al., 2014). DNAH1
+encodes an axonemal inner arm dynein HC and is expressed in various
+tissues including the testis (Maiti et al., 2000). Homozygosity mapping
+was carried out on a cohort of 20 North African individuals. Four different homozygous mutations in DNAH1, one run-on, one missense and
+two splice site mutations were identified in seven patients including
+three brothers. Electron microscopy examination of spermatozoa
+revealed a general axonemal disorganization including mislocalization
+of the microtubule doublets, absence of the central pair in about half
+of the analyzed cross sections, loss of the inner arm dynein as well as
+severe disorganization of the fibrous sheath, the outer dense fibers
+and the mitochondrial sheath (Ben Khelifa et al., 2014). All these
+defects are hallmarks of the MMAF phenotype. Molecular and functional
+studies on samples from one of the mutated patients carrying the recurrent splicing mutation (c.11788-1G.A) demonstrated that the transcript and the protein were absent, confirming that the observed
+phenotype is due to the complete absence of DNAH1. This initial
+study thus indicates that 70% of DFS patients are expected to bear a
+genetic alteration in other genes, thus confirming that, like PCD,
+MMAF is genetically heterogeneous and that many other genes are
+likely involved in this syndrome. Lastly, the patient with the less severe
+missense variant presented a milder phenotype with 5% motility and
+the presence of 6% morphologically normal spermatozoa in contrast
+to the other DNAH1-mutated patients which had 100% abnormal
+sperm and 0% motility (Ben Khelifa et al., 2014). It could therefore be
+expected that individuals with intermediate asthenozoospermia and a
+low level of morphological anomalies could also harbor homozygous
+or compound heterozygous DNAH1 mutations of moderate severity.
+The phenotype observed in DNAH1-mutated patients extends
+beyond the absence of flagellar motility, as usually observed in other axonemal component defects, and substantiates a role for this protein in the
+maintenance of the structural integrity of the flagella. In Dnahc1 KO mice
+(the mouse ortholog of DNAH1, previously called Mdhc7), ‘rapid-freeze
+deep-etch electron microscopy’ studies indicated that one head of the
+IDA3 was missing, leading to a 3-2-1 globular head arrangement and suggesting that DNAH1 is one of the components of the IDA3 (Vernon et al.,
+2005). In Tetrahymena thermophila, IDA3 corresponds to the dynein d/a
+which is directly connected to the radial spoke RS3 through an arc-like
+structure (King, 2013). In mammals, the three radial spokes (RS1, RS2,
+and RS3) are multiprotein complexes allowing a connection between
+the external microtubule doublets and the two central microtubules
+thus stabilizing the axoneme (Pigino et al., 2011). Therefore, the
+severe axonemal disorganization observed in DNAH1-mutated patients
+may occur as a result of the abrogation of RS3 anchoring, leading to the
+absence of the central pair and the mislocalization of the peripheral doublets (Ben Khelifa et al., 2014). KO male mice lacking Dnah1 are infertile
+but only present with asthenozoospermia, without the sperm morphological abnormalities observed in human. Aside from the fact that there
+might be some divergences in flagellar biogenesis between mouse and
+human, an incomplete disruption of the targeted dynein was reported
+in the mouse model, which may explain this phenotypic difference
+(Neesen et al., 2001; Ben Khelifa et al., 2014).
+The central pair microtubules: the central key
+of MMAF phenotype?
+The central pair microtubules (CP) are composed of two microtubule
+singlets, named C1 and C2, which are structurally and biochemically distinct. Structural studies in Chlamydomonasshowed that the C1 tubule has
+two long projections (1a and 1b) and two short projections (1c and 1d).
+The C2 tubule has three short projections termed 2a, 2b and 2c. The CP
+contains at least 23 distinct proteins and some of these proteins are
+uniquely associated with either C1 or C2, indicating that the two microtubules may be functionally specialized. Evidence supports the fact that
+the CP projections interact with the RS heads and modulate dynein activity (reviewed in Wargo and Smith, 2003).
+It is worth noting that the lack of the CPs leading to an abnormal ‘9+0’
+configuration of the axoneme is the main defect observed in most cases
+associated with MMAF (Chemes and Rawe, 2003). Such a defect was also
+observed in patients with DNAH1 mutations (Ben Khelifa et al., 2014).
+These observations raise the hypothesis that CP disorganization might
+be the cornerstone leading to the MMAF phenotype. Several experimental models support the idea that some structural defects impacting theCP
+give rise to MMAF (Fig. 4C and Table VII). Axonemal abnormalities have
+been observed in spermatids from testicular biopsies underlining that the
+onset of the defect occurs during the late stages of spermiogenesis due to
+a defective assembly of cytoskeletal components of the sperm tail
+(Chemes and Rawe, 2010). Interestingly, in some cases, the disorganization of the microtubules has been described to increase and the sperm
+phenotype to worsen during the sperm transit through the epididymal
+duct (Sapiro et al., 2002; Sironen et al., 2011). This suggests that CP
+defects precede other more severe structural abnormalities by weakening all the axonemal organization making the flagella vulnerable to mechanical stress during spermiogenesis and sperm transit. This demonstrates
+that CP plays a major role in maintaining the global flagellum organization
+throughout spermiogenesis. This could explain why most other axonemal defects, not affecting the CP structure, do not lead to the
+MMAF phenotype.
+As a consequence, all genes encoding a protein interacting directly (CP
+components) or indirectly with the CP apparatus, like RS, some dynein
+arms or different partner proteins, are henceforth good candidates for
+the MMAF phenotype (Fig. 4C). As an example, depletion of mouse
+Meig1, a protein that interacts directly with Spag16 (Table VII) leads to
+shorter flagella, absence of the normal ‘9+2’ axoneme arrangement
+and peri-axonemal disorganization (Zhang et al., 2004; Salzberg et al.,
+474 Coutton et al.
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+..........................................................................................................................................................................................................................................................
+Table VII Animal models with central pair of microtubule doublet defects presenting with a DFS/MMAF-like phenotype.
+Inactivated
+genes ID
+Full ID Localization Function Sperm phenotype Known
+protein
+interaction
+Associated
+phenotype
+References
+Spag6 Sperm associated
+antigen 6
+C1 central pair
+microtubule
+Unknown Truncated sperm tails.
+Lack of the central pair microtubules.
+Alterations in the fibrous sheath and/or outer
+dense fibers.
+SPAG16£
+,
+SPAG17
+Hydrocephalus (50%) Sapiro et al. (2000,
+2002)
+Spag16 Sperm associated
+antigen 16
+Bridges connecting the
+C1 and C2
+microtubules
+Unknown Sperm abnormally shaped.
+Lack of the central pair microtubules.
+Marked disorganization of the outer doublet
+microtubules and outer dense fibers.
+SPAG6£, SPAG17,
+MEIG1£
+None Zhang et al. (2004)
+Spef2 (Kpl2) Sperm flagellar 2 C1b (?) Unknown Lowered sperm counts, short sperm tails.
+Absence of central pair and missing of peripheral
+doublets.
+Lack of organized mitochondria, outer dense
+fibers, and fibrous sheath structures.
+IFT20 None in pig model;
+Hydrocephalus and
+sinusitis in mouse
+Sironen et al. (2006,
+2010, 2011)
+Eno4 Enolase 4 C1b (?) Glycolytic enzymes;
+ATP production
+Sperm shortened, thickened and coiled.
+Disorganized aggregates of the fibrous sheath
+components.
+Disrupted axonemal structures.
+Displaced outer dense fibers in the principal
+piece.
+Defective annulus was also reported
+PGAM None Nakamura et al.
+(2013)
+Ttll1 (PGs3) Tubulin tyrosine
+ligase-like 1
+Central pair a-tubulin
+(?)
+Axonemal a-tubulin
+polyglutamylation
+Shortened flagella.
+Various axonemal abnormalities ranged from the
+absence of central microtubule to complete
+disorganization of the axonemal and
+peri-axonemal structures.
+Unknown Rhinosinusitis, otitis
+media
+Ikegami et al. (2010)
+and Vogel et al.
+(2010)
+PGs1 (Gtrgeo22) Tubulin
+polyglutamylase
+complex subunit 1
+Central pair a-tubulin
+(?)
+Axonemal a-tubulin
+polyglutamylation
+Shortened flagella.
+Various axonemal abnormalities ranged from the
+absence of central microtubule to complete
+disorganization of the axonemal and
+peri-axonemal structures.
+Unknown Absence of intermale
+aggression, reduced body
+fat
+Campbell et al.
+(2002)
+‘?’ indicated a probable localization but not formally identified. ‘£’ indicated a protein partner involved in dysplasia of the fibrous sheath/multiple morphological abnormalities of the flagella (DFS/MMAF)-like phenotype. SPAG17: Sperm associated
+antigen 17; MEIG1: Meiosis expressed gene 1; IFT20: intraflagellar transport 20; PGAM: phosphoglycerate mutase.
+Genetic causes of teratozoospermia 475
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+2010; Teves et al., 2013). In humans, several studies reported mutations
+in the coiled-coil domain containing 39 (CCDC39), coiled-coil domain
+containing 40 (CCDC40), radial spoke head 1 homolog (RSPH1), radial
+spoke head 4 homolog A (RSPH4A), radial spoke head 9 homolog
+RSPH9 and HYDIN, axonemal central pair apparatus protein (HYDIN)
+genes leading to CP defects. However, few phenotypic descriptions or
+structural studies have been carried out on sperm samples from
+mutated patients (Table VI). Only Merveille et al. (2011) reported that
+the sperm flagellum was shortened in patients with a mutation in the
+CCDC39 gene, a feature consistent with the MMAF phenotype and our
+hypothesis.
+PCD to MMAF phenotype: a phenotypic
+continuum?
+DNAH1 is the first inner arm dynein gene involved in a human pathology
+and the first axonemal gene responsible for a male infertility phenotype
+without any of the other symptoms usually observed in PCD. These
+novel mutations in the axonemal dyneinDNAH1 strengthen the emerging
+point of view that MMAF may be a phenotypic variation of the classical
+forms of PCD with a continuum of clinical manifestations ranging from infertile PCD patients to MMAF patients with no or low noise PCD manifestations. Indeed, many genes are likely to have a specific function in the
+sperm flagellum with potentially several paralogs that could carry out a
+similar function in other ciliated tissues, thus explaining the absence of
+a more severe PCD phenotype. For instance, absence of respiratory
+symptoms in DNAH1-mutated patients may be explained by other
+dyneins phylogenetically close to DNAH1 which may compensate the
+absence ofDNAH1 in other motile cilia (Ben Khelifa et al., 2014). This hypothesis has also been mentioned in a reverse situation where PCD
+patients with mutations in the CCDC114, a gene encoding an outer
+dynein arm docking complex, had no fertility problems. The authors proposed that CCDC114 function could be partially replaced by CCDC63,
+a homologous protein of CCDC114 with an expression restricted to the
+testis (Onoufriadis et al., 2013). Unfortunately, no nasal brushings or biopsies from DNAH1-mutated individuals could be obtained to search for
+infra-clinical manifestations by exploring the patient’s ciliary function in
+respiratory epithelium. In addition, alternative splicing is widespread in
+mammals and splice variants often exhibit tissue-specific expression patterns (Yu et al., 2014). Therefore some mutations may affect alternative
+variants specifically expressed in testis while having no effect in other
+tissues.
+Overall, these observations support the fact that important differences exist between the axonemal assembly/function of respiratory
+cilia and sperm flagella that explain why PCDs are not always associated
+with primary flagellar defects and vice versa. This was supported by
+mutations in DNAH5, an outer dynein arm, which are associated with
+the absence of outer dynein arms in respiratory cilia while a normal distribution of ODA heavy chain was reported in the sperm flagellum of
+mutated patients (Fliegauf et al., 2005). Mutations in DNAH11, another
+outer dynein arm, although associated with a normal axonemal ultrastructure, led to a PCD phenotype also with normal male fertility (Bartoloni et al., 2002; Schwabe et al., 2008). In many mouse models with a
+MMAF-like phenotype, the structural disorder appears to be specific
+to sperm tail development, because no effects on the architecture of
+cilia in the respiratory or female reproductive tract have been observed
+(Pilder et al., 1997; Fossella et al., 2000; Campbell et al., 2002; Miki et al.,
+2002; Sapiro et al., 2002; Sironen et al., 2006, 2011; Zhang et al., 2006;
+Lessard et al., 2007; Lee et al., 2008; Salzberg et al., 2010; Nakamura
+et al., 2013). Despite this normal axonemal organization, respiratory
+symptoms or lower tracheal ciliary beat frequency and/or hydrocephalus were described (Sapiro et al., 2002; Lee et al., 2008; Sironen et al.,
+2011). These findings highlight the duality of function of various proteins,
+involved in sperm flagellum biogenesis and in the motility of tracheal and
+ependymal cilia. Further studies are needed to elucidate the mechanisms
+underlying differences between cilia and flagella and to decipher the specific proteome of these two closely related organelles.
+Clinical implications of flagellar defects: return
+to base
+In dividing cells, the centrioles form the core of the centrosome which is
+the primary microtubule-organizing center in animal cells and it is
+involved in numerous functions such as the organization of the
+mitotic/meiotic spindle (reviewed in Bettencourt-Dias and Glover,
+2007). During flagellum biogenesis, the sperm centrioles migrate to
+the spermatid periphery and form the basal bodies from which the flagellar axoneme originates (Chemes, 2012). Centrioles are embedded in a
+matrix of proteins known as the pericentriolar material that supports
+motor proteins such as dyneins or kinesins (Schatten and Sun, 2009).
+Moreover, during fertilization in human, the sperm centrosome organizes the sperm aster which is essential to unite the sperm and the
+oocyte pronuclei (Sathananthan et al., 1991). The sperm centrosome
+also controls the syngamy and the first mitotic divisions after fertilization
+(Schatten and Sun, 2009).
+Primary flagellar abnormalities have been associated with an elevated
+frequency of gonosomal disomies and diploidies (Lewis-Jones et al.,
+2003; Baccetti et al., 2005b; Rives et al., 2005; Collodel and Moretti,
+2006; Ghedir et al., 2014). In the light of the above, chromosomal abnormalities observed in MMAF patients may be linked to the common components shared between the sperm centrosome and the flagella.
+Therefore, it could be speculated that defects in some of these
+centrosome-associated proteins may disturb both flagellum formation
+and spindle assembly during sperm meiosis, resulting in nondisjunction
+errors and spermatozoa aneuploidy (Rives et al., 2005). No chromosomal abnormalities were however detected in one patient with short-tailed
+spermatozoa (Viville et al., 2000) pointing out that all flagellar defects do
+not impact the centrosomal function.
+Sperm aneuploidy could impede ICSI outcomes in patients with flagellar defects. Nevertheless several studies described the successful application of ICSI to treat male infertility due to MMAF or PCD (for review
+Chemes and Rawe, 2003,Chemes and Alvarez Sedo, 2012;Da´vila Garza
+and Patrizio, 2013). The most recent review estimated the mean overall
+fertilization, pregnancy and live birth rates in MMAF patients at 63, 57 and
+43%, respectively (Da´vila Garza and Patrizio, 2013). In PCD patients, this
+review found fertilization and pregnancy rates ranging from 55 to 65%
+and from 35 to 45%, respectively, depending with the sperm source (ejaculated or testicular). The overall live birth rate was estimated at 39%.
+Interestingly although the results compare favorably with the overall
+results obtained after ICSI, the rate of ICSI success seems to be influenced by the type of ultrastructural flagellar defects carried by the
+patients (Mitchell et al., 2006; Fauque et al., 2009). Mitchell et al.
+(2006) reported a lower implantation and clinical pregnancy rate in
+patients without axonemal central structures (i.e. ‘9+0’ axoneme).
+476 Coutton et al.
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+Likewise, Fauque et al. (2009)reported a slower kinetics of early embryo
+cleavage and a lower implantation rate when a central pair of singlet
+microtubules was missing. These data question the possibility of a link
+between some specific axonemal structural defects and abnormal embryonic development in human. Since axonemal structures and sperm
+asters come from the sperm centrosome, it is possible that some of
+the described cases of fertilization failure and abnormal embryonic development reported in MMAF patients might be caused by defects in centrosomal or pericentrosomal proteins (Sathananthan, 1994; Van
+Blerkom, 1996; Chemes, 2012). The use of heterologous ICSI systems
+(human-bovine, human-rabbit) with sperm from infertile men with
+MMAF supported this hypothesis, showing a lower rate of sperm aster
+formation (Rawe et al., 2002; Terada et al., 2004). Interestingly, IVF
+experiments in Dnah1 KO mice demonstrated a retarded rate of early
+embryo development (Neesen et al., 2001). Unfortunately, in patients
+with DNAH1 mutations no data relative to ICSI attempts were available
+(Ben Khelifa et al., 2014). Lastly, although there has been no report of an
+abnormal birth from patients with MMAF or PCD, the risk of genetic
+defects other than infertility linked to the sperm structural defects
+should be discussed during genetic counseling (Sha et al., 2014). We
+believe that genetics data combined with careful analysis using electron
+microscopy will, in time, permit us to optimize the course of treatment
+for MMAF patients.
+Translation of the genetic
+information to the clinic: the way
+forward
+ART can circumvent infertility, and IVF with ISCI is possible for most
+patients regardless of the etiology of the defects. Unfortunately the availability of these technologies does not guarantee success and almost half
+the couples who seek reproductive assistance fail to achieve a pregnancy.
+The improvement of ART procedures is therefore particularly relevant
+and this strongly relies on a better understanding of spermatogenesis
+and of the molecular physiopathology of infertility. This mission involves
+the identification of genes responsible for male infertility. To date, a very
+short list of genes was identified which is in sharp contrast with the fact
+that several hundreds of genes (probably well in excess of a thousand)
+are estimated to be involved in spermatogenesis and male reproduction.
+Although genetic causes of human male fertility remain largely unknown,
+genetics investigations of some specific teratozoospermic phenotypes
+have yielded fruitful results. The key to success in the identification of infertility genes was largely based on the study of clinically and genetically
+homogenous phenotypes in small cohorts with consanguineous subjects
+and large families. This led in particular to the identification of AURKC and
+DPY19L2 and to the development of diagnoses for both genes, which are
+now recommended for patients presenting macrozoospermia and globozoospermia, respectively. Additional efforts are needed to identify
+genes in others syndromes and more generally in all phenotypes of
+male infertility in which many genes remain to be identified in human.
+The recent identification of DNAH1 in patients with MMAF is promising
+although a positive diagnosis is achieved for only 28% of the patients.
+This indicates that MMAF is genetically heterogeneous and that many
+other genes are likely involved in this syndrome.
+Homozygosity mapping has so far permitted the identification of the
+three main genes discussed in this review. This strategy can only be
+successful when studying large families or consanguineous patients presenting with a very homogeneous phenotypes. Due to the great genetic
+heterogeneity of infertility, this technique has now reached its limits and
+microarray analyses are now replaced by the fast evolving technology of
+next generation sequencing. Sequencing of all the coding sequences, or
+exome sequencing, can now be realized in a few weeks at a cost of
+400 –1000 E. Whole exome sequencing will be available on the next
+day (in a few years time) for probably less than that cost. This technical
+revolution is what was needed to unlock the secrets of male infertility.
+Exomic/genomic sequencing of large cohorts of patients is now necessary to identify the thousands of mutations involved in infertility and
+the hundreds of genes necessary to achieve efficient spermatogenesis.
+The identification of variants in candidate genes will be fast, but long
+and complex analyses will be necessary to confirm the pathogenic
+effect of the identified variants and more so to understand the function
+of the identified proteins. We can be confident that the number of
+genes and mutations identified in the pathological context of infertility
+will increase exponentially over the next few years.
+The next step will be to exploit these data to the benefit of the patients.
+Genotype/phenotype correlation will allow us to provide the best advice
+and care to patients and to answer many questions: is the risk of aneuploidy increased and is it therefore advisable to do ICSI? Or do we recommend performing PGD? Can we expect to find some sperm in this
+patient’s testis and is it worth doing a biopsy? Such prognoses are
+already available for a handful of patients: ICSI is contraindicated to
+patients with a homozygous AURKC mutation and a testicular biopsy
+should not be attempted for men with an AZFa or b deletion (Krausz
+et al., 2014). The discovery of DPY19L2 provided a better insight of
+the molecular pathogeny of globozoospermia. A recent work showed
+that testicular sperm present similar DNA defects to epididymal
+sperm thus suggesting that testicular biopsy is not relevant in this case
+(Yassine et al., 2015a). Moreover, the demonstration that the sperm
+factor (PLCzeta) is absent in globozoospermic sperm might justify the
+use of AOA in this pathology (Escoffier et al., 2015). With an increased
+list of genes associated with infertility we can expect that a better prognosis and improved advice and treatments will soon be available to many
+more patients.
+We are also convinced that another revolution is brewing.We are currently measuring the limitation of the whole IVF and ICSI strategy that is
+proposed to most infertile patients, especially those bearing the most
+severe defects. Alternative treatment strategies will only be possible
+with an in-depth comprehension of all aspects of spermatogenesis and
+of the physiopathology of sperm defects. The basis of this comprehension stems from the identification of the genes involved and of their
+function.We believe that male infertility might be among the pathologies
+that are best suited for targeted protein therapy and we are convinced
+that restoration of a functional spermatogenesis will be possible by
+reintroducing a deficient or missing protein as: (i) treatment success
+can be measured easily and objectively by a mere spermogram, (ii) in
+man spermatogenesis lasts 70 days. This corresponds to the necessary
+treatment duration to obtain functional gametes, which can then be cryopreserved and used at a later date to initiate any number of pregnancies.
+This relatively short treatment is in sharp contrast with life-long supplementations needed for most other genetic diseases.We thus believe the
+identification of the genetic causes of infertility will permit us to develop
+therapies tailored to restore specifically the identified defects. Different
+options are possible, ranging from direct protein or mRNA injection into
+Genetic causes of teratozoospermia 477
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+the rete testis (Ogawa et al., 1997) to injection of expression vectors via
+lipid shuttles or a virus vector such as adeno-associated viruses (AAV). As
+the targeted cells produce the gametes that will be used to achieve a
+pregnancy it is crucial that no genetic material is inserted into the
+genome, to preclude the transmission of potential deleterious effects
+to the next generations. At the moment even AAV vectors, which are
+considered as non-integrating and have been used successfully on post
+mitotic tissues in many clinical trials, have been found integrating the
+genome of the target cells at a frequency of 1024
+– 1025 (Kaufmann
+et al., 2013). For the time being, this low level of insertion precludes
+the utilization of viral vectors in the context of infertility, but we can
+hope that fully non-integrative vector will soon be available. Protein
+therapy is also possible ex vivo in testis culture systems but it is labor intensive and therefore less amenable to transposition to many different
+specific genetic defects. KO mice that have so far been used to study
+the physiopathology of abnormal spermatogenesis should now be
+used to evaluate the feasibility of different treatment options. The efficient delivery of the replacement protein will be subordinate to the
+nature and the localization of the defective native protein and the
+mode of delivery will have to be adjusted to ensure specificity. We
+however firmly believe that the restricted localization of the targeted
+cells (in the testis) and the limited duration of treatment clearly favor
+the development of innovative therapies applied to male infertility.
+In conclusion, now is a very exciting time in the field of the genetics of
+infertility. We have so far seen only a small part of the tip of the iceberg
+but we are confident that the rest will come to light in the foreseeable
+future. We believe that this work will be the cornerstone of the next
+revolution in ART allowing the clinician not just to bypass the abnormalities by forceful ICSI but to propose new therapeutic strategies allowing
+the selective repair of the broken parts.
+Authors’ roles
+Conception and organization of manuscript: C.C., C.A. and P.F.R.; literature search and analysis of evidence: C.C., J.E, and G.M.; writing and
+editing: C.C., J.E., G.M., C.A. and P.F.R.
+Funding
+Part of this work was funded by the Agence Nationale de la Recherche
+(ANR Genopat 2009, projet ICG2I)
+Conflict of interest
+None declared.
+References
+Achard V, Paulmyer-Lacroix O, Mercier G, Porcu G, Saias-Magnan J,
+Metzler-Guillemain C, Guichaoua MR. Reproductive failure in patients with
+various percentages of macronuclear spermatozoa: high level of aneuploid and
+polyploid spermatozoa. J Androl 2007;28:600– 606.
+Afzelius BA, Eliasson R. Male and female infertility problems in the immotile-cilia
+syndrome. Eur J Respir Dis Suppl 1983;127:144– 147.
+Alvarez Sedo´ C, Rawe VY, Chemes HE. Acrosomal biogenesis in human
+globozoospermia: immunocytochemical, ultrastructural and proteomic studies.
+Hum Reprod 2012;27:1912 –1921.
+Amdani SN, Jones C, Coward K. Phospholipase C zeta (PLCz): oocyte activation and
+clinical links to male factor infertility. Adv Biol Regul 2013;53:292– 308.
+Anton-Lamprecht I, Kotzur B, Schopf E. Round-headed human spermatozoa. Fertil Steril
+1976;27:685 –693.
+Antony D, Becker-Heck A, Zariwala MA, Schmidts M, Onoufriadis A, Forouhan M,
+Wilson R, Taylor-Cox T, Dewar A, Jackson C et al. Mutations in CCDC39 and
+CCDC40 are the major cause of primary ciliary dyskinesia with axonemal
+disorganization and absent inner dynein arms. Hum Mutat 2013;34:462 –472.
+Assou S, Anahory T, Pantesco V, Le Carrour T, Pellestor F, Klein B, Reyftmann L,
+Dechaud H, De Vos J, Hamamah S. The human cumulus—oocyte complex
+gene-expression profile. Hum Reprod 2006;21:1705 – 1719.
+Audouard C, Christians E. Hsp90b1 knockout targeted to male germline: a mouse
+model for globozoospermia. Fertil Steril 2011;95:1475 –1477.e1 –4.
+Austin-Tse C, Halbritter J, Zariwala MA, Gilberti RM, Gee HY, Hellman N, Pathak N,
+Liu Y, Panizzi JR, Patel-King RS et al. Zebrafish ciliopathy screen plus human
+mutational analysis identifies C21orf59 and CCDC65 defects as causing primary
+ciliary dyskinesia. Am J Hum Genet 2013;93:672– 686.
+Avo Santos M, van de Werken C, de Vries M, Jahr H, Vromans MJM, Laven JSE,
+Fauser BC, Kops GJ, Lens SM, Baart EB. A role for Aurora C in the chromosomal
+passenger complex during human preimplantation embryo development. Hum
+Reprod 2011;26:1868 –1881.
+Baccetti B, BurriniAG, Capitani S, Collodel G, Moretti E, Piomboni P, Renieri T. Notulae
+seminologicae. 2. The ‘short tail’ and ‘stump’ defect in human spermatozoa.
+Andrologia 1993;25:331 –335.
+Baccetti B, Bruni E, Gambera L, Moretti E, Piomboni P. An ultrastructural and
+immunocytochemical study of a rare genetic sperm tail defect that causes
+infertility in humans. Fertil Steril 2004;82:463 –468.
+Baccetti B, Collodel G, Estenoz M, Manca D, Moretti E, Piomboni P. Gene deletions in
+an infertile man with sperm fibrous sheath dysplasia. Hum Reprod 2005a;
+20:2790– 2794.
+Baccetti B, Collodel G, Gambera L, Moretti E, Serafini F, Piomboni P. Fluorescence in
+situ hybridization and molecular studies in infertile men with dysplasia of the
+fibrous sheath. Fertil Steril 2005b;84:123– 129.
+Baker MA, Naumovski N, Hetherington L, Weinberg A, Velkov T, Aitken RJ. Head and
+flagella subcompartmental proteomic analysis of human spermatozoa. Proteomics
+2013;13:61– 74.
+Balboula AZ, Schindler K. Selective disruption of aurora C kinase reveals distinct
+functions from aurora B kinase during meiosis in mouse oocytes. PLoS Genet 2014;
+10:e1004194.
+Bartoloni L, Blouin J-L, Pan Y, Gehrig C, Maiti AK, Scamuffa N, Rossier C, Jorissen M,
+Armengot M, Meeks M et al. Mutations in the DNAH11 (axonemal heavy chain
+dynein type 11) gene cause one form of situs inversus totalis and most likely
+primary ciliary dyskinesia. Proc Natl Acad Sci USA 2002;99:10282 –10286.
+Baudat F, Buard J, Grey C, Fledel-Alon A, Ober C, Przeworski M, Coop G, de Massy B.
+PRDM9 is a major determinant of meiotic recombination hotspots in humans and
+mice. Science 2010;327:836–840.
+Becker M, Stolz A, Ertych N, Bastians H. Centromere localization of INCENP-Aurora B
+is sufficient to support spindle checkpoint function. Cell Cycle Georget Tex 2010;
+9:1360 –1372.
+Becker-Heck A, Zohn IE, Okabe N, Pollock A, Lenhart KB, Sullivan-Brown J,
+McSheene J, Loges NT, Olbrich H, Haeffner K et al. The coiled-coil domain
+containing protein CCDC40 is essential for motile cilia function and left-right axis
+formation. Nat Genet 2011;43:79– 84.
+Ben Khelifa M, Zouari R, Harbuz R, Halouani L, Arnoult C, Lunardi J, Ray PF. A new
+AURKC mutation causing macrozoospermia: implications for human
+spermatogenesis and clinical diagnosis. Mol Hum Reprod 2011;17:762–768.
+Ben Khelifa M, Coutton C, Blum MGB, Abada F, Harbuz R, Zouari R, Guichet A,
+May-Panloup P, Mitchell V, Rollet J et al. Identification of a new recurrent aurora
+kinase C mutation in both European and African men with macrozoospermia.
+Hum Reprod 2012;27:3337 –3346.
+Ben Khelifa M, Coutton C, Zouari R, Karaouze`ne T, Rendu J, Bidart M,
+Yassine S, Pierre V, Delaroche J, Hennebicq S et al. Mutations in DNAH1, which
+encodes an inner arm heavy chain dynein, lead to male infertility from multiple
+morphological abnormalities of the sperm flagella. Am J Hum Genet 2014;
+94:95 –104.
+Benzacken B, Gavelle FM, Martin-Pont B, Dupuy O, Lie`vre N, Hugues JN, Wolf JP.
+Familial sperm polyploidy induced by genetic spermatogenesis failure: case report.
+Hum Reprod 2001;16:2646 –2651.
+478 Coutton et al.
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+Bernard M, Sanseau P, Henry C, Couturier A, Prigent C. Cloning of STK13, a third
+human protein kinase related to Drosophila aurora and budding yeast Ipl1 that
+maps on chromosome 19q13.3-ter. Genomics 1998;53:406– 409.
+Bettencourt-Dias M, Glover DM. Centrosome biogenesis and function: centrosomics
+brings new understanding. Nat Rev Mol Cell Biol 2007;8:451 –463.
+Bisgrove BW, Yost HJ. The roles of cilia in developmental disorders and disease.
+Development 2006;133:4131– 4143.
+Blanchard Y, Lescoat D, Le Lannou D. Anomalous distribution of nuclear basic proteins
+in round-headed human spermatozoa. Andrologia 1990;22:549– 555.
+Blanchon S, Legendre M, Copin B, Duquesnoy P, Montantin G, Kott E, Dastot F,
+Jeanson L, Cachanado M, Rousseau A et al. Delineation of CCDC39/CCDC40
+mutation spectrum and associated phenotypes in primary ciliary dyskinesia. J Med
+Genet 2012;49:410– 416.
+Boivin J, Bunting L, Collins JA, Nygren KG. International estimates of infertility
+prevalence and treatment-seeking: potential need and demand for infertility
+medical care. Hum Reprod 2007;22:1506 –1512.
+Boon M, Jorissen M, Proesmans M, De Boeck K. Primary ciliary dyskinesia, an orphan
+disease. Eur J Pediatr 2013;172:151– 162.
+Brahem S, Mehdi M, Elghezal H, Saad A. Analysis of sperm aneuploidies and DNA
+fragmentation in patients with globozoospermia or with abnormal acrosomes.
+Urology 2011;77:1343– 1348.
+Brahem S, Mehdi M, Elghezal H, Saad A. Study of aneuploidy rate and sperm DNA
+fragmentation in large-headed, multiple-tailed spermatozoa. Andrologia 2012;
+44:130– 135.
+Brenner S. The genetics of Caenorhabditis elegans. Genetics 1974;77:71–94.
+Brown PR, Miki K, Harper DB, Eddy EM. A-kinase anchoring protein 4 binding proteins
+in the fibrous sheath of the sperm flagellum. Biol Reprod 2003;68:2241 – 2248.
+Brown JR, Koretke KK, Birkeland ML, Sanseau P, Patrick DR. Evolutionary relationships
+of Aurora kinases: implications for model organism studies and the development of
+anti-cancer drugs. BMC Evol Biol 2004;4:39.
+Brugo-Olmedo S, Chillik C, Kopelman S. Definition and causes of infertility. Reprod
+Biomed Online 2001;2:41– 53.
+Buettner FFR, Ashikov A, Tiemann B, Lehle L, Bakker H. C. elegans DPY-19 is a
+C-mannosyltransferase glycosylating thrombospondin repeats. Mol Cell 2013;
+50:295– 302.
+Bui KH, Sakakibara H, Movassagh T,Oiwa K, Ishikawa T. Molecular architecture of inner
+dynein arms in situ in Chlamydomonas reinhardtii flagella. J Cell Biol 2008;
+183:923 –932.
+Bukowy-Bieryłło Z, Zie˛ tkiewicz E, Loges NT, Wittmer M, Geremek M, Olbrich H,
+Fliegauf M, Voelkel K, Rutkiewicz E, Rutland J et al. RPGR mutations might cause
+reduced orientation of respiratory cilia. Pediatr Pulmonol 2013;48:352– 363.
+Campbell PK, Waymire KG, Heier RL, Sharer C, Day DE, Reimann H, Jaje JM,
+Friedrich GA, Burmeister M, Bartness TJ et al. Mutation of a novel gene results in
+abnormal development of spermatid flagella, loss of intermale aggression and
+reduced body fat in mice. Genetics 2002;162:307.
+Carmena M, Earnshaw WC. The cellular geography of aurora kinases. Nat Rev Mol Cell
+Biol 2003;4:842– 854.
+Carmena M, Wheelock M, Funabiki H, Earnshaw WC. The chromosomal passenger
+complex (CPC): from easy rider to the godfather of mitosis. Nat Rev Mol Cell Biol
+2012;13:789 –803.
+Carrell DT, Emery BR, Liu L. Characterization of aneuploidy rates, protamine
+levels, ultrastructure, and functional ability of round-headed sperm from two
+siblings and implications for intracytoplasmic sperm injection. Fertil Steril 1999;
+71:511– 516.
+Carson AR, Cheung J, Scherer SW. Duplication and relocation of the functional
+DPY19L2 gene within low copy repeats. BMC Genomics 2006;7:45.
+Castleman VH, Romio L, Chodhari R, Hirst RA, de Castro SCP, Parker KA,
+Ybot-Gonzalez P, Emes RD, Wilson SW, Wallis C et al. Mutations in radial spoke
+head protein genes RSPH9 and RSPH4A cause primary ciliary dyskinesia with
+central-microtubular-pair abnormalities. Am J Hum Genet 2009;84:197 –209.
+Chan CS, Botstein D. Isolation and characterization of chromosome-gain and
+increase-in-ploidy mutants in yeast. Genetics 1993;135:677 –691.
+Chelli MH, Albert M, Ray PF, Guthauser B, Izard V, Hammoud I, Selva J, Vialard F. Can
+intracytoplasmic morphologically selected sperm injection be used to select
+normal-sized sperm heads in infertile patients with macrocephalic sperm head
+syndrome? Fertil Steril 2010;93:1347.e1 –5.
+Chemes HE. Sperm centrioles and their dual role in flagellogenesis and cell cycle of the
+zygote. In: Schatten H. (ed) The Centrosome. Humana Press, 2012, 33 –48. Available
+at: http://link.springer.com.gate2.inist.fr/chapter/10.1007/978-1-62703-035-
+9_2. Accessed June 20, 2014.
+Chemes HE, Alvarez Sedo C. Tales of the tail and sperm head aches: changing concepts
+on the prognostic significance of sperm pathologies affecting the head, neck and tail.
+Asian J Androl 2012;14:14– 23.
+Chemes EH, Rawe YV. Sperm pathology: a step beyond descriptive morphology.
+Origin, characterization and fertility potential of abnormal sperm phenotypes in
+infertile men. Hum Reprod Update 2003;9:405– 428.
+Chemes HE, Rawe VY. The making of abnormal spermatozoa: cellular and molecular
+mechanisms underlying pathological spermiogenesis. Cell Tissue Res 2010;
+341:349 –357.
+Chemes HE, Brugo S, Zanchetti F, CarrereC, Lavieri JC. Dysplasia of the fibrous sheath:
+an ultrastructural defect of human spermatozoa associated with sperm immotility
+and primary sterility. Fertil Steril 1987;48:664 –669.
+Chemes HE, Olmedo SB, Carrere C, Oses R, Carizza C, Leisner M, Blaquier J.
+Ultrastructural pathology of the sperm flagellum: association between flagellar
+pathology and fertility prognosis in severely asthenozoospermic men. Hum Reprod
+1998;13:2521 –2526.
+Chen H-L, Tang C-JC, Chen C-Y, Tang TK. Overexpression of an Aurora-C
+kinase-deficient mutant disrupts the Aurora-B/INCENP complex and induces
+polyploidy. J Biomed Sci 2005;12:297 –310.
+Chianese C, Fino MG, Riera Escamilla A, Lo´pez Rodrigo O, Vinci S, Guarducci E,
+Daguin F, Muratori M, Tamburrino L, Lo Giacco D et al. Comprehensive
+investigation in patients affected by sperm macrocephaly and globozoospermia.
+Andrology 2015;3:203– 212.
+Christensen GL, Ivanov IP, Atkins JF, Campbell B, Carrell DT. Identification of
+polymorphisms in the Hrb, GOPC, and Csnk2a2 genes in two men with
+globozoospermia. J Androl 2006;27:11– 15.
+Collodel G, Moretti E. Sperm morphology and aneuploidies: defects of supposed
+genetic origin. Andrologia 2006;38:208 –215.
+Coutton C, Zouari R, Abada F, Ben Khelifa M, Merdassi G, Triki C, Escalier D,
+Hesters L, Mitchell V, Levy R et al. MLPA and sequence analysis of DPY19L2
+reveals point mutations causing globozoospermia. Hum Reprod 2012;
+27:2549 – 2558.
+Coutton C, Abada F, Karaouzene T, Sanlaville D, Satre V, Lunardi J, Jouk P-S, Arnoult C,
+Thierry-Mieg N, Ray PF. Fine characterisation of a recombination hotspot at the
+DPY19L2 locus and resolution of the paradoxical excess of duplications over
+deletions in the general population. PLoS Genet 2013;9:e1003363.
+Dale B, Iaccarino M, Fortunato A, Gragnaniello G, Kyozuka K, Tosti E. A morphological
+and functional study of fusibility in round-headed spermatozoa in the human. Fertil
+Steril 1994;61:336– 340.
+Dam AHDM, Feenstra I, Westphal JR, Ramos L, van Golde RJT, Kremer JAM.
+Globozoospermia revisited. Hum Reprod Update 2007a;13:63– 75.
+Dam AHDM, Koscinski I, Kremer JAM, Moutou C, Jaeger A-S, Oudakker AR,
+Tournaye H, Charlet N, Lagier-Tourenne C, van Bokhoven H et al. Homozygous
+mutation in SPATA16 is associated with male infertility in human
+globozoospermia. Am J Hum Genet 2007b;81:813 –820.
+Dam AH, Ramos L, Dijkman HB, Woestenenk R, Robben H, van den Hoven L,
+Kremer JA. Morphology of partial globozoospermia. J Androl 2011;32:
+199 –206.
+Daniels MLA, Leigh MW, Davis SD, Armstrong MC, Carson JL, Hazucha M, Dell SD,
+Eriksson M, Collins FS, Knowles MR et al. Founder mutation in RSPH4A identified
+in patients of Hispanic descent with primary ciliary dyskinesia. Hum Mutat 2013;
+34:1352– 1356.
+David G, Feneux D, Serres C, Escalier D, Jouannet P. A new entity of sperm pathology:
+peri-axonemal flagellar dyskinesia. Bull Acade´mie Natl Me´decine 1993;177:263– 271;
+discussion 272 – 275.
+Da´vila Garza SA, Patrizio P. Reproductive outcomes in patients with male infertility
+because of Klinefelter’s syndrome, Kartagener’s syndrome, round-head sperm,
+dysplasia fibrous sheath, and “stump” tail sperm: an updated literature review.
+Curr Opin Obstet Gynecol 2013;25:229 –246.
+De Boer P, de Vries M, Ramos L. A mutation study of sperm head shape and motility in
+the mouse: lessons for the clinic. Andrology 2015;3:174 –202.
+Devillard F, Metzler-Guillemain C, Pelletier R, DeRobertis C, Bergues U, Hennebicq S,
+Guichaoua M, Se`le B, Rousseaux S. Polyploidy in large-headed sperm: FISH study of
+three cases. Hum Reprod 2002;17:1292– 1298.
+Dieterich K, Soto Rifo R, Faure AK, Hennebicq S, Ben Amar B, Zahi M, Perrin J,
+Martinez D, Se`le B, Jouk P-S et al. Homozygous mutation of AURKC yields
+Genetic causes of teratozoospermia 479
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+large-headed polyploid spermatozoa and causes male infertility. Nat Genet 2007;
+39:661– 665.
+Dieterich K, Zouari R, Harbuz R, Vialard F, Martinez D, Bellayou H, Prisant N,
+Zoghmar A, Guichaoua MR, Koscinski I et al. The Aurora Kinase C c.144delC
+mutation causes meiosis I arrest in men and is frequent in the North African
+population. Hum Mol Genet 2009;18:1301– 1309.
+Dirami T, Rode B, Jollivet M, Da Silva N, Escalier D, Gaitch N, Norez C, Tuffery P,
+Wolf J-P, Becq F et al. Missense mutations in SLC26A8, encoding a sperm-specific
+activator of CFTR, are associated with human asthenozoospermia. Am J Hum
+Genet 2013;92:760– 766.
+Dirican EK, Isik A, Vicdan K, Sozen E, Suludere Z. Clinical pregnancies and livebirths
+achieved by intracytoplasmic injection of round headed acrosomeless
+spermatozoa with and without oocyte activation in familial globozoospermia: case
+report. Asian J Androl 2008;10:332–336.
+Duquesnoy P, Escudier E, Vincensini L, Freshour J, Bridoux A-M, CosteA, DeschildreA,
+de Blic J, Legendre M, Montantin G et al. Loss-of-function mutations in the human
+ortholog of Chlamydomonas reinhardtii ODA7 disrupt dynein arm assembly and
+cause primary ciliary dyskinesia. Am J Hum Genet 2009;85:890 –896.
+Duriez B, Duquesnoy P, Escudier E, Bridoux A-M, Escalier D, Rayet I, Marcos E,
+Vojtek A-M, Bercher J-F, Amselem S. A common variant in combination with a
+nonsense mutation in a member of the thioredoxin family causes primary ciliary
+dyskinesia. Proc Natl Acad Sci USA 2007;104:3336 –3341.
+Eddy EM, Toshimori K, O’Brien DA. Fibrous sheath of mammalian spermatozoa.
+Microsc Res Tech 2003;61:103 –115.
+Elinati E, Kuentz P, Redin C, Jaber S, Vanden Meerschaut F, Makarian J, Koscinski I,
+Nasr-Esfahani MH, Demirol A, Gurgan T et al. Globozoospermia is mainly due to
+DPY19L2 deletion via non-allelic homologous recombination involving two
+recombination hotspots. Hum Mol Genet 2012;21:3695 –3702.
+El Kerch F, Lamzouri A, Laarabi FZ, Zahi M, Ben Amar B, Sefiani A. Confirmation of the
+high prevalence in Morocco of the homozygous mutation c.144delC in the aurora
+kinase C gene (AURKC) in the teratozoospermia with large-headed spermatozoa.
+J Gynecol Obstet Biol Reprod 2011;40:329–333.
+Eloualid A, Rouba H, Rhaissi H, Barakat A, Louanjli N, Bashamboo A, McElreavey K.
+Prevalence of the Aurora kinase C c.144delC mutation in infertile Moroccan men.
+Fertil Steril 2014;101:1086– 1090.
+Escalier D. Human spermatozoa with large heads and multiple flagella: a quantitative
+ultrastructural study of 6 cases. Biol Cell 1983;48:65– 74.
+Escalier D, David G. Pathology of the cytoskeleton of the human sperm flagellum:
+axonemal and peri-axonemal anomalies. Biol Cell 1984;50:37 –52.
+Escalier D, Serres C. Aberrant distribution of the peri-axonemal structures in the
+human spermatozoon: possible role of the axoneme in the spatial organization of
+the flagellar components. Biol Cell 1985;53:239– 250.
+Escalier D, Bermu`dez D, Gallo JM, Viellefond A, Schre´vel J. Cytoplasmic events in
+human meiotic arrest as revealed by immunolabelling of spermatocyte proacrosin.
+Differentiation 1992;51:233– 243.
+Escoffier J, Yassine S, Lee HC, Martinez G, Delaroche J, Coutton C, Karaouze`ne T,
+Zouari R, Metzler-Guillemain C, Pernet-Gallay K et al. Subcellular localization of
+phospholipase Cz in human sperm and its absence in DPY19L2-deficient sperm
+are consistent with its role in oocyte activation. Mol Hum Reprod 2015;21:157– 168.
+Failly M, Bartoloni L, Letourneau A, Munoz A, Falconnet E, Rossier C, de Santi MM,
+Santamaria F, Sacco O, DeLozier-Blanchet CD et al. Mutations in DNAH5
+account for only 15% of a non-preselected cohort of patients with primary ciliary
+dyskinesia. J Med Genet 2009;46:281 –286.
+Fauque P, Albert M, Serres C, Viallon V, Davy C, Epelboin S, Chalas C, Jouannet P,
+Patrat C. From ultrastructural flagellar sperm defects to the health of babies
+conceived by ICSI. Reprod Biomed Online 2009;19:326 –336.
+Ferna´ndez-Miranda G, Trakala M, Martı´n J, Escobar B, Gonza´lez A, Ghyselinck NB,
+Ortega S, Can˜amero M, Pe´rez de Castro I, Malumbres M. Genetic disruption of
+aurora B uncovers an essential role for aurora C during early mammalian
+development. Development 2011;138:2661– 2672.
+Fliegauf M, Olbrich H, Horvath J, Wildhaber JH, Zariwala MA, Kennedy M,
+Knowles MR, Omran H. Mislocalization of DNAH5 and DNAH9 in respiratory
+cells from patients with primary ciliary dyskinesia. Am J Respir Crit Care Med 2005;
+171:1343 –1349.
+Flo¨rke-Gerloff S, To¨pfer-Petersen E, Mu¨ller-EsterlW, Mansouri A, Schatz R, SchirrenC,
+Schill W, Engel W. Biochemical and genetic investigation of round-headed
+spermatozoa in infertile men including two brothers and their father. Andrologia
+1984;16:187 –202.
+Fossella J, Samant SA, Silver LM, King SM, Vaughan KT, Olds-Clarke P, Johnson KA,
+Mikami A, Vallee RB, Pilder SH. An axonemal dynein at the Hybrid Sterility 6
+locus: implications for t haplotype-specific male sterility and the evolution of
+species barriers. Mamm Genome 2000;11:8 – 15.
+Frohnert C, Schweizer S, Hoyer-Fender S. SPAG4L/SPAG4L-2 are testis-specific SUN
+domain proteins restricted to the apical nuclear envelope of round spermatids facing
+the acrosome. Mol Hum Reprod 2011;17:207– 218.
+Fujihara Y, Satouh Y, Inoue N, Isotani A, Ikawa M, Okabe M. SPACA1-deficient male
+mice are infertile with abnormally shaped sperm heads reminiscent of
+globozoospermia. Development 2012;139:3583– 3589.
+Funaki T, Kon S, Tanabe K, Natsume W, Sato S, Shimizu T, Yoshida N, Wong WF,
+Ogura A, Ogawa T et al. The Arf GAP SMAP2 is necessary for organized vesicle
+budding from the trans-Golgi network and subsequent acrosome formation in
+spermiogenesis. Mol Biol Cell 2013;24:2633– 2644.
+German J, Rasch EM, Huang CY, MacLeod J, Imperato-McGinley J. Human infertility due
+to production of multiple-tailed spermatozoa with excessive amounts of DNA. Am
+Soc Hum Genet 1981;33:64A.
+Ghedir H, Mehri A, Mehdi M, Brahem S, Saad A, Ibala-Romdhane S. Meiotic segregation
+and sperm DNA fragmentation in Tunisian men with dysplasia of the fibrous sheath
+(DFS) associated with head abnormalities. J Assist Reprod Genet 2014;31:1167–1174.
+Glover DM, Leibowitz MH, McLean DA, Parry H. Mutations in aurora prevent
+centrosome separation leading to the formation of monopolar spindles. Cell 1995;
+81:95 –105.
+Go¨b E, Schmitt J, Benavente R, Alsheimer M. Mammalian sperm head formation involves
+different polarization of two novel LINC complexes. PloS One 2010;5:e12072.
+Goldenson B, Crispino JD. The aurora kinases in cell cycle and leukemia. Oncogene
+2014;34:537 –545.
+Guichard C, Harricane MC, Lafitte JJ, Godard P, Zaegel M, Tack V, Lalau G,
+Bouvagnet P. Axonemal dynein intermediate-chain gene (DNAI1) mutations
+result in situs inversus and primary ciliary dyskinesia (Kartagener syndrome). Am J
+Hum Genet 2001;68:1030 –1035.
+Guthauser B, Vialard F, Dakouane M, Izard V, Albert M, Selva J. Chromosomal analysis
+of spermatozoa with normal-sized heads in two infertile patients with macrocephalic
+sperm head syndrome. Fertil Steril 2006;85:750.e5 – 750.e7.
+Hao Z, Wolkowicz MJ, Shetty J, Klotz K, Bolling L, Sen B, Westbrook VA, Coonrod S,
+Flickinger CJ, Herr JC. SAMP32, a testis-specific, isoantigenic sperm acrosomal
+membrane-associated protein. Biol Reprod 2002;66:735 –744.
+Haraguchi S, Tsuda M, Kitajima S, Sasaoka Y, Nomura-Kitabayashid A, Kurokawa K,
+Saga Y. nanos1: a mouse nanos gene expressed in the central nervous system is
+dispensable for normal development. Mech Dev 2003;120:721–731.
+Harbuz R, Zouari R, Pierre V, Ben Khelifa M, Kharouf M, Coutton C, Merdassi G,
+Abada F, Escoffier J, Nikas Y et al. A recurrent deletion of DPY19L2 causes
+infertility in man by blocking sperm head elongation and acrosome formation. Am J
+Hum Genet 2011;88:351– 361.
+Heytens E, Parrington J, Coward K, Young C, Lambrecht S, Yoon S-Y, Fissore RA,
+Hamer R, Deane CM, Ruas M et al. Reduced amounts and abnormal forms of
+phospholipase C zeta (PLCzeta) in spermatozoa from infertile men. Hum Reprod
+2009;24:2417 –2428.
+Hjeij R, Lindstrand A, Francis R, Zariwala MA, Liu X, Li Y, Damerla R, Dougherty GW,
+Abouhamed M, Olbrich H et al. ARMC4 mutations cause primary ciliary dyskinesia
+with randomization of left/right body asymmetry. Am J Hum Genet 2013;
+93:357– 367.
+Hjeij R, Onoufriadis A, Watson CM, Slagle CE, Klena NT, Dougherty GW,
+Kurkowiak M, Loges NT, Diggle CP, Morante NFC et al. CCDC151 mutations
+cause primary ciliary dyskinesia by disruption of the outer dynein arm docking
+complex formation. Am J Hum Genet 2014;95:257 –274.
+Holstein AF, Schirren C, Schirren CG. Human spermatids and spermatozoa lacking
+acrosomes. J Reprod Fertil 1973;35:489– 491.
+Honigberg L, Kenyon C. Establishment of left/right asymmetry in neuroblast migration
+by UNC-40/DCC, UNC-73/Trio and DPY-19 proteins in C. elegans. Development
+2000;127:4655 –4668.
+Horani A, Druley TE, Zariwala MA, Patel AC, Levinson BT, Van Arendonk LG,
+Thornton KC, Giacalone JC, Albee AJ, Wilson KS et al. Whole-exome capture
+and sequencing identifies HEATR2 mutation as a cause of primary ciliary
+dyskinesia. Am J Hum Genet 2012;91:685– 693.
+Horani A, Ferkol TW, Shoseyov D, Wasserman MG, Oren YS, Kerem B, Amirav I,
+Cohen-Cymberknoh M, Dutcher SK, Brody SL et al. LRRC6 mutation causes
+primary ciliary dyskinesia with dynein arm defects. PloS One 2013a;8:e59436.
+480 Coutton et al.
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+Horani A, Brody SL, Ferkol TW, Shoseyov D,Wasserman MG, Ta-shma A,Wilson KS,
+Bayly PV, Amirav I, Cohen-Cymberknoh M et al. CCDC65 mutation causes primary
+ciliary dyskinesia with normal ultrastructure and hyperkinetic cilia. PloS One 2013b;
+8:e72299.
+Horani A, Brody SL, Ferkol TW. Picking up speed: advances in the genetics of primary
+ciliary dyskinesia. Pediatr Res 2014;75:158 –164.
+Hornef N, Olbrich H, Horvath J, Zariwala MA, Fliegauf M, Loges NT, Wildhaber J,
+Noone PG, Kennedy M, Antonarakis SE et al. DNAH5 mutations are a common
+cause of primary ciliary dyskinesia with outer dynein arm defects. Am J Respir Crit
+Care Med 2006;174:120– 126.
+Iban˜ez-Tallon I, Gorokhova S, Heintz N. Loss of function of axonemal dynein Mdnah5
+causes primary ciliary dyskinesia and hydrocephalus. Hum Mol Genet 2002;
+11:715– 721.
+Iban˜ez-Tallon I, Heintz N, Omran H. To beat or not to beat: roles of cilia in
+development and disease. Hum Mol Genet 2003;12(Spec No 1):R27–R35.
+Ikegami K, Sato S, Nakamura K, Ostrowski LE, Setou M. Tubulin polyglutamylation is
+essential for airway ciliary function through the regulation of beating asymmetry.
+Proc Natl Acad Sci USA 2010;107:10490– 10495.
+In’t Veld PA, Broekmans FJ, de France HF, Pearson PL, Pieters MH, van Kooij RJ.
+Intracytoplasmic sperm injection (ICSI) and chromosomally abnormal
+spermatozoa. Hum Reprod 1997;12:752– 754.
+Inaba K. Molecular architecture of the sperm flagella: molecules for motility and
+signaling. Zoolog Sci 2003;20:1043 –1056.
+Inaba K. Sperm flagella: comparative and phylogenetic perspectives of protein
+components. Mol Hum Reprod 2011;17:524 –538.
+Ito C, Suzuki-Toyota F, Maekawa M, Toyama Y, Yao R, Noda T, Toshimori K. Failure to
+assemble the peri-nuclear structures in GOPC deficient spermatids as found in
+round-headed spermatozoa. Arch Histol Cytol 2004;67:349 –360.
+Jeganathan D, Chodhari R, Meeks M, Faeroe O, Smyth D, Nielsen K, Amirav I,
+Luder AS, Bisgaard H, Gardiner RM et al. Loci for primary ciliary dyskinesia map
+to chromosome 16p12.1-12.2 and 15q13.1-15.1 in Faroe Islands and Israeli
+Druze genetic isolates. J Med Genet 2004;41:233– 240.
+Jerber J, Baas D, Soulavie F, Chhin B, Cortier E, Vesque C, Thomas J, Durand B. The
+coiled-coil domain containing protein CCDC151 is required for the function of
+IFT-dependent motile cilia in animals. Hum Mol Genet 2014;23:563–577.
+Jungwirth A, Giwercman A, Tournaye H, Diemer T, Kopa Z, Dohle G, Krausz C,
+European Association of Urology Working Group on Male Infertility. European
+Association of Urology guidelines on Male Infertility: the 2012 update. Eur Urol
+2012;62:324 –332.
+Kahraman S, Akarsu C, Cengiz G, Dirican K, So¨zen E, Can B, Gu¨ven C,
+Vanderzwalmen P. Fertility of ejaculated and testicular megalohead spermatozoa
+with intracytoplasmic sperm injection. Hum Reprod 1999;14:726–730.
+Kahraman S, Sertyel S, Findikli N, Kumtepe Y, Oncu N, Melil S, Unal S, Yelke H,
+Vanderzwalmen P. Effect of PGD on implantation and ongoing pregnancy rates in
+cases with predominantly macrocephalic spermatozoa. Reprod Biomed Online
+2004;9:79 –85.
+Kang-Decker N, Mantchev GT, Juneja SC, McNiven MA, van Deursen JM. Lack of
+acrosome formation in Hrb-deficient mice. Science 2001;294:1531 –1533.
+Karaca N, Yilmaz R, Kanten GE, Kervancioglu E, Solakoglu S, Kervancioglu ME. First
+successful pregnancy in a globozoospermic patient having homozygous mutation
+in SPATA16. Fertil Steril 2014;102:103 –107.
+Karaouze`ne T, El Atifi M, Issartel J-P, Grepillat M, Coutton C, Martinez D, Arnoult C,
+Ray P. Comparative testicular transcriptome of wild type and globozoospermic
+Dpy19l2 knock out mice. Basic Clin Androl 2013;23. Available at: http://hal.
+univ-grenoble-alpes.fr/inserm-00880088/. Accessed May 7, 2014.
+Kashir J, Heindryckx B, Jones C, Sutter PD, Parrington J, Coward K. Oocyte activation,
+phospholipase C zeta and human infertility. Hum Reprod Update 2010;16:690– 703.
+Kaufmann KB, Bu¨ning H, Galy A, Schambach A, Grez M. Gene therapy on the move.
+EMBO Mol Med 2013;5:1642– 1661.
+Khan J, Ezan F, Cre´met J-Y, Fautrel A, Gilot D, Lambert M, Benaud C, Troadec M-B,
+Prigent C. Overexpression of active Aurora-C kinase results in cell transformation
+and tumour formation. PLoS One 2011;6:e26512.
+Khattri A, Reddy VP, Pandey RK, Sudhakar DVS, Gupta NJ, Chakravarty BN,
+Deenadayal M, Singh L, Thangaraj K. Novel mutations in calcium/
+calmodulin-dependent protein kinase IV (CAMK4) gene in infertile men. Int J
+Androl 2012;35:810 –818.
+Kierszenbaum AL, Tres LL, Rivkin E, Kang-Decker N, van Deursen JMA. The
+acroplaxome is the docking site of Golgi-derived myosin Va/Rab27a/bcontaining proacrosomal vesicles in wild-type and Hrb mutant mouse spermatids.
+Biol Reprod 2004;70:1400– 1410.
+Kilani Z, Ismail R, Ghunaim S, Mohamed H, Hughes D, Brewis I, Barratt CLR. Evaluation
+and treatment of familial globozoospermia in five brothers. Fertil Steril 2004;
+82:1436– 1439.
+Kimmins S, Crosio C, Kotaja N, Hirayama J, Monaco L, Ho¨o¨ g C, van Duin M, Gossen JA,
+Sassone-Corsi P. Differential functions of the Aurora-B and Aurora-C kinases in
+mammalian spermatogenesis. Mol Endocrinol 2007;21:726 –739.
+King SM. A solid-state control system for dynein-based ciliary/flagellar motility. J Cell Biol
+2013;201:173– 175.
+Knowles MR, Leigh MW, Carson JL, Davis SD, Dell SD, Ferkol TW, Olivier KN, Sagel SD,
+Rosenfeld M, Burns KA et al. Mutations of DNAH11 in patients with primary ciliary
+dyskinesia with normal ciliary ultrastructure. Thorax 2012;67:433–441.
+Knowles MR, Daniels LA, Davis SD, Zariwala MA, Leigh MW. Primary ciliary dyskinesia.
+Recent advances in diagnostics, genetics, and characterization of clinical disease. Am J
+Respir Crit Care Med 2013a;188:913–922.
+Knowles MR, Leigh MW, Ostrowski LE, Huang L, Carson JL, Hazucha MJ, Yin W,
+Berg JS, Davis SD, Dell SD et al. Exome sequencing identifies mutations in
+CCDC114 as a cause of primary ciliary dyskinesia. Am J Hum Genet 2013b;
+92:99–106.
+Knowles MR, Ostrowski LE, Loges NT, Hurd T, Leigh MW, Huang L, Wolf WE,
+Carson JL, Hazucha MJ, Yin W et al. Mutations in SPAG1 cause primary ciliary
+dyskinesia associated with defective outer and inner dynein arms. Am J Hum Genet
+2013c;93:711– 720.
+Knowles MR, Ostrowski LE, Leigh MW, Sears PR, Davis SD, Wolf WE, Hazucha MJ,
+Carson JL, Olivier KN, Sagel SD et al. Mutations in RSPH1 cause primary ciliary
+dyskinesia with a unique clinical and ciliary phenotype. Am J Respir Crit Care Med
+2014;189:707– 717.
+Kosaki K, Ikeda K, Miyakoshi K, Ueno M, Kosaki R, Takahashi D, Tanaka M, Torikata C,
+Yoshimura Y, Takahashi T. Absent inner dynein arms in a fetus with familial
+hydrocephalus-situs abnormality. Am J Med Genet A 2004;129A:308– 311.
+Koscinski I, Elinati E, Fossard C, Redin C, Muller J, Velez de la Calle J, Schmitt F, Ben
+Khelifa M, Ray PF, Ray P et al. DPY19L2 deletion as a major cause of
+globozoospermia. Am J Hum Genet 2011;88:344–350.
+Kott E, Duquesnoy P, Copin B, Legendre M, Dastot-Le Moal F, Montantin G, Jeanson L,
+Tamalet A, Papon J-F, Siffroi J-P et al. Loss-of-function mutations in LRRC6, a gene
+essential for proper axonemal assembly of inner and outer dynein arms, cause
+primary ciliary dyskinesia. Am J Hum Genet 2012;91:958 –964.
+Kott E, Legendre M, Copin B, Papon J-F, Dastot-Le Moal F, Montantin G, Duquesnoy P,
+Piterboth W, Amram D, Bassinet L et al. Loss-of-function mutations in RSPH1 cause
+primary ciliary dyskinesia with central-complex and radial-spoke defects. Am J Hum
+Genet 2013;93:561– 570.
+Krausz C. Male infertility: pathogenesis and clinical diagnosis. Best Pract Res Clin
+Endocrinol Metab 2011;25:271– 285.
+Krausz C, Hoefsloot L, Simoni M, Tu¨ttelmann F, European Academy of Andrology,
+European Molecular Genetics Quality Network. EAA/EMQN best practice
+guidelines for molecular diagnosis of Y-chromosomal microdeletions:
+state-of-the-art 2013. Andrology 2014;2:5 –19.
+Kruger TF, Menkveld R, Stander FS, Lombard CJ, Van der Merwe JP, van Zyl JA, Smith K.
+Sperm morphologic features as a prognostic factor in in vitro fertilization. Fertil Steril
+1986;46:1118 –1123.
+Kuentz P, Vanden Meerschaut F, Elinati E, Nasr-Esfahani MH, Gurgan T, Iqbal N,
+Carre´-Pigeon F, Brugnon F, Gitlin SA, Velez de la Calle J et al. Assisted oocyte
+activation overcomes fertilization failure in globozoospermic patients regardless of
+the DPY19L2 status. Hum Reprod 2013;28:1054 –1061.
+Kullander S, Rausing A. On round-headed human spermatozoa. Int J Fertil 1975;
+20:33–40.
+Kuo Y-C, Lin Y-H, Chen H-I, Wang Y-Y, Chiou Y-W, Lin H-H, Pan H-A, Wu C-M,
+Su S-M, Hsu C-C et al. SEPT12 mutations cause male infertility with defective
+sperm annulus. Hum Mutat 2012;33:710–719.
+Kusz-Zamelczyk K, Sajek M, Spik A, Glazar R, Je˛drzejczak P, Latos-Bielen´ska A,
+Kotecki M, Pawelczyk L, Jaruzelska J. Mutations of NANOS1, a human homologue
+of the Drosophila morphogen, are associated with a lack of germ cells in testes or
+severe oligo-astheno-teratozoospermia. J Med Genet 2013;50:187–193.
+Kyono K, Nakajo Y, Nishinaka C, Hattori H, Kyoya T, Ishikawa T, Abe H, Araki Y. A
+birth from the transfer of a single vitrified-warmed blastocyst using
+intracytoplasmic sperm injection with calcium ionophore oocyte activation in a
+globozoospermic patient. Fertil Steril 2009;91:931.e7– 11.
+Genetic causes of teratozoospermia 481
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+Lee L, Campagna DR, Pinkus JL, Mulhern H, Wyatt TA, Sisson JH, Pavlik JA, Pinkus GS,
+Fleming MD. Primary ciliary dyskinesia in mice lacking the novel ciliary protein Pcdp1.
+Mol Cell Biol 2008;28:949 –957.
+Lerer-Goldshtein T, Bel S, Shpungin S, Pery E, Motro B, Goldstein RS, Bar-Sheshet SI,
+Breitbart H, Nir U. TMF/ARA160: a key regulator of sperm development. Dev
+Biol 2010;348:12 –21.
+Lessard C, Lothrop H, Schimenti JC, Handel MA. Mutagenesis-generated mouse
+models of human infertility with abnormal sperm. Hum Reprod 2007;22:159– 166.
+Lewis-Jones I, Aziz N, Seshadri S, Douglas A, Howard P. Sperm chromosomal
+abnormalities are linked to sperm morphologic deformities. Fertil Steril 2003;
+79:212– 215.
+Li X, Sakashita G, Matsuzaki H, Sugimoto K, Kimura K, Hanaoka F, Taniguchi H,
+Furukawa K, Urano T. Direct association with inner centromere protein
+(INCENP) activates the novel chromosomal passenger protein, Aurora-C. J Biol
+Chem 2004;279:47201 – 47211.
+Lin Y-N, Roy A, YanW, Burns KH, Matzuk MM. Loss of zona pellucida binding proteins
+in the acrosomal matrix disrupts acrosome biogenesis and sperm morphogenesis.
+Mol Cell Biol 2007;27:6794 – 6805.
+Lin Y-H, Wang Y-Y, Chen H-I, Kuo Y-C, Chiou Y-W, Lin H-H, Wu C-M, Hsu C-C,
+Chiang H-S, Kuo P-L. SEPTIN12 genetic variants confer susceptibility to
+teratozoospermia. PLoS One 2012;7:e34011.
+Liu G, Shi Q-W, Lu G-X. A newly discovered mutation in PICK1 in a human with
+globozoospermia. Asian J Androl 2010;12:556 –560.
+Liu P, Carvalho CMB, Hastings PJ, Lupski JR. Mechanisms for recurrent and complex
+human genomic rearrangements. Curr Opin Genet Dev 2012;22:211 –220.
+Loges NT, Olbrich H, Fenske L, Mussaffi H, Horvath J, Fliegauf M, Kuhl H, Baktai G,
+Peterffy E, Chodhari R et al. DNAI2 mutations cause primary ciliary dyskinesia
+with defects in the outer dynein arm. Am J Hum Genet 2008;83:547 –558.
+Loges NT, Olbrich H, Becker-Heck A, Ha¨ffner K, Heer A, Reinhard C, Schmidts M,
+Kispert A, Zariwala MA, Leigh MW et al. Deletions and point mutations of
+LRRC50 cause primary ciliary dyskinesia due to dynein arm defects. Am J Hum
+Genet 2009;85:883– 889.
+Lu L, Lin M, Xu M, Zhou Z-M, Sha J-H. Gene functional research using
+polyethylenimine-mediated in vivo gene transfection into mouse spermatogenic
+cells. Asian J Androl 2006;8:53 –59.
+Lucas JS, Adam EC, Goggin PM, Jackson CL, Powles-Glover N, Patel SH, Humphreys J,
+Fray MD, Falconnet E, Blouin J-L et al. Static respiratory cilia associated with
+mutations in Dnahc11/DNAH11: a mouse model of PCD. Hum Mutat 2012;
+33:495– 503.
+Lyons RA, Saridogan E, Djahanbakhch O. The reproductive significance of human
+Fallopian tube cilia. Hum Reprod Update 2006;12:363 –372.
+Maiti AK, Matte´i MG, Jorissen M, Volz A, Zeigler A, Bouvagnet P. Identification, tissue
+specific expression, and chromosomal localisation of several human dynein heavy
+chain genes. Eur J Hum Genet 2000;8:923 –932.
+Mannowetz N, Kartarius S, Wennemuth G, Montenarh M. Protein kinase CK2
+andnew binding partners during spermatogenesis.CellMol Life Sci 2010;67:3905–3913.
+Mateu E, Rodrigo L, Prados N, Gil-Salom M, Remohı´ J, Pellicer A, Rubio C. High
+incidence of chromosomal abnormalities in large-headed and multiple-tailed
+spermatozoa. J Androl 2006;27:6 – 10.
+Matzuk MM, Lamb DJ. Genetic dissection of mammalian fertility pathways. Nat Cell Biol
+2002;4(Suppl):s41 – s49.
+Matzuk MM, Lamb DJ. The biology of infertility: research advances and clinical
+challenges. Nat Med 2008;14:1197 –1213.
+Mazor M, Alkrinawi S, Chalifa-Caspi V, Manor E, Sheffield VC, Aviram M, Parvari R.
+Primary ciliary dyskinesia caused by homozygous mutation in DNAL1, encoding
+dynein light chain 1. Am J Hum Genet 2011;88:599 –607.
+Merveille A-C, Davis EE, Becker-Heck A, Legendre M, Amirav I, Bataille G, Belmont J,
+Beydon N, Billen F, Cle´ment A et al. CCDC39 is required for assembly of inner
+dynein arms and the dynein regulatory complex and for normal ciliary motility in
+humans and dogs. Nat Genet 2011;43:72 –78.
+Miki K,WillisWD, Brown PR, Goulding EH, Fulcher KD, Eddy EM. Targeted disruption
+of the Akap4 gene causes defects in sperm flagellum and motility. Dev Biol 2002;
+248:331 –342.
+Mitchell V, Rives N, Albert M, Peers M-C, Selva J, Clavier B, Escudier E, Escalier D.
+Outcome of ICSI with ejaculated spermatozoa in a series of men with distinct
+ultrastructural flagellar abnormalities. Hum Reprod 2006;21:2065 –2074.
+Mitchison HM, Schmidts M, Loges NT, Freshour J, Dritsoula A, Hirst RA,
+O’Callaghan C, Blau H, Al Dabbagh M, Olbrich H et al. Mutations in axonemal
+dynein assembly factor DNAAF3 cause primary ciliary dyskinesia. Nat Genet 2012;
+44:381– 389, S1 –2.
+Molinari E, Mirabelli M, Raimondo S, Brussino A, Gennarelli G, Bongioanni F,
+Revelli A. Sperm macrocephaly syndrome in a patient without AURKC
+mutations and with a history of recurrent miscarriage. Reprod Biomed Online
+2013;26:148– 156.
+Moore A, Escudier E, Roger G, Tamalet A, Pelosse B, Marlin S, Cle´ment A, Geremek M,
+Delaisi B, Bridoux A-M et al. RPGR is mutated in patients with a complex X linked
+phenotype combining primary ciliary dyskinesia and retinitis pigmentosa. J Med
+Genet 2006;43:326– 333.
+Moore DJ, Onoufriadis A, Shoemark A, Simpson MA, zur Lage PI, de Castro SC,
+Bartoloni L, Gallone G, Petridi S, Woollard WJ et al. Mutations in ZMYND10, a
+gene essential for proper axonemal assembly of inner and outer dynein arms in
+humans and flies, cause primary ciliary dyskinesia. Am J Hum Genet 2013;
+93:346– 356.
+Moretti E, Geminiani M, Terzuoli G, Renieri T, Pascarelli N, Collodel G. Two cases of
+sperm immotility: a mosaic of flagellar alterations related to dysplasia of the fibrous
+sheath and abnormalities of head-neck attachment. Fertil Steril 2011;95:1787.e19 –
+23.
+Munro NC, Currie DC, Lindsay KS, Ryder TA, Rutman A, Dewar A, Greenstone MA,
+Hendry WF, Cole PJ. Fertility in men with primary ciliary dyskinesia presenting with
+respiratory infection. Thorax 1994;49:684– 687.
+Musacchio A, Hardwick KG. The spindle checkpoint: structural insights into dynamic
+signalling. Nat Rev Mol Cell Biol 2002;3:731– 741.
+Myers S, Bowden R, Tumian A, Bontrop RE, Freeman C, MacFie TS, McVean G,
+Donnelly P. Drive against hotspot motifs in primates implicates the PRDM9 gene
+in meiotic recombination. Science 2010;327:876 –879.
+Nakamura N, Dai Q, Williams J, Goulding EH, Willis WD, Brown PR, Eddy EM.
+Disruption of a spermatogenic cell-specific mouse enolase 4 (eno4) gene causes
+sperm structural defects and male infertility. Biol Reprod 2013;88:90.
+Neesen J, Kirschner R, Ochs M, Schmiedl A, Habermann B, Mueller C, Holstein AF,
+Nuesslein T, Adham I, Engel W. Disruption of an inner arm dynein heavy chain
+gene results in asthenozoospermia and reduced ciliary beat frequency. Hum Mol
+Genet 2001;10:1117– 1128.
+Neugebauer DC, Neuwinger J, Jockenho¨vel F, Nieschlag E. ‘9 + 0’ axoneme in
+spermatozoa and some nasal cilia of a patient with totally immotile spermatozoa
+associated with thickened sheath and short midpiece.Hum Reprod 1990;5:981– 986.
+Nieschlag E, Behre HM, Nieschlag S. Andrology: Male Reproductive Health and
+Dysfunction. Springer Science & Business Media, 2010.
+Nistal M, Paniagua R, Herruzo A. Multi-tailed spermatozoa in a case with
+asthenospermia and teratospermia. Virchows Arch B Cell Pathol 1977;26:111 –118.
+Noveski P, Madjunkova S, Maleva I, Sotiroska V, Petanovski Z, Plaseska-Karanfilska D. A
+homozygous deletion of the DPY19l2 gene is a cause of globozoospermia in men
+from the Republic of Macedonia. Balk J Med Genet 2013;16:73–76.
+O’Callaghan C, Chetcuti P, Moya E. High prevalence of primary ciliary dyskinesia in a
+British Asian population. Arch Dis Child 2010;95:51–52.
+Ogawa T, Are´chaga JM, Avarbock MR, Brinster RL. Transplantation of testis germinal
+cells into mouse seminiferous tubules. Int J Dev Biol 1997;41:111 –122.
+Olbrich H, Ha¨ffner K, Kispert A, Vo¨lkel A, Volz A, Sasmaz G, Reinhardt R, Hennig S,
+Lehrach H, Konietzko N et al. Mutations in DNAH5 cause primary ciliary
+dyskinesia and randomization of left-right asymmetry. Nat Genet 2002;30:143– 144.
+Olbrich H, Schmidts M, Werner C, Onoufriadis A, Loges NT, Raidt J, Banki NF,
+Shoemark A, Burgoyne T, Al Turki S et al. Recessive HYDIN mutations cause
+primary ciliary dyskinesia without randomization of left-right body asymmetry. Am
+J Hum Genet 2012;91:672 –684.
+Olmedo SB, Nodar F, Chillik C, Chemes HE. Successful intracytoplasmic sperm
+injection with spermatozoa from a patient with dysplasia of the fibrous sheath and
+chronic respiratory disease. Hum Reprod 1997;12:1497 – 1499.
+Olmedo SB, Rawe VY, Nodar FN, Galaverna GD,Acosta AA, Chemes HE. Pregnancies
+established through intracytoplasmic sperm injection (ICSI) using spermatozoa with
+dysplasia of fibrous sheath. Asian J Androl 2000;2:125–130.
+Ombelet W, Menkveld R, Kruger TF, Steeno O. Sperm morphology assessment:
+historical review in relation to fertility. Hum Reprod Update 1995;1:543 –557.
+Omran H, Kobayashi D, Olbrich H, Tsukahara T, Loges NT, Hagiwara H, Zhang Q,
+Leblond G, O’Toole E, Hara C et al. Ktu/PF13 is required for cytoplasmic
+pre-assembly of axonemal dyneins. Nature 2008;456:611– 616.
+Onoufriadis A, Paff T, Antony D, Shoemark A, Micha D, Kuyt B, Schmidts M, Petridi S,
+Dankert-Roelse JE, Haarman EG et al. Splice-site mutations in the axonemal outer
+482 Coutton et al.
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+dynein arm docking complex gene CCDC114 cause primary ciliary dyskinesia. Am J
+Hum Genet 2013;92:88– 98.
+Onoufriadis A, Shoemark A, Munye MM, James CT, Schmidts M, Patel M, Rosser EM,
+Bacchelli C, Beales PL, Scambler PJ et al. Combined exome and whole-genome
+sequencing identifies mutations in ARMC4 as a cause of primary ciliary dyskinesia
+with defects in the outer dynein arm. J Med Genet 2014a;51:61 –67.
+Onoufriadis A, Shoemark A, Schmidts M, Patel M, Jimenez G, Liu H, Thomas B,
+Dixon M, Hirst RA, Rutman A et al. Targeted NGS gene panel identifies
+mutations in RSPH1 causing primary ciliary dyskinesia and a common mechanism
+for ciliary central pair agenesis due to radial spoke defects. Hum Mol Genet 2014b;
+23:3362– 3374.
+Ostrowski LE, Dutcher SK, Lo CW. Cilia and models for studying structure and
+function. Proc Am Thorac Soc 2011;8:423 –429.
+Ounis L, Zoghmar A, Coutton C, Rouabah L, Hachemi M, Martinez D, Martinez G,
+Bellil I, Khelifi D, Arnoult C et al. Mutations of the aurora kinase C gene causing
+macrozoospermia are the most frequent genetic cause of male infertility in
+Algerian men. Asian J Androl 2015;17:68– 73.
+Paiardi C, Pasini ME, Gioria M, Berruti G. Failure of acrosome formation and
+globozoospermia in the wobbler mouse, a Vps54 spontaneous recessive mutant.
+Spermatogenesis 2011;1:52 –62.
+Palermo GD, Neri QV, Takeuchi T, Rosenwaks Z. ICSI: where we have been and where
+we are going. Semin Reprod Med 2009;27:191–201.
+Panizzi JR, Becker-Heck A, Castleman VH, Al-Mutairi DA, Liu Y, Loges NT, Pathak N,
+Austin-Tse C, Sheridan E, Schmidts M et al. CCDC103 mutations cause primary
+ciliary dyskinesia by disrupting assembly of ciliary dynein arms. Nat Genet 2012;
+44:714– 719.
+Parvanov ED, Petkov PM, Paigen K. Prdm9 controls activation of mammalian
+recombination hotspots. Science 2010;327:835.
+Pennarun G, Escudier E, Chapelin C, Bridoux AM, Cacheux V, Roger G, Cle´ment A,
+Goossens M, Amselem S, Duriez B. Loss-of-function mutations in a human gene
+related to Chlamydomonas reinhardtii dynein IC78 result in primary ciliary
+dyskinesia. Am J Hum Genet 1999;65:1508– 1519.
+Perrin A, Morel F, Moy L, Colleu D, Amice V, De Braekeleer M. Study of aneuploidy in
+large-headed, multiple-tailed spermatozoa: case report and review of the literature.
+Fertil Steril 2008;90:1201.e13 – 1201.e17.
+Perrin A, Coat C, Nguyen MH, Talagas M, Morel F, Amice J, De Braekeleer M.
+Molecular cytogenetic and genetic aspects of globozoospermia: a review.
+Andrologia 2013;45:1 –9.
+Pierre V, Martinez G, Coutton C, Delaroche J, Yassine S, Novella C, Pernet-Gallay K,
+Hennebicq S, Ray PF, Arnoult C. Absence of Dpy19l2, a new inner nuclear
+membrane protein, causes globozoospermia in mice by preventing the anchoring
+of the acrosome to the nucleus. Development 2012;139:2955 – 2965.
+Pieters MH, Speed RM, de Boer P, Vreeburg JT, Dohle G, In’t Veld PA. Evidence of
+disturbed meiosis in a man referred for intracytoplasmic sperm injection. Lancet
+1998;351:957.
+Pigino G, Bui KH, Maheshwari A, Lupetti P, Diener D, Ishikawa T. Cryoelectron
+tomography of radial spokes in cilia and flagella. J Cell Biol 2011;195:673– 687.
+Pilder SH, Olds-Clarke P, Orth JM, Jester WF, Dugan L. Hst7: a male sterility mutation
+perturbing sperm motility, flagellar assembly, and mitochondrial sheath
+differentiation. J Androl 1997;18:663– 671.
+Pirrello O, Machev N, Schimdt F, Terriou P, Me´ne´zo Y, Viville S. Search for mutations
+involved in human globozoospermia. Hum Reprod 2005;20:1314– 1318.
+Poongothai J, Gopenath TS, Manonayaki S. Genetics of human male infertility. Singapore
+Med J 2009;50:336 –347.
+Popli K, Stewart J. Infertility and its management in men with cystic fibrosis:
+review of literature and clinical practices in the UK. Hum Fertil (Camb) 2007;
+10:217– 221.
+Price DM, Kanyo R, Steinberg N, Chik CL, Ho AK. Nocturnal activation of aurora C in
+rat pineal gland: its role in the norepinephrine-induced phosphorylation of histone
+H3 and gene expression. Endocrinology 2009;150:2334– 2341.
+Rawe VY, Galaverna GD, Acosta AA, Olmedo SB, Chemes HE. Incidence of tail
+structure distortions associated with dysplasia of the fibrous sheath in human
+spermatozoa. Hum Reprod 2001;16:879– 886.
+Rawe VY, Terada Y, Nakamura S, Chillik CF, Olmedo SB, Chemes HE. A pathology of
+the sperm centriole responsible for defective sperm aster formation, syngamy and
+cleavage. Hum Reprod 2002;17:2344 –2349.
+Rives N, Mousset-Simeon N, Mazurier S, Mace B. Primary flagellar abnormality is
+associated with an increased rate of spermatozoa aneuploidy. J Androl 2005;26:61–69.
+Rybouchkin AV, Van der Straeten F,Quatacker J, De Sutter P, Dhont M. Fertilization and
+pregnancy after assisted oocyte activation and intracytoplasmic sperm injection in a
+case of round-headed sperm associated with deficient oocyte activation capacity.
+Fertil Steril 1997;68:1144 –1147.
+Salzberg Y, Eldar T, Karminsky O-D, Itach SB-S, Pietrokovski S, Don J. Meig1
+deficiency causes a severe defect in mouse spermatogenesis. Dev Biol 2010;
+338:158 – 167.
+Sapiro R, Tarantino LM, Velazquez F, Kiriakidou M, Hecht NB, Bucan M, Strauss JF.
+Sperm antigen 6 is the murine homologue of the Chlamydomonas reinhardtii
+central apparatus protein encoded by the PF16 locus. Biol Reprod 2000;62:511– 518.
+Sapiro R, Kostetskii I, Olds-Clarke P, Gerton GL, Radice GL, Strauss III JF. Male
+infertility, impaired sperm motility, and hydrocephalus in mice deficient in
+sperm-associated antigen 6. Mol Cell Biol 2002;22:6298– 6305.
+Sasai K, Katayama H, Stenoien DL, Fujii S, Honda R, Kimura M, Okano Y, Tatsuka M,
+Suzuki F, Nigg EA et al. Aurora-C kinase is a novel chromosomal passenger
+protein that can complement Aurora-B kinase function in mitotic cells. Cell Motil
+Cytoskeleton 2004;59:249 –263.
+Sathananthan AH. Functional competence of abnormal spermatozoa. Baillie`res Clin
+Obstet Gynaecol 1994;8:141 –156.
+Sathananthan AH, Kola I, Osborne J, Trounson A, Ng SC, Bongso A, Ratnam SS.
+Centrioles in the beginning of human development. Proc Natl Acad Sci USA 1991;
+88:4806– 4810.
+Satir P, Christensen ST. Structure and function of mammalian cilia. Histochem Cell Biol
+2008;129:687– 693.
+Schatten H, SunQ-Y. The functional significance of centrosomes in mammalian meiosis,
+fertilization, development, nuclear transfer, and stem cell differentiation. Environ Mol
+Mutagen 2009;50:620 –636.
+Schindler K, Davydenko O, Fram B, Lampson MA, Schultz RM. Maternally recruited
+Aurora C kinase is more stable than Aurora B to support mouse oocyte
+maturation and early development. Proc Natl Acad Sci USA 2012;109:E2215–E2222.
+Schwabe GC, Hoffmann K, Loges NT, Birker D, Rossier C, de Santi MM, Olbrich H,
+Fliegauf M, Failly M, Liebers U et al. Primary ciliary dyskinesia associated with
+normal axoneme ultrastructure is caused by DNAH11 mutations. Hum Mutat
+2008;29:289 –298.
+Sen CGS, Holstein AF, Schirren C. u¨ber die Morphogenese rundko¨pfiger
+Spermatozoen des Menschen. Andrologia 1971;3:117– 125.
+Sermondade N, Hafhouf E, Dupont C, Bechoua S, Palacios C, Eustache F, Poncelet C,
+Benzacken B, Le´vy R, Sifer C. Successful childbirth after intracytoplasmic
+morphologically selected sperm injection without assisted oocyte activation in a
+patient with globozoospermia. Hum Reprod 2011;26:2944 –2949.
+Sha Y-W, Ding L, Li P. Management of primary ciliary dyskinesia/Kartagener’s
+syndrome in infertile male patients and current progress in defining the underlying
+genetic mechanism. Asian J Androl 2014;16:101 –106.
+Sharif B, Na J, Lykke-Hartmann K, McLaughlin SH, Laue E, Glover DM, ZernickaGoetz M. The chromosome passenger complex is required for fidelity of
+chromosome transmission and cytokinesis in meiosis of mouse oocytes. J Cell Sci
+2010;123:4292 –4300.
+Singh G. Ultrastructural features of round-headed human spermatozoa. Int J Fertil 1992;
+37:99–102.
+Sironen A, Thomsen B, Andersson M, Ahola V, Vilkki J. An intronic insertion in KPL2
+results in aberrant splicing and causes the immotile short-tail sperm defect in the
+pig. Proc Natl Acad Sci USA 2006;103:5006– 5011.
+Sironen A, Hansen J, Thomsen B, Andersson M, Vilkki J, Toppari J, Kotaja N. Expression
+of SPEF2 during mouse spermatogenesis and identification of IFT20 as an interacting
+protein. Biol Reprod 2010;82:580–590.
+Sironen A, Kotaja N, Mulhern H, Wyatt TA, Sisson JH, Pavlik JA, Miiluniemi M,
+Fleming MD, Lee L. Loss of SPEF2 function in mice results in spermatogenesis
+defects and primary ciliary dyskinesia. Biol Reprod 2011;85:690– 701.
+Smith EN, Bloss CS, Badner JA, Barrett T, Belmonte PL, Berrettini W, Byerley W,
+Coryell W, Craig D, Edenberg HJ et al. Genome-wide association study of bipolar
+disorder in European American and African American individuals. Mol Psychiatry
+2009;14:755 –763.
+Stalf T, Sa´nchez R, Ko¨hn FM, Schalles U, Kleinstein J, Hinz V, Tielsch J, Khanaga O,
+Turley H, Gips H. Pregnancy and birth after intracytoplasmic sperm injection with
+spermatozoa from a patient with tail stump syndrome. Hum Reprod 1995;
+10:2112– 2114.
+Stankiewicz P, Lupski JR. Structural variation in the human genome and its role in
+disease. Annu Rev Med 2010;61:437– 455.
+Genetic causes of teratozoospermia 483
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+Sun F, Ko E, Martin RH. Is there a relationship between sperm chromosome
+abnormalities and sperm morphology? Reprod Biol Endocrinol 2006;4:1.
+Sunkel CE, Glover DM. Polo, a mitotic mutant of Drosophila displaying abnormal
+spindle poles. J Cell Sci 1988;89:25 –38.
+Tang C-JC, Lin C-Y, Tang TK. Dynamic localization and functional implications of
+Aurora-C kinase during male mouse meiosis. Dev Biol 2006;290:398 –410.
+Tarkar A, Loges NT, Slagle CE, Francis R, Dougherty GW, Tamayo JV, Shook B,
+Cantino M, Schwartz D, Jahnke C et al. DYX1C1 is required for axonemal dynein
+assembly and ciliary motility. Nat Genet 2013;45:995 –1003.
+Taylor SL, Yoon SY, Morshedi MS, Lacey DR, Jellerette T, Fissore RA, Oehninger S.
+Complete globozoospermia associated with PLCz deficiency treated with calcium
+ionophore and ICSI results in pregnancy. Reprod Biomed Online 2010;20:559–564.
+Tejera A, Molla´ M, Muriel L, Remohı´ J, Pellicer A, De Pablo JL. Successful pregnancy
+and childbirth after intracytoplasmic sperm injection with calcium ionophore oocyte
+activation in a globozoospermic patient. Fertil Steril 2008;90:1202.e1–1202.e5.
+Terada Y, Nakamura S, Morita J, Tachibana M, Morito Y, Ito K, Murakami T, Yaegashi N,
+Okamura K. Use of mammalian eggs for assessment of human sperm function:
+molecular and cellular analyses of fertilization by intracytoplasmic sperm injection.
+Am J Reprod Immunol 2004;51:290 –293.
+Teves ME, Jha KN, Song J, Nagarkatti-Gude DR, Herr JC, Foster JA, Strauss JF, Zhang Z.
+Germ cell-specific disruption of the Meig1 gene causes impaired spermiogenesis in
+mice. Andrology 2013;1:37 –46.
+Thonneau P, Marchand S, Tallec A, Ferial ML, Ducot B, Lansac J, Lopes P, Tabaste JM,
+Spira A. Incidence and main causes of infertility in a resident population (1,850,000)
+of three French regions (1988 –1989). Hum Reprod 1991;6:811 –816.
+Tseng TC, Chen SH, Hsu YP, Tang TK. Protein kinase profile of sperm and eggs: cloning
+and characterization of two novel testis-specific protein kinases (AIE1, AIE2) related
+to yeast and fly chromosome segregation regulators. DNA Cell Biol 1998;
+17:823– 833.
+Tsou J-H, Chang K-C, Chang-Liao P-Y, Yang S-T, Lee C-T, Chen Y-P, Lee Y-C, Lin B-W,
+Lee J-C, Shen M-R et al.Aberrantly expressed AURKC enhances the transformation
+and tumourigenicity of epithelial cells. J Pathol 2011;225:243 –254.
+Turner RM, Musse MP, Mandal A, Klotz K, Jayes FC, Herr JC, Gerton GL, Moss SB,
+Chemes HE. Molecular genetic analysis of two human sperm fibrous sheath
+proteins, AKAP4 and AKAP3, in men with dysplasia of the fibrous sheath. J Androl
+2001;22:302 –315.
+Turner DJ, Miretti M, Rajan D, Fiegler H, Carter NP, Blayney ML, Beck S, Hurles ME.
+Germline rates of de novo meiotic deletions and duplications causing several
+genomic disorders. Nat Genet 2008;40:90– 95.
+Tu¨ttelmann F, Simoni M, Kliesch S, Ledig S, Dworniczak B,Wieacker P, Ro¨pke A. Copy
+number variants in patients with severe oligozoospermia and Sertoli-cell-only
+syndrome. PLoS One 2011a;6:e19426.
+Tu¨ttelmann F, Werny F, Cooper TG, Kliesch S, Simoni M, Nieschlag E. Clinical
+experience with azoospermia: aetiology and chances for spermatozoa detection
+upon biopsy. Int J Androl 2011b;34:291 –298.
+Vader G, Maia AF, Lens SM. The chromosomal passenger complex and the spindle
+assembly checkpoint: kinetochore-microtubule error correction and beyond. Cell
+Div 2008;3:10.
+Vagnarelli P, Earnshaw WC. Chromosomal passengers: the four-dimensional
+regulation of mitotic events. Chromosoma 2004;113:211 –222.
+Van Blerkom J. Sperm centrosome dysfunction: a possible new class of male factor
+infertility in the human. Mol Hum Reprod 1996;2:349 –354.
+Van der Horst A, Lens SMA. Cell division: control of the chromosomal passenger
+complex in time and space. Chromosoma 2014;123:25–42.
+Van derWaal MS, Hengeveld RCC, van der Horst A, Lens SMA. Cell division control by
+the Chromosomal Passenger Complex. Exp Cell Res 2012;318:1407 – 1420.
+Vernon GG, Neesen J, Woolley DM. Further studies on knockout mice lacking a
+functional dynein heavy chain (MDHC7). 1. Evidence for a structural deficit in the
+axoneme. Cell Motil Cytoskeleton 2005;61:65– 73.
+Vicari E, de Palma A, Burrello N, Longo G, Grazioso C, Barone N, Zahi M, D’Agata R,
+Calogero AE. Absolute polymorphic teratozoospermia in patients with oligoasthenozoospermia is associated with an elevated sperm aneuploidy rate. J Androl
+2003;24:598 –603.
+Vincensini L, Blisnick T, Bastin P. 1001 model organisms to study cilia and flagella. Biol Cell
+2011;103:109– 130.
+Viville S, Mollard R, Bach ML, Falquet C, Gerlinger P, Warter S. Do morphological
+anomalies reflect chromosomal aneuploidies?: case report. Hum Reprod 2000;
+15:2563– 2566.
+Vogel P, Hansen G, Fontenot G, Read R. Tubulin tyrosine ligase-like 1 deficiency results
+in chronic rhinosinusitis and abnormal development of spermatid flagella in mice. Vet
+Pathol 2010;47:703 –712.
+Vogt PH, Falcao CL, Hanstein R, Zimmer J. The AZF proteins. Int J Androl 2008;
+31:383– 394.
+Walden CM, Sandhoff R, Chuang C-C, Yildiz Y, Butters TD, Dwek RA, Platt FM, van der
+Spoel AC. Accumulation of glucosylceramide in murine testis, caused by inhibition
+of beta-glucosidase 2: implications for spermatogenesis. J Biol Chem 2007;282:
+32655 – 32664.
+Wang H,Wan H, Li X, LiuW, Chen Q,Wang Y, Yang L, Tang H, Zhang X, Duan E et al.
+Atg7 is required for acrosome biogenesis during spermatogenesis in mice. Cell Res
+2014;24:852 –869.
+Wargo MJ, Smith EF. Asymmetry of the central apparatus defines the location of active
+microtubule sliding in Chlamydomonas flagella. Proc Natl Acad Sci USA 2003;
+100:137 –142.
+Watanabe K, Takebayashi H, Bepari AK, Esumi S, Yanagawa Y, Tamamaki N. Dpy19l1,
+a multi-transmembrane protein, regulates the radial migration of glutamatergic
+neurons in the developing cerebral cortex. Development 2011;138:4979– 4990.
+Weissenberg R, Aviram A, Golan R, Lewin LM, Levron J, Madgar I, Dor J, Barkai G,
+Goldman B. Concurrent use of flow cytometry and fluorescence in-situ
+hybridization techniques for detecting faulty meiosis in a human sperm sample.
+Mol Hum Reprod 1998;4:61–66.
+Wickstead B, Gull K. Dyneins across eukaryotes: a comparative genomic analysis. Traffic
+2007;8:1708 – 1721.
+Wirschell M, Olbrich H, Werner C, Tritschler D, Bower R, Sale WS, Loges NT,
+Pennekamp P, Lindberg S, Stenram U et al. The nexin-dynein regulatory complex
+subunit DRC1 is essential for motile cilia function in algae and humans. Nat Genet
+2013;45:262 –268.
+World Health Organization. WHO Laboratory Manual for the Examination of Human
+Semen and Semen-Cervical Mucus Interaction, 1st edn. Singapore: Press Concern,
+1980.
+World Health Organization. WHO Laboratory Manual for the Examination and
+Processing of Human Semen, 5th edn. Cambridge: Cambridge University Press,
+2010, 272 p.
+Xiao N, Kam C, Shen C, Jin W, Wang J, Lee KM, Jiang L, Xia J. PICK1 deficiency causes
+male infertility in mice by disrupting acrosome formation. J Clin Invest 2009;
+119:802 –812.
+Xu X, Toselli PA, Russell LD, Seldin DC. Globozoospermia in mice lacking the casein
+kinase II alpha’ catalytic subunit. Nat Genet 1999;23:118– 121.
+Xu M, Xiao J, Chen J, Li J, Yin L, Zhu H, Zhou Z, Sha J. Identification and characterization
+of a novel human testis-specific Golgi protein, NYD-SP12. Mol Hum Reprod 2003;
+9:9 –17.
+Yan W. Male infertility caused by spermiogenic defects: lessons from gene knockouts.
+Mol Cell Endocrinol 2009;306:24– 32.
+Yan X, Cao L, Li Q, Wu Y, Zhang H, Saiyin H, Liu X, Zhang X, Shi Q, Yu L. Aurora C is
+directly associated with Survivin and required for cytokinesis. Genes Cells 2005;
+10:617– 626.
+Yang K-T, Li S-K, Chang C-C, Tang C-JC, Lin Y-N, Lee S-C, Tang TK. Aurora-C kinase
+deficiency causes cytokinesis failure in meiosis I and production of large polyploid
+oocytes in mice. Mol Biol Cell 2010;21:2371– 2383.
+Yao R, Ito C, Natsume Y, Sugitani Y, Yamanaka H, Kuretake S, Yanagida K, Sato A,
+Toshimori K, Noda T. Lack of acrosome formation in mice lacking a Golgi protein,
+GOPC. Proc Natl Acad Sci USA 2002;99:11211 –11216.
+Yassine S, Escoffier J, Martinez G, Coutton C, Karaouze`ne T, Zouari R, Ravanat J-L,
+Metzler-Guillemain C, Fissore R, Hennebicq S et al. Dpy19l2-deficient
+globozoospermic sperm display altered genome packaging and DNA damage that
+compromises the initiation of embryo development. Mol Hum Reprod 2015a;
+21:169– 185.
+Yassine S, Escoffier J, Nahed RA, Pierre V, Karaouzene T, Ray PF, Arnoult C. Dynamics
+of Sun5 localization during spermatogenesis in wild type and Dpy19l2 knock-out
+mice indicates that Sun5 is not involved in acrosome attachment to the nuclear
+envelope. PloS One 2015b;10:e0118698.
+Yatsenko AN, O’Neil DS, Roy A, Arias-Mendoza PA, Chen R, Murthy LJ, Lamb DJ,
+Matzuk MM. Association of mutations in the zona pellucida binding protein 1
+(ZPBP1) gene with abnormal sperm head morphology in infertile men. Mol Hum
+Reprod 2012;18:14– 21.
+Yildiz Y, Matern H, Thompson B, Allegood JC, Warren RL, Ramirez DMO,
+Hammer RE, Hamra FK, Matern S, Russell DW. Mutation of beta-glucosidase 2
+484 Coutton et al.
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025
+causes glycolipid storage disease and impaired male fertility. J Clin Invest 2006;
+116:2985 – 2994.
+Yoon S-Y, Jellerette T, Salicioni AM, Lee HC, Yoo M-S, Coward K, Parrington J,
+Grow D, Cibelli JB, Visconti PE et al. Human sperm devoid of PLC, zeta 1 fail to
+induce Ca(2+) release and are unable to initiate the first step of embryo
+development. J Clin Invest 2008;118:3671 –3681.
+Yu Y, Fuscoe JC, Zhao C, Guo C, Jia M, Qing T, Bannon DI, Lancashire L, Bao W, Du T
+et al.A rat RNA-Seq transcriptomic BodyMap across 11 organs and 4 developmental
+stages. Nat Commun 2014;5:3230.
+Yurov YB, Saias MJ, Vorsanova SG, Erny R, Soloviev IV, Sharonin VO, Guichaoua MR,
+Luciani JM. Rapid chromosomal analysis of germ-line cells by FISH: an investigation of
+an infertile male with large-headed spermatozoa. Mol Hum Reprod 1996;2:665– 668.
+Zariwala MA, Knowles MR, Leigh MW. Primary ciliary dyskinesia. In: Pagon RA,
+Adam MP, Ardinger HH, Bird TD, Dolan CR, Fong C-T, Smith RJ, Stephens K
+(eds). GeneReviewsw. Seattle, WA: University of Washington, Seattle, 1993.
+Available at: http://www.ncbi.nlm.nih.gov/books/NBK1122/. Accessed August
+20, 2014.
+Zariwala M, Noone PG, Sannuti A, Minnix S, Zhou Z, Leigh MW, Hazucha M,Carson JL,
+Knowles MR. Germline mutations in an intermediate chain dynein cause primary
+ciliary dyskinesia. Am J Respir Cell Mol Biol 2001;25:577 –583.
+Zariwala MA, Gee HY, Kurkowiak M, Al-Mutairi DA, Leigh MW, Hurd TW, Hjeij R,
+Dell SD, Chaki M, Dougherty GW et al. ZMYND10 is mutated in primary ciliary
+dyskinesia and interacts with LRRC6. Am J Hum Genet 2013;93:336– 345.
+Zekri A, Lesan V, Ghaffari SH, Tabrizi MH, Modarressi MH. Gene amplification and
+overexpression of Aurora-C in breast and prostate cancer cell lines. Oncol Res
+2012;20:241 –250.
+Zhang Z, Kostetskii I, Moss SB, Jones BH, Ho C, Wang H, Kishida T, Gerton GL,
+Radice GL, Strauss JF. Haploinsufficiency for the murine orthologue of
+Chlamydomonas PF20 disrupts spermatogenesis. Proc Natl Acad Sci USA 2004;
+101:12946 – 12951.
+Zhang Z, Kostetskii I, Tang W, Haig-Ladewig L, Sapiro R, Wei Z, Patel AM, Bennett J,
+Gerton GL, Moss SB et al. Deficiency of SPAG16L causes male infertility associated
+with impaired sperm motility. Biol Reprod 2006;74:751– 759.
+Zhang F, GuW, Hurles ME, Lupski JR. Copy number variation in human health, disease,
+and evolution. Annu Rev Genomics Hum Genet 2009;10:451– 481.
+Zhou J, Yao J, Joshi HC. Attachment and tension in the spindle assembly checkpoint.
+J Cell Sci 2002;115:3547– 3555.
+Zhu F, Gong F, Lin G, Lu G. DPY19L2 gene mutations are a major cause of
+globozoospermia: identification of three novel point mutations. Mol Hum Reprod
+2013;19:395 –404.
+Genetic causes of teratozoospermia 485
+Downloaded from https://academic.oup.com/humupd/article/21/4/455/684509 by guest on 18 February 2025

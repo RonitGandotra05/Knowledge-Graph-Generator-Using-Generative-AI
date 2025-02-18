@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teratospermia Knowledge Graph</title>
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style type="text/css">
+        #graph {
+            width: 100%;
+            height: 800px;
+            border: 1px solid lightgray;
+        }
+        #nodeInfo {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            width: 400px;
+            background: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: none;
+            max-height: 600px;
+            overflow-y: auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #666;
+            transition: all 0.2s ease;
+        }
+        .close-button:hover {
+            background: #e0e0e0;
+            color: #333;
+        }
+        .legend {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            background: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div id="graph"></div>
+    <div id="nodeInfo"></div>
+    <div class="legend">
+        <h4>Legend</h4>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ff4444;"></div>
+            <span>Core Condition</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #4444ff;"></div>
+            <span>Genetic Markers</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #44ff44;"></div>
+            <span>Cellular Processes</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ff8844;"></div>
+            <span>Diagnostic Methods</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #8844ff;"></div>
+            <span>Morphological Features</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ff8844;"></div>
+            <span>Subtypes</span>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // Citations database
+        const citations = {
+            long: {
+                authors: "S Long",
+                title: "P-084 Exome sequencing reveals the novel genetic mutations associated with teratospermia",
+                journal: "Human Reproduction",
+                volume: "39",
+                issue: "Supplement_1",
+                year: "2024",
+                articleId: "deae108.458",
+                doi: "https://doi.org/10.1093/humrep/deae108.458"
+            }
+        };
+
+        // Node details database
+        const nodeDetails = {
+            "Teratospermia": {
+                description: "A condition characterized by abnormal sperm morphology",
+                evidence: "Major factor in male reproductive disorders, significant contributor to male infertility globally",
+                impact: "Affects fertility potential and reproductive success",
+                citations: ["long"]
+            },
+            "CCDC62": {
+                description: "Novel gene mutation associated with teratospermia",
+                evidence: "Mutations affect proliferation and apoptosis of GC-2 cells, identified in study of 55 patients",
+                impact: "Pathogenic/likely pathogenic variant affecting sperm morphology",
+                citations: ["long"]
+            },
+            "KCNU1": {
+                description: "Novel gene mutation associated with teratospermia",
+                evidence: "Mutations affect proliferation and apoptosis of GC-2 cells, identified in study of 55 patients",
+                impact: "Affects sperm cell development and function",
+                citations: ["long"]
+            },
+            "Cell Proliferation": {
+                description: "Critical cellular process for sperm development",
+                evidence: "Affected by mutations in CCDC62 and KCNU1",
+                impact: "Essential for normal spermatogenesis",
+                citations: ["long"]
+            },
+            "Apoptosis": {
+                description: "Programmed cell death process",
+                evidence: "Affected by mutations in CCDC62 and KCNU1",
+                impact: "Important for sperm cell quality control",
+                citations: ["long"]
+            },
+            "Spermatogenesis": {
+                description: "Process of sperm cell development",
+                evidence: "Core process affected in teratospermia",
+                impact: "Critical for normal sperm morphology",
+                citations: ["long"]
+            },
+            "Exome Sequencing": {
+                description: "Genetic analysis method",
+                evidence: "Identified 1 pathogenic variant and 4 variants of unknown significance",
+                impact: "Key diagnostic tool for genetic causes of teratospermia",
+                citations: ["long"]
+            },
+            "Cell Phenotype Analysis": {
+                description: "Functional study method",
+                evidence: "Used to assess mutation impacts on GC-2 cells",
+                impact: "Validates functional effects of genetic mutations",
+                citations: ["long"]
+            },
+            "Small Acrosome": {
+                description: "Structural abnormality in sperm",
+                evidence: "Specific subtype of teratospermia studied",
+                impact: "Affects sperm-egg interaction capability",
+                citations: ["long"]
+            },
+            "DPY19L2": {
+                description: "Core gene associated with globozoospermia",
+                evidence: "Multiple mutation types identified including p.Arg290His recurrent variant",
+                impact: "Critical for sperm head morphology and acrosome formation",
+                citations: ["long"]
+            },
+            "ATG7": {
+                description: "Autophagy-related protein involved in Golgi vesicle fusion",
+                evidence: "Mouse model shows sperm head deformities when affected",
+                impact: "Essential for proper sperm head formation and acrosome development",
+                citations: ["long"]
+            },
+            "CSNK2a2": {
+                description: "Kinase involved in sperm development",
+                evidence: "Located in acrosomal matrix, interacts with Pick1",
+                impact: "Regulates protein function through phosphorylation",
+                citations: ["long"]
+            },
+            "Globozoospermia": {
+                description: "Specific form of teratospermia with round-headed sperm",
+                evidence: "Associated with DPY19L2 mutations",
+                impact: "Severe impact on fertility due to abnormal sperm head morphology",
+                citations: ["long"]
+            },
+            "Protein Glycosylation": {
+                description: "Process of attaching sugar molecules to proteins",
+                evidence: "Essential for sperm head formation",
+                impact: "Important for sperm function",
+                citations: ["long"]
+            },
+            "Autophagy": {
+                description: "Cellular process involving the degradation and recycling of cellular components",
+                evidence: "Essential for sperm head formation",
+                impact: "Important for sperm function",
+                citations: ["long"]
+            },
+            "Pick1": {
+                description: "Protein interactor in acrosome development",
+                evidence: "Interacts with CSNK2a2 in acrosomal matrix",
+                impact: "Important for acrosome formation and sperm head shaping",
+                citations: ["long"]
+            },
+            "AURKC": {
+                description: "Core gene involved in chromosomal segregation and cytokinesis in male germ cells, member of the chromosomal passenger complex (CPC)",
+                evidence: "Multiple mutations identified (c.144delC - 85% of cases, p.C229Y, p.Y248*, c436-2A.G), high prevalence in Maghrebian population (1:50 carriers)",
+                impact: "Essential for meiotic divisions, chromosome segregation, and spindle assembly checkpoint regulation; mutations cause macrozoospermia",
+                citations: ["long"]
+            },
+            "Macrozoospermia": {
+                description: "Severe form of teratospermia characterized by large-headed multiflagellar spermatozoa with tetraploid DNA content",
+                evidence: "Associated with AURKC mutations, presents with >70% large-headed spermatozoa, reduced sperm count, and meiotic arrest",
+                impact: "Results in severe male infertility due to complete meiotic division failure and abnormal sperm morphology",
+                citations: ["long"]
+            },
+            "Spindle Assembly Checkpoint": {
+                description: "Critical cell division control mechanism",
+                evidence: "Regulated by AURKC in meiotic cells, ensures proper chromosome segregation",
+                impact: "Dysfunction leads to abnormal DNA content in sperm cells",
+                citations: ["long"]
+            },
+            "Flow Cytometry": {
+                description: "DNA content analysis method",
+                evidence: "Reveals homogeneous tetraploid DNA content in macrozoospermia cases",
+                impact: "Confirms meiotic division failure in affected patients",
+                citations: ["long"]
+            },
+            "FISH Analysis": {
+                description: "Chromosomal analysis technique",
+                evidence: "Shows varying levels of ploidy in affected sperm: haploid (0-10.9%), diploid (19.8-60%), triploid (10-62.4%), tetraploid (5.1-36%)",
+                impact: "Important for assessing chromosomal content in abnormal sperm",
+                citations: ["long"]
+            },
+            "AKAP3": {
+                description: "Structural protein involved in fibrous sheath organization",
+                evidence: "Located in sperm flagellum, interacts with protein kinase A",
+                impact: "Critical for proper flagellar structure and function",
+                citations: ["long"]
+            },
+            "AKAP4": {
+                description: "Structural protein completing fibrous sheath assembly",
+                evidence: "Located in sperm flagellum, interacts with protein kinase A",
+                impact: "Essential for flagellar structure completion",
+                citations: ["long"]
+            },
+            "Sperm Flagellum Development": {
+                description: "Complex process of flagellum formation and assembly",
+                evidence: "Involves multiple structural components including axoneme and accessory structures",
+                impact: "Critical for sperm motility and function",
+                citations: ["long"]
+            },
+            "Axoneme": {
+                description: "Structural component of sperm flagellum",
+                evidence: "Part of sperm flagellum development",
+                impact: "Essential for sperm motility",
+                citations: ["long"]
+            },
+            "Fibrous Sheath": {
+                description: "Structural component of sperm flagellum",
+                evidence: "Part of sperm flagellum development",
+                impact: "Essential for sperm motility",
+                citations: ["long"]
+            },
+            "DPY19L2 Genetic Testing": {
+                description: "Molecular diagnostic approach for globozoospermia",
+                evidence: "Includes deletion screening and point mutation analysis",
+                impact: "Essential for confirming genetic cause and guiding treatment",
+                citations: ["long"]
+            }
+        };
+
+        // Create nodes and edges
+        const nodes = new vis.DataSet([
+            // Core condition
+            {id: 1, label: "Teratospermia", color: "#ff4444", shape: "dot", size: 25},
+            
+            // Genetic markers
+            {id: 2, label: "CCDC62", color: "#4444ff", group: 1},
+            {id: 3, label: "KCNU1", color: "#4444ff", group: 1},
+            
+            // Cellular processes
+            {id: 4, label: "Cell Proliferation", color: "#44ff44", group: 2},
+            {id: 5, label: "Apoptosis", color: "#44ff44", group: 2},
+            {id: 6, label: "Spermatogenesis", color: "#44ff44", group: 2},
+            
+            // Diagnostic methods
+            {id: 7, label: "Exome Sequencing", color: "#ff8844", group: 3},
+            {id: 8, label: "Cell Phenotype Analysis", color: "#ff8844", group: 3},
+            
+            // Morphological features
+            {id: 9, label: "Small Acrosome", color: "#8844ff", group: 4},
+            
+            // New nodes
+            {id: 10, label: "DPY19L2", color: "#4444ff", group: 1},
+            {id: 11, label: "ATG7", color: "#4444ff", group: 1},
+            {id: 12, label: "CSNK2a2", color: "#4444ff", group: 1},
+            {id: 13, label: "Globozoospermia", color: "#ff8844", group: 5},
+            {id: 14, label: "Protein Glycosylation", color: "#44ff44", group: 2},
+            {id: 15, label: "Autophagy", color: "#44ff44", group: 2},
+            {id: 16, label: "Pick1", color: "#4444ff", group: 1},
+            {id: 17, label: "AURKC", color: "#4444ff", group: 1},
+            {id: 18, label: "Macrozoospermia", color: "#ff8844", group: 5},
+            {id: 19, label: "Flow Cytometry", color: "#ff8844", group: 3},
+            {id: 20, label: "FISH Analysis", color: "#ff8844", group: 3},
+            {id: 21, label: "Spindle Assembly Checkpoint", color: "#44ff44", group: 2},
+            {id: 22, label: "AKAP3", color: "#4444ff", group: 1},
+            {id: 23, label: "AKAP4", color: "#4444ff", group: 1},
+            {id: 24, label: "Sperm Flagellum Development", color: "#44ff44", group: 2},
+            {id: 25, label: "Axoneme", color: "#44ff44", group: 2},
+            {id: 26, label: "Fibrous Sheath", color: "#44ff44", group: 2},
+            {id: 27, label: "DPY19L2 Genetic Testing", color: "#ff8844", group: 3}
+        ]);
+
+        const edges = new vis.DataSet([
+            // Genetic marker connections
+            {from: 2, to: 1, arrows: "to", label: "Causes"},
+            {from: 3, to: 1, arrows: "to", label: "Causes"},
+            
+            // Process connections
+            {from: 4, to: 1, arrows: "to", label: "Affects"},
+            {from: 5, to: 1, arrows: "to", label: "Affects"},
+            {from: 6, to: 1, arrows: "to", label: "Disrupted in"},
+            
+            // Gene-process relationships
+            {from: 2, to: 4, arrows: "to", label: "Regulates"},
+            {from: 2, to: 5, arrows: "to", label: "Regulates"},
+            {from: 3, to: 4, arrows: "to", label: "Regulates"},
+            {from: 3, to: 5, arrows: "to", label: "Regulates"},
+            
+            // Diagnostic connections
+            {from: 7, to: 2, arrows: "to", label: "Identifies"},
+            {from: 7, to: 3, arrows: "to", label: "Identifies"},
+            {from: 8, to: 4, arrows: "to", label: "Measures"},
+            {from: 8, to: 5, arrows: "to", label: "Measures"},
+            
+            // Morphological connections
+            {from: 9, to: 1, arrows: "to", label: "Characterizes"},
+            {from: 6, to: 9, arrows: "to", label: "Affects"},
+            
+            // New edges
+            {from: 10, to: 1, arrows: "to", label: "Causes"},
+            {from: 10, to: 13, arrows: "to", label: "Primary cause"},
+            {from: 10, to: 14, arrows: "to", label: "Regulates"},
+            {from: 11, to: 1, arrows: "to", label: "Affects"},
+            {from: 11, to: 15, arrows: "to", label: "Controls"},
+            {from: 12, to: 1, arrows: "to", label: "Affects"},
+            {from: 13, to: 1, arrows: "to", label: "Subtype of"},
+            {from: 14, to: 1, arrows: "to", label: "Influences"},
+            {from: 15, to: 1, arrows: "to", label: "Influences"},
+            {from: 12, to: 16, arrows: "to", label: "Interacts with"},
+            {from: 16, to: 9, arrows: "to", label: "Influences"},
+            {from: 17, to: 1, arrows: "to", label: "Causes"},
+            {from: 17, to: 18, arrows: "to", label: "Primary cause"},
+            {from: 18, to: 1, arrows: "to", label: "Subtype of"},
+            {from: 19, to: 18, arrows: "to", label: "Diagnoses"},
+            {from: 20, to: 18, arrows: "to", label: "Diagnoses"},
+            {from: 19, to: 17, arrows: "to", label: "Validates impact"},
+            {from: 20, to: 17, arrows: "to", label: "Validates impact"},
+            {from: 17, to: 21, arrows: "to", label: "Regulates"},
+            {from: 21, to: 18, arrows: "to", label: "When disrupted leads to"},
+            {from: 22, to: 26, arrows: "to", label: "Organizes"},
+            {from: 23, to: 26, arrows: "to", label: "Completes assembly"},
+            {from: 24, to: 1, arrows: "to", label: "Affects"},
+            {from: 25, to: 24, arrows: "to", label: "Core component"},
+            {from: 26, to: 24, arrows: "to", label: "Accessory structure"},
+            {from: 27, to: 10, arrows: "to", label: "Diagnoses"},
+            {from: 27, to: 13, arrows: "to", label: "Confirms"}
+        ]);
+
+        // Create network
+        const container = document.getElementById('graph');
+        const data = {
+            nodes: nodes,
+            edges: edges
+        };
+        const options = {
+            nodes: {
+                shape: 'dot',
+                size: 16,
+                font: {
+                    size: 14,
+                    face: 'Arial'
+                }
+            },
+            edges: {
+                font: {
+                    size: 12,
+                    align: 'middle'
+                },
+                color: {
+                    inherit: 'from'
+                },
+                smooth: {
+                    type: 'continuous',
+                    roundness: 0
+                }
+            },
+            physics: {
+                enabled: true,
+                hierarchicalRepulsion: {
+                    centralGravity: 0.0,
+                    springLength: 250,
+                    springConstant: 0.01,
+                    nodeDistance: 200,
+                    damping: 0.09
+                },
+                solver: 'hierarchicalRepulsion',
+                stabilization: {
+                    iterations: 1000
+                }
+            },
+            groups: {
+                1: {physics: true, shape: 'dot'},
+                2: {physics: true, shape: 'dot'},
+                3: {physics: true, shape: 'dot'},
+                4: {physics: true, shape: 'dot'},
+                5: {physics: true, shape: 'dot'}
+            }
+        };
+        const network = new vis.Network(container, data, options);
+
+        // Node click handler
+        network.on("click", function (params) {
+            if (params.nodes.length > 0) {
+                const nodeId = params.nodes[0];
+                const node = nodes.get(nodeId);
+                const details = nodeDetails[node.label];
+                
+                const infoDiv = document.getElementById("nodeInfo");
+                let citationsHtml = '';
+                
+                if (details.citations && details.citations.length > 0) {
+                    citationsHtml = details.citations.map(citationKey => {
+                        const citation = citations[citationKey];
+                        return `
+                            <div class="citation">
+                                <p><span class="detail-label">Source:</span><br>
+                                ${citation.authors} (${citation.year})<br>
+                                <em>${citation.title}</em><br>
+                                ${citation.journal} ${citation.volume}${citation.issue ? `(${citation.issue})` : ''}<br>
+                                <a href="${citation.doi}" class="doi" target="_blank">DOI: ${citation.doi}</a>
+                                </p>
+                            </div>
+                        `;
+                    }).join('');
+                }
+                
+                infoDiv.innerHTML = `
+                    <button class="close-button" onclick="document.getElementById('nodeInfo').style.display='none'">×</button>
+                    <h3>${node.label}</h3>
+                    <div class="detail-section">
+                        <p><span class="detail-label">Description:</span><br>${details.description}</p>
+                    </div>
+                    <div class="detail-section">
+                        <p><span class="detail-label">Evidence:</span><br>${details.evidence}</p>
+                    </div>
+                    <div class="detail-section">
+                        <p><span class="detail-label">Impact:</span><br>${details.impact}</p>
+                    </div>
+                    ${citationsHtml}
+                `;
+                infoDiv.style.display = "block";
+            } else {
+                document.getElementById("nodeInfo").style.display = "none";
+            }
+        });
+
+        // Add controls
+        const controls = document.createElement('div');
+        controls.style.position = 'absolute';
+        controls.style.top = '10px';
+        controls.style.left = '10px';
+        controls.innerHTML = `
+            <div style="background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <button onclick="network.fit()" style="margin: 5px;">Fit Graph</button>
+                <button onclick="togglePhysics()" style="margin: 5px;">Toggle Physics</button>
+                <button onclick="network.stabilize()" style="margin: 5px;">Stabilize</button>
+            </div>
+        `;
+        container.appendChild(controls);
+
+        function togglePhysics() {
+            const physics = network.physics.options.enabled;
+            network.setOptions({ physics: { enabled: !physics } });
+        }
+    </script>
+</body>
+</html> 

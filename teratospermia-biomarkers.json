@@ -1,0 +1,427 @@
+{
+    "condition": {
+        "name": "Teratospermia",
+        "definition": "A condition characterized by abnormal sperm morphology",
+        "clinicalSignificance": "Major factor in male reproductive disorders",
+        "impact": "Significant contributor to male infertility globally",
+        "subtypes": [
+            {
+                "name": "Globozoospermia",
+                "description": "Specific form characterized by round-headed sperm without acrosome",
+                "geneticBasis": "DPY19L2 mutations",
+                "clinicalSignificance": "Severe form affecting sperm head morphology and function"
+            },
+            {
+                "name": "Macrozoospermia",
+                "description": "Characterized by large-headed multiflagellar spermatozoa",
+                "geneticBasis": {
+                    "gene": "AURKC",
+                    "mutations": {
+                        "primary": "c.144delC (85% of cases)",
+                        "others": ["p.C229Y", "p.Y248*", "c436-2A.G"]
+                    }
+                },
+                "clinicalFeatures": {
+                    "spermMorphology": "Close to 100% large-head spermatozoa in mutation-positive cases",
+                    "spermCount": "Severely reduced",
+                    "dnaContent": "Tetraploid (blocked meiotic divisions)",
+                    "otherFeatures": [
+                        "Multiple flagella",
+                        "Abnormal chromatin condensation",
+                        "Meiotic arrest but continued spermiogenesis"
+                    ]
+                },
+                "diagnosticCriteria": {
+                    "morphology": "> 70% large-headed spermatozoa",
+                    "spermConcentration": "> 0.5 M/ml",
+                    "geneticTesting": "AURKC exons 3 and 6 as first-line test"
+                }
+            }
+        ]
+    },
+    "biomarkers": [
+        {
+            "name": "CCDC62",
+            "type": "Genetic Marker",
+            "category": "Novel Gene Mutation",
+            "evidence": {
+                "study": "Long et al. 2024",
+                "findings": "Mutations affect proliferation and apoptosis of GC-2 cells",
+                "sampleSize": "55 patients with teratospermia"
+            },
+            "clinicalSignificance": "Pathogenic/likely pathogenic variant affecting sperm morphology",
+            "functionalImpact": "Influences cell proliferation and survival"
+        },
+        {
+            "name": "KCNU1",
+            "type": "Genetic Marker",
+            "category": "Novel Gene Mutation",
+            "evidence": {
+                "study": "Long et al. 2024",
+                "findings": "Mutations affect proliferation and apoptosis of GC-2 cells",
+                "sampleSize": "55 patients with teratospermia"
+            },
+            "clinicalSignificance": "Affects sperm cell development and function",
+            "functionalImpact": "Influences cell proliferation and survival"
+        },
+        {
+            "name": "DPY19L2",
+            "type": "Genetic Marker",
+            "category": "Core Gene",
+            "mutations": {
+                "types": [
+                    "Homozygous point mutations",
+                    "Compound heterozygous point mutations",
+                    "Missense mutations",
+                    "Nonsense mutations",
+                    "Frameshift mutations",
+                    "Splice-site mutations",
+                    "Small deletions",
+                    "Complete gene deletion (81% of pathological alleles)"
+                ],
+                "significantVariant": {
+                    "name": "p.Arg290His",
+                    "location": "exon 8",
+                    "type": "Recurrent missense",
+                    "impact": "Affects Dol-P moiety binding, critical for protein function"
+                },
+                "prevalence": {
+                    "deletion": "1/290 in general population (heterozygous)",
+                    "duplication": "1/85 in general population"
+                }
+            },
+            "proteinFunction": {
+                "ortholog": "DPY-19 in C. elegans",
+                "activity": "C-mannosyltransferase",
+                "substrate": "dolichol-phosphate-mannose (Dol-P-Man)",
+                "function": "Glycosylation of target proteins",
+                "location": "Inner nuclear membrane",
+                "role": "Anchors acrosome to nucleus during spermiogenesis"
+            },
+            "clinicalManagement": {
+                "diagnosis": {
+                    "primaryTest": "DPY19L2 deletion screening",
+                    "methods": [
+                        "Long-range PCR",
+                        "MLPA",
+                        "Quantitative PCR"
+                    ]
+                },
+                "treatment": {
+                    "approach": "ICSI with artificial oocyte activation",
+                    "challenges": [
+                        "Low fertilization rates",
+                        "Poor embryo development",
+                        "DNA fragmentation",
+                        "Abnormal chromatin condensation"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "ATG7",
+            "type": "Protein Marker",
+            "category": "Autophagy Factor",
+            "function": {
+                "primaryRole": "Golgi vesicle fusion",
+                "secondaryRole": "Protein trafficking",
+                "location": "Cytoplasm"
+            },
+            "phenotype": {
+                "acrosome": "Present but no hook shape",
+                "nucleus": "Poorly elongated",
+                "headMorphology": "30% Globular or deformed",
+                "nuclearMembrane": "Normal"
+            }
+        },
+        {
+            "name": "CSNK2a2",
+            "type": "Protein Marker",
+            "category": "Kinase",
+            "function": {
+                "activity": "Kinase/phosphorylation",
+                "location": ["Ubiquitous", "Acrosomal matrix"],
+                "interactionPartner": "Pick1"
+            }
+        },
+        {
+            "name": "Pick1",
+            "type": "Protein Marker",
+            "category": "Interaction Partner",
+            "function": {
+                "primaryRole": "Protein interaction",
+                "location": "Acrosomal matrix",
+                "interactionPartner": "CSNK2a2"
+            },
+            "evidence": {
+                "modelType": "Mouse model",
+                "significance": "Important for acrosome development"
+            }
+        },
+        {
+            "name": "AURKC",
+            "type": "Genetic Marker",
+            "category": "Core Gene",
+            "mutations": {
+                "types": [
+                    "c.144delC deletion (85% of mutated alleles)",
+                    "p.C229Y missense mutation",
+                    "p.Y248* nonsense mutation",
+                    "c436-2A.G splice mutation"
+                ],
+                "prevalence": {
+                    "maghrebian": "1 in 50 heterozygous carriers",
+                    "european": "p.Y248* is main mutation"
+                },
+                "mutationHistory": {
+                    "c.144delC": "Occurred between 1350-1750 AD",
+                    "p.Y248*": "Occurred between 675-1075 AD"
+                }
+            },
+            "function": {
+                "role": [
+                    "Chromosomal passenger complex (CPC) component",
+                    "Controls chromosome segregation",
+                    "Regulates spindle assembly checkpoint (SAC)",
+                    "Essential for meiotic divisions"
+                ],
+                "expression": "Predominantly in testis and dividing spermatocytes",
+                "impact": "Critical for meiotic divisions and sperm formation"
+            },
+            "clinicalSignificance": {
+                "mutationDiagnosis": "50.8-100% of analyzed macrozoospermic patients",
+                "phenotypeCorrelation": "Nearly 100% large-head spermatozoa in mutation-positive cases",
+                "diagnosticCriteria": {
+                    "spermConcentration": "> 1 million/ml",
+                    "largeHeadPercentage": "> 70%",
+                    "normalSpermPercentage": "< 1%"
+                }
+            }
+        },
+        {
+            "name": "AKAP3",
+            "type": "Protein Marker",
+            "category": "Structural Protein",
+            "function": {
+                "primaryRole": "Organizing fibrous sheath structure",
+                "location": "Sperm flagellum",
+                "interaction": "cAMP-dependent protein kinase A"
+            }
+        },
+        {
+            "name": "AKAP4",
+            "type": "Protein Marker",
+            "category": "Structural Protein",
+            "function": {
+                "primaryRole": "Completing fibrous sheath assembly",
+                "location": "Sperm flagellum",
+                "interaction": "cAMP-dependent protein kinase A"
+            }
+        }
+    ],
+    "relatedProcesses": [
+        {
+            "name": "Cell Proliferation",
+            "type": "Cellular Process",
+            "affectedBy": ["CCDC62", "KCNU1"],
+            "significance": "Critical for normal sperm development"
+        },
+        {
+            "name": "Apoptosis",
+            "type": "Cellular Process",
+            "affectedBy": ["CCDC62", "KCNU1"],
+            "significance": "Important for sperm cell quality control"
+        },
+        {
+            "name": "Spermatogenesis",
+            "type": "Developmental Process",
+            "affectedComponents": ["Sperm morphology", "Acrosome development"],
+            "significance": "Core process affected in teratospermia"
+        },
+        {
+            "name": "Protein Glycosylation",
+            "type": "Post-translational Modification",
+            "keyPlayers": ["DPY19L2"],
+            "significance": "Critical for proper protein function and sperm development"
+        },
+        {
+            "name": "Autophagy",
+            "type": "Cellular Process",
+            "keyPlayers": ["ATG7"],
+            "significance": "Important for proper sperm head formation and acrosome development"
+        },
+        {
+            "name": "Protein Phosphorylation",
+            "type": "Post-translational Modification",
+            "keyPlayers": ["CSNK2a2"],
+            "significance": "Regulates protein function in sperm development"
+        },
+        {
+            "name": "Sperm Flagellum Development",
+            "type": "Structural Process",
+            "components": [
+                {
+                    "name": "Axoneme",
+                    "structure": "9+2 microtubule arrangement",
+                    "elements": [
+                        "Outer microtubule doublets",
+                        "Central microtubule pair",
+                        "Dynein arms",
+                        "Radial spokes",
+                        "Nexin links"
+                    ]
+                },
+                {
+                    "name": "Accessory Structures",
+                    "elements": [
+                        "Outer dense fibers",
+                        "Mitochondrial sheath",
+                        "Fibrous sheath"
+                    ]
+                }
+            ]
+        }
+    ],
+    "diagnosticMethods": [
+        {
+            "name": "Exome Sequencing",
+            "type": "Genetic Analysis",
+            "purpose": "Identify genetic variations",
+            "findings": {
+                "pathogenicVariants": 1,
+                "unknownSignificanceVariants": 4,
+                "sampleType": "Sperm DNA"
+            }
+        },
+        {
+            "name": "Cell Phenotype Analysis",
+            "type": "Functional Study",
+            "purpose": "Assess mutation impacts",
+            "targetCells": "GC-2 cells",
+            "parameters": ["Proliferation", "Apoptosis"]
+        },
+        {
+            "name": "Flow Cytometry",
+            "type": "DNA Content Analysis",
+            "purpose": "Assess DNA content in sperm cells",
+            "findings": {
+                "inMacrozoospermia": "Homogeneous tetraploid DNA content",
+                "significance": "Indicates meiotic division failure"
+            }
+        },
+        {
+            "name": "FISH Analysis",
+            "type": "Chromosomal Analysis",
+            "purpose": "Assess chromosomal content",
+            "findings": {
+                "haploid": "0-10.9%",
+                "diploid": "19.8-60%",
+                "triploid": "10-62.4%",
+                "tetraploid": "5.1-36%"
+            }
+        },
+        {
+            "name": "DPY19L2 Genetic Testing",
+            "type": "Molecular Analysis",
+            "approaches": [
+                {
+                    "name": "Deletion Screening",
+                    "methods": [
+                        "Long-range PCR",
+                        "MLPA",
+                        "Quantitative PCR"
+                    ],
+                    "priority": "First-line test"
+                },
+                {
+                    "name": "Point Mutation Analysis",
+                    "target": "Exons 8-11 hotspot region",
+                    "indication": "After deletion screening"
+                }
+            ]
+        }
+    ],
+    "morphologicalFeatures": [
+        {
+            "name": "Small Acrosome",
+            "type": "Structural Abnormality",
+            "significance": "Specific subtype of teratospermia",
+            "impact": "Affects sperm-egg interaction"
+        }
+    ],
+    "chainOfLogic": [
+        {
+            "sequence": "Genetic Mutation Chain",
+            "steps": [
+                "Gene mutations (CCDC62, KCNU1)",
+                "Altered cell proliferation and apoptosis",
+                "Abnormal sperm development",
+                "Teratospermia"
+            ]
+        },
+        {
+            "sequence": "Diagnostic Chain",
+            "steps": [
+                "DNA extraction",
+                "Exome sequencing",
+                "Variant identification",
+                "Functional validation",
+                "Clinical correlation"
+            ]
+        },
+        {
+            "sequence": "Macrozoospermia Development",
+            "steps": [
+                "AURKC mutation",
+                "Meiotic division failure",
+                "Abnormal DNA content",
+                "Large head formation",
+                "Multiple flagella development",
+                "Infertility"
+            ]
+        }
+    ],
+    "citations": [
+        {
+            "authors": "S Long",
+            "title": "P-084 Exome sequencing reveals the novel genetic mutations associated with teratospermia",
+            "journal": "Human Reproduction",
+            "volume": "39",
+            "issue": "Supplement_1",
+            "year": "2024",
+            "articleId": "deae108.458",
+            "doi": "https://doi.org/10.1093/humrep/deae108.458"
+        }
+    ],
+    "modelSystems": {
+        "mouseModels": [
+            {
+                "gene": "Atg7",
+                "phenotype": {
+                    "acrosome": "Present but no hook shape",
+                    "nucleus": "Poorly elongated",
+                    "headMorphology": "30% Globular or deformed",
+                    "nuclearMembrane": "Normal"
+                },
+                "significance": "Demonstrates role in sperm head shaping"
+            },
+            {
+                "gene": "Csnk2a2",
+                "phenotype": {
+                    "location": "Acrosomal matrix",
+                    "partner": "Pick1",
+                    "function": "Kinase activity"
+                },
+                "significance": "Important for acrosome development"
+            }
+        ]
+    },
+    "proteinInteractions": [
+        {
+            "primaryProtein": "CSNK2a2",
+            "interactionPartner": "Pick1",
+            "location": "Acrosomal matrix",
+            "functionalSignificance": "Critical for acrosome development and sperm head shaping"
+        }
+    ]
+} 

@@ -56,7 +56,7 @@
             line-height: 1.6;
         }
         
-        .graph-links {
+        .graph-cards {
             display: flex;
             justify-content: center;
             gap: 20px;
@@ -64,7 +64,7 @@
             margin-top: 2rem;
         }
         
-        .graph-card {
+        .card {
             background: white;
             padding: 2rem;
             border-radius: 15px;
@@ -75,23 +75,23 @@
             color: inherit;
         }
         
-        .graph-card:hover {
+        .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
         
-        .graph-card h2 {
+        .card h2 {
             color: #4CAF50;
             margin-bottom: 1rem;
         }
         
-        .graph-card p {
+        .card p {
             color: #666;
             font-size: 0.9em;
             margin-bottom: 1rem;
         }
         
-        .view-button {
+        .button {
             display: inline-block;
             background: #4CAF50;
             color: white;
@@ -102,7 +102,7 @@
             font-weight: bold;
         }
         
-        .view-button:hover {
+        .button:hover {
             background: #45a049;
         }
         
@@ -130,24 +130,30 @@
             Based on comprehensive research paper analysis and data visualization. Each graph provides detailed insights into different aspects of male infertility.
         </p>
         
-        <div class="graph-links">
-            <a href="./azoospermia-graph.html" class="graph-card">
+        <div class="graph-cards">
+            <div class="card">
                 <h2>Azoospermia Graph</h2>
                 <p>Explore biomarkers and relationships in azoospermia, a condition characterized by the absence of sperm in semen.</p>
-                <span class="view-button">View Graph</span>
-            </a>
+                <a href="./azoospermia-graph.html" class="button">View Graph</a>
+            </div>
             
-            <a href="./oligospermia-graph.html" class="graph-card">
+            <div class="card">
                 <h2>Oligospermia Graph</h2>
                 <p>Discover biomarkers and relationships in oligospermia, a condition characterized by low sperm concentration.</p>
-                <span class="view-button">View Graph</span>
-            </a>
+                <a href="./oligospermia-graph.html" class="button">View Graph</a>
+            </div>
 
-            <a href="./hypospermia-graph.html" class="graph-card">
+            <div class="card">
                 <h2>Hypospermia Graph</h2>
                 <p>Investigate biomarkers and relationships in hypospermia, a condition characterized by low semen volume (less than 1.5 ml).</p>
-                <span class="view-button">View Graph</span>
-            </a>
+                <a href="./hypospermia-graph.html" class="button">View Graph</a>
+            </div>
+            
+            <div class="card">
+                <h2>Teratospermia Graph</h2>
+                <p>Explore genetic mutations and cellular processes in teratospermia, a condition characterized by abnormal sperm morphology.</p>
+                <a href="./teratospermia-graph.html" class="button">View Graph</a>
+            </div>
         </div>
         
         <footer>

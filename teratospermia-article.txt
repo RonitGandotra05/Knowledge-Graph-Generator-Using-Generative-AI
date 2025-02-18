@@ -1,0 +1,43 @@
+P-084 Exome sequencing reveals the novel genetic mutations associated with teratospermia 
+S Long
+Human Reproduction, Volume 39, Issue Supplement_1, July 2024, deae108.458, https://doi.org/10.1093/humrep/deae108.458
+Published: 03 July 2024
+pdfPDF
+ Split View
+ Cite
+Permissions Icon Permissions
+Share Icon Share 
+Abstract
+Study question
+This research aims to explore the molecular mechanisms of genetic variations in the small acrosome sperm subtype within teratospermia and its correlation with male infertility.
+
+Summary answer
+Novel gene mutations associated with teratospermia were identified, providing important insights into the genetic mechanisms underlying this condition.
+
+What is known already
+Male infertility is a substantial challenge in reproductive medicine, impacting a significant proportion of couples globally. Teratospermia, marked by abnormal sperm morphology, is a major factor in male reproductive disorders. Unraveling the genetic foundation of teratospermia is essential for comprehending the intricate molecular mechanisms governing male fertility.
+
+Study design, size, duration
+This study uses exome sequencing to investigate the genetic landscape of male infertility, particularly focusing on teratospermia. Through a comprehensive examination of the exome, our goal is to uncover novel gene mutations and understand the molecular mechanisms connecting genetic changes to abnormal sperm morphology and, consequently, male infertility.
+
+Participants/materials, setting, methods
+Sperm DNA was extracted from 55 patients with a confirmed diagnosis of teratospermia for this study. Subsequently, comprehensive exome sequencing was performed on the extracted sperm DNA to investigate potential genetic variations associated with teratospermia.Further functional studies were conducted to unveil the potential roles of mutated genes in the development of the reproductive system and spermogenesis.
+
+Main results and the role of chance
+Within the known genes associated with spermatogenic dysfunction, we identified one pathogenic/likely pathogenic variant and four variants of unknown significance, all of which have not been previously reported.Cell phenotype experiments revealed that mutations in CCDC62 and KCNU1 have specific effects on the proliferation and apoptosis of GC-2 cells.
+
+Limitations, reasons for caution
+Further molecular experiments and pathway mechanism studies are required to enhance our understanding of the observed effects and provide a more comprehensive interpretation of the findings.
+
+Wider implications of the findings
+This study unveils novel genes and pathways in teratospermia, informing diagnosis, prognosis, and potential treatments for male infertility. Exploring the genetic landscape enhances our comprehension of the complex interplay between genetics and male fertility, guiding personalized approaches in reproductive medicine.
+
+Trial registration number
+not applicable
+
+Topic: apoptosisphenotypemutationdnafertilitygenesmale infertilityreproductive medicinesperm cellgenetic variationdiagnosisgeneticsacrosomereproductive systemmale reproductive system disordersteratozoospermiaexomewhole exome sequencing
+Issue Section: POSTER VIEWING > Andrology
+PDF
+This content is only available as a PDF.
+© The Author(s) 2024. Published by Oxford University Press on behalf of European Society of Human Reproduction and Embryology. All rights reserved. For permissions, please email: journals.permissions@oup.com
+This article is published and distributed under the terms of the Oxford University Press, Standard Journals Publication Model (https://academic.oup.com/pages/standard-publication-reuse-rights)

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Oligospermia Knowledge Graph</title>
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style type="text/css">
+        #graph {
+            width: 100%;
+            height: 800px;
+            border: 1px solid lightgray;
+        }
+        #nodeInfo {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            width: 400px;
+            background: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: none;
+            max-height: 600px;
+            overflow-y: auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #666;
+            transition: all 0.2s ease;
+        }
+        .close-button:hover {
+            background: #e0e0e0;
+            color: #333;
+        }
+        .close-button:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+        }
+        .citation {
+            font-size: 0.9em;
+            color: #666;
+            border-top: 1px solid #eee;
+            margin-top: 15px;
+            padding-top: 15px;
+        }
+        .doi {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        h3 {
+            color: #333;
+            margin-top: 0;
+        }
+        .detail-section {
+            margin-bottom: 10px;
+        }
+        .detail-label {
+            font-weight: bold;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+    <div id="graph"></div>
+    <div id="nodeInfo"></div>
+
+    <script type="text/javascript">
+        const citations = {
+            agarwal: {
+                authors: "Agarwal et al.",
+                title: "Mechanisms of oligozoospermia: an oxidative stress perspective",
+                journal: "Systems Biology in Reproductive Medicine",
+                year: "2014",
+                doi: "https://doi.org/10.3109/19396368.2014.918675"
+            },
+            murgia: {
+                authors: "Murgia et al.",
+                title: "Seminal Fluid Metabolomic Markers of Oligozoospermic Infertility in Humans",
+                journal: "Metabolites",
+                year: "2020",
+                doi: "https://doi.org/10.3390/metabo10020064"
+            },
+            bieniek: {
+                authors: "Bieniek et al.",
+                title: "New biomarkers in male infertility",
+                journal: "Current Opinion in Urology",
+                year: "2021",
+                doi: "https://doi.org/10.1097/MOU.0000000000000647"
+            }
+        };
+
+        // Updated node details with metabolic markers
+        const nodeDetails = {
+            "Oligozoospermia": {
+                description: "Less than 15 × 106 sperm/mL of seminal ejaculate",
+                evidence: "Major contributory factor in male infertility, affecting 45-50% of cases",
+                impact: "Primary cause of infertility in 81% of cases, secondary in 19%",
+                citations: ["agarwal", "murgia"]
+            },
+            "ROS": {
+                description: "Primary oxidative stress marker",
+                evidence: "Significantly higher in oligozoospermic patients (855.7 RLU/s)",
+                impact: "Central mediator of multiple pathways",
+                citations: ["agarwal", "murgia"]
+            },
+            "MDA": {
+                description: "Secondary oxidative stress marker",
+                evidence: "Significantly higher in OA patients",
+                impact: "Indicates membrane damage and oxidative stress",
+                citations: ["agarwal"]
+            },
+            "Fructose": {
+                description: "Essential energy source for sperm metabolism",
+                evidence: "Increased in oligozoospermia (r = -0.53, p = 0.0009 with sperm count)",
+                impact: "Marker of energy metabolism and seminal vesicle function",
+                citations: ["murgia"]
+            },
+            "Myo-inositol": {
+                description: "Cellular regulation marker",
+                evidence: "Correlates with progressive motility (r = 0.34, p = 0.04)",
+                impact: "Critical for mitochondrial function and sperm development",
+                citations: ["murgia"]
+            },
+            "Choline": {
+                description: "Membrane metabolism marker",
+                evidence: "Altered levels in oligozoospermic patients (p = 0.04)",
+                impact: "Important for membrane integrity and lipid transport",
+                citations: ["murgia"]
+            },
+            "Aspartate": {
+                description: "Spermatogenic function marker",
+                evidence: "Positive correlation with sperm count (r = 0.40, p = 0.01)",
+                impact: "Indicates testicular function and spermatogenesis",
+                citations: ["murgia"]
+            },
+            "FSH": {
+                description: "Follicle Stimulating Hormone",
+                evidence: "Elevated levels in oligozoospermic patients",
+                impact: "Indicates spermatogenic dysfunction",
+                citations: ["agarwal"]
+            },
+            "DNA Damage": {
+                description: "Oxidative stress-induced DNA fragmentation",
+                evidence: "Associated with poor IVF outcomes",
+                impact: "Reduces fertilization and pregnancy rates",
+                citations: ["agarwal"]
+            },
+            "ATP Production": {
+                description: "Energy production in sperm cells",
+                evidence: "Impaired by elevated ROS levels",
+                impact: "Affects sperm motility and function",
+                citations: ["agarwal"]
+            },
+            "Membrane Damage": {
+                description: "Structural damage to sperm membrane",
+                evidence: "Result of lipid peroxidation",
+                impact: "Affects sperm viability and function",
+                citations: ["agarwal"]
+            },
+            "Microtubule Structure": {
+                description: "Cytoskeletal elements in sperm",
+                evidence: "43% cases show absent/disorganized microtubules",
+                impact: "Critical for sperm motility and morphology",
+                citations: ["agarwal"]
+            },
+            "Sperm Concentration": {
+                description: "Primary diagnostic parameter",
+                evidence: "WHO 2010 guidelines cutoff: <15 × 106/mL",
+                impact: "Key indicator of male fertility potential",
+                citations: ["agarwal"]
+            },
+            "Sperm Motility": {
+                description: "Movement capability of sperm",
+                evidence: "WHO 2010 guidelines cutoff: <40%",
+                impact: "Essential for fertilization",
+                citations: ["agarwal"]
+            },
+            "Sperm Morphology": {
+                description: "Physical structure and form of sperm",
+                evidence: "WHO 2010 guidelines cutoff: <4% normal forms",
+                impact: "Indicates sperm quality and function",
+                citations: ["agarwal"]
+            },
+            "miRNAs": {
+                description: "MicroRNAs in seminal plasma",
+                evidence: "Altered expression in infertile men",
+                impact: "Potential diagnostic biomarkers",
+                citations: ["agarwal"]
+            },
+            "piRNAs": {
+                description: "Piwi-interacting RNAs",
+                evidence: "Dysregulated in infertile patients",
+                impact: "Role in transposon regulation",
+                citations: ["agarwal"]
+            },
+            "Alpha-glucosidase": {
+                description: "Epididymal marker",
+                evidence: "Altered levels in infertile men",
+                impact: "Indicates epididymal function",
+                citations: ["agarwal"]
+            },
+            "Oligoasthenozoospermia": {
+                description: "Combined condition of low sperm count and poor motility",
+                evidence: "Common progression from oligozoospermia",
+                impact: "Significantly reduces natural conception chances",
+                citations: ["agarwal"]
+            },
+            "Oligoteratozoospermia": {
+                description: "Combined condition of low sperm count and abnormal morphology",
+                evidence: "Associated with increased DNA fragmentation",
+                impact: "Affects fertilization potential",
+                citations: ["agarwal"]
+            },
+            "Oligoasthenoteratozoospermia": {
+                description: "Combined condition affecting count, motility, and morphology",
+                evidence: "Most severe form of oligozoospermia-related conditions",
+                impact: "Requires assisted reproduction techniques",
+                citations: ["agarwal"]
+            },
+            "Environmental Factors": {
+                description: "External factors affecting sperm production",
+                evidence: "Includes smoking, alcohol, drugs, and temperature",
+                impact: "Modifiable risk factors for oligozoospermia",
+                citations: ["agarwal"]
+            },
+            "Medical Factors": {
+                description: "Clinical conditions affecting fertility",
+                evidence: "Includes varicocele, trauma, and genetic disorders",
+                impact: "May require specific medical interventions",
+                citations: ["agarwal"]
+            },
+            "Testicular Volume": {
+                description: "Physical measure of testicular size",
+                evidence: "Correlates with sperm production capacity",
+                impact: "Diagnostic indicator of spermatogenic function",
+                citations: ["agarwal"]
+            },
+            "Prostate Markers": {
+                description: "Biochemical markers from prostate",
+                evidence: "Includes acid phosphatase, citric acid, zinc",
+                impact: "Indicates prostate function and secretion",
+                citations: ["agarwal"]
+            },
+            "Seminal Vesicle Markers": {
+                description: "Biochemical markers from seminal vesicles",
+                evidence: "Primary marker is fructose",
+                impact: "Indicates seminal vesicle function",
+                citations: ["agarwal"]
+            },
+            "X-chromosome miRNAs": {
+                description: "MicroRNAs encoded on X chromosome",
+                evidence: "Differential expression in infertile men",
+                impact: "Potential biomarkers for male infertility",
+                citations: ["agarwal"]
+            },
+            "Chromosome 19 Clusters": {
+                description: "miRNA clusters on chromosome 19",
+                evidence: "Involved in spermatogenesis regulation",
+                impact: "Potential therapeutic targets",
+                citations: ["agarwal"]
+            },
+            "miR-34b/c Clusters": {
+                description: "Specific miRNA clusters",
+                evidence: "Essential for spermatogenesis",
+                impact: "Regulates sperm development",
+                citations: ["agarwal"]
+            },
+            "miR-449 Clusters": {
+                description: "Family of miRNAs",
+                evidence: "Involved in ciliated cell development",
+                impact: "Critical for sperm motility",
+                citations: ["agarwal"]
+            },
+            "tRNAs": {
+                description: "Transfer RNAs in sperm",
+                evidence: "Altered in infertile patients",
+                impact: "Role in protein synthesis regulation",
+                citations: ["agarwal"]
+            },
+            "Y RNAs": {
+                description: "Small non-coding RNAs",
+                evidence: "Present in sperm and seminal plasma",
+                impact: "Potential fertility biomarkers",
+                citations: ["agarwal"]
+            },
+            "rRNAs": {
+                description: "Ribosomal RNAs",
+                evidence: "Component of sperm RNA profile",
+                impact: "Indicator of cellular function",
+                citations: ["agarwal"]
+            },
+            "Cell Proliferation": {
+                description: "Process of cell division and growth",
+                evidence: "Altered in oligozoospermia",
+                impact: "Affects spermatogenesis efficiency",
+                citations: ["agarwal"]
+            },
+            "Cell Differentiation": {
+                description: "Process of sperm cell maturation",
+                evidence: "Disrupted in oligozoospermia",
+                impact: "Affects sperm development",
+                citations: ["agarwal"]
+            },
+            "Apoptosis": {
+                description: "Programmed cell death",
+                evidence: "Increased in oligozoospermia",
+                impact: "Reduces sperm count",
+                citations: ["agarwal"]
+            },
+            "Antisperm Antibodies": {
+                description: "Immunological marker indicating blood-testis barrier breach",
+                evidence: "Present in some infertile men but controversial clinical significance",
+                impact: "May cause sperm agglutination and reduced motility",
+                citations: ["bieniek"]
+            },
+            "DNA Fragmentation Index": {
+                description: "Marker of DNA integrity in sperm",
+                evidence: "Up to 8% of infertile men with normal SA show high DFI (>30%)",
+                impact: "Correlates with lower conception rates and higher miscarriage rates",
+                citations: ["bieniek"]
+            },
+            "Zinc": {
+                description: "Essential micronutrient for sperm function",
+                evidence: "Prostate-derived micronutrient",
+                impact: "Affects sperm count and function",
+                citations: ["bieniek"]
+            },
+            "Selenium": {
+                description: "Required micronutrient for spermatogenesis",
+                evidence: "Deficiency affects sperm quality",
+                impact: "Essential for normal sperm development",
+                citations: ["bieniek"]
+            },
+            "Carnitine": {
+                description: "Important for sperm metabolism",
+                evidence: "Affects sperm motility and maturation",
+                impact: "Key role in sperm energy metabolism",
+                citations: ["bieniek"]
+            },
+            "Protamine P1": {
+                description: "Nuclear protein for chromatin packaging",
+                evidence: "Should maintain 1:1 ratio with P2",
+                impact: "Critical for proper DNA compaction",
+                citations: ["bieniek"]
+            },
+            "Protamine P2": {
+                description: "Nuclear protein for chromatin packaging",
+                evidence: "Undetectable in 17% of IVF patients",
+                impact: "Affects sperm penetration capacity",
+                citations: ["bieniek"]
+            },
+            "CREM": {
+                description: "Gene expression regulator",
+                evidence: "Hypermethylation correlates with poor sperm parameters",
+                impact: "Affects spermatogenesis regulation",
+                citations: ["bieniek"]
+            },
+            "Sperm-Mucus Interaction": {
+                description: "Functional test of sperm-cervical mucus interaction",
+                evidence: "Limited current use due to poor reproducibility",
+                impact: "Historical test for cervical factor infertility",
+                citations: ["bieniek"]
+            },
+            "Acrosome Reaction": {
+                description: "Test of sperm fertilizing capability",
+                evidence: "Can be triggered by calcium ionophore or natural agonists",
+                impact: "Predicts fertilization potential",
+                citations: ["bieniek"]
+            }
+        };
+
+        // Network configuration
+        const nodes = new vis.DataSet([
+            // Core node
+            {id: 1, label: "Oligozoospermia", color: "#ff4444", shape: "dot", size: 20},
+            
+            // Oxidative Stress Markers
+            {id: 2, label: "ROS", color: "#ff8844"},
+            {id: 3, label: "MDA", color: "#ff8844"},
+            {id: 4, label: "DNA Damage", color: "#ff8844"},
+            {id: 5, label: "DNA Fragmentation", color: "#ff8844"},
+            {id: 6, label: "Membrane Damage", color: "#ff8844"},
+            {id: 7, label: "Microtubule Structure", color: "#ff8844"},
+            
+            // Metabolic Markers
+            {id: 8, label: "Fructose", color: "#44ff88"},
+            {id: 9, label: "Myo-inositol", color: "#44ff88"},
+            {id: 10, label: "Choline", color: "#44ff88"},
+            {id: 11, label: "Aspartate", color: "#44ff88"},
+            {id: 12, label: "ATP Production", color: "#44ff88"},
+            
+            // Clinical Parameters
+            {id: 13, label: "FSH", color: "#44ff44"},
+            {id: 14, label: "Sperm Concentration", color: "#44ff44"},
+            {id: 15, label: "Sperm Motility", color: "#44ff44"},
+            {id: 16, label: "Sperm Morphology", color: "#44ff44"},
+            {id: 17, label: "Testicular Volume", color: "#44ff44"},
+            
+            // Related Conditions
+            {id: 18, label: "Oligoasthenozoospermia", color: "#ff4444"},
+            {id: 19, label: "Oligoteratozoospermia", color: "#ff4444"},
+            {id: 20, label: "Oligoasthenoteratozoospermia", color: "#ff4444"},
+            
+            // Environmental and Medical Factors
+            {id: 21, label: "Environmental Factors", color: "#ff8888"},
+            {id: 22, label: "Medical Factors", color: "#ff8888"},
+            
+            // Organ-specific Markers
+            {id: 23, label: "Prostate Markers", color: "#88ff44"},
+            {id: 24, label: "Epididymis Markers", color: "#88ff44"},
+            {id: 25, label: "Seminal Vesicle Markers", color: "#88ff44"},
+            {id: 26, label: "Alpha-glucosidase", color: "#88ff44"},
+            
+            // RNA/Genetic Markers
+            {id: 27, label: "miRNAs", color: "#4444ff"},
+            {id: 28, label: "piRNAs", color: "#4444ff"},
+            {id: 29, label: "X-chromosome miRNAs", color: "#4444ff"},
+            {id: 30, label: "Chromosome 19 Clusters", color: "#4444ff"},
+            {id: 31, label: "miR-34b/c Clusters", color: "#4444ff"},
+            {id: 32, label: "miR-449 Clusters", color: "#4444ff"},
+            {id: 33, label: "tRNAs", color: "#4444ff"},
+            {id: 34, label: "Y RNAs", color: "#4444ff"},
+            {id: 35, label: "rRNAs", color: "#4444ff"},
+            
+            // Cellular Processes
+            {id: 36, label: "Cell Proliferation", color: "#ff44ff"},
+            {id: 37, label: "Cell Differentiation", color: "#ff44ff"},
+            {id: 38, label: "Apoptosis", color: "#ff44ff"},
+            {id: 39, label: "Gene Expression", color: "#ff44ff"},
+            
+            // New Functional Markers
+            {id: 40, label: "Antisperm Antibodies", color: "#ff8844", group: "immunological"},
+            {id: 41, label: "DNA Fragmentation Index", color: "#ff8844", group: "functional"},
+            
+            // New Protein/Micronutrient Markers
+            {id: 42, label: "Zinc", color: "#44ff88", group: "micronutrient"},
+            {id: 43, label: "Selenium", color: "#44ff88", group: "micronutrient"},
+            {id: 44, label: "Carnitine", color: "#44ff88", group: "micronutrient"},
+            
+            // New Molecular Markers
+            {id: 45, label: "Protamine P1", color: "#4444ff", group: "molecular"},
+            {id: 46, label: "Protamine P2", color: "#4444ff", group: "molecular"},
+            {id: 47, label: "CREM", color: "#4444ff", group: "molecular"},
+            
+            // Functional Tests
+            {id: 48, label: "Sperm-Mucus Interaction", color: "#ff44ff", group: "functional"},
+            {id: 49, label: "Acrosome Reaction", color: "#ff44ff", group: "functional"}
+        ]);
+
+        const edges = new vis.DataSet([
+            // Oxidative Stress Pathway
+            {from: 2, to: 1, arrows: "to"},  // ROS to Oligozoospermia
+            {from: 2, to: 3, arrows: "to"},  // ROS to MDA
+            {from: 2, to: 4, arrows: "to"},  // ROS to DNA Damage
+            {from: 4, to: 5, arrows: "to"},  // DNA Damage to DNA Fragmentation
+            {from: 2, to: 6, arrows: "to"},  // ROS to Membrane Damage
+            {from: 6, to: 7, arrows: "to"},  // Membrane Damage to Microtubule Structure
+            
+            // Metabolic Pathway
+            {from: 8, to: 1, arrows: "to"},  // Fructose to Oligozoospermia
+            {from: 9, to: 1, arrows: "to"},  // Myo-inositol to Oligozoospermia
+            {from: 10, to: 1, arrows: "to"}, // Choline to Oligozoospermia
+            {from: 11, to: 1, arrows: "to"}, // Aspartate to Oligozoospermia
+            {from: 12, to: 1, arrows: "to"}, // ATP Production to Oligozoospermia
+            
+            // Clinical Parameters
+            {from: 13, to: 1, arrows: "to"}, // FSH to Oligozoospermia
+            {from: 14, to: 1, arrows: "to"}, // Sperm Concentration to Oligozoospermia
+            {from: 15, to: 1, arrows: "to"}, // Sperm Motility to Oligozoospermia
+            {from: 16, to: 1, arrows: "to"}, // Sperm Morphology to Oligozoospermia
+            {from: 17, to: 1, arrows: "to"}, // Testicular Volume to Oligozoospermia
+            
+            // Related Conditions
+            {from: 18, to: 1, arrows: "to"}, // OA to Oligozoospermia
+            {from: 19, to: 1, arrows: "to"}, // OT to Oligozoospermia
+            {from: 20, to: 1, arrows: "to"}, // OAT to Oligozoospermia
+            
+            // Environmental and Medical Factors
+            {from: 21, to: 1, arrows: "to"}, // Environmental Factors to Oligozoospermia
+            {from: 22, to: 1, arrows: "to"}, // Medical Factors to Oligozoospermia
+            
+            // Organ-specific Markers
+            {from: 23, to: 1, arrows: "to"}, // Prostate Markers to Oligozoospermia
+            {from: 24, to: 1, arrows: "to"}, // Epididymis Markers to Oligozoospermia
+            {from: 25, to: 1, arrows: "to"}, // Seminal Vesicle Markers to Oligozoospermia
+            {from: 26, to: 24, arrows: "to"}, // Alpha-glucosidase to Epididymis Markers
+            
+            // RNA/Genetic Markers
+            {from: 27, to: 1, arrows: "to"}, // miRNAs to Oligozoospermia
+            {from: 28, to: 1, arrows: "to"}, // piRNAs to Oligozoospermia
+            {from: 29, to: 27, arrows: "to"}, // X-chromosome miRNAs to miRNAs
+            {from: 30, to: 27, arrows: "to"}, // Chromosome 19 Clusters to miRNAs
+            {from: 31, to: 27, arrows: "to"}, // miR-34b/c Clusters to miRNAs
+            {from: 32, to: 27, arrows: "to"}, // miR-449 Clusters to miRNAs
+            {from: 33, to: 1, arrows: "to"}, // tRNAs to Oligozoospermia
+            {from: 34, to: 1, arrows: "to"}, // Y RNAs to Oligozoospermia
+            {from: 35, to: 1, arrows: "to"}, // rRNAs to Oligozoospermia
+            
+            // Cellular Processes
+            {from: 36, to: 39, arrows: "to"}, // Cell Proliferation to Gene Expression
+            {from: 37, to: 39, arrows: "to"}, // Cell Differentiation to Gene Expression
+            {from: 38, to: 39, arrows: "to"}, // Apoptosis to Gene Expression
+            {from: 39, to: 1, arrows: "to"},  // Gene Expression to Oligozoospermia
+            
+            // New Functional Marker connections
+            {from: 40, to: 1, arrows: "to"},  // ASA to Oligozoospermia
+            {from: 41, to: 1, arrows: "to"},  // DFI to Oligozoospermia
+            
+            // Micronutrient connections
+            {from: 42, to: 1, arrows: "to"},  // Zinc to Oligozoospermia
+            {from: 43, to: 1, arrows: "to"},  // Selenium to Oligozoospermia
+            {from: 44, to: 1, arrows: "to"},  // Carnitine to Oligozoospermia
+            
+            // Molecular marker connections
+            {from: 45, to: 1, arrows: "to"},  // P1 to Oligozoospermia
+            {from: 46, to: 1, arrows: "to"},  // P2 to Oligozoospermia
+            {from: 47, to: 1, arrows: "to"},  // CREM to Oligozoospermia
+            
+            // Functional test connections
+            {from: 48, to: 1, arrows: "to"},  // Sperm-Mucus to Oligozoospermia
+            {from: 49, to: 1, arrows: "to"},  // Acrosome Reaction to Oligozoospermia
+            
+            // Additional relationships
+            {from: 45, to: 46, arrows: "to"},  // P1 to P2 (ratio relationship)
+            {from: 2, to: 49, arrows: "to"},   // ROS affects Acrosome Reaction
+            {from: 42, to: 23, arrows: "to"}   // Zinc to Prostate Markers
+        ]);
+
+        // Create network
+        const container = document.getElementById('graph');
+        const data = {
+            nodes: nodes,
+            edges: edges
+        };
+        const options = {
+            nodes: {
+                shape: 'dot',
+                size: 16,
+                font: {
+                    size: 12,
+                    face: 'Arial'
+                }
+            },
+            edges: {
+                smooth: {
+                    type: 'continuous',
+                    forceDirection: 'none',
+                    roundness: 0.5
+                },
+                length: 250,
+                color: {
+                    inherit: 'from'
+                }
+            },
+            physics: {
+                enabled: true,
+                barnesHut: {
+                    gravitationalConstant: -8000,
+                    centralGravity: 0.1,
+                    springLength: 250,
+                    springConstant: 0.04,
+                    damping: 0.09,
+                    avoidOverlap: 1.5
+                },
+                repulsion: {
+                    nodeDistance: 250
+                },
+                solver: 'barnesHut',
+                stabilization: {
+                    enabled: true,
+                    iterations: 2000,
+                    updateInterval: 50
+                }
+            },
+            layout: {
+                improvedLayout: true,
+                clusterThreshold: 150,
+                hierarchical: {
+                    enabled: false,
+                    direction: 'UD',
+                    sortMethod: 'directed',
+                    nodeSpacing: 200,
+                    levelSeparation: 250
+                }
+            },
+            groups: {
+                oxidativeStress: {color: "#ff8844", shape: "dot"},
+                metabolic: {color: "#44ff88", shape: "dot"},
+                clinical: {color: "#44ff44", shape: "dot"},
+                conditions: {color: "#ff4444", shape: "dot"},
+                environmental: {color: "#ff8888", shape: "dot"},
+                organ: {color: "#88ff44", shape: "dot"},
+                genetic: {color: "#4444ff", shape: "dot"},
+                cellular: {color: "#ff44ff", shape: "dot"},
+                immunological: {color: "#ff8844", shape: "dot"},
+                functional: {color: "#ff8844", shape: "dot"},
+                micronutrient: {color: "#44ff88", shape: "dot"},
+                molecular: {color: "#4444ff", shape: "dot"},
+                functionalTest: {color: "#ff44ff", shape: "dot"}
+            },
+            interaction: {
+                dragNodes: true,
+                dragView: true,
+                hideEdgesOnDrag: false,
+                hideNodesOnDrag: false,
+                hover: true,
+                navigationButtons: true,
+                multiselect: true,
+                selectable: true,
+                selectConnectedEdges: true,
+                tooltipDelay: 300,
+                zoomView: true
+            }
+        };
+        const network = new vis.Network(container, data, options);
+
+        // Add event listeners for physics control
+        network.on("dragEnd", function (params) {
+            network.setOptions({ physics: { enabled: true } });
+        });
+
+        network.on("dragStart", function (params) {
+            network.setOptions({ physics: { enabled: false } });
+        });
+
+        // Add stabilization progress handler
+        network.on("stabilizationProgress", function(params) {
+            // Optional: Add loading indicator here
+        });
+
+        network.on("stabilizationIterationsDone", function() {
+            // Optional: Remove loading indicator here
+        });
+
+        // Add zoom buttons and controls
+        const controls = document.createElement('div');
+        controls.style.position = 'absolute';
+        controls.style.top = '10px';
+        controls.style.left = '10px';
+        controls.innerHTML = `
+            <div style="background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <button onclick="network.fit()" style="margin: 5px;">Fit Graph</button>
+                <button onclick="togglePhysics()" style="margin: 5px;">Toggle Physics</button>
+                <button onclick="network.stabilize()" style="margin: 5px;">Stabilize</button>
+            </div>
+        `;
+        container.appendChild(controls);
+
+        // Add physics toggle function
+        function togglePhysics() {
+            const physics = network.physics.options.enabled;
+            network.setOptions({ physics: { enabled: !physics } });
+        }
+
+        // Node click handler
+        network.on("click", function (params) {
+            if (params.nodes.length > 0) {
+                const nodeId = params.nodes[0];
+                const node = nodes.get(nodeId);
+                const details = nodeDetails[node.label] || {
+                    description: "Additional information coming soon",
+                    evidence: "Under review",
+                    impact: "To be determined",
+                    citations: []
+                };
+                
+                const infoDiv = document.getElementById("nodeInfo");
+                let citationsHtml = '';
+                
+                if (details.citations && details.citations.length > 0) {
+                    citationsHtml = details.citations.map(citationKey => {
+                        const citation = citations[citationKey];
+                        return `
+                            <div class="citation">
+                                <p><span class="detail-label">Source:</span><br>
+                                ${citation.authors} (${citation.year})<br>
+                                <em>${citation.title}</em><br>
+                                ${citation.journal}<br>
+                                <a href="${citation.doi}" class="doi" target="_blank">DOI: ${citation.doi}</a></p>
+                            </div>
+                        `;
+                    }).join('');
+                }
+                
+                infoDiv.innerHTML = `
+                    <button class="close-button" onclick="document.getElementById('nodeInfo').style.display='none'">×</button>
+                    <h3>${node.label}</h3>
+                    <div class="detail-section">
+                        <p><span class="detail-label">Description:</span><br>${details.description}</p>
+                    </div>
+                    <div class="detail-section">
+                        <p><span class="detail-label">Evidence:</span><br>${details.evidence}</p>
+                    </div>
+                    <div class="detail-section">
+                        <p><span class="detail-label">Impact:</span><br>${details.impact}</p>
+                    </div>
+                    ${citationsHtml}
+                `;
+                infoDiv.style.display = "block";
+            } else {
+                document.getElementById("nodeInfo").style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html> 

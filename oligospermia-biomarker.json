@@ -1,0 +1,1093 @@
+{
+    "core_condition": {
+      "name": "Oligozoospermia",
+      "definition": "Less than 15 × 106 sperm/mL of seminal ejaculate",
+      "prevalence": "Part of 45-50% male factor infertility cases",
+      "clinical_significance": "Major contributory factor in male infertility",
+      "source_papers": [
+        {
+          "authors": "Agarwal et al.",
+          "year": "2014",
+          "doi": "https://doi.org/10.3109/19396368.2014.918675"
+        },
+        {
+          "authors": "Murgia et al.",
+          "year": "2020",
+          "title": "Seminal Fluid Metabolomic Markers of Oligozoospermic Infertility in Humans",
+          "journal": "Metabolites",
+          "doi": "https://doi.org/10.3390/metabo10020064"
+        }
+      ],
+      "global_prevalence": "Affects 12-15% of couples worldwide",
+      "primary_diagnosis_distribution": {
+        "primary_infertility": "81%",
+        "secondary_infertility": "19%"
+      }
+    },
+    "related_conditions": [
+      {
+        "name": "Oligoasthenozoospermia (OA)",
+        "definition": "Low sperm count (<15 × 106/mL) with poor motility (<40%)",
+        "evidence_level": "Clinical diagnosis",
+        "relationship": "Combined defect"
+      },
+      {
+        "name": "Oligoteratozoospermia (OT)",
+        "definition": "Low sperm count (<15 × 106/mL) with poor morphology (<4% normal forms)",
+        "evidence_level": "Clinical diagnosis",
+        "relationship": "Combined defect"
+      },
+      {
+        "name": "Oligoasthenoteratozoospermia (OAT)",
+        "definition": "Low sperm count with poor motility and morphology",
+        "evidence_level": "Clinical diagnosis",
+        "relationship": "Combined defect"
+      }
+    ],
+    "chain_of_logic": {
+        "integrated_oxidative_stress_pathway": {
+            "start": "ROS",
+            "interconnected_pathways": [
+                {
+                    "primary_sequence": [
+                        "ROS production ↑",
+                        "→ DNA damage",
+                        "→ DNA fragmentation ↑",
+                        "→ Poor fertilization",
+                        "→ Reduced pregnancy rates"
+                    ],
+                    "branching_effects": [
+                        {
+                            "branch": "ATP pathway",
+                            "sequence": [
+                                "ROS ↑",
+                                "→ ATP production ↓",
+                                "→ Energy deficiency",
+                                "→ Reduced motility",
+                                "→ Oligoasthenozoospermia"
+                            ]
+                        },
+                        {
+                            "branch": "Lipid peroxidation",
+                            "sequence": [
+                                "ROS ↑",
+                                "→ Lipid peroxidation ↑",
+                                "→ MDA levels ↑",
+                                "→ Membrane damage",
+                                "→ Microtubule disruption",
+                                "→ Poor motility + morphology"
+                            ]
+                        }
+                    ],
+                    "evidence": {
+                        "ros_levels": {
+                            "oligozoospermia": "855.7 RLU/s",
+                            "OA": "3253.6 RLU/s",
+                            "OAT": "883.8 RLU/s"
+                        },
+                        "correlations": [
+                            {
+                                "parameters": "ROS vs concentration",
+                                "value": "r2 = -0.44",
+                                "significance": "p = 0.001"
+                            },
+                            {
+                                "parameters": "MDA vs DNA fragmentation",
+                                "relationship": "Positive correlation"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "metabolic_marker_interactions": {
+            "start": "Metabolic dysfunction",
+            "interconnected_pathways": [
+                {
+                    "primary_sequence": [
+                        "Fructose utilization ↓",
+                        "→ Energy metabolism disruption",
+                        "→ ATP production ↓",
+                        "→ Motility impairment"
+                    ],
+                    "branching_effects": [
+                        {
+                            "branch": "Membrane metabolism",
+                            "sequence": [
+                                "Choline levels altered",
+                                "→ Membrane integrity compromised",
+                                "→ Increased ROS susceptibility",
+                                "→ Oxidative damage"
+                            ]
+                        },
+                        {
+                            "branch": "Cellular regulation",
+                            "sequence": [
+                                "Myo-inositol levels ↓",
+                                "→ Mitochondrial function ↓",
+                                "→ ATP production ↓",
+                                "→ Multiple parameter defects"
+                            ]
+                        }
+                    ],
+                    "evidence": {
+                        "correlations": [
+                            {
+                                "marker": "Fructose",
+                                "with_total_sperm": "r = -0.53, p = 0.0009",
+                                "with_motile_sperm": "r = -0.59, p = 0.0001"
+                            },
+                            {
+                                "marker": "Myo-inositol",
+                                "with_progressive_motility": "r = 0.34, p = 0.04"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "hormonal_metabolic_interaction": {
+            "start": "FSH",
+            "interconnected_pathways": [
+                {
+                    "primary_sequence": [
+                        "FSH levels altered",
+                        "→ Spermatogenesis disruption",
+                        "→ Metabolic changes",
+                        "→ Multiple effects"
+                    ],
+                    "branching_effects": [
+                        {
+                            "branch": "Energy metabolism",
+                            "sequence": [
+                                "Fructose accumulation",
+                                "→ Reduced sperm count",
+                                "→ Oligozoospermia"
+                            ]
+                        },
+                        {
+                            "branch": "Cellular function",
+                            "sequence": [
+                                "Aspartate levels ↓",
+                                "→ Spermatogenic dysfunction",
+                                "→ Multiple parameter defects"
+                            ]
+                        }
+                    ],
+                    "evidence": {
+                        "correlations": [
+                            {
+                                "marker": "Aspartate",
+                                "with_total_sperm": "r = 0.40, p = 0.01",
+                                "with_motile_sperm": "r = 0.44, p = 0.006"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    },
+    "biomarkers": [
+      {
+        "name": "Reactive Oxygen Species (ROS)",
+            "type": "Primary oxidative stress marker",
+        "evidence": "Significantly higher in oligozoospermic patients",
+            "impact": "Central mediator of multiple pathways",
+        "cutoff_value": "94 RLU/s × 106 sperm",
+        "clinical_significance": "High diagnostic accuracy for infertility",
+            "mechanism": "Induces oxidative stress and DNA damage",
+            "related_markers": [
+                {
+                    "marker": "MDA",
+                    "relationship": "Causes increased production",
+                    "evidence": "Positive correlation"
+                },
+                {
+                    "marker": "DNA fragmentation",
+                    "relationship": "Direct causation",
+                    "evidence": "Poor IVF outcomes"
+                },
+                {
+                    "marker": "ATP",
+                    "relationship": "Inverse correlation",
+                    "evidence": "Energy deficiency in OA"
+                }
+            ],
+            "pathways": [
+                "integrated_oxidative_stress_pathway",
+                "metabolic_marker_interactions"
+            ]
+      },
+      {
+        "name": "Malondialdehyde (MDA)",
+            "type": "Secondary oxidative stress marker",
+        "evidence": "Significantly higher in OA patients",
+            "impact": "Indicates membrane damage",
+            "mechanism": "End product of ROS-induced damage",
+            "related_markers": [
+                {
+                    "marker": "ROS",
+                    "relationship": "Produced by",
+                    "evidence": "Direct correlation"
+                },
+                {
+                    "marker": "DNA fragmentation",
+                    "relationship": "Co-occurrence",
+                    "evidence": "Positive correlation"
+                }
+            ],
+            "pathways": [
+                "integrated_oxidative_stress_pathway",
+                "metabolic_marker_interactions"
+            ]
+        },
+        {
+            "name": "Metabolic Markers",
+            "type": "Metabolic function indicators",
+            "components": [
+                {
+                    "name": "Fructose",
+                    "role": "Energy source",
+                    "correlation": {
+                        "with_sperm_count": "r = -0.53, p = 0.0009",
+                        "with_motility": "r = -0.59, p = 0.0001"
+                    },
+                    "related_markers": [
+                        {
+                            "marker": "ATP",
+                            "relationship": "Energy metabolism",
+                            "evidence": "Direct pathway"
+                        }
+                    ]
+                },
+                {
+                    "name": "Myo-inositol",
+                    "role": "Cellular regulation",
+                    "correlation": {
+                        "with_motility": "r = 0.34, p = 0.04"
+                    },
+                    "related_markers": [
+                        {
+                            "marker": "ATP",
+                            "relationship": "Mitochondrial function",
+                            "evidence": "Direct impact"
+                        }
+                    ]
+                },
+                {
+                    "name": "Aspartate",
+                    "role": "Spermatogenic function",
+                    "correlation": {
+                        "with_sperm_count": "r = 0.40, p = 0.01",
+                        "with_motile_sperm": "r = 0.44, p = 0.006"
+                    }
+                }
+            ],
+            "pathways": [
+                "metabolic_marker_interactions",
+                "hormonal_metabolic_interaction"
+            ]
+        },
+        {
+            "name": "FSH",
+            "type": "Hormonal marker",
+            "evidence": "Elevated in oligozoospermic patients",
+            "impact": "Indicates spermatogenic dysfunction",
+            "clinical_significance": "Diagnostic and prognostic value",
+            "related_markers": [
+                {
+                    "marker": "Aspartate",
+                    "relationship": "Inverse correlation",
+                    "evidence": "Both indicate spermatogenic function"
+                },
+                {
+                    "marker": "Metabolic markers",
+                    "relationship": "Regulatory impact",
+                    "evidence": "Affects metabolic pathways"
+                }
+            ],
+            "pathways": [
+                "hormonal_metabolic_interaction",
+                "integrated_oxidative_stress_pathway"
+            ]
+        },
+        {
+            "name": "Testicular Volume",
+            "type": "Physical marker",
+            "evidence": "Reduced in oligozoospermic patients",
+            "impact": "Indicates spermatogenic tissue capacity",
+            "clinical_significance": "Diagnostic value",
+            "pathways": [
+              "diagnostic_marker_pathways.physical_parameter_pathway"
+            ]
+        },
+        {
+            "name": "miRNAs",
+            "type": "Genetic marker",
+            "evidence": "Altered expression in infertile men",
+            "impact": "Post-transcriptional regulation",
+            "clinical_significance": "Potential diagnostic biomarker",
+            "pathways": [
+              "molecular_marker_pathways.miRNA_regulation_pathway",
+              "genetic_marker_pathways.chromosome_specific_pathway"
+            ]
+        },
+        {
+            "name": "piRNAs",
+            "type": "RNA marker",
+            "evidence": "Dysregulated in infertile patients",
+            "impact": "Transposon regulation",
+            "clinical_significance": "Novel biomarker",
+            "pathways": [
+              "rna_marker_pathways.pirna_pathway"
+            ]
+        },
+        {
+            "name": "Alpha-glucosidase",
+            "type": "Epididymal marker",
+            "evidence": "Altered in infertile men",
+            "impact": "Indicates epididymal function",
+            "clinical_significance": "Diagnostic value",
+            "pathways": [
+              "organ_specific_pathways.epididymal_pathway"
+            ]
+        },
+        {
+            "name": "RNA Markers",
+            "type": "Genetic regulation markers",
+            "components": [
+                {
+                    "name": "miRNAs",
+                    "role": "Post-transcriptional regulation",
+                    "evidence": "Altered expression in infertile men",
+                    "related_markers": [
+                        {
+                            "marker": "Gene expression",
+                            "relationship": "Direct regulation",
+                            "evidence": "Multiple affected pathways"
+                        }
+                    ]
+                },
+                {
+                    "name": "piRNAs",
+                    "role": "Transposon regulation",
+                    "evidence": "Dysregulated in infertile patients",
+                    "related_markers": [
+                        {
+                            "marker": "DNA integrity",
+                            "relationship": "Protective function",
+                            "evidence": "Genomic stability"
+                        }
+                    ]
+                }
+            ],
+            "pathways": [
+                "molecular_marker_pathways",
+                "genetic_marker_pathways"
+            ]
+        },
+        {
+            "name": "Organ-specific Markers",
+            "type": "Functional markers",
+            "components": [
+                {
+                    "name": "Alpha-glucosidase",
+                    "role": "Epididymal function",
+                    "evidence": "Altered in infertile men",
+                    "related_markers": [
+                        {
+                            "marker": "Sperm motility",
+                            "relationship": "Direct impact",
+                            "evidence": "Maturation marker"
+                        }
+                    ]
+                },
+                {
+                    "name": "Testicular Volume",
+                    "role": "Physical marker",
+                    "evidence": "Reduced in oligozoospermic patients",
+                    "related_markers": [
+                        {
+                            "marker": "FSH",
+                            "relationship": "Inverse correlation",
+                            "evidence": "Both indicate spermatogenic capacity"
+                        }
+                    ]
+                }
+            ],
+            "pathways": [
+                "organ_specific_pathways",
+                "diagnostic_marker_pathways"
+            ]
+      }
+    ],
+    "diagnostic_parameters": [
+      {
+        "name": "Sperm Concentration",
+        "cutoff": "<15 × 106/mL",
+        "significance": "Primary diagnostic criterion",
+        "evidence_level": "WHO 2010 guidelines"
+      },
+      {
+        "name": "Sperm Motility",
+        "cutoff": "<40%",
+        "significance": "Secondary diagnostic criterion",
+        "evidence_level": "WHO 2010 guidelines"
+      },
+      {
+        "name": "Sperm Morphology",
+        "cutoff": "<4% normal forms",
+        "significance": "Secondary diagnostic criterion",
+        "evidence_level": "WHO 2010 guidelines"
+      }
+    ],
+    "causative_factors": [
+      {
+        "category": "Environmental",
+        "factors": [
+          "High fever",
+          "Smoking",
+          "Alcohol",
+          "Recreational drugs"
+        ]
+      },
+      {
+        "category": "Medical",
+        "factors": [
+          "Testicular trauma",
+          "Chromosomal disorders",
+          "Secondary testicular failure",
+          "Varicocele",
+          "Sexually transmitted diseases",
+          "Hormonal disorders",
+          "Obesity"
+        ]
+      }
+    ],
+    "molecular_mechanisms": [
+      {
+        "pathway": "Oxidative Stress",
+        "components": [
+          {
+            "name": "ROS production",
+            "impact": "DNA damage",
+            "evidence": "High levels in oligozoospermic patients",
+            "related_pathways": [
+              "integrated_oxidative_stress_pathway"
+            ]
+          },
+          {
+            "name": "Lipid peroxidation",
+            "impact": "Membrane damage",
+            "evidence": "Elevated MDA levels",
+            "related_pathways": [
+              "lipid_peroxidation_pathway"
+            ]
+          },
+          {
+            "name": "ATP production",
+            "impact": "Energy deficiency",
+            "evidence": "Impaired by ROS"
+          }
+        ]
+      },
+      {
+        "pathway": "Lipid Peroxidation",
+        "components": [
+          {
+            "name": "MDA",
+            "impact": "Indicates oxidative damage",
+            "evidence": "Significantly higher in OA patients"
+          },
+          {
+            "name": "Disorganized microtubules",
+            "impact": "Structural damage",
+            "evidence": "Higher in asthenozoospermia and oligoasthenozoospermia"
+          },
+          {
+            "name": "Absent microtubules in 43% cases",
+            "impact": "Structural damage",
+            "evidence": "Higher in asthenozoospermia and oligoasthenozoospermia"
+          }
+        ]
+      }
+    ],
+    "clinical_correlations": [
+      {
+        "parameter": "ROS levels",
+        "correlation": "Negative",
+        "with": "Sperm concentration",
+        "strength": "r2 = -0.44",
+        "significance": "p = 0.001"
+      },
+      {
+        "parameter": "Sperm concentration",
+        "correlation": "Positive",
+        "with": "Normal morphology",
+        "strength": "r2 = 0.27",
+        "significance": "p = 0.04"
+      },
+      {
+        "parameter": "morphology vs concentration",
+        "correlation": "r2 = 0.407",
+        "significance": "p = 0.009"
+      },
+      {
+        "parameter": "morphology vs motility",
+        "correlation": "r2 = 0.508",
+        "significance": "p = 0.001"
+      },
+      {
+        "parameter": "ROS vs concentration",
+        "correlation": "r2 = -0.354",
+        "significance": "p = 0.021"
+      }
+    ],
+    "study_parameters": {
+      "sample_size": {
+        "total_subjects": 374,
+        "healthy_donors": 56,
+        "infertile_patients": 318,
+        "final_analyzed": 101
+      },
+      "patient_groups": {
+        "oligozoospermia": "16 patients (5%)",
+        "oligoasthenozoospermia": "12 patients (3.8%)",
+        "oligoteratozoospermia": "19 patients (6%)",
+        "oligoasthenoteratozoospermia": "54 patients (17%)"
+      },
+      "control_groups": [
+        {
+          "name": "All donors",
+          "size": 56,
+          "criteria": [
+            "normal semen parameters",
+            "no sexually infected disease",
+            "no use of recreational drugs",
+            "may or may not have initiated pregnancy"
+          ]
+        },
+        {
+          "name": "Proven donors",
+          "size": 28,
+          "criteria": [
+            "normal semen parameters",
+            "no sexually infected disease",
+            "no use of recreational drugs",
+            "initiated pregnancy in past"
+          ]
+        },
+        {
+          "name": "Recent proven donors",
+          "size": 12,
+          "criteria": [
+            "normal semen parameters",
+            "no sexually infected disease",
+            "no use of recreational drugs",
+            "initiated pregnancy in past 2 years"
+          ]
+        }
+      ]
+    },
+    "biomarkers": {
+      "ros_measurements": {
+        "proven_donors_<2_years": "58.8 (14.2, 79.2) RLU/s",
+        "oligozoospermia": "855.7 (49.8, 2030.3) RLU/s",
+        "OAT": "883.8 (199.3, 3778) RLU/s",
+        "OT": "600.0 (111.8, 3573.6) RLU/s",
+        "OA": "3253.6 (544.2, 10433.6) RLU/s"
+      },
+      "diagnostic_accuracy": {
+        "ROS_cutoff": {
+          "value": "94 RLU/s × 106 sperm",
+          "group": "proven donors <2 years",
+          "characteristics": "Highest sensitivity, specificity, and AUC"
+        }
+      }
+    },
+    "clinical_correlations": {
+      "donor_correlations": {
+        "all_donors": [
+          {
+            "parameters": "morphology vs concentration",
+            "correlation": "r2 = 0.407",
+            "significance": "p = 0.009"
+          },
+          {
+            "parameters": "morphology vs motility",
+            "correlation": "r2 = 0.508",
+            "significance": "p = 0.001"
+          },
+          {
+            "parameters": "ROS vs concentration",
+            "correlation": "r2 = -0.354",
+            "significance": "p = 0.021"
+          }
+        ],
+        "proven_donors": [
+          {
+            "parameters": "morphology vs concentration",
+            "correlation": "r2 = 0.481",
+            "significance": "p = 0.037"
+          },
+          {
+            "parameters": "morphology vs motility",
+            "correlation": "r2 = 0.494",
+            "significance": "p = 0.032"
+          }
+        ]
+      },
+      "patient_correlations": {
+        "OT_group": {
+          "parameters": "morphology vs ROS",
+          "correlation": "r2 = 0.81",
+          "significance": "p = 0.001"
+        },
+        "OAT_group": [
+          {
+            "parameters": "volume vs morphology",
+            "correlation": "r2 = -0.27",
+            "significance": "p = 0.05"
+          },
+          {
+            "parameters": "concentration vs morphology",
+            "correlation": "r2 = 0.27",
+            "significance": "p = 0.04"
+          }
+        ]
+      }
+    },
+    "molecular_mechanisms": {
+      "lipid_peroxidation_pathway": {
+        "marker": "MDA",
+        "significance": [
+          "Higher in asthenozoospermia and oligoasthenozoospermia",
+          "Positively correlates with DNA fragmentation",
+          "Negatively correlates with sperm motility and morphology"
+        ],
+        "structural_impacts": [
+          "Disorganized microtubules",
+          "Absent microtubules in 43% cases"
+        ]
+      }
+    },
+    "diagnostic_methods": {
+      "semen_analysis": {
+        "parameters": [
+          "Concentration",
+          "Motility",
+          "Morphology",
+          "Viability"
+        ],
+        "methods": [
+          "MicroCell counting chamber",
+          "Eosin-Nigrosin stain for viability",
+          "Diff-Quik kit for morphology"
+        ]
+      },
+      "leukocyte_analysis": {
+        "threshold": ">1 × 106 WBC/mL",
+        "method": "Endtz test",
+        "indication": "Leukocytospermia"
+      }
+    },
+    "treatment_implications": {
+      "art_outcomes": [
+        {
+          "procedure": "ICSI",
+          "finding": "Lower fertilization rates",
+          "evidence": "Significantly lower in concentration <107 sperm/mL",
+          "reference": "Arikan et al."
+        },
+        {
+          "procedure": "IVF",
+          "finding": "Poor pregnancy rates",
+          "evidence": "Associated with DNA damaged sperm",
+          "reference": "Henkel et al."
+        }
+      ],
+      "art_specific_findings": {
+        "ICSI_outcomes": {
+          "fertilization_impact": "Significantly lower in concentration <107 sperm/mL",
+          "evidence_level": "Retrospective study",
+          "two_pronuclei_formation": "Significantly lower in severe oligozoospermia"
+        },
+        "DNA_damage_impact": {
+          "pregnancy_rate": "Lower in DNA damaged sperm",
+          "fertilization_success": "Affected by oxidative stress-induced DNA damage"
+        }
+      }
+    },
+    "metabolomic_markers": {
+      "biological_significance": {
+        "fructose": {
+          "role": "Essential energy source for spermatozoa metabolism and motility",
+          "source": "Produced by seminal vesicles",
+          "clinical_relevance": "Marker of seminal vesicle function",
+          "pathological_finding": "Increased in oligozoospermia due to reduced utilization by fewer spermatozoa",
+          "evidence_strength": "Strong negative correlation with sperm count and motility"
+        },
+        "myo_inositol": {
+          "role": [
+            "Regulates cellular processes in gamete development",
+            "Important for spermatogenesis and sperm function",
+            "Critical for mitochondrial function in sperm"
+          ],
+          "clinical_relevance": [
+            "Lower concentration associated with reduced fertility",
+            "Improves sperm motility in oligoasthenoteratozoospermia",
+            "Higher concentration in seminiferous tubules than serum"
+          ],
+          "therapeutic_potential": "Supplementation may improve sperm parameters"
+        },
+        "choline": {
+          "role": [
+            "Cell membrane constituent",
+            "Important for lipid cholesterol transport",
+            "Critical for membrane metabolism"
+          ],
+          "pathological_finding": "Altered levels suggest disrupted membrane metabolism",
+          "clinical_relevance": "Marker of membrane integrity and function"
+        },
+        "aspartate": {
+          "role": [
+            "Present in Leydig cells",
+            "Found in epididymal spermatozoa",
+            "Important for spermatogenesis"
+          ],
+          "clinical_relevance": [
+            "Reduced in oligozoospermia",
+            "Positive correlation with sperm count and motility",
+            "Potential marker of spermatogenic function"
+          ],
+          "evidence_strength": "Strong positive correlation with sperm parameters"
+        }
+      },
+      "study_methodology": {
+        "sample_processing": {
+          "centrifugation": "12,052× g at 4°C for 10 min",
+          "extraction": {
+            "methanol": "600 µL",
+            "water": "400 µL",
+            "chloroform": "600 µL"
+          },
+          "analysis_conditions": {
+            "temperature": "300 K",
+            "frequency": "499 MHz",
+            "spectral_width": "6000 Hz"
+          }
+        },
+        "statistical_analysis": {
+          "multivariate": [
+            "Principal Component Analysis (PCA)",
+            "Orthogonal Partial Least Square (OPLS-DA)"
+          ],
+          "univariate": [
+            "U-Mann Whitney test",
+            "ROC curve analysis",
+            "Spearman Correlation"
+          ],
+          "model_validation": {
+            "permutation_tests": "400 iterations",
+            "cross_validation": "7-fold"
+          }
+        }
+      },
+      "study_parameters": {
+        "sample_size": {
+          "total": 47,
+          "control": 29,
+          "oligozoospermic": 18
+        },
+        "analysis_method": "Nuclear Magnetic Resonance spectroscopy",
+        "identified_metabolites": 34,
+        "significant_markers": [
+          {
+            "name": "Fructose",
+            "significance": "p = 0.0008",
+            "auc": 0.82,
+            "confidence_interval": "0.67-0.94",
+            "correlation": {
+              "total_spermatozoa": {
+                "r": -0.53,
+                "p": 0.0009
+              },
+              "total_motile_spermatozoa": {
+                "r": -0.59,
+                "p": 0.0001
+              }
+            }
+          },
+          {
+            "name": "Choline",
+            "significance": "p = 0.04",
+            "auc": 0.7,
+            "confidence_interval": "0.53-0.86"
+          },
+          {
+            "name": "Aspartate",
+            "significance": "p = 0.009",
+            "auc": 0.76,
+            "confidence_interval": "0.6-0.9",
+            "correlation": {
+              "total_spermatozoa": {
+                "r": 0.40,
+                "p": 0.01
+              },
+              "total_motile_spermatozoa": {
+                "r": 0.44,
+                "p": 0.006
+              }
+            }
+          },
+          {
+            "name": "Myo-inositol",
+            "significance": "p = 0.03",
+            "auc": 0.71,
+            "confidence_interval": "0.54-0.88",
+            "correlation": {
+              "progressive_motility": {
+                "r": 0.34,
+                "p": 0.04
+              }
+            }
+          }
+        ]
+      },
+      "identified_compounds": [
+        "Isoleucine",
+        "Leucine",
+        "Valine",
+        "Lactate",
+        "Threonine",
+        "Alanine",
+        "Lysine",
+        "N-Acetyl groups",
+        "Glutamate",
+        "Glutamine",
+        "Citrate",
+        "Aspartate",
+        "Asparagine",
+        "Creatine",
+        "Cis-Aconitate",
+        "Choline",
+        "sn-Glycero-3-Phosphocholine",
+        "Betaine",
+        "Myo-Inositol",
+        "Taurine",
+        "Glycine",
+        "Fructose",
+        "Serine",
+        "Uridine",
+        "Ascorbate",
+        "N-Acetyl-Glucosamine",
+        "Glucose-6-Phosphate",
+        "Trans-Aconitate",
+        "Tyrosine",
+        "Histidine",
+        "Phenylalanine",
+        "Tryptophan",
+        "Adenosine",
+        "Formate"
+      ]
+    },
+    "clinical_implications": {
+        "diagnostic_potential": {
+            "metabolomic_profile": {
+                "accuracy": {
+                    "model_performance": {
+                        "R2X": 0.723,
+                        "R2Y": 0.632,
+                        "Q2": 0.417,
+                        "p_value": 0.004
+                    },
+                    "ROC_analysis": {
+                        "AUC": 0.9,
+                        "confidence_interval": "0.75-1",
+                        "p_value": 0.002
+                    }
+                },
+                "clinical_utility": [
+                    "Potential for non-invasive diagnosis",
+                    "May complement standard semen analysis",
+                    "Could identify underlying metabolic dysfunction"
+                ]
+            },
+            "biomarker_panel": {
+                "combined_markers": [
+                    {
+                        "name": "Fructose",
+                        "diagnostic_value": "Energy metabolism marker",
+                        "clinical_application": "Seminal vesicle function assessment"
+                    },
+                    {
+                        "name": "Myo-inositol",
+                        "diagnostic_value": "Spermatogenesis marker",
+                        "clinical_application": "Potential therapeutic target"
+                    },
+                    {
+                        "name": "Choline",
+                        "diagnostic_value": "Membrane metabolism marker",
+                        "clinical_application": "Sperm membrane integrity assessment"
+                    },
+                    {
+                        "name": "Aspartate",
+                        "diagnostic_value": "Spermatogenic function marker",
+                        "clinical_application": "Assessment of testicular function"
+                    }
+                ]
+            }
+        },
+        "therapeutic_implications": {
+            "potential_interventions": [
+                {
+                    "target": "Myo-inositol",
+                    "approach": "Supplementation",
+                    "expected_benefit": "Improved sperm motility and function"
+                },
+                {
+                    "target": "Energy metabolism",
+                    "approach": "Metabolic support",
+                    "rationale": "Address altered fructose utilization"
+                }
+            ],
+            "monitoring_markers": [
+                {
+                    "marker": "Aspartate",
+                    "utility": "Monitor spermatogenic function",
+                    "correlation": "Positive with sperm parameters"
+                },
+                {
+                    "marker": "Fructose",
+                    "utility": "Monitor energy metabolism",
+                    "correlation": "Negative with sperm count"
+                }
+            ]
+        },
+        "future_directions": {
+            "research_needs": [
+                "Larger scale validation studies",
+                "Therapeutic intervention trials",
+                "Integration with other diagnostic methods"
+            ],
+            "potential_applications": [
+                "Personalized treatment approaches",
+                "Early detection of male infertility",
+                "Monitoring treatment response"
+            ]
+        }
+    },
+    "citations": [
+      {
+        "authors": "Agarwal et al.",
+        "year": "2014",
+        "doi": "https://doi.org/10.3109/19396368.2014.918675"
+      },
+      {
+        "authors": "Murgia et al.",
+        "year": "2020",
+        "title": "Seminal Fluid Metabolomic Markers of Oligozoospermic Infertility in Humans",
+        "journal": "Metabolites",
+        "doi": "https://doi.org/10.3390/metabo10020064"
+      },
+      {
+        "authors": "Bieniek et al.",
+        "year": "2016",
+        "title": "Seminal biomarkers for the evaluation of male infertility",
+        "journal": "Asian Journal of Andrology",
+        "doi": "10.4103/1008-682X.175781"
+      }
+    ],
+    "biomarkers": {
+      "functional_markers": {
+        "antisperm_antibodies": {
+          "type": "Immunological marker",
+          "evidence": "Present in some infertile men but controversial clinical significance",
+          "impact": "May cause sperm agglutination and reduced motility",
+          "mechanism": "Immunological response to blood-testis barrier breach",
+          "clinical_value": "Limited correlation with pregnancy rates",
+          "citations": ["bieniek"]
+        },
+        "dna_fragmentation_index": {
+          "type": "DNA integrity marker",
+          "evidence": "Up to 8% of infertile men with normal SA show high DFI (>30%)",
+          "impact": "Correlates with lower conception rates and higher miscarriage rates",
+          "mechanism": "Cellular stress leading to DNA damage",
+          "testing_methods": [
+            "Comet assay",
+            "TUNEL assay",
+            "Sperm chromatin dispersion",
+            "Sperm chromatin structure assay (SCSA)"
+          ],
+          "citations": ["bieniek"]
+        }
+      },
+      "protein_markers": {
+        "zinc": {
+          "type": "Micronutrient marker",
+          "evidence": "Essential for sperm function",
+          "impact": "Affects sperm count and function",
+          "source": "Prostate secretion",
+          "citations": ["bieniek"]
+        },
+        "selenium": {
+          "type": "Micronutrient marker",
+          "evidence": "Required for normal spermatogenesis",
+          "impact": "Deficiency affects sperm quality",
+          "citations": ["bieniek"]
+        },
+        "carnitine": {
+          "type": "Micronutrient marker",
+          "evidence": "Important for sperm metabolism",
+          "impact": "Affects sperm motility and maturation",
+          "citations": ["bieniek"]
+        }
+      },
+      "molecular_markers": {
+        "protamines": {
+          "type": "Nuclear proteins",
+          "subtypes": {
+            "P1": {
+              "normal_ratio": "1:1 with P2",
+              "impact": "Critical for chromatin packaging"
+            },
+            "P2": {
+              "evidence": "Undetectable in 17% of IVF patients",
+              "impact": "Affects sperm penetration capacity"
+            }
+          },
+          "citations": ["bieniek"]
+        },
+        "crem": {
+          "type": "Gene expression regulator",
+          "evidence": "Hypermethylation correlates with poor sperm parameters",
+          "impact": "Affects spermatogenesis",
+          "citations": ["bieniek"]
+        }
+      },
+      "metabolic_pathway_markers": {
+        "oxidative_stress": {
+          "ros_threshold": {
+            "evidence": "Both high and low levels affect fertility",
+            "physiological_role": "Required for capacitation and sperm-oocyte fusion",
+            "pathological_effects": "High levels cause DNA damage and reduced motility",
+            "citations": ["bieniek"]
+          }
+        }
+      },
+      "sperm_functional_tests": {
+        "sperm_mucus_interaction": {
+          "type": "Functional assay",
+          "methods": ["Postcoital test", "In vitro testing"],
+          "clinical_value": "Limited current use due to poor reproducibility",
+          "citations": ["bieniek"]
+        },
+        "acrosome_reaction": {
+          "type": "Functional assay",
+          "triggers": ["Calcium ionophore", "Progesterone", "Zona pellucida proteins"],
+          "impact": "Predicts fertilization potential",
+          "citations": ["bieniek"]
+        }
+      }
+    }
+  }

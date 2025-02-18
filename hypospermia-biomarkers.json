@@ -1,0 +1,576 @@
+{
+    "condition": {
+        "name": "Hypospermia",
+        "definition": "Low volume of ejaculated semen, less than 1.5 milliliters (ml)",
+        "normalRange": "1.5-6 ml according to WHO standards",
+        "clinicalSignificance": "Can be a cause of male infertility if there is difficulty achieving pregnancy",
+        "prevalence": "Significant in infertile population, with 207 cases identified in study of 2587 infertile patients",
+        "fertilityImpact": "Not always a barrier to conception if sperm concentration and quality are good"
+    },
+    "biomarkers": [
+        {
+            "name": "Seminal Volume",
+            "type": "Primary Diagnostic Marker",
+            "normalRange": "1.5-6 ml",
+            "abnormalValue": "< 1.5 ml",
+            "testMethod": "Seminogram/Spermiogram",
+            "clinicalSignificance": "Primary diagnostic criterion for hypospermia",
+            "impactOnFertility": "May affect total sperm count but not necessarily sperm concentration or quality",
+            "assessmentConditions": {
+                "abstinencePeriod": "3-5 days",
+                "note": "Lower volume may be due to recent ejaculation rather than pathological causes"
+            }
+        },
+        {
+            "name": "Post-Ejaculation Urine Analysis",
+            "type": "Diagnostic Test",
+            "purpose": "Detect retrograde ejaculation",
+            "indicator": "Cloudy urine after orgasm",
+            "clinicalSignificance": "Confirms retrograde ejaculation diagnosis"
+        },
+        {
+            "name": "PMN Elastase",
+            "type": "Inflammatory Marker",
+            "normalRange": "< 290 ng/ml",
+            "abnormalRanges": {
+                "latentInfection": "290-1000 ng/ml",
+                "confirmedInfection": "> 1000 ng/ml"
+            },
+            "testMethod": "ELISA",
+            "clinicalSignificance": "Indicator of inflammation and infection",
+            "evidence": {
+                "study": "Zhou et al. 2022",
+                "findings": "Significantly higher in CT+ patients (70% abnormal) vs CT- patients (46.9% abnormal)",
+                "pValue": "< 0.001"
+            }
+        },
+        {
+            "name": "White Blood Cell Count",
+            "type": "Inflammatory Marker",
+            "normalRange": "< 1 × 106/ml",
+            "testMethod": "Microscopy",
+            "clinicalSignificance": "Indicator of inflammation/infection",
+            "evidence": {
+                "study": "Zhou et al. 2022",
+                "findings": "Significantly higher abnormal rates in CT+ (11.8%) vs CT- (2.5%) patients",
+                "pValue": "< 0.001"
+            }
+        },
+        {
+            "name": "Intrascrotal Temperature",
+            "type": "Physical Parameter",
+            "normalRange": "0.6°C less than rectal temperature",
+            "varicoceleRange": "0.9°C less than rectal temperature",
+            "testMethod": "Thermistor needle telethermometer probe",
+            "clinicalSignificance": "Previously thought to be elevated in varicocele, but study shows no significant elevation",
+            "evidence": {
+                "study": "Stephenson & O'Shaughnessy 1968",
+                "methodology": "Direct measurement in scrotal septum",
+                "sampleSize": "13 controls, 3 varicocele patients"
+            }
+        },
+        {
+            "name": "Sperm Count in Varicocele Patients",
+            "type": "Fertility Parameter",
+            "ranges": {
+                "belowTwentyMillion": "70% of varicocele patients",
+                "aboveFiftyMillion": "Only 10% of varicocele patients"
+            },
+            "evidence": {
+                "study": "Stephenson & O'Shaughnessy 1968",
+                "sampleSize": "40 patients with varicocele",
+                "methodology": "Preoperative sperm analysis"
+            },
+            "clinicalSignificance": "Strong correlation between varicocele and reduced sperm count"
+        },
+        {
+            "name": "Sperm Motility in Varicocele",
+            "type": "Fertility Parameter",
+            "ranges": {
+                "normal": "50-90%",
+                "observed": "20-85% in study population"
+            },
+            "evidence": {
+                "study": "Stephenson & O'Shaughnessy 1968",
+                "methodology": "Manual sperm analysis",
+                "dataSource": "Preoperative evaluation"
+            }
+        },
+        {
+            "name": "Rectal-Scrotal Temperature Differential",
+            "type": "Physical Parameter",
+            "methodology": {
+                "measurement": "Direct thermistor needle measurement",
+                "conditions": [
+                    "No surgical preparation",
+                    "No anesthesia",
+                    "Room temperature environment"
+                ]
+            },
+            "normalValues": {
+                "control": "0.6°C below rectal temperature",
+                "varicocele": "0.9°C below rectal temperature",
+                "significance": "Challenges previous assumptions about temperature elevation in varicocele"
+            },
+            "evidence": {
+                "study": "Stephenson & O'Shaughnessy 1968",
+                "sampleSize": {
+                    "controls": "13 patients",
+                    "varicocele": "3 patients"
+                },
+                "measurementTechnique": "Thermistor needle telethermometer probe in scrotal septum"
+            }
+        }
+    ],
+    "relatedConditions": [
+        {
+            "name": "Retrograde Ejaculation",
+            "relationship": "Major causative factor",
+            "prevalence": {
+                "overall": "3.2% of infertile patients",
+                "inHypospermia": "40.5% of hypospermia cases",
+                "evidence": {
+                    "study": "Juárez-Bengoa et al. 2011",
+                    "sampleSize": "2587 infertile patients, 207 with hypospermia"
+                }
+            },
+            "clinicalFeatures": {
+                "seminalVolume": {
+                    "pretreatment": "1.2 ml",
+                    "postTreatment": "1.5 ml"
+                },
+                "mobileSpermCells": {
+                    "pretreatment": "47.2 million",
+                    "postTreatment": "62.5 million"
+                },
+                "urineSperm": {
+                    "pretreatment": "22 per high-power field",
+                    "postTreatment": "10 per high-power field"
+                }
+            },
+            "hormonalProfile": {
+                "findings": "Lower levels of FSH, LH, and testosterone compared to non-retrograde ejaculation cases",
+                "significance": "Hormonal factors may contribute to condition"
+            }
+        },
+        {
+            "name": "Anejaculation",
+            "relationship": "Extreme form",
+            "description": "Almost no semen in ejaculate",
+            "causes": ["Blockage", "Retrograde ejaculation"],
+            "alternativeName": "Aspermia"
+        },
+        {
+            "name": "Oligospermia",
+            "relationship": "Often co-occurring",
+            "description": "Low sperm concentration",
+            "impact": "Combined presence may further reduce fertility potential"
+        },
+        {
+            "name": "Teratozoospermia",
+            "relationship": "Can co-occur",
+            "description": "Abnormal sperm morphology",
+            "impact": "When combined with hypospermia, significantly reduces natural pregnancy chances"
+        }
+    ],
+    "causativeFactors": [
+        {
+            "category": "Anatomical",
+            "factors": [
+                {
+                    "name": "Partial Retrograde Ejaculation",
+                    "description": "Sperm traveling toward bladder during ejaculation",
+                    "causes": [
+                        "Congenital anomalies of male urethra",
+                        "Prostate surgery",
+                        "Medications for prostatic hyperplasia"
+                    ],
+                    "symptoms": ["Cloudy urine after orgasm", "Low ejaculate volume"]
+                },
+                {
+                    "name": "Vasa Deferentia and Seminal Vesicle Agenesis",
+                    "description": "Congenital anomaly of male genital organs"
+                },
+                {
+                    "name": "Ejaculatory Duct Obstruction (EDO)",
+                    "causes": [
+                        "Inflammation",
+                        "Prostatitis",
+                        "Varicocele"
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Hormonal",
+            "factors": [
+                {
+                    "name": "Androgen Insensitivity Syndrome (AIS)",
+                    "description": "Resistance to male hormones",
+                    "types": ["Partial", "Total"]
+                }
+            ]
+        },
+        {
+            "category": "Neurological",
+            "factors": [
+                {
+                    "name": "Neurologic Erectile Dysfunction",
+                    "description": "Loss of nerve impulses through penis"
+                }
+            ]
+        },
+        {
+            "category": "Behavioral/External",
+            "factors": [
+                {
+                    "name": "Frequent Ejaculation",
+                    "description": "Repeated ejaculation resulting in lower sperm volume",
+                    "recommendation": "3-5 days abstinence for testing",
+                    "reversibility": "Temporary condition"
+                },
+                {
+                    "name": "Smoking",
+                    "impact": "May lead to lower ejaculate amount"
+                },
+                {
+                    "name": "Overweight",
+                    "impact": "May lead to lower ejaculate amount"
+                }
+            ]
+        },
+        {
+            "category": "Medical Procedures",
+            "factors": [
+                {
+                    "name": "Bladder Neck Incision (BNI)",
+                    "description": "Procedure for urination problems",
+                    "impact": "Can affect ejaculate volume",
+                    "indication": "Problems passing urine"
+                }
+            ]
+        },
+        {
+            "category": "Age-Related",
+            "description": "Natural decrease in semen production with aging",
+            "type": "Progressive",
+            "nature": "Natural process not associated with disease"
+        },
+        {
+            "category": "Infectious",
+            "factors": [
+                {
+                    "name": "Chlamydia trachomatis (CT) Infection",
+                    "description": "Most common bacterial sexually transmitted infection",
+                    "evidence": {
+                        "study": "Zhou et al. 2022",
+                        "sampleSize": "7154 infertile males",
+                        "findings": {
+                            "prevalence": "416 CT+ vs 6738 CT-",
+                            "hypospermiaRate": "CT+ (12.5%) vs CT- (8.5%)",
+                            "statisticalSignificance": "P = 0.005"
+                        }
+                    },
+                    "impacts": [
+                        {
+                            "parameter": "Semen Volume",
+                            "effect": "Significantly lower in CT+ group",
+                            "mechanism": "Inflammation-associated obstruction of ejaculatory duct"
+                        },
+                        {
+                            "parameter": "Inflammation",
+                            "effect": "Increased white blood cells and PMN elastase",
+                            "mechanism": "Inflammatory response to infection"
+                        }
+                    ],
+                    "nonAffectedParameters": [
+                        "Sperm viability",
+                        "Sperm motility",
+                        "Sperm morphology",
+                        "Acrosin activity",
+                        "Antisperm antibody levels"
+                    ],
+                    "associatedMarkers": [
+                        "Decreased fructose",
+                        "Decreased citrate",
+                        "Decreased α-glucosidase"
+                    ],
+                    "organImpact": {
+                        "seminalVesicles": "Dysfunction",
+                        "prostate": "Dysfunction",
+                        "epididymis": "Dysfunction"
+                    }
+                }
+            ]
+        },
+        {
+            "category": "Vascular",
+            "factors": [
+                {
+                    "name": "Varicocele",
+                    "description": "Dilated veins in the pampiniform plexus",
+                    "historicalContext": {
+                        "firstDescription": "Ambrose Pare, 1550",
+                        "fertilityLink": "Tulloch, 1952"
+                    },
+                    "evidence": {
+                        "study": "Stephenson & O'Shaughnessy 1968",
+                        "findings": {
+                            "prevalence": "70% of patients had sperm counts below 20 million",
+                            "spermCounts": "Only 10% had counts > 50 million/cc",
+                            "treatmentResponse": "6 of 9 patients achieved fertile levels post-surgery"
+                        }
+                    },
+                    "proposedMechanisms": [
+                        {
+                            "mechanism": "Venous congestion",
+                            "effect": "Anoxia and lack of nutrition to germinal epithelium"
+                        },
+                        {
+                            "mechanism": "Temperature effect",
+                            "status": "Not confirmed by study",
+                            "evidence": "No significant temperature elevation found"
+                        }
+                    ],
+                    "surgicalTreatment": {
+                        "procedure": "High ligation of left spermatic vein",
+                        "location": "Level of anterior superior iliac spine",
+                        "effectiveness": "Significant improvement in sperm counts"
+                    }
+                }
+            ]
+        }
+    ],
+    "organSystems": [
+        {
+            "name": "Vesicles",
+            "role": "Primary organ for semen production",
+            "impact": "Dysfunction leads to decreased semen volume",
+            "markers": ["Fructose levels"]
+        },
+        {
+            "name": "Prostate",
+            "role": "Primary organ for semen production",
+            "impact": "Dysfunction leads to decreased semen volume",
+            "markers": [
+                "Acid phosphatase",
+                "Citric acid",
+                "Zinc"
+            ]
+        },
+        {
+            "name": "Epididymis",
+            "role": "Sperm transport and maturation",
+            "marker": "Alpha-glucosidase"
+        }
+    ],
+    "treatmentOptions": [
+        {
+            "category": "Medical",
+            "options": [
+                {
+                    "type": "Treatment for Retrograde Ejaculation",
+                    "effectiveness": {
+                        "seminalVolume": "25% increase (1.2 to 1.5 ml)",
+                        "spermMotility": "32% increase in mobile cells",
+                        "evidence": "Juárez-Bengoa et al. 2011"
+                    },
+                    "outcomes": {
+                        "urineSperm": "54.5% reduction in sperm in urine",
+                        "clinicalSignificance": "Improved ejaculate parameters"
+                    }
+                },
+                {
+                    "type": "Dietary Supplements",
+                    "effectiveness": "May help improve semen level",
+                    "evidence": "Limited"
+                },
+                {
+                    "type": "Surgical Intervention",
+                    "conditions": ["Seminal vesicle problems", "Prostate problems"],
+                    "effectiveness": "Variable",
+                    "limitation": "Not always possible to increase final semen volume",
+                    "indication": "When anatomical cause is identified"
+                }
+            ]
+        },
+        {
+            "category": "Assisted Reproduction",
+            "options": [
+                {
+                    "name": "Artificial Insemination (AI)",
+                    "indication": "When combined with other sperm issues"
+                },
+                {
+                    "name": "In Vitro Fertilization (IVF)",
+                    "indication": "When combined with other sperm issues"
+                },
+                {
+                    "name": "Special Sperm Collection Techniques",
+                    "methods": [
+                        "Epididymal Aspiration",
+                        "Testicular Biopsy"
+                    ],
+                    "indication": "For cases of aspermia"
+                }
+            ]
+        },
+        {
+            "category": "Surgical",
+            "options": [
+                {
+                    "type": "Varicocele Ligation",
+                    "procedure": "High ligation of left spermatic vein",
+                    "effectiveness": {
+                        "fertilityRate": "6 out of 9 patients achieved fertile levels",
+                        "evidence": "Stephenson & O'Shaughnessy 1968"
+                    },
+                    "indication": "Varicocele with associated hypospermia",
+                    "notes": "Improvement possible even without temperature change"
+                }
+            ]
+        }
+    ],
+    "diagnosticCriteria": {
+        "requiredTests": [
+            {
+                "name": "Seminogram/Spermiogram",
+                "parameters": [
+                    "Semen volume",
+                    "Sperm concentration",
+                    "Sperm motility",
+                    "Sperm morphology"
+                ],
+                "requirements": {
+                    "abstinence": "3-5 days",
+                    "collection": "Complete sample required"
+                },
+                "importance": "Primary diagnostic tool"
+            }
+        ],
+        "differentialDiagnosis": [
+            {
+                "condition": "Aspermia",
+                "definition": "Total absence of ejaculation",
+                "distinction": "No ejaculate vs low volume",
+                "alternativeName": "Anejaculation"
+            },
+            {
+                "condition": "Azoospermia",
+                "definition": "No sperm in ejaculate",
+                "distinction": "Normal volume but no sperm vs low volume",
+                "note": "Can have normal ejaculate volume"
+            }
+        ]
+    },
+    "chainOfLogic": [
+        {
+            "sequence": "Primary Production Chain",
+            "steps": [
+                "Vesicle/Prostate dysfunction",
+                "Decreased semen production",
+                "Low ejaculate volume",
+                "Potential fertility impact"
+            ]
+        },
+        {
+            "sequence": "Retrograde Chain",
+            "steps": [
+                "Anatomical/Neural factors",
+                "Retrograde flow",
+                "Reduced ejaculate volume",
+                "Fertility impact"
+            ]
+        },
+        {
+            "sequence": "Age-Related Chain",
+            "steps": [
+                "Aging process",
+                "Decreased production capacity",
+                "Reduced volume",
+                "Variable fertility impact"
+            ]
+        },
+        {
+            "sequence": "Diagnostic Chain",
+            "steps": [
+                "Sexual abstinence (3-5 days)",
+                "Complete sample collection",
+                "Volume measurement",
+                "Additional parameter assessment",
+                "Diagnosis confirmation"
+            ]
+        },
+        {
+            "sequence": "Infection-Inflammation Chain",
+            "steps": [
+                "CT infection in genital tract",
+                "Inflammatory response (↑PMN elastase, ↑WBC)",
+                "Inflammation-induced dysfunction of reproductive organs",
+                "Decreased production of seminal components",
+                "Reduced ejaculate volume",
+                "Hypospermia"
+            ]
+        },
+        {
+            "sequence": "Varicocele-Related Chain",
+            "steps": [
+                "Varicocele development",
+                "Venous congestion in pampiniform plexus",
+                "Possible anoxia and nutritional deficiency",
+                "Impact on spermatogenesis",
+                "Reduced sperm production",
+                "Hypospermia"
+            ]
+        }
+    ],
+    "citations": [
+        {
+            "authors": "E B BANK",
+            "title": "The possibilities of artificial insemination in sterility caused by oligospermia and hypospermia",
+            "journal": "Z Urol",
+            "year": "1964"
+        },
+        {
+            "authors": "G Robin et al",
+            "title": "Why and how to assess hypospermia?",
+            "journal": "Gynecol Obstet Fertil",
+            "year": "2008"
+        },
+        {
+            "authors": "Marta Barranquero Gómez et al",
+            "title": "What Is Hypospermia? – Causes, Symptoms & Treatment",
+            "year": "2021"
+        },
+        {
+            "authors": "Zhou H, Wu S, Tang X, et al",
+            "title": "Chlamydia trachomatis infection in the genital tract is associated with inflammation and hypospermia in the infertile male of China",
+            "journal": "Asian Journal of Andrology",
+            "volume": "24(1)",
+            "pages": "56-61",
+            "year": "2022",
+            "doi": "10.4103/aja.aja_54_21"
+        },
+        {
+            "authors": "Juárez-Bengoa A, Bagnarello-González F, Rodríguez-Perdomo DF, Rodríguez-Yee E",
+            "title": "Prevalence of retrograde ejaculation in infertility associated to hypospermia",
+            "journal": "Ginecologia y Obstetricia de Mexico",
+            "volume": "79(2)",
+            "pages": "61-66",
+            "year": "2011",
+            "pmid": "21966785"
+        },
+        {
+            "authors": "Stephenson JD, O'Shaughnessy EJ",
+            "title": "Hypospermia and Its Relationship to Varicocele and Intrascrotal Temperature",
+            "journal": "Fertility and Sterility",
+            "volume": "19",
+            "issue": "1",
+            "pages": "110-117",
+            "year": "1968",
+            "issn": "0015-0282",
+            "doi": "https://doi.org/10.1016/S0015-0282(16)36550-5",
+            "url": "https://www.sciencedirect.com/science/article/pii/S0015028216365505"
+        }
+    ]
+} 

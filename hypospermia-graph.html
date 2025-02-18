@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hypospermia Knowledge Graph</title>
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style type="text/css">
+        #graph {
+            width: 100%;
+            height: 800px;
+            border: 1px solid lightgray;
+        }
+        #nodeInfo {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            width: 400px;
+            background: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: none;
+            max-height: 600px;
+            overflow-y: auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #666;
+            transition: all 0.2s ease;
+        }
+        .close-button:hover {
+            background: #e0e0e0;
+            color: #333;
+        }
+        .close-button:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+        }
+        .citation {
+            font-size: 0.9em;
+            color: #666;
+            border-top: 1px solid #eee;
+            margin-top: 15px;
+            padding-top: 15px;
+        }
+        .doi {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        h3 {
+            color: #333;
+            margin-top: 0;
+        }
+        .detail-section {
+            margin-bottom: 10px;
+        }
+        .detail-label {
+            font-weight: bold;
+            color: #444;
+        }
+        .legend {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            background: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div id="graph"></div>
+    <div id="nodeInfo"></div>
+    <div class="legend">
+        <h4>Legend</h4>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ff4444;"></div>
+            <span>Core Condition</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #4444ff;"></div>
+            <span>Biomarkers</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #44ff44;"></div>
+            <span>Related Conditions</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ff8844;"></div>
+            <span>Causative Factors</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #8844ff;"></div>
+            <span>Treatment Options</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #44ffff;"></div>
+            <span>Organ Systems</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ff44ff;"></div>
+            <span>Diagnostic Criteria</span>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // Citations database
+        const citations = {
+            bank: {
+                authors: "E B BANK",
+                title: "The possibilities of artificial insemination in sterility caused by oligospermia and hypospermia",
+                journal: "Z Urol",
+                year: "1964"
+            },
+            robin: {
+                authors: "G Robin et al",
+                title: "Why and how to assess hypospermia?",
+                journal: "Gynecol Obstet Fertil",
+                year: "2008"
+            },
+            gomez: {
+                authors: "Marta Barranquero Gómez et al",
+                title: "What Is Hypospermia? – Causes, Symptoms & Treatment",
+                year: "2021"
+            },
+            zhou: {
+                authors: "Zhou H, Wu S, Tang X, et al",
+                title: "Chlamydia trachomatis infection in the genital tract is associated with inflammation and hypospermia in the infertile male of China",
+                journal: "Asian Journal of Andrology",
+                volume: "24(1)",
+                pages: "56-61",
+                year: "2022",
+                doi: "10.4103/aja.aja_54_21"
+            },
+            juarez: {
+                authors: "Juárez-Bengoa A, et al",
+                title: "Prevalence of retrograde ejaculation in infertility associated to hypospermia",
+                journal: "Ginecologia y Obstetricia de Mexico",
+                volume: "79(2)",
+                pages: "61-66",
+                year: "2011",
+                pmid: "21966785"
+            },
+            stephenson: {
+                authors: "Stephenson JD, O'Shaughnessy EJ",
+                title: "Hypospermia and Its Relationship to Varicocele and Intrascrotal Temperature",
+                journal: "Fertility and Sterility",
+                volume: "19",
+                issue: "1",
+                pages: "110-117",
+                year: "1968",
+                issn: "0015-0282",
+                doi: "https://doi.org/10.1016/S0015-0282(16)36550-5"
+            }
+        };
+
+        // Node details database
+        const nodeDetails = {
+            "Hypospermia": {
+                description: "Low volume of ejaculated semen, less than 1.5 milliliters (ml)",
+                evidence: "Significant in infertile population, with 207 cases identified in study of 2587 infertile patients",
+                impact: "Not always a barrier to conception if sperm concentration and quality are good",
+                citations: ["robin", "juarez"]
+            },
+            "Seminal Volume": {
+                description: "Primary diagnostic marker for hypospermia",
+                evidence: "Normal range: 1.5-6 ml according to WHO standards, Abnormal: < 1.5 ml",
+                impact: "May affect total sperm count but not necessarily sperm concentration or quality. Assessment requires 3-5 days abstinence period",
+                citations: ["robin", "gomez"]
+            },
+            "PMN Elastase": {
+                description: "Inflammatory marker indicating infection",
+                evidence: "Normal range: < 290 ng/ml, Abnormal ranges: 290-1000 ng/ml (latent infection), > 1000 ng/ml (confirmed infection)",
+                impact: "Significantly higher in CT+ patients (70% abnormal) vs CT- patients (46.9% abnormal)",
+                citations: ["zhou"]
+            },
+            "White Blood Cell Count": {
+                description: "Inflammatory marker in semen",
+                evidence: "Normal range: < 1 × 106/ml, Higher abnormal rates in CT+ (11.8%) vs CT- (2.5%) patients",
+                impact: "Key indicator of inflammation and infection in reproductive tract",
+                citations: ["zhou"]
+            },
+            "Intrascrotal Temperature": {
+                description: "Physical parameter measuring testicular temperature",
+                evidence: "Normal: 0.6°C less than rectal temperature, Varicocele: 0.9°C less than rectal temperature",
+                impact: "Challenges previous assumptions about temperature elevation in varicocele",
+                citations: ["stephenson"]
+            },
+            "Vesicles": {
+                description: "Primary organ for semen production",
+                evidence: "Produces significant portion of seminal fluid, monitored through fructose levels",
+                impact: "Dysfunction leads to decreased semen volume",
+                citations: ["robin", "zhou"]
+            },
+            "Prostate": {
+                description: "Primary organ for semen production",
+                evidence: "Produces key components of seminal fluid, monitored through acid phosphatase, citric acid, and zinc levels",
+                impact: "Dysfunction significantly affects semen volume and composition",
+                citations: ["robin", "zhou"]
+            },
+            "Epididymis": {
+                description: "Critical organ for sperm transport and maturation",
+                evidence: "Function assessed through alpha-glucosidase levels",
+                impact: "Dysfunction can affect both semen parameters and sperm quality",
+                citations: ["zhou"]
+            },
+            "Fructose Levels": {
+                description: "Biochemical marker for seminal vesicle function",
+                evidence: "Decreased levels observed in CT infection and other pathological conditions",
+                impact: "Indicates seminal vesicle dysfunction",
+                citations: ["zhou"]
+            },
+            "Acid Phosphatase": {
+                description: "Prostate-specific biochemical marker",
+                evidence: "Key indicator of prostatic contribution to seminal fluid",
+                impact: "Reflects prostate function and potential pathologies",
+                citations: ["robin", "zhou"]
+            },
+            "Citric Acid": {
+                description: "Prostate-specific biochemical marker",
+                evidence: "Decreased levels associated with prostatic dysfunction",
+                impact: "Important indicator of prostate contribution to semen",
+                citations: ["zhou"]
+            },
+            "Zinc": {
+                description: "Prostate-specific biochemical marker",
+                evidence: "Essential component of prostatic fluid",
+                impact: "Reflects prostate function and secretory capacity",
+                citations: ["robin", "zhou"]
+            },
+            "Alpha-glucosidase": {
+                description: "Epididymis-specific biochemical marker",
+                evidence: "Decreased levels observed in epididymal dysfunction",
+                impact: "Key indicator of epididymal function and patency",
+                citations: ["zhou"]
+            },
+            "Retrograde Ejaculation": {
+                description: "Major causative factor of hypospermia where semen flows backward into bladder",
+                evidence: "Present in 40.5% of hypospermia cases, confirmed by post-ejaculation urine analysis",
+                impact: "Significant impact on semen volume and fertility potential",
+                citations: ["juarez"]
+            },
+            "Post-Ejaculation Urine Analysis": {
+                description: "Diagnostic test for detecting retrograde ejaculation",
+                evidence: "Presence of sperm in post-ejaculatory urine confirms diagnosis",
+                impact: "Critical for differentiating retrograde ejaculation from other causes",
+                citations: ["juarez"]
+            },
+            "Seminogram": {
+                description: "Primary diagnostic tool for assessing semen parameters",
+                evidence: "Measures volume, concentration, motility, and morphology",
+                impact: "Essential for initial diagnosis and monitoring",
+                citations: ["robin", "gomez"]
+            },
+            "Varicocele": {
+                description: "Dilated veins in the pampiniform plexus affecting testicular function",
+                evidence: "70% of patients had sperm counts below 20 million, only 10% above 50 million",
+                impact: "Significant impact on sperm production and semen parameters",
+                citations: ["stephenson"]
+            },
+            "Anejaculation": {
+                description: "Extreme form of hypospermia where there is almost no semen in ejaculate",
+                evidence: "Associated with complete blockage or severe retrograde ejaculation",
+                impact: "Complete inability to deliver sperm through ejaculation, requiring medical intervention",
+                citations: ["robin", "juarez"]
+            },
+            "Oligospermia": {
+                description: "Low sperm concentration condition that often co-occurs with hypospermia",
+                evidence: "Frequently observed in conjunction with low semen volume",
+                impact: "Combined presence may further reduce fertility potential",
+                citations: ["bank", "robin"]
+            },
+            "Teratozoospermia": {
+                description: "Abnormal sperm morphology condition that can co-occur with hypospermia",
+                evidence: "When combined with hypospermia, significantly reduces natural pregnancy chances",
+                impact: "Multiple sperm parameter defects require specialized treatment approaches",
+                citations: ["robin", "gomez"]
+            },
+            "Anatomical Factors": {
+                description: "Physical and structural causes of hypospermia",
+                evidence: "Include congenital anomalies, obstructions, and post-surgical changes",
+                impact: "Major contributors to semen volume reduction",
+                citations: ["robin", "juarez"]
+            },
+            "Partial Retrograde Ejaculation": {
+                description: "Condition where some semen flows backward into bladder during ejaculation",
+                evidence: "Caused by congenital anomalies, prostate surgery, or medications",
+                impact: "Results in reduced ejaculate volume and fertility potential",
+                citations: ["juarez"]
+            },
+            "Vasa Deferentia Agenesis": {
+                description: "Congenital absence or malformation of the vas deferens",
+                evidence: "Anatomical defect preventing normal sperm transport",
+                impact: "Causes severe reduction in semen volume",
+                citations: ["robin"]
+            },
+            "Ejaculatory Duct Obstruction": {
+                description: "Blockage of the ducts that transport sperm and seminal fluid",
+                evidence: "Can be caused by inflammation, prostatitis, or varicocele",
+                impact: "Reduces semen volume and affects fertility",
+                citations: ["robin", "zhou"]
+            },
+            "Hormonal Factors": {
+                description: "Endocrine system influences on semen production",
+                evidence: "Various hormonal imbalances can affect seminal fluid production",
+                impact: "Can lead to reduced semen volume and quality",
+                citations: ["robin", "juarez"]
+            },
+            "Androgen Insensitivity Syndrome": {
+                description: "Condition where body has reduced response to male hormones",
+                evidence: "Can be partial or complete, affecting reproductive function",
+                impact: "Influences semen production and volume",
+                citations: ["robin"]
+            },
+            "Neurological Factors": {
+                description: "Nerve-related causes affecting ejaculation",
+                evidence: "Can affect nerve impulses controlling ejaculation process",
+                impact: "Results in reduced ejaculatory volume or function",
+                citations: ["juarez"]
+            },
+            "Behavioral Factors": {
+                description: "Lifestyle and behavior-related causes of hypospermia",
+                evidence: "Includes frequent ejaculation, smoking, and weight issues",
+                impact: "Modifiable factors affecting semen volume",
+                citations: ["robin", "gomez"]
+            },
+            "Frequent Ejaculation": {
+                description: "Repeated ejaculation leading to temporary volume reduction",
+                evidence: "Requires 3-5 days abstinence for accurate testing",
+                impact: "Temporary and reversible cause of low volume",
+                citations: ["robin", "gomez"]
+            },
+            "Smoking": {
+                description: "Tobacco use affecting semen parameters",
+                evidence: "Associated with reduced semen volume",
+                impact: "Modifiable risk factor for hypospermia",
+                citations: ["robin"]
+            },
+            "Overweight": {
+                description: "Excess body weight affecting semen parameters",
+                evidence: "Associated with reduced semen volume",
+                impact: "Modifiable risk factor for hypospermia",
+                citations: ["robin"]
+            },
+            "Medical Procedures": {
+                description: "Surgical or medical interventions affecting ejaculation",
+                evidence: "Includes procedures like bladder neck incision",
+                impact: "Can affect ejaculate volume",
+                citations: ["juarez"]
+            },
+            "Age-Related Factors": {
+                description: "Natural age-related changes in semen production",
+                evidence: "Progressive decrease in semen production with aging",
+                impact: "Natural process not associated with disease",
+                citations: ["robin"]
+            },
+            "Infectious Factors": {
+                description: "Infection-related causes of hypospermia",
+                evidence: "Include various pathogens affecting reproductive tract",
+                impact: "Can cause inflammation and reduced semen volume",
+                citations: ["zhou"]
+            },
+            "CT Infection": {
+                description: "Chlamydia trachomatis infection in male reproductive tract",
+                evidence: "Higher hypospermia rates in CT+ (12.5%) vs CT- (8.5%) patients",
+                impact: "Causes inflammation and reduced semen volume",
+                citations: ["zhou"]
+            },
+            "Medical Treatment": {
+                description: "Non-surgical therapeutic approaches for hypospermia",
+                evidence: "Includes medication and lifestyle modifications",
+                impact: "Can improve semen volume in some cases",
+                citations: ["robin", "juarez"]
+            },
+            "Dietary Supplements": {
+                description: "Nutritional supplements for improving semen parameters",
+                evidence: "Limited evidence for effectiveness",
+                impact: "May help improve semen volume in some cases",
+                citations: ["robin"]
+            },
+            "Assisted Reproduction": {
+                description: "Advanced reproductive technologies for fertility treatment",
+                evidence: "Used when natural conception is challenging",
+                impact: "Helps overcome fertility issues related to hypospermia",
+                citations: ["bank", "robin"]
+            },
+            "Artificial Insemination": {
+                description: "Procedure placing sperm directly in female reproductive tract",
+                evidence: "Used when combined with other sperm issues",
+                impact: "Helps bypass volume-related fertility issues",
+                citations: ["bank"]
+            },
+            "IVF": {
+                description: "In vitro fertilization for severe fertility cases",
+                evidence: "Used when combined with other sperm issues",
+                impact: "Advanced treatment option for complex cases",
+                citations: ["robin"]
+            },
+            "Surgical Treatment": {
+                description: "Surgical interventions for treating hypospermia",
+                evidence: "Used for anatomical causes and varicocele",
+                impact: "Can correct underlying physical causes",
+                citations: ["stephenson", "juarez"]
+            },
+            "Epididymal Aspiration": {
+                description: "Surgical sperm retrieval from epididymis",
+                evidence: "Used in cases of severe hypospermia or azoospermia",
+                impact: "Alternative method for obtaining sperm",
+                citations: ["robin"]
+            },
+            "Testicular Biopsy": {
+                description: "Surgical extraction of testicular tissue for sperm",
+                evidence: "Used in severe cases when other methods fail",
+                impact: "Last-resort option for sperm retrieval",
+                citations: ["robin"]
+            }
+        };
+
+        // Create nodes and edges
+        const nodes = new vis.DataSet([
+            // Core node
+            {id: 1, label: "Hypospermia", color: "#ff4444", shape: "dot", size: 25},
+            
+            // Biomarkers cluster
+            {id: 2, label: "Seminal Volume", color: "#4444ff", group: 1},
+            {id: 3, label: "PMN Elastase", color: "#4444ff", group: 1},
+            {id: 4, label: "White Blood Cell Count", color: "#4444ff", group: 1},
+            {id: 5, label: "Intrascrotal Temperature", color: "#4444ff", group: 1},
+            {id: 6, label: "Fructose Levels", color: "#4444ff", group: 1},
+            {id: 7, label: "Acid Phosphatase", color: "#4444ff", group: 1},
+            {id: 8, label: "Citric Acid", color: "#4444ff", group: 1},
+            {id: 9, label: "Zinc", color: "#4444ff", group: 1},
+            {id: 10, label: "Alpha-glucosidase", color: "#4444ff", group: 1},
+            
+            // Related Conditions cluster
+            {id: 11, label: "Retrograde Ejaculation", color: "#44ff44", group: 2},
+            {id: 12, label: "Anejaculation", color: "#44ff44", group: 2},
+            {id: 13, label: "Oligospermia", color: "#44ff44", group: 2},
+            {id: 14, label: "Teratozoospermia", color: "#44ff44", group: 2},
+            
+            // Causative Factors cluster
+            // Anatomical
+            {id: 15, label: "Anatomical Factors", color: "#ff8844", group: 3},
+            {id: 16, label: "Partial Retrograde Ejaculation", color: "#ff8844", group: 3},
+            {id: 17, label: "Vasa Deferentia Agenesis", color: "#ff8844", group: 3},
+            {id: 18, label: "Ejaculatory Duct Obstruction", color: "#ff8844", group: 3},
+            
+            // Hormonal
+            {id: 19, label: "Hormonal Factors", color: "#ff8844", group: 3},
+            {id: 20, label: "Androgen Insensitivity Syndrome", color: "#ff8844", group: 3},
+            
+            // Other factors
+            {id: 21, label: "Neurological Factors", color: "#ff8844", group: 3},
+            {id: 22, label: "Behavioral Factors", color: "#ff8844", group: 3},
+            {id: 23, label: "Frequent Ejaculation", color: "#ff8844", group: 3},
+            {id: 24, label: "Smoking", color: "#ff8844", group: 3},
+            {id: 25, label: "Overweight", color: "#ff8844", group: 3},
+            {id: 26, label: "Medical Procedures", color: "#ff8844", group: 3},
+            {id: 27, label: "Age-Related Factors", color: "#ff8844", group: 3},
+            {id: 28, label: "Infectious Factors", color: "#ff8844", group: 3},
+            {id: 29, label: "CT Infection", color: "#ff8844", group: 3},
+            {id: 30, label: "Varicocele", color: "#ff8844", group: 3},
+            
+            // Treatment Options cluster
+            {id: 31, label: "Medical Treatment", color: "#8844ff", group: 4},
+            {id: 32, label: "Dietary Supplements", color: "#8844ff", group: 4},
+            {id: 33, label: "Assisted Reproduction", color: "#8844ff", group: 4},
+            {id: 34, label: "Artificial Insemination", color: "#8844ff", group: 4},
+            {id: 35, label: "IVF", color: "#8844ff", group: 4},
+            {id: 36, label: "Surgical Treatment", color: "#8844ff", group: 4},
+            {id: 37, label: "Varicocele Ligation", color: "#8844ff", group: 4},
+            {id: 38, label: "Epididymal Aspiration", color: "#8844ff", group: 4},
+            {id: 39, label: "Testicular Biopsy", color: "#8844ff", group: 4},
+            
+            // Organ Systems cluster
+            {id: 40, label: "Vesicles", color: "#44ffff", group: 5},
+            {id: 41, label: "Prostate", color: "#44ffff", group: 5},
+            {id: 42, label: "Epididymis", color: "#44ffff", group: 5},
+            
+            // Diagnostic Criteria cluster
+            {id: 43, label: "Seminogram", color: "#ff44ff", group: 6},
+            {id: 44, label: "Post-Ejaculation Urine Analysis", color: "#ff44ff", group: 6}
+        ]);
+
+        const edges = new vis.DataSet([
+            // Biomarker connections
+            {from: 2, to: 1, arrows: "to", label: "Diagnoses"},
+            {from: 3, to: 1, arrows: "to", label: "Indicates"},
+            {from: 4, to: 1, arrows: "to", label: "Indicates"},
+            {from: 5, to: 1, arrows: "to", label: "Measures"},
+            
+            // Organ-specific markers
+            {from: 6, to: 40, arrows: "to", label: "Indicates"},
+            {from: 7, to: 41, arrows: "to", label: "Indicates"},
+            {from: 8, to: 41, arrows: "to", label: "Indicates"},
+            {from: 9, to: 41, arrows: "to", label: "Indicates"},
+            {from: 10, to: 42, arrows: "to", label: "Indicates"},
+            
+            // Related Conditions
+            {from: 11, to: 1, arrows: "to", label: "Causes"},
+            {from: 12, to: 1, arrows: "to", label: "Related"},
+            {from: 13, to: 1, arrows: "to", label: "Co-occurs"},
+            {from: 14, to: 1, arrows: "to", label: "Co-occurs"},
+            
+            // Anatomical Factors
+            {from: 15, to: 1, arrows: "to", label: "Causes"},
+            {from: 16, to: 15, arrows: "to", label: "Type"},
+            {from: 17, to: 15, arrows: "to", label: "Type"},
+            {from: 18, to: 15, arrows: "to", label: "Type"},
+            
+            // Hormonal Factors
+            {from: 19, to: 1, arrows: "to", label: "Influences"},
+            {from: 20, to: 19, arrows: "to", label: "Type"},
+            
+            // Other Causative Connections
+            {from: 21, to: 1, arrows: "to", label: "Affects"},
+            {from: 22, to: 1, arrows: "to", label: "Modifies"},
+            {from: 23, to: 22, arrows: "to", label: "Type"},
+            {from: 24, to: 22, arrows: "to", label: "Type"},
+            {from: 25, to: 22, arrows: "to", label: "Type"},
+            {from: 26, to: 1, arrows: "to", label: "Impacts"},
+            {from: 27, to: 1, arrows: "to", label: "Contributes"},
+            {from: 28, to: 1, arrows: "to", label: "Causes"},
+            {from: 29, to: 28, arrows: "to", label: "Type"},
+            {from: 30, to: 1, arrows: "to", label: "Affects"},
+            
+            // Treatment Connections
+            {from: 31, to: 1, arrows: "to", label: "Treats"},
+            {from: 32, to: 31, arrows: "to", label: "Type"},
+            {from: 33, to: 1, arrows: "to", label: "Manages"},
+            {from: 34, to: 33, arrows: "to", label: "Method"},
+            {from: 35, to: 33, arrows: "to", label: "Method"},
+            {from: 36, to: 1, arrows: "to", label: "Corrects"},
+            {from: 37, to: 36, arrows: "to", label: "Procedure"},
+            {from: 38, to: 33, arrows: "to", label: "Collection"},
+            {from: 39, to: 33, arrows: "to", label: "Collection"},
+            
+            // Organ Systems
+            {from: 40, to: 1, arrows: "to", label: "Produces"},
+            {from: 41, to: 1, arrows: "to", label: "Produces"},
+            {from: 42, to: 1, arrows: "to", label: "Affects"},
+            
+            // Diagnostic connections
+            {from: 43, to: 1, arrows: "to", label: "Diagnoses"},
+            {from: 44, to: 1, arrows: "to", label: "Confirms"},
+            
+            // Inter-node relationships
+            {from: 30, to: 5, arrows: "to", label: "Affects"},
+            {from: 11, to: 44, arrows: "to", label: "Detected by"},
+            {from: 29, to: 3, arrows: "to", label: "Elevates"},
+            {from: 29, to: 4, arrows: "to", label: "Increases"},
+            {from: 40, to: 2, arrows: "to", label: "Influences"},
+            {from: 41, to: 2, arrows: "to", label: "Influences"},
+            
+            // Additional relationships from JSON
+            {from: 29, to: 6, arrows: "to", label: "Decreases"},
+            {from: 29, to: 8, arrows: "to", label: "Decreases"},
+            {from: 29, to: 10, arrows: "to", label: "Decreases"},
+            {from: 37, to: 30, arrows: "to", label: "Treats"}
+        ]);
+
+        // Create network
+        const container = document.getElementById('graph');
+        const data = {
+            nodes: nodes,
+            edges: edges
+        };
+        const options = {
+            nodes: {
+                shape: 'dot',
+                size: 16,
+                font: {
+                    size: 14,
+                    face: 'Arial'
+                }
+            },
+            edges: {
+                font: {
+                    size: 12,
+                    align: 'middle'
+                },
+                color: {
+                    inherit: 'from'
+                },
+                smooth: {
+                    type: 'continuous',
+                    roundness: 0
+                }
+            },
+            physics: {
+                enabled: true,
+                hierarchicalRepulsion: {
+                    centralGravity: 0.0,
+                    springLength: 250,
+                    springConstant: 0.01,
+                    nodeDistance: 200,
+                    damping: 0.09
+                },
+                solver: 'hierarchicalRepulsion',
+                stabilization: {
+                    iterations: 1000
+                }
+            },
+            groups: {
+                1: {physics: true, shape: 'dot'},
+                2: {physics: true, shape: 'dot'},
+                3: {physics: true, shape: 'dot'},
+                4: {physics: true, shape: 'dot'},
+                5: {physics: true, shape: 'dot'},
+                6: {physics: true, shape: 'dot'}
+            }
+        };
+        const network = new vis.Network(container, data, options);
+
+        // Node click handler
+        network.on("click", function (params) {
+            if (params.nodes.length > 0) {
+                const nodeId = params.nodes[0];
+                const node = nodes.get(nodeId);
+                const details = nodeDetails[node.label] || {
+                    description: "Additional information coming soon",
+                    evidence: "Under review",
+                    impact: "To be determined",
+                    citations: []
+                };
+                
+                const infoDiv = document.getElementById("nodeInfo");
+                let citationsHtml = '';
+                
+                if (details.citations && details.citations.length > 0) {
+                    citationsHtml = details.citations.map(citationKey => {
+                        const citation = citations[citationKey];
+                        return `
+                            <div class="citation">
+                                <p><span class="detail-label">Source:</span><br>
+                                ${citation.authors} (${citation.year})<br>
+                                <em>${citation.title}</em><br>
+                                ${citation.journal}${citation.volume ? `, ${citation.volume}` : ''}<br>
+                                ${citation.doi ? `<a href="${citation.doi}" class="doi" target="_blank">DOI: ${citation.doi}</a>` : ''}
+                                </p>
+                            </div>
+                        `;
+                    }).join('');
+                }
+                
+                infoDiv.innerHTML = `
+                    <button class="close-button" onclick="document.getElementById('nodeInfo').style.display='none'">×</button>
+                    <h3>${node.label}</h3>
+                    <div class="detail-section">
+                        <p><span class="detail-label">Description:</span><br>${details.description}</p>
+                    </div>
+                    <div class="detail-section">
+                        <p><span class="detail-label">Evidence:</span><br>${details.evidence}</p>
+                    </div>
+                    <div class="detail-section">
+                        <p><span class="detail-label">Impact:</span><br>${details.impact}</p>
+                    </div>
+                    ${citationsHtml}
+                `;
+                infoDiv.style.display = "block";
+            } else {
+                document.getElementById("nodeInfo").style.display = "none";
+            }
+        });
+
+        // Add controls
+        const controls = document.createElement('div');
+        controls.style.position = 'absolute';
+        controls.style.top = '10px';
+        controls.style.left = '10px';
+        controls.innerHTML = `
+            <div style="background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <button onclick="network.fit()" style="margin: 5px;">Fit Graph</button>
+                <button onclick="togglePhysics()" style="margin: 5px;">Toggle Physics</button>
+                <button onclick="network.stabilize()" style="margin: 5px;">Stabilize</button>
+            </div>
+        `;
+        container.appendChild(controls);
+
+        function togglePhysics() {
+            const physics = network.physics.options.enabled;
+            network.setOptions({ physics: { enabled: !physics } });
+        }
+    </script>
+</body>
+</html> 

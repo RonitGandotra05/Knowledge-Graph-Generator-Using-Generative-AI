@@ -1,0 +1,69 @@
+{
+    "biomarkers": [
+        {
+            "name": "DNAH1",
+            "type": "Genetic Marker",
+            "category": "Core Gene",
+            "mutations": {
+                "types": [
+                    "Homozygous mutations",
+                    "Splice site mutations",
+                    "Missense mutations",
+                    "Run-on mutations"
+                ],
+                "impact": "Leads to MMAF phenotype",
+                "prevalence": "28% of MMAF cases"
+            },
+            "proteinFunction": {
+                "role": "Inner arm dynein heavy chain",
+                "location": "Axonemal inner dynein arm",
+                "function": "Stabilizes axonemal structure through radial spoke interaction"
+            },
+            "clinicalSignificance": {
+                "phenotype": "Multiple morphological abnormalities of the flagella",
+                "severity": "Complete absence leads to 100% abnormal sperm",
+                "motility": "Severe to complete asthenozoospermia"
+            }
+        }
+    ],
+    "relatedProcesses": [
+        {
+            "name": "Central Pair Assembly",
+            "type": "Structural Process",
+            "components": {
+                "C1": {
+                    "projections": ["1a", "1b", "1c", "1d"],
+                    "function": "Specialized interactions with radial spokes"
+                },
+                "C2": {
+                    "projections": ["2a", "2b", "2c"],
+                    "function": "Modulates dynein activity"
+                }
+            },
+            "significance": "Critical for maintaining global flagellar organization",
+            "defectImpact": "Leads to MMAF phenotype and structural instability"
+        }
+    ],
+    "clinicalManagement": {
+        "ICSI_Outcomes": {
+            "overall": {
+                "fertilization_rate": "63%",
+                "pregnancy_rate": "57%",
+                "live_birth_rate": "43%"
+            },
+            "factors_affecting_success": {
+                "central_pair_defects": "Lower implantation and pregnancy rates",
+                "axonemal_structure": "Influences early embryo development",
+                "sperm_selection": "Critical for ICSI success"
+            }
+        },
+        "genetic_counseling": {
+            "recommendations": [
+                "Genetic testing for specific mutations",
+                "Assessment of aneuploidy risk",
+                "Evaluation of treatment options",
+                "Discussion of success rates based on specific defects"
+            ]
+        }
+    }
+} 

@@ -276,6 +276,36 @@
                 evidence: "Includes deletion screening and point mutation analysis",
                 impact: "Essential for confirming genetic cause and guiding treatment",
                 citations: ["long"]
+            },
+            "DNAH1": {
+                description: "Core gene involved in sperm flagellar structure and function",
+                evidence: "Mutations found in 28% of MMAF cases, leading to severe flagellar abnormalities",
+                impact: "Complete absence results in 100% abnormal sperm morphology and severe asthenozoospermia",
+                citations: ["long"]
+            },
+            "MMAF": {
+                description: "Multiple Morphological Abnormalities of the Flagella - severe form of teratospermia",
+                evidence: "Associated with DNAH1 mutations and central pair defects",
+                impact: "Causes severe male infertility through multiple flagellar abnormalities",
+                citations: ["long"]
+            },
+            "Central Pair Assembly": {
+                description: "Critical process in sperm flagellum formation",
+                evidence: "Defects lead to '9+0' axoneme configuration and MMAF phenotype",
+                impact: "Essential for maintaining flagellar structure and function",
+                citations: ["long"]
+            },
+            "Clinical Management": {
+                description: "Treatment and counseling strategies for teratospermia",
+                evidence: "Success rates vary based on specific ultrastructural defects",
+                impact: "Guides patient care and treatment decisions",
+                citations: ["long"]
+            },
+            "ICSI Outcomes": {
+                description: "Success rates and factors affecting ICSI treatment",
+                evidence: "Overall success rates: 63% fertilization, 57% pregnancy, 43% live birth",
+                impact: "Varies based on specific flagellar defects and sperm selection",
+                citations: ["long"]
             }
         };
 
@@ -318,7 +348,12 @@
             {id: 24, label: "Sperm Flagellum Development", color: "#44ff44", group: 2},
             {id: 25, label: "Axoneme", color: "#44ff44", group: 2},
             {id: 26, label: "Fibrous Sheath", color: "#44ff44", group: 2},
-            {id: 27, label: "DPY19L2 Genetic Testing", color: "#ff8844", group: 3}
+            {id: 27, label: "DPY19L2 Genetic Testing", color: "#ff8844", group: 3},
+            {id: 28, label: "DNAH1", color: "#4444ff", group: 1},
+            {id: 29, label: "MMAF", color: "#ff8844", group: 5},
+            {id: 30, label: "Central Pair Assembly", color: "#44ff44", group: 2},
+            {id: 31, label: "Clinical Management", color: "#ff8844", group: 3},
+            {id: 32, label: "ICSI Outcomes", color: "#ff8844", group: 3}
         ]);
 
         const edges = new vis.DataSet([
@@ -374,7 +409,14 @@
             {from: 25, to: 24, arrows: "to", label: "Core component"},
             {from: 26, to: 24, arrows: "to", label: "Accessory structure"},
             {from: 27, to: 10, arrows: "to", label: "Diagnoses"},
-            {from: 27, to: 13, arrows: "to", label: "Confirms"}
+            {from: 27, to: 13, arrows: "to", label: "Confirms"},
+            {from: 28, to: 29, arrows: "to", label: "Primary cause"},
+            {from: 29, to: 1, arrows: "to", label: "Subtype of"},
+            {from: 30, to: 29, arrows: "to", label: "When defective leads to"},
+            {from: 30, to: 24, arrows: "to", label: "Critical component"},
+            {from: 31, to: 29, arrows: "to", label: "Guides treatment"},
+            {from: 32, to: 31, arrows: "to", label: "Influences"},
+            {from: 30, to: 32, arrows: "to", label: "Affects"}
         ]);
 
         // Create network

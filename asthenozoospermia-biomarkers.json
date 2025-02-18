@@ -1,0 +1,454 @@
+{
+    "condition": {
+        "name": "Asthenozoospermia",
+        "definition": "A condition characterized by reduced sperm motility",
+        "clinicalSignificance": "Common cause of male infertility worldwide",
+        "impact": "Affects male fertility through impaired sperm movement",
+        "prevalence": "Affects significant portion of infertile males"
+    },
+    "biomarkers": [
+        {
+            "name": "Anandamide (AEA)",
+            "type": "Bioactive Lipid",
+            "category": "Endocannabinoid",
+            "evidence": {
+                "study": "Amoako et al. 2013",
+                "sampleSize": "86 volunteers",
+                "findings": {
+                    "content": "Significantly lower in asthenozoospermia patients",
+                    "levels": {
+                        "patients": "0.080 ± 0.01 nM",
+                        "controls": "0.198 ± 0.03 nM",
+                        "pValue": "< 0.05"
+                    }
+                }
+            },
+            "clinicalSignificance": {
+                "role": "Regulates sperm motility, capacitation and acrosome reaction",
+                "impact": "Lower levels associated with reduced sperm motility",
+                "mechanism": "Acts through cannabinoid receptors (CB1 and CB2)"
+            },
+            "relatedGenes": {
+                "CB1": {
+                    "expression": "Significantly decreased in asthenozoospermia",
+                    "pValue": "< 0.001",
+                    "function": "Mediates AEA signaling in sperm"
+                },
+                "regulatoryEnzymes": {
+                    "synthesis": "NAPE-PLD",
+                    "degradation": "FAAH"
+                }
+            }
+        },
+        {
+            "name": "N6-methyladenosine (m6A)",
+            "type": "RNA Modification Marker",
+            "category": "Epigenetic Marker",
+            "evidence": {
+                "study": "Yang et al. 2016",
+                "sampleSize": "52 semen samples (20 patients, 32 controls)",
+                "findings": {
+                    "content": "Significantly higher in asthenozoospermia patients (p = 0.033)",
+                    "oddsRatio": "3.229",
+                    "confidenceInterval": "1.178 – 8.853",
+                    "pValue": "0.023"
+                }
+            },
+            "clinicalSignificance": {
+                "riskFactor": "Increased m6A content is a risk factor for asthenozoospermia",
+                "correlation": "Negatively correlated with sperm motility",
+                "impact": "Affects sperm movement and function"
+            }
+        },
+        {
+            "name": "METTL3",
+            "type": "Methyltransferase",
+            "category": "RNA Modification Enzyme",
+            "evidence": {
+                "expressionLevel": "2.4-fold higher in patients",
+                "pValue": "0.016",
+                "correlation": "Positively correlated with m6A content (r = 0.303, p = 0.032)"
+            },
+            "function": {
+                "role": "Catalyzes m6A formation",
+                "substrate": "RNA with S-adenosyl-L-methionine as methyl donor",
+                "complex": "Forms complex with METTL14 and WTAP"
+            }
+        },
+        {
+            "name": "METTL14",
+            "type": "Methyltransferase",
+            "category": "RNA Modification Enzyme",
+            "evidence": {
+                "expressionLevel": "2.5-fold higher in patients",
+                "pValue": "0.025"
+            },
+            "function": {
+                "role": "Forms methyltransferase complex with METTL3",
+                "activity": "Catalyzes m6A formation"
+            }
+        },
+        {
+            "name": "CB2",
+            "type": "Receptor",
+            "category": "Cannabinoid Receptor",
+            "evidence": {
+                "study": "Amoako et al. 2013",
+                "function": "Mediates AEA signaling in sperm",
+                "expression": "Present in human sperm"
+            },
+            "clinicalSignificance": {
+                "role": "Secondary receptor for AEA signaling",
+                "impact": "Contributes to sperm function regulation"
+            }
+        },
+        {
+            "name": "Methanandamide (meth-AEA)",
+            "type": "Synthetic Cannabinoid",
+            "category": "Experimental Tool",
+            "evidence": {
+                "study": "Amoako et al. 2013",
+                "findings": {
+                    "effect": "Decreases sperm motility and viability",
+                    "mechanism": "CB1-mediated inhibition of mitochondrial activity"
+                }
+            },
+            "clinicalSignificance": {
+                "role": "Experimental tool for understanding AEA effects",
+                "impact": "Demonstrates mechanism of cannabinoid action on sperm"
+            }
+        },
+        {
+            "name": "WTAP",
+            "type": "Methyltransferase Complex Component",
+            "category": "RNA Modification Enzyme",
+            "evidence": {
+                "study": "Yang et al. 2016",
+                "function": "Part of m6A methyltransferase complex"
+            },
+            "clinicalSignificance": {
+                "role": "Affects cellular m6A by interacting with METTL3-METTL14",
+                "impact": "Contributes to m6A regulation in sperm"
+            }
+        },
+        {
+            "name": "FTO",
+            "type": "Demethylase",
+            "category": "RNA Modification Enzyme",
+            "evidence": {
+                "study": "Yang et al. 2016",
+                "function": "Removes m6A modification from RNA"
+            },
+            "clinicalSignificance": {
+                "role": "m6A eraser",
+                "impact": "Regulates m6A levels in sperm RNA"
+            }
+        },
+        {
+            "name": "ALKBH5",
+            "type": "Demethylase",
+            "category": "RNA Modification Enzyme",
+            "evidence": {
+                "study": "Yang et al. 2016",
+                "function": "Removes m6A modification from RNA"
+            },
+            "clinicalSignificance": {
+                "role": "m6A eraser",
+                "impact": "Regulates m6A levels in sperm RNA"
+            }
+        },
+        {
+            "name": "YTHDF2",
+            "type": "m6A Reader Protein",
+            "category": "RNA Binding Protein",
+            "evidence": {
+                "study": "Yang et al. 2016",
+                "function": "Selectively recognizes m6A-modified RNA"
+            },
+            "clinicalSignificance": {
+                "role": "Regulates RNA stability and translation",
+                "impact": "Affects m6A-dependent gene expression"
+            }
+        },
+        {
+            "name": "Mitochondrial Activity",
+            "type": "Cellular Function",
+            "category": "Metabolic Marker",
+            "evidence": {
+                "study": "Amoako et al. 2013",
+                "findings": {
+                    "effect": "Inhibited by cannabinoid signaling",
+                    "impact": "Affects sperm motility and viability"
+                }
+            },
+            "clinicalSignificance": {
+                "role": "Energy production for sperm motility",
+                "impact": "Direct link to sperm function"
+            }
+        },
+        {
+            "name": "Plexin-B2",
+            "type": "Cell Surface Receptor",
+            "category": "Signaling Protein",
+            "evidence": {
+                "study": "Saraswat et al. 2017",
+                "findings": {
+                    "expressionLevel": "Downregulated in asthenozoospermia",
+                    "pValue": "5.99E-13",
+                    "foldChange": "2.51",
+                    "AUC": "1.0"
+                }
+            },
+            "clinicalSignificance": {
+                "role": "Regulates RhoA activation and focal adhesion assembly",
+                "impact": "Affects sperm motility through axoneme activation pathway"
+            }
+        },
+        {
+            "name": "Ninein",
+            "type": "Centrosomal Protein",
+            "category": "Structural Protein",
+            "evidence": {
+                "study": "Saraswat et al. 2017",
+                "findings": {
+                    "expressionLevel": "Downregulated in asthenozoospermia",
+                    "pValue": "7.18E-11",
+                    "foldChange": "6.17",
+                    "AUC": "1.0"
+                }
+            },
+            "clinicalSignificance": {
+                "role": "Centrosome assembly and axoneme activation",
+                "impact": "Critical for sperm motility"
+            }
+        },
+        {
+            "name": "Fascin-3",
+            "type": "Actin-bundling Protein",
+            "category": "Cytoskeletal Protein",
+            "evidence": {
+                "study": "Saraswat et al. 2017",
+                "findings": {
+                    "expressionLevel": "Downregulated in asthenozoospermia",
+                    "pValue": "7.14E-09",
+                    "foldChange": "1.66",
+                    "AUC": "0.925"
+                }
+            },
+            "clinicalSignificance": {
+                "role": "Regulates actin stress fiber contraction",
+                "impact": "Important for axoneme activation and sperm motility"
+            }
+        },
+        {
+            "name": "Dynein Light Chain 1",
+            "type": "Motor Protein",
+            "category": "Cytoskeletal Protein",
+            "evidence": {
+                "study": "Saraswat et al. 2017",
+                "findings": {
+                    "expressionLevel": "Downregulated in asthenozoospermia",
+                    "pValue": "4.03E-08",
+                    "foldChange": "4.79",
+                    "AUC": "0.975"
+                }
+            },
+            "clinicalSignificance": {
+                "role": "Component of motor protein complex",
+                "impact": "Essential for sperm flagellar movement"
+            }
+        },
+        {
+            "name": "PROCA1",
+            "type": "Protein PROCA1",
+            "category": "Novel Protein",
+            "evidence": {
+                "study": "Saraswat et al. 2017",
+                "findings": {
+                    "expressionLevel": "Downregulated in asthenozoospermia",
+                    "pValue": "1.45E-06",
+                    "foldChange": "5.65",
+                    "AUC": "1.0"
+                }
+            },
+            "clinicalSignificance": {
+                "role": "Novel protein implicated in sperm motility",
+                "impact": "Potential biomarker for asthenozoospermia"
+            }
+        }
+    ],
+    "clinicalParameters": {
+        "spermMotility": {
+            "progressiveMotility": {
+                "patients": "8.6%",
+                "controls": "24.7%",
+                "correlation": "r = −0.288, p = 0.038"
+            },
+            "nonProgressiveMotility": {
+                "patients": "19.8%",
+                "controls": "44.5%",
+                "correlation": "r = −0.293, p = 0.037"
+            },
+            "immotility": {
+                "patients": "72.4%",
+                "controls": "30.8%",
+                "correlation": "r = 0.387, p = 0.005"
+            }
+        },
+        "otherParameters": {
+            "spermConcentration": {
+                "patients": "39.2 × 106/mL",
+                "controls": "96.6 × 106/mL"
+            },
+            "normalMorphology": {
+                "patients": "5.1%",
+                "controls": "8.2%"
+            }
+        }
+    },
+    "relatedProcesses": [
+        {
+            "name": "Endocannabinoid Signaling",
+            "type": "Signaling Pathway",
+            "components": [
+                {
+                    "name": "Receptors",
+                    "elements": ["CB1", "CB2"],
+                    "function": "Mediate AEA effects on sperm"
+                },
+                {
+                    "name": "Regulatory Enzymes",
+                    "elements": ["NAPE-PLD", "FAAH"],
+                    "function": "Control local AEA levels"
+                }
+            ],
+            "impact": {
+                "spermFunctions": [
+                    "Motility",
+                    "Capacitation",
+                    "Acrosome reaction"
+                ],
+                "clinicalRelevance": "Potential target for pharmacological interventions"
+            }
+        },
+        {
+            "name": "RNA Methylation",
+            "type": "Epigenetic Modification",
+            "components": [
+                {
+                    "name": "Writers",
+                    "elements": ["METTL3", "METTL14", "WTAP"],
+                    "function": "Add m6A modification"
+                },
+                {
+                    "name": "Erasers",
+                    "elements": ["FTO", "ALKBH5"],
+                    "function": "Remove m6A modification"
+                },
+                {
+                    "name": "Readers",
+                    "elements": ["YTHDF2"],
+                    "function": "Recognize m6A modification"
+                }
+            ]
+        },
+        {
+            "name": "Mitochondrial Function",
+            "type": "Cellular Process",
+            "components": [
+                {
+                    "name": "Energy Production",
+                    "function": "ATP generation for sperm motility"
+                },
+                {
+                    "name": "Regulation",
+                    "elements": ["CB1-mediated signaling"],
+                    "function": "Modulates mitochondrial activity"
+                }
+            ],
+            "impact": {
+                "spermFunctions": [
+                    "Motility",
+                    "Viability"
+                ],
+                "clinicalRelevance": "Critical for sperm function"
+            }
+        }
+    ],
+    "diagnosticMethods": [
+        {
+            "name": "Ultra-high performance liquid chromatography-tandem mass spectrometry",
+            "type": "Analytical Method",
+            "purpose": "Quantify AEA in seminal plasma",
+            "application": "Biomarker measurement"
+        },
+        {
+            "name": "qRT-PCR",
+            "type": "Gene Expression Analysis",
+            "purpose": "Measure expression of CB1, CB2, NAPE-PLD, and FAAH",
+            "application": "Pathway analysis"
+        },
+        {
+            "name": "LC-ESI-MS/MS",
+            "type": "Analytical Method",
+            "purpose": "Measure m6A content in sperm RNA",
+            "specifications": {
+                "sensitivity": {
+                    "LOD": "1.2 fmol",
+                    "LOQ": "4.0 fmol"
+                },
+                "accuracy": {
+                    "RSD": "1.8–10.6%",
+                    "RE": "2.7–12.1%"
+                }
+            }
+        },
+        {
+            "name": "Real-time PCR",
+            "type": "Gene Expression Analysis",
+            "purpose": "Measure expression of m6A regulatory genes",
+            "targets": ["FTO", "ALKBH5", "METTL3", "METTL14", "WTAP", "YTHDF2"]
+        }
+    ],
+    "chainOfLogic": [
+        {
+            "sequence": "Molecular Pathway",
+            "steps": [
+                "Increased METTL3/METTL14 expression",
+                "Enhanced m6A modification",
+                "Altered RNA regulation",
+                "Reduced sperm motility",
+                "Asthenozoospermia"
+            ]
+        }
+    ],
+    "citations": [
+        {
+            "authors": "Amoako AA et al.",
+            "title": "Anandamide modulates human sperm motility: implications for men with asthenozoospermia and oligoasthenoteratozoospermia",
+            "journal": "Human Reproduction",
+            "volume": "28",
+            "issue": "8",
+            "year": "2013",
+            "doi": "10.1093/humrep/det232"
+        },
+        {
+            "authors": "Yang Y et al.",
+            "title": "Increased N6-methyladenosine in Human Sperm RNA as a Risk Factor for Asthenozoospermia",
+            "journal": "Scientific Reports",
+            "volume": "6",
+            "articleId": "24345",
+            "year": "2016",
+            "doi": "10.1038/srep24345"
+        },
+        {
+            "authors": "Saraswat M et al.",
+            "title": "Human Spermatozoa Quantitative Proteomic Signature Classifies Normo- and Asthenozoospermia",
+            "journal": "Molecular & Cellular Proteomics",
+            "volume": "16",
+            "issue": "2",
+            "year": "2017",
+            "doi": "10.1074/mcp.M116.061028"
+        }
+    ]
+} 

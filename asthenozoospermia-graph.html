@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asthenozoospermia Knowledge Graph</title>
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+        }
+
+        #graph {
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
+
+        #nodeInfo {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            width: 350px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            display: none;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        #nodeInfo h3 {
+            margin: 0 0 15px 0;
+            color: #333;
+            font-size: 18px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .detail-section {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #666;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .citation {
+            background: #f8f8f8;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+
+        .citation a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+
+        .citation a:hover {
+            text-decoration: underline;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #666;
+            padding: 5px;
+        }
+
+        .close-button:hover {
+            color: #333;
+        }
+
+        .controls {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+
+        .controls button {
+            margin: 0 4px;
+            padding: 6px 12px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .controls button:hover {
+            background: #f5f5f5;
+        }
+
+        .legend {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-size: 12px;
+            max-width: 200px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 6px 0;
+            color: #333;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div id="graph"></div>
+    
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color" style="background: #FF4136;"></div>
+            <span>Core Condition</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #2ECC40;"></div>
+            <span>Biomarkers</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #7FDBFF;"></div>
+            <span>Enzymes</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #FF851B;"></div>
+            <span>Receptors</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #B10DC9;"></div>
+            <span>Proteins</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #01FF70;"></div>
+            <span>Pathways</span>
+        </div>
+    </div>
+
+    <div id="nodeInfo"></div>
+
+    <div class="controls">
+        <button onclick="network.fit()">Fit Graph</button>
+        <button onclick="togglePhysics()">Toggle Physics</button>
+        <button onclick="network.stabilize()">Stabilize</button>
+    </div>
+
+    <script type="text/javascript">
+        // Citations database
+        const citations = {
+            amoako: {
+                authors: "Amoako AA et al.",
+                title: "Anandamide modulates human sperm motility: implications for men with asthenozoospermia and oligoasthenoteratozoospermia",
+                journal: "Human Reproduction",
+                volume: "28",
+                issue: "8",
+                year: "2013",
+                doi: "10.1093/humrep/det232"
+            },
+            yang: {
+                authors: "Yang Y et al.",
+                title: "Increased N6-methyladenosine in Human Sperm RNA as a Risk Factor for Asthenozoospermia",
+                journal: "Scientific Reports",
+                volume: "6",
+                articleId: "24345",
+                year: "2016",
+                doi: "10.1038/srep24345"
+            },
+            saraswat: {
+                authors: "Saraswat M et al.",
+                title: "Human Spermatozoa Quantitative Proteomic Signature Classifies Normo- and Asthenozoospermia",
+                journal: "Molecular & Cellular Proteomics",
+                volume: "16",
+                issue: "2",
+                year: "2017",
+                doi: "10.1074/mcp.M116.061028"
+            }
+        };
+
+        // Node details database
+        const nodeDetails = {
+            "Asthenozoospermia": {
+                description: "A condition characterized by reduced sperm motility",
+                evidence: "Common cause of male infertility worldwide, defined as sperm motility < 40% according to WHO 2010 criteria",
+                impact: "Affects male fertility through impaired sperm movement",
+                citations: ["amoako", "yang", "saraswat"]
+            },
+            "Anandamide (AEA)": {
+                description: "Endocannabinoid biomarker in seminal plasma",
+                evidence: "Significantly lower in asthenozoospermia patients (0.080 ± 0.01 nM vs 0.198 ± 0.03 nM in controls, p < 0.05)",
+                impact: "Regulates sperm motility, capacitation and acrosome reaction",
+                citations: ["amoako"]
+            },
+            "N6-methyladenosine (m6A)": {
+                description: "RNA modification marker",
+                evidence: "Significantly higher in asthenozoospermia patients (p = 0.033)",
+                impact: "Risk factor for asthenozoospermia, negatively correlates with sperm motility",
+                citations: ["yang"]
+            },
+            "METTL3": {
+                description: "RNA methyltransferase",
+                evidence: "2.4-fold higher expression in patients (p = 0.016)",
+                impact: "Catalyzes m6A formation, affects RNA regulation",
+                citations: ["yang"]
+            },
+            "METTL14": {
+                description: "RNA methyltransferase",
+                evidence: "2.5-fold higher expression in patients (p = 0.025)",
+                impact: "Forms complex with METTL3 for m6A formation",
+                citations: ["yang"]
+            },
+            "CB1": {
+                description: "Cannabinoid receptor",
+                evidence: "Significantly decreased expression in asthenozoospermia",
+                impact: "Mediates AEA signaling in sperm",
+                citations: ["amoako"]
+            },
+            "CB2": {
+                description: "Cannabinoid receptor",
+                evidence: "Present in human sperm",
+                impact: "Secondary receptor for AEA signaling",
+                citations: ["amoako"]
+            },
+            "NAPE-PLD": {
+                description: "AEA synthesis enzyme",
+                evidence: "Regulates AEA levels in seminal plasma",
+                impact: "Controls local AEA concentration",
+                citations: ["amoako"]
+            },
+            "FAAH": {
+                description: "AEA degradation enzyme",
+                evidence: "Regulates AEA levels in seminal plasma",
+                impact: "Controls local AEA concentration",
+                citations: ["amoako"]
+            },
+            "Plexin-B2": {
+                description: "Cell surface receptor",
+                evidence: "Downregulated in asthenozoospermia (p = 5.99E-13, fold change: 2.51)",
+                impact: "Regulates sperm motility through axoneme activation",
+                citations: ["saraswat"]
+            },
+            "Ninein": {
+                description: "Centrosomal protein",
+                evidence: "Downregulated in asthenozoospermia (p = 7.18E-11, fold change: 6.17)",
+                impact: "Critical for sperm motility",
+                citations: ["saraswat"]
+            },
+            "Fascin-3": {
+                description: "Actin-bundling protein",
+                evidence: "Downregulated in asthenozoospermia (p = 7.14E-09, fold change: 1.66)",
+                impact: "Important for axoneme activation and sperm motility",
+                citations: ["saraswat"]
+            },
+            "Dynein Light Chain 1": {
+                description: "Motor protein",
+                evidence: "Downregulated in asthenozoospermia (p = 4.03E-08, fold change: 4.79)",
+                impact: "Essential for sperm flagellar movement",
+                citations: ["saraswat"]
+            },
+            "PROCA1": {
+                description: "Novel protein",
+                evidence: "Downregulated in asthenozoospermia (p = 1.45E-06, fold change: 5.65)",
+                impact: "Potential biomarker for asthenozoospermia",
+                citations: ["saraswat"]
+            },
+            "Kallikrein-2": {
+                description: "Serine protease enzyme",
+                evidence: "Upregulated in asthenozoospermia (10.13-fold change, p = 1.46E-07)",
+                impact: "May affect sperm protein processing and motility",
+                citations: ["saraswat"]
+            },
+            "Peroxiredoxin-2": {
+                description: "Antioxidant enzyme",
+                evidence: "Upregulated in asthenozoospermia (6.93-fold change, p = 0.00014)",
+                impact: "Involved in cellular response to oxidative stress",
+                citations: ["saraswat"]
+            },
+            "Peroxiredoxin-5": {
+                description: "Mitochondrial antioxidant enzyme",
+                evidence: "Upregulated in asthenozoospermia (5.72-fold change, p = 8.52E-06)",
+                impact: "Protects against oxidative stress in mitochondria",
+                citations: ["saraswat"]
+            },
+            "Heat Shock Protein Beta-1": {
+                description: "Stress response protein",
+                evidence: "Upregulated in asthenozoospermia (7.52-fold change, p = 5.95E-08)",
+                impact: "Involved in stress response and protein aggregation prevention",
+                citations: ["saraswat"]
+            },
+            "Tubulin Alpha-8": {
+                description: "Cytoskeletal protein",
+                evidence: "Upregulated in asthenozoospermia (19.69-fold change, p = 6.35E-06)",
+                impact: "Major component of microtubules affecting sperm structure",
+                citations: ["saraswat"]
+            },
+            "Bone Marrow Proteoglycan": {
+                description: "Proteoglycan protein",
+                evidence: "Downregulated in asthenozoospermia (79.40-fold change, p = 5.89E-06)",
+                impact: "Highest fold-change protein, potential biomarker",
+                citations: ["saraswat"]
+            },
+            "RhoA": {
+                description: "Protein involved in cell signaling",
+                evidence: "Upregulated in asthenozoospermia (1.5-fold change, p = 0.00014)",
+                impact: "Part of the pathway regulating axoneme activation",
+                citations: ["saraswat"]
+            },
+            "RhoGDI": {
+                description: "Protein involved in cell signaling",
+                evidence: "Downregulated in asthenozoospermia (p = 0.00014)",
+                impact: "Inhibits the activation of RhoA",
+                citations: ["saraswat"]
+            },
+            "Axoneme Activation": {
+                description: "Process by which sperm flagella extend",
+                evidence: "Regulated by RhoA and its downstream effectors",
+                impact: "Essential for sperm motility",
+                citations: ["saraswat"]
+            },
+            "Focal Adhesion Assembly": {
+                description: "Assembly of proteins at the cell surface",
+                evidence: "Regulated by RhoA and its downstream effectors",
+                impact: "Part of the pathway regulating axoneme activation",
+                citations: ["saraswat"]
+            },
+            "Actin Stress Fiber Formation": {
+                description: "Formation of actin stress fibers",
+                evidence: "Regulated by RhoA and its downstream effectors",
+                impact: "Part of the pathway regulating axoneme activation",
+                citations: ["saraswat"]
+            },
+            "Glycolysis/Gluconeogenesis": {
+                description: "Process of converting glucose to energy",
+                evidence: "Regulated by RhoA and its downstream effectors",
+                impact: "Part of the pathway regulating axoneme activation",
+                citations: ["saraswat"]
+            },
+            "Cellular Stress Response": {
+                description: "General response to cellular stress",
+                evidence: "Regulated by RhoA and its downstream effectors",
+                impact: "Part of the pathway regulating axoneme activation",
+                citations: ["saraswat"]
+            },
+            "Centrosome Assembly": {
+                description: "Assembly of the centrosome",
+                evidence: "Regulated by RhoA and its downstream effectors",
+                impact: "Part of the pathway regulating axoneme activation",
+                citations: ["saraswat"]
+            }
+        };
+
+        // Create nodes and edges
+        const nodes = new vis.DataSet([
+            // Core condition
+            {id: 1, label: "Asthenozoospermia", color: "#FF4136", shape: "dot", size: 25},
+            
+            // Biomarkers
+            {id: 2, label: "Anandamide (AEA)", color: "#2ECC40", group: 1},
+            {id: 3, label: "N6-methyladenosine (m6A)", color: "#2ECC40", group: 1},
+            
+            // Enzymes
+            {id: 4, label: "METTL3", color: "#7FDBFF", group: 2},
+            {id: 5, label: "METTL14", color: "#7FDBFF", group: 2},
+            {id: 8, label: "NAPE-PLD", color: "#7FDBFF", group: 2},
+            {id: 9, label: "FAAH", color: "#7FDBFF", group: 2},
+            {id: 15, label: "Kallikrein-2", color: "#7FDBFF", group: 2},
+            {id: 16, label: "Peroxiredoxin-2", color: "#7FDBFF", group: 2},
+            {id: 17, label: "Peroxiredoxin-5", color: "#7FDBFF", group: 2},
+            
+            // Receptors
+            {id: 6, label: "CB1", color: "#FF851B", group: 3},
+            {id: 7, label: "CB2", color: "#FF851B", group: 3},
+            
+            // Proteins
+            {id: 10, label: "Plexin-B2", color: "#B10DC9", group: 4},
+            {id: 11, label: "Ninein", color: "#B10DC9", group: 4},
+            {id: 12, label: "Fascin-3", color: "#B10DC9", group: 4},
+            {id: 13, label: "Dynein Light Chain 1", color: "#B10DC9", group: 4},
+            {id: 14, label: "PROCA1", color: "#B10DC9", group: 4},
+            {id: 18, label: "Heat Shock Protein Beta-1", color: "#B10DC9", group: 4},
+            {id: 19, label: "Tubulin Alpha-8", color: "#B10DC9", group: 4},
+            {id: 20, label: "Bone Marrow Proteoglycan", color: "#B10DC9", group: 4},
+            {id: 21, label: "RhoA", color: "#B10DC9", group: 4},
+            {id: 22, label: "RhoGDI", color: "#B10DC9", group: 4},
+            
+            // Pathways
+            {id: 23, label: "Axoneme Activation", color: "#01FF70", group: 5},
+            {id: 24, label: "Focal Adhesion Assembly", color: "#01FF70", group: 5},
+            {id: 25, label: "Actin Stress Fiber Formation", color: "#01FF70", group: 5},
+            {id: 26, label: "Glycolysis/Gluconeogenesis", color: "#01FF70", group: 5},
+            {id: 27, label: "Cellular Stress Response", color: "#01FF70", group: 5},
+            {id: 28, label: "Centrosome Assembly", color: "#01FF70", group: 5}
+        ]);
+
+        const edges = new vis.DataSet([
+            // AEA pathway
+            {from: 2, to: 1, arrows: "to", label: "Regulates"},
+            {from: 6, to: 2, arrows: "to", label: "Mediates"},
+            {from: 7, to: 2, arrows: "to", label: "Mediates"},
+            {from: 8, to: 2, arrows: "to", label: "Synthesizes"},
+            {from: 9, to: 2, arrows: "to", label: "Degrades"},
+            
+            // m6A pathway
+            {from: 3, to: 1, arrows: "to", label: "Risk Factor"},
+            {from: 4, to: 3, arrows: "to", label: "Catalyzes"},
+            {from: 5, to: 3, arrows: "to", label: "Catalyzes"},
+            {from: 4, to: 5, arrows: "both", label: "Complex"},
+            
+            // Protein connections
+            {from: 10, to: 1, arrows: "to", label: "Regulates"},
+            {from: 11, to: 1, arrows: "to", label: "Affects"},
+            {from: 12, to: 1, arrows: "to", label: "Affects"},
+            {from: 13, to: 1, arrows: "to", label: "Essential"},
+            {from: 14, to: 1, arrows: "to", label: "Biomarker"},
+            {from: 15, to: 1, arrows: "to", label: "Upregulated"},
+            {from: 16, to: 1, arrows: "to", label: "Upregulated"},
+            {from: 17, to: 1, arrows: "to", label: "Upregulated"},
+            {from: 18, to: 1, arrows: "to", label: "Stress Response"},
+            {from: 19, to: 1, arrows: "to", label: "Cytoskeleton"},
+            {from: 20, to: 1, arrows: "to", label: "Downregulated"},
+            
+            // Pathway connections
+            {from: 11, to: 28, arrows: "to", label: "Regulates"},
+            {from: 28, to: 23, arrows: "to", label: "Activates"},
+            {from: 23, to: 1, arrows: "to", label: "Controls"},
+            {from: 12, to: 25, arrows: "to", label: "Bundles"},
+            {from: 25, to: 23, arrows: "to", label: "Activates"},
+            {from: 10, to: 21, arrows: "to", label: "Activates"},
+            {from: 21, to: 24, arrows: "to", label: "Promotes"},
+            {from: 24, to: 25, arrows: "to", label: "Leads to"},
+            {from: 22, to: 21, arrows: "to", label: "Inhibits"},
+            {from: 26, to: 1, arrows: "to", label: "Downregulated in"},
+            {from: 27, to: 1, arrows: "to", label: "Upregulated in"},
+            {from: 16, to: 27, arrows: "to", label: "Part of"},
+            {from: 17, to: 27, arrows: "to", label: "Part of"},
+            {from: 18, to: 27, arrows: "to", label: "Part of"}
+        ]);
+
+        // Create network
+        const container = document.getElementById('graph');
+        const data = {
+            nodes: nodes,
+            edges: edges
+        };
+        const options = {
+            nodes: {
+                shape: 'dot',
+                size: 16,
+                font: {
+                    size: 12,
+                    face: 'Arial',
+                    color: '#333'
+                },
+                borderWidth: 2,
+                shadow: true
+            },
+            edges: {
+                width: 1.5,
+                color: {
+                    color: '#999',
+                    highlight: '#666',
+                    hover: '#666'
+                },
+                font: {
+                    size: 11,
+                    align: 'middle'
+                },
+                smooth: {
+                    type: 'continuous'
+                }
+            },
+            physics: {
+                enabled: true,
+                barnesHut: {
+                    gravitationalConstant: -2000,
+                    centralGravity: 0.3,
+                    springLength: 200,
+                    springConstant: 0.04,
+                    damping: 0.09,
+                    avoidOverlap: 0.1
+                },
+                stabilization: {
+                    iterations: 2500
+                }
+            },
+            interaction: {
+                hover: true,
+                tooltipDelay: 200,
+                zoomView: true,
+                dragView: true,
+                navigationButtons: true
+            }
+        };
+        const network = new vis.Network(container, data, options);
+
+        // Node click handler
+        network.on("click", function (params) {
+            if (params.nodes.length > 0) {
+                const nodeId = params.nodes[0];
+                const node = nodes.get(nodeId);
+                const details = nodeDetails[node.label];
+                
+                if (details) {
+                    const infoDiv = document.getElementById("nodeInfo");
+                    let citationsHtml = '';
+                    
+                    if (details.citations && details.citations.length > 0) {
+                        citationsHtml = details.citations.map(citationKey => {
+                            const citation = citations[citationKey];
+                            return `
+                                <div class="citation">
+                                    <p><span class="detail-label">Source:</span><br>
+                                    ${citation.authors} (${citation.year})<br>
+                                    <em>${citation.title}</em><br>
+                                    ${citation.journal} ${citation.volume}${citation.issue ? `(${citation.issue})` : ''}<br>
+                                    <a href="https://doi.org/${citation.doi}" target="_blank">DOI: ${citation.doi}</a>
+                                    </p>
+                                </div>
+                            `;
+                        }).join('');
+                    }
+                    
+                    infoDiv.innerHTML = `
+                        <button class="close-button" onclick="document.getElementById('nodeInfo').style.display='none'">×</button>
+                        <h3>${node.label}</h3>
+                        <div class="detail-section">
+                            <p><span class="detail-label">Description:</span><br>${details.description}</p>
+                        </div>
+                        <div class="detail-section">
+                            <p><span class="detail-label">Evidence:</span><br>${details.evidence}</p>
+                        </div>
+                        <div class="detail-section">
+                            <p><span class="detail-label">Impact:</span><br>${details.impact}</p>
+                        </div>
+                        ${citationsHtml}
+                    `;
+                    infoDiv.style.display = "block";
+                } else {
+                    document.getElementById("nodeInfo").style.display = "none";
+                }
+            } else {
+                document.getElementById("nodeInfo").style.display = "none";
+            }
+        });
+
+        function togglePhysics() {
+            const physics = network.physics.options.enabled;
+            network.setOptions({ physics: { enabled: !physics } });
+        }
+    </script>
+</body>
+</html> 

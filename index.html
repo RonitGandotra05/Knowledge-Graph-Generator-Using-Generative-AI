@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Interactive visualization of male infertility biomarkers and their relationships based on research papers">
-    <meta name="keywords" content="azoospermia, oligospermia, biomarkers, knowledge graph, medical research, visualization">
+    <meta name="keywords" content="azoospermia, oligospermia, hypospermia, biomarkers, knowledge graph, medical research, visualization">
     <meta name="author" content="Ronit Gandotra">
     
     <title>Male Infertility Knowledge Graphs</title>
     
-    <style>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/RonitGandotra05/Knowledge-Graph-Generator-Using-Generative-AI/main/favicon.png">
+    
+    <style type="text/css">
         * {
             margin: 0;
             padding: 0;
@@ -18,79 +21,85 @@
         
         body {
             font-family: 'Arial', sans-serif;
-            background: #EEF2F7;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
         }
         
         .container {
+            text-align: center;
+            padding: 2rem;
             background: white;
-            border-radius: 24px;
-            padding: 40px;
-            max-width: 900px;
-            width: 100%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 1000px;
+            width: 90%;
+            margin: 20px;
         }
         
         h1 {
-            color: #2D3B55;
-            font-size: 36px;
-            margin-bottom: 16px;
-            text-align: center;
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
         
         .description {
             color: #666;
-            text-align: center;
-            margin-bottom: 40px;
-            font-size: 16px;
+            margin-bottom: 2rem;
+            font-size: 1.1em;
             line-height: 1.6;
         }
         
         .graph-links {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin-bottom: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 2rem;
         }
         
         .graph-card {
             background: white;
-            padding: 24px;
-            border-radius: 16px;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 300px;
             text-decoration: none;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
+            color: inherit;
         }
         
         .graph-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
         
         .graph-card h2 {
             color: #4CAF50;
-            font-size: 24px;
-            margin-bottom: 12px;
+            margin-bottom: 1rem;
         }
         
         .graph-card p {
             color: #666;
-            margin-bottom: 20px;
-            line-height: 1.5;
+            font-size: 0.9em;
+            margin-bottom: 1rem;
         }
         
         .view-button {
             display: inline-block;
             background: #4CAF50;
             color: white;
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
             transition: background 0.3s ease;
+            font-weight: bold;
         }
         
         .view-button:hover {
@@ -98,12 +107,9 @@
         }
         
         footer {
-            text-align: center;
+            margin-top: 3rem;
             color: #666;
-            font-size: 14px;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
-            margin-top: 20px;
+            font-size: 0.9em;
         }
         
         footer a {
@@ -120,8 +126,8 @@
     <div class="container">
         <h1>Male Infertility Knowledge Graphs</h1>
         <p class="description">
-            Explore interactive visualizations of biomarkers and their relationships in male infertility conditions. 
-            Based on comprehensive research paper analysis and data visualization.
+            Explore interactive visualizations of biomarkers and their relationships in male infertility conditions.
+            Based on comprehensive research paper analysis and data visualization. Each graph provides detailed insights into different aspects of male infertility.
         </p>
         
         <div class="graph-links">
@@ -136,11 +142,17 @@
                 <p>Discover biomarkers and relationships in oligospermia, a condition characterized by low sperm concentration.</p>
                 <span class="view-button">View Graph</span>
             </a>
+
+            <a href="./hypospermia-graph.html" class="graph-card">
+                <h2>Hypospermia Graph</h2>
+                <p>Investigate biomarkers and relationships in hypospermia, a condition characterized by low semen volume (less than 1.5 ml).</p>
+                <span class="view-button">View Graph</span>
+            </a>
         </div>
         
         <footer>
-            Created by <a href="https://github.com/RonitGandotra05" target="_blank">Ronit Gandotra</a> | 
-            <a href="https://github.com/RonitGandotra05/Knowledge-Graph-Generator-Using-Generative-AI" target="_blank">View on GitHub</a>
+            <p>Created by <a href="https://github.com/RonitGandotra05" target="_blank">Ronit Gandotra</a> | 
+            <a href="https://github.com/RonitGandotra05/Knowledge-Graph-Generator-Using-Generative-AI" target="_blank">View on GitHub</a></p>
         </footer>
     </div>
 </body>

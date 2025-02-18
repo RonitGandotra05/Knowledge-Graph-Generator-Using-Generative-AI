@@ -29,13 +29,43 @@
             color: #333;
         }
         
-        /* Existing styles with improvements */
+        /* Navigation Menu */
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .nav-menu a {
+            color: #4CAF50;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+        
+        .nav-menu a:hover {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        /* Adjust graph container to account for nav menu */
         #graph {
+            margin-top: 50px;
             width: 100%;
-            height: 100vh;  /* Full viewport height */
+            height: calc(100vh - 50px);
             border: 1px solid lightgray;
         }
         
+        /* Existing styles with improvements */
         #nodeInfo {
             position: fixed;
             right: 20px;
@@ -131,6 +161,10 @@
     </style>
 </head>
 <body>
+    <nav class="nav-menu">
+        <a href="azoospermia-graph.html">Azoospermia Graph</a>
+        <a href="oligospermia-graph.html">Oligospermia Graph</a>
+    </nav>
     <div id="graph"></div>
     <div id="nodeInfo"></div>
 

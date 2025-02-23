@@ -42,7 +42,6 @@ project-root/
 │   └── research_papers/     # Source documents
 ├── index.html               # Main entry point
 ├── 404.html                # Error page
-├── knowledge_graph.json     # Combined graph data
 └── README.md               # This file
 ```
 

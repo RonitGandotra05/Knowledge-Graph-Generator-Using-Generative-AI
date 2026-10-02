@@ -116,19 +116,7 @@ export class Workspace {
       if (files?.length && !this.busy) void this.upload([...files]);
     });
     $("#add-terms", root).addEventListener("click", () => this.addTerms());
-    root
-      .querySelectorAll<HTMLElement>("[data-step]")
-      .forEach((button) =>
-        button.addEventListener("click", () =>
-          this.goStep(Number(button.dataset.step)),
-        ),
-      );
-    $("#step-back", root).addEventListener("click", () =>
-      this.goStep(this.step - 1),
-    );
-    $("#step-next", root).addEventListener("click", () =>
-      this.goStep(this.step + 1),
-    );
+    $("#edit-setup", root).addEventListener("click", () => this.goStep(0));
     for (const id of ["focus", "terms"])
       $("#" + id, root).addEventListener("input", () => {
         this.discoverySignature = "";
@@ -681,9 +669,7 @@ export class Workspace {
     $("#context-note", this.root).textContent = this.doc
       ? `All parsed sections are reviewed in bounded requests. These are representative keyword matches. ${selection?.missing.length ? "Not found: " + selection.missing.join(", ") + ". " : ""}${selected > options.maxNodes ? "Increase the concept limit or select fewer concepts." : ""} Token estimates vary by model.`
       : "Upload a paper to preview evidence.";
-    this.analysisReady =
-      !!this.doc &&
-      !!(this.focus().trim() || this.keywords().trim() || selected);
+    this.analysisReady = !!this.doc;
     this.updateNavigation();
     this.updateAvailability();
   }
@@ -1008,47 +994,23 @@ export class Workspace {
     $("#analysis-meta", this.root).textContent =
       `${this.analysis.graph.nodes.length} concepts · ${this.analysis.graph.edges.length} relationships · ${this.analysis.provider} / ${this.analysis.model}`;
   }
-  private canVisit(step: number) {
-    return (
-      step === 0 ||
-      (step === 1 && !!this.doc) ||
-      (step === 2 &&
-        !!this.doc &&
-        !!(this.focus().trim() || this.keywords().trim())) ||
-      (step === 3 && (!!this.analysis || (this.busy && !!this.controller)))
-    );
-  }
   private updateNavigation() {
-    this.root
-      .querySelectorAll<HTMLButtonElement>("[data-step]")
-      .forEach((b) => {
-        b.disabled = this.busy || !this.canVisit(Number(b.dataset.step));
-        b.setAttribute(
-          "aria-current",
-          Number(b.dataset.step) === this.step ? "step" : "false",
-        );
-      });
-    $<HTMLButtonElement>("#step-back", this.root).disabled =
-      this.busy || this.step === 0;
-    $<HTMLButtonElement>("#step-next", this.root).hidden = this.step >= 2;
-    $<HTMLButtonElement>("#step-next", this.root).disabled =
-      this.busy || !this.canVisit(this.step + 1);
-    $("#step-label", this.root).textContent = `Step ${this.step + 1} of 4`;
+    const active = this.step === 3;
+    $("#workspace-composer", this.root).hidden = active;
+    $("#edit-setup", this.root).hidden = !active || this.busy;
+    $("#graph-result", this.root).hidden = !active || !this.analysis;
+    $("#graph-placeholder", this.root).hidden = !active || !!this.analysis;
+    this.root.dataset.stage = active ? "analysis" : "setup";
   }
   goStep(step: number) {
-    if (step < 0 || step > 3 || !this.canVisit(step)) return;
-    this.step = step;
-    this.root.querySelectorAll<HTMLElement>("[data-page]").forEach((p) => {
-      p.hidden =
-        Number(p.dataset.page) !== step ||
-        (p.id === "graph-result" && !this.analysis) ||
-        (p.id === "graph-placeholder" && !!this.analysis);
-    });
+    if (step !== 3 && this.busy) return;
+    this.step = step === 3 ? 3 : 0;
     this.updateNavigation();
     this.scheduleSave();
   }
   private renderDocument() {
     const papers = this.papers.length ? this.papers : this.doc?.papers || [];
+    this.root.classList.toggle("has-papers", papers.length > 0);
     $("#document-summary", this.root).hidden = !this.doc && !papers.length;
     $("#text-preview", this.root).hidden = !this.doc;
     if (papers.length) {

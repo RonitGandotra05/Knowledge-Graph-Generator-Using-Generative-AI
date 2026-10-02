@@ -1,18 +1,21 @@
 export const workspaceTemplate = /* HTML */ `<div class="workspace-heading">
     <div>
-      <h1>What would you like to explore?</h1>
-      <p>Upload up to ten papers and tell us what interests you.</p>
+      <div class="eyebrow">YOUR RESEARCH / YOUR PERSPECTIVE</div>
+      <h1>Research workspace</h1>
+      <p>Papers, a focus, your AI. Everything you need in one place.</p>
     </div>
-    <button class="text-button" id="import-analysis">Import graph</button
-    ><input id="import-file" type="file" accept=".json" hidden />
+    <div class="workspace-actions">
+      <button
+        type="button"
+        id="edit-setup"
+        class="button secondary small"
+        hidden
+      >
+        Research setup</button
+      ><button class="text-button" id="import-analysis">Import graph</button
+      ><input id="import-file" type="file" accept=".json" hidden />
+    </div>
   </div>
-  <nav class="workflow-pages" aria-label="Analysis steps">
-    <button type="button" data-step="0" aria-current="step">
-      <span>1</span> Paper</button
-    ><button type="button" data-step="1"><span>2</span> Your focus</button
-    ><button type="button" data-step="2"><span>3</span> Build</button
-    ><button type="button" data-step="3"><span>4</span> Graph</button>
-  </nav>
   <div id="status" role="status" aria-live="polite" hidden></div>
   <section
     id="run-progress"
@@ -58,175 +61,149 @@ export const workspaceTemplate = /* HTML */ `<div class="workspace-heading">
       aria-label="Recent analysis activity"
     ></ol>
   </section>
-  <div class="workspace-grid">
-    <div class="setup-column">
-      <fieldset id="workflow-inputs">
-        <section class="panel" data-page="0">
-          <div class="section-head">
-            <div>
-              <span class="step-index">01</span>
-              <h2>Upload your papers</h2>
-            </div>
-            <span class="local-badge">● Local parsing</span>
-          </div>
-          <label class="upload-zone" id="drop-zone" tabindex="0"
-            ><input
-              id="document-file"
-              type="file"
-              multiple
-              accept=".pdf,.docx,.txt,.md,.csv,.tsv"
-              hidden
-            /><span class="upload-icon">↥</span
-            ><strong>Drop your research papers here</strong
-            ><span>or click to browse your files</span
-            ><small
-              >Up to 10 files · PDF, DOCX or text · 30 MB per file</small
-            ></label
-          >
-          <p class="fine-print">
-            Scanned pages are recognized automatically with local English OCR.
-            Page images stay in your browser; unreadable papers or pages are
-            listed separately.
-          </p>
-          <div id="document-summary" hidden></div>
-          <details id="text-preview" hidden>
-            <summary>Review extracted text</summary>
-            <div id="extracted-text"></div>
-            <button type="button" id="export-text" class="text-button">
-              Download extracted TXT ↓
-            </button>
-          </details>
-        </section>
-        <section class="panel" data-page="1" hidden>
-          <div class="section-head">
-            <div>
-              <span class="step-index">02</span>
-              <h2>Tell us your focus</h2>
-            </div>
-          </div>
-          <label
-            >What would you like to understand?<textarea
-              id="focus"
-              rows="3"
-              maxlength="1000"
-              placeholder="e.g. How does the gut microbiome relate to autism, and which biomarkers does this paper study?"
-            ></textarea>
-          </label>
-          <p class="fine-print">
-            A short description is enough. We’ll find relevant ideas and
-            connections for you.
-          </p>
-          <div id="manual-terms">
-            <label
-              >A few keywords (optional)<textarea
-                id="terms"
-                maxlength="1000"
-                rows="2"
-                placeholder="e.g. autism, gut microbiome, machine learning"
-              ></textarea>
-            </label>
-            <div class="input-note">
-              Separate keywords with commas.<button
-                type="button"
-                id="add-terms"
-                class="text-button"
-              >
-                Find keywords
-              </button>
-            </div>
-          </div>
-          <details id="discovery-controls">
-            <summary>Review suggested concepts</summary>
-            <p class="fine-print">
-              Review all readable paper sections in bounded requests. Refine
-              suggestions before extracting relationships.
-            </p>
-            <button
-              type="button"
-              id="discover-concepts"
-              class="button secondary full"
-            >
-              Discover concepts with AI ✧
-            </button>
-          </details>
-          <details class="concept-review">
-            <summary>Refine concepts (optional)</summary>
-            <div class="review-toolbar">
-              <span id="concept-count">0 concepts selected</span
-              ><button type="button" id="select-all" class="text-button">
-                All</button
-              ><button type="button" id="select-none" class="text-button">
-                None
-              </button>
-            </div>
-            <input
-              id="concept-search"
-              aria-label="Search concepts"
-              placeholder="Filter concepts or categories…"
-            />
-            <div id="concepts" class="concept-chips">
-              <p class="fine-print">Your reviewed concepts will appear here.</p>
-            </div>
-          </details>
-        </section>
-        <section
-          class="panel"
-          data-page="2"
-          hidden
-          id="provider-form"
-        ></section>
-        <section class="panel advanced" data-page="2" hidden>
-          <p id="provider-budget" class="fine-print" hidden></p>
-          <details>
-            <summary>
-              Graph quality & context budget <span>Advanced</span>
-            </summary>
-            <div class="advanced-grid">
-              <label
-                >Maximum concepts<input
-                  id="max-nodes"
-                  type="number"
-                  min="2"
-                  max="150"
-                  value="150" /></label
-              ><label
-                >Maximum relationships<input
-                  id="max-edges"
-                  type="number"
-                  min="1"
-                  max="500"
-                  value="500" /></label
-              ><label
-                >Context budget (approx. tokens)<input
-                  id="context-budget"
-                  type="number"
-                  min="500"
-                  max="12000"
-                  step="500"
-                  value="6000" /></label
-              ><label class="check-label"
-                ><input id="include-inferred" type="checkbox" />Include
-                AI-inferred relationships</label
-              >
-            </div>
-            <p class="fine-print">
-              Evidence is always required. Inferred connections use dashed
-              lines. Confidence filtering is available in the graph.
-            </p>
-          </details>
-        </section>
-      </fieldset>
-    </div>
-    <div class="results-column">
-      <section class="panel context-panel" data-page="2" hidden>
+  <div id="workspace-composer">
+    <fieldset id="workflow-inputs" class="composer-grid">
+      <section class="panel" id="source-form">
         <div class="section-head">
           <div>
-            <span class="step-index">04</span>
-            <h2>Ready to connect the ideas?</h2>
+            <span class="panel-icon" aria-hidden="true">▤</span>
+            <h2>Upload your papers</h2>
           </div>
-          <span class="section-note"></span>
+          <span class="local-badge">● Local parsing</span>
         </div>
+        <label class="upload-zone" id="drop-zone" tabindex="0"
+          ><input
+            id="document-file"
+            type="file"
+            multiple
+            accept=".pdf,.docx,.txt,.md,.csv,.tsv"
+            hidden
+          /><span class="upload-icon">↥</span
+          ><strong>Drop your research papers here</strong
+          ><span>or click to browse your files</span
+          ><small
+            >Up to 10 files · PDF, DOCX or text · 30 MB per file</small
+          ></label
+        >
+        <p class="fine-print">
+          Automatic local OCR for scanned pages. Unreadable files/pages are
+          clearly listed.
+        </p>
+        <div id="document-summary" hidden></div>
+        <details id="text-preview" hidden>
+          <summary>Review extracted text</summary>
+          <div id="extracted-text"></div>
+          <button type="button" id="export-text" class="text-button">
+            Download extracted TXT ↓
+          </button>
+        </details>
+        <label
+          >Your focus <span class="optional-label">optional</span
+          ><textarea
+            id="focus"
+            rows="2"
+            maxlength="1000"
+            placeholder="e.g. Compare the proposed method, key findings and supporting evidence."
+          ></textarea>
+        </label>
+        <p class="fine-print">
+          Leave blank to explore the paper broadly, or describe what matters to
+          you.
+        </p>
+        <div id="manual-terms">
+          <label
+            >A few keywords (optional)<textarea
+              id="terms"
+              maxlength="1000"
+              rows="1"
+              placeholder="e.g. attention, renewable energy, materials"
+            ></textarea>
+          </label>
+          <div class="input-note">
+            Separate keywords with commas.<button
+              type="button"
+              id="add-terms"
+              class="text-button"
+            >
+              Find keywords
+            </button>
+          </div>
+        </div>
+        <details id="discovery-controls">
+          <summary>Review suggested concepts</summary>
+          <p class="fine-print">
+            Review all readable paper sections in bounded requests. Refine
+            suggestions before extracting relationships.
+          </p>
+          <button
+            type="button"
+            id="discover-concepts"
+            class="button secondary full"
+          >
+            Discover concepts with AI ✧
+          </button>
+        </details>
+        <details class="concept-review">
+          <summary>Refine concepts (optional)</summary>
+          <div class="review-toolbar">
+            <span id="concept-count">0 concepts selected</span
+            ><button type="button" id="select-all" class="text-button">
+              All</button
+            ><button type="button" id="select-none" class="text-button">
+              None
+            </button>
+          </div>
+          <input
+            id="concept-search"
+            aria-label="Search concepts"
+            placeholder="Filter concepts or categories…"
+          />
+          <div id="concepts" class="concept-chips">
+            <p class="fine-print">Your reviewed concepts will appear here.</p>
+          </div>
+        </details>
+      </section>
+      <section class="panel" id="provider-form"></section>
+      <section class="panel context-panel">
         <div id="run-estimate" class="run-estimate" aria-live="polite"></div>
+        <p id="provider-budget" class="fine-print" hidden></p>
+        <details>
+          <summary>
+            Graph quality & context budget <span>Advanced</span>
+          </summary>
+          <div class="advanced-grid">
+            <label
+              >Maximum concepts<input
+                id="max-nodes"
+                type="number"
+                min="2"
+                max="150"
+                value="150" /></label
+            ><label
+              >Maximum relationships<input
+                id="max-edges"
+                type="number"
+                min="1"
+                max="500"
+                value="500" /></label
+            ><label
+              >Context budget (approx. tokens)<input
+                id="context-budget"
+                type="number"
+                min="500"
+                max="12000"
+                step="500"
+                value="6000" /></label
+            ><label class="check-label"
+              ><input id="include-inferred" type="checkbox" />Include
+              AI-inferred relationships</label
+            >
+          </div>
+          <p class="fine-print">
+            Evidence is always required. Inferred connections use dashed lines.
+            Confidence filtering is available in the graph.
+          </p>
+        </details>
         <details class="send-preview">
           <summary>See what gets sent to AI</summary>
           <div id="context-estimate" class="estimate-grid">
@@ -251,46 +228,38 @@ export const workspaceTemplate = /* HTML */ `<div class="workspace-heading">
             <div id="discovery-passages"></div>
           </details>
         </details>
-        <div class="send-disclosure">
-          Excerpts go directly to your AI provider. You pay any API charges to
-          them; Evidence Atlas charges nothing. ChatGPT subscriptions do not
-          include OpenAI API usage.
+        <div class="build-actions">
+          <div class="send-disclosure">
+            Excerpts go directly to your AI provider. You pay any API charges to
+            them; Evidence Atlas charges nothing. ChatGPT subscriptions do not
+            include OpenAI API usage.
+          </div>
+          <button id="analyze" class="button primary full" disabled>
+            Build my graph <span>↗</span>
+          </button>
         </div>
-        <button id="analyze" class="button primary full" disabled>
-          Build my graph <span>↗</span>
-        </button>
         <p class="fine-print center">
           Concept discovery + relationship extraction · Exports are built
           locally
         </p>
       </section>
-      <section
-        class="panel workflow-guide"
-        data-page="3"
-        hidden
-        id="graph-placeholder"
-      >
-        <div class="orbital-icon live-orbit">⌘</div>
-        <div class="eyebrow">RESEARCH, CONNECTED</div>
-        <h2>Your research is<br />coming into view.</h2>
-        <p>
-          Concepts appear as sections are read. Verified connections follow,
-          each with its quoted source.
-        </p>
-        <div class="guide-steps">
-          <span><i>1</i> Find relevant passages</span
-          ><span><i>2</i> Extract relationships</span
-          ><span><i>3</i> Verify supporting text</span>
-        </div>
-      </section>
+    </fieldset>
+  </div>
+  <section class="panel workflow-guide" hidden id="graph-placeholder">
+    <div class="orbital-icon live-orbit">⌘</div>
+    <div class="eyebrow">RESEARCH, CONNECTED</div>
+    <h2>Your research is<br />coming into view.</h2>
+    <p>
+      Concepts appear as sections are read. Verified connections follow, each
+      with its quoted source.
+    </p>
+    <div class="guide-steps">
+      <span><i>1</i> Find relevant passages</span
+      ><span><i>2</i> Extract relationships</span
+      ><span><i>3</i> Verify supporting text</span>
     </div>
-  </div>
-  <div class="workflow-pagination">
-    <button id="step-back" class="button secondary">Back</button
-    ><span id="step-label">Step 1 of 4</span
-    ><button id="step-next" class="button primary">Continue →</button>
-  </div>
-  <section id="graph-result" data-page="3" hidden>
+  </section>
+  <section id="graph-result" hidden>
     <div class="result-heading">
       <div>
         <div class="eyebrow">ANALYSIS COMPLETE</div>

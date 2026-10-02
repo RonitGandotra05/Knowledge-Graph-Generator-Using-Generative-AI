@@ -1,7 +1,12 @@
 import type { Concept, ExtractionOptions, ResearchDocument } from "../types";
 import type { ProviderConfig } from "./client";
 import { coverageBatches } from "./coverage";
-import { outputBudget, requestPolicy } from "./limits";
+import {
+  outputBudget,
+  requestPolicy,
+  safeOptions,
+  type RequestPolicy,
+} from "./limits";
 import { conceptSchema, graphSchema } from "./schema";
 import { formatContext, occurrences } from "../retrieval/context";
 import { priceFor, tokenCost } from "./usage";
@@ -31,9 +36,11 @@ export function estimateRun(
   completedRelationships: number[] = [],
   free = false,
   observedLatencyMs?: number,
+  observedPolicy?: RequestPolicy | null,
 ): RunEstimate {
+  options = safeOptions(config, options);
   const batches = coverageBatches(doc, options.contextTokens),
-    policy = requestPolicy(config);
+    policy = observedPolicy ?? requestPolicy(config);
   const discovery = batches.filter(
     (_, i) => !discoveryComplete && !completedDiscovery.includes(i),
   );
@@ -77,9 +84,9 @@ export function estimateRun(
       : config.provider === "gemini"
         ? 6000
         : 10000);
-  const pace = (tokens: number) =>
+  const pace = (tokens: number, slow = false) =>
     Math.max(
-      calls * latency,
+      calls * latency * (slow ? 2.5 : 1),
       policy ? calls * policy.spacingMs : 0,
       policy ? (Math.max(0, calls - 1) / policy.requestsPerMinute) * 60000 : 0,
       policy
@@ -96,7 +103,7 @@ export function estimateRun(
           Math.ceil(tokens / policy.tokensPerDay),
         )
       : 1;
-  const quotaDays = windows(tokenCeiling);
+  const quotaDays = windows(policy?.inputOnly ? inputTokens : tokenCeiling);
   const usage = {
     inputTokens,
     outputTokens,
@@ -124,11 +131,56 @@ export function estimateRun(
       free ? "free" : "standard",
     ),
     durationMs:
-      pace(inputTokens + outputTokens) +
-      (windows(inputTokens + outputTokens) - 1) * 86400000,
-    durationCeilingMs: pace(tokenCeiling) + (quotaDays - 1) * 86400000,
+      pace(policy?.inputOnly ? inputTokens : inputTokens + outputTokens) +
+      (windows(policy?.inputOnly ? inputTokens : inputTokens + outputTokens) -
+        1) *
+        86400000,
+    durationCeilingMs:
+      pace(policy?.inputOnly ? inputTokens : tokenCeiling, true) +
+      (quotaDays - 1) * 86400000,
     quotaDays,
     requestsPerMinute: policy?.requestsPerMinute ?? null,
     tokensPerMinute: policy?.tokensPerMinute ?? null,
   };
+}
+
+export function paidAlternatives(
+  doc: ResearchDocument,
+  concepts: Concept[],
+  options: ExtractionOptions,
+  current?: ProviderConfig,
+) {
+  return (
+    [
+      {
+        provider: "openai",
+        model: "gpt-4.1-mini",
+        endpoint: "https://api.openai.com/v1",
+      },
+      {
+        provider: "gemini",
+        model: "gemini-2.5-flash",
+        endpoint: "https://generativelanguage.googleapis.com/v1beta",
+      },
+    ] as const
+  ).map((p) => {
+    const config: ProviderConfig = {
+      ...p,
+      key: "",
+      billing: "standard",
+      capacity:
+        current?.provider === p.provider &&
+        current.billing !== "free" &&
+        current.model === p.model
+          ? current.capacity
+          : undefined,
+    };
+    return {
+      config,
+      estimate: estimateRun(doc, concepts, config, {
+        ...options,
+        contextTokens: 6000,
+      }),
+    };
+  });
 }

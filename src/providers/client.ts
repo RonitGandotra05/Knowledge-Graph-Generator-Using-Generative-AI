@@ -1,3 +1,4 @@
+import { safeCapacity, type RateCapacity } from "./capacity";
 import { reportedUsage, type UsageEvent, type TokenUsage } from "./usage";
 import { parseJSON } from "../graph/validate";
 import {
@@ -16,6 +17,7 @@ export interface ProviderConfig {
   model: string;
   endpoint: string;
   billing?: "standard" | "free";
+  capacity?: RateCapacity;
 }
 export const providers: Record<
   ProviderId,
@@ -99,6 +101,8 @@ function validateConfig(c: ProviderConfig) {
       "Enter an API key. It stays in this tab’s memory and is cleared on refresh.",
     );
   if (!c.model.trim()) throw new Error("Enter a model ID.");
+  if (c.capacity && !safeCapacity(c.capacity))
+    throw new Error("Enter valid whole-number dashboard limits.");
   endpointURL(c);
 }
 export function providerError(status: number): string {
@@ -214,12 +218,15 @@ export class LLMProvider {
       throw new Error(
         "This request is too large for the selected model’s starter budget. Reduce context or use fewer, shorter concepts.",
       );
-    await this.beforeRequest?.(inputTokens + outputTokens);
+    const quotaTokens = policy?.inputOnly
+      ? inputTokens
+      : inputTokens + outputTokens;
+    await this.beforeRequest?.(quotaTokens);
     const combined = AbortSignal.any([
       AbortSignal.timeout(90000),
       ...(signal ? [signal] : []),
     ]);
-    const ticket = this.guard.begin(this.config, inputTokens + outputTokens);
+    const ticket = this.guard.begin(this.config, quotaTokens);
     let actualTokens: number | undefined;
     let usage: TokenUsage | null = null,
       status = 0;
@@ -242,9 +249,12 @@ export class LLMProvider {
       }
       const data = await response.json();
       usage = reportedUsage(provider, data);
-      actualTokens = usage?.totalTokens;
+      actualTokens = policy?.inputOnly
+        ? usage?.inputTokens
+        : usage?.totalTokens;
       const totalOnly = data.usage?.total_tokens;
       if (
+        !policy?.inputOnly &&
         actualTokens === undefined &&
         typeof totalOnly === "number" &&
         Number.isFinite(totalOnly) &&

@@ -1,7 +1,9 @@
+import { capacityProfile } from "./capacity";
 import type { ProviderConfig } from "./client";
 import type { ExtractionOptions } from "../types";
 
 export interface RequestPolicy {
+  inputOnly?: boolean;
   contextTokens: number;
   maxNodes: number;
   maxEdges: number;
@@ -63,7 +65,26 @@ export function freeProvider(
 }
 export function requestPolicy(config: ProviderConfig): RequestPolicy | null {
   const provider = freeProvider(config);
-  if (!provider) return null;
+  if (!provider) {
+    const capacity = capacityProfile(config);
+    if (!capacity) return null;
+    return {
+      contextTokens:
+        config.provider === "gemini" && config.billing === "free" ? 1000 : 6000,
+      maxNodes: 150,
+      maxEdges: 500,
+      inputTokens: 25000,
+      outputTokens: config.provider === "gemini" ? 10000 : 7000,
+      requestsPerMinute: Math.max(1, Math.floor(capacity.rpm * 0.8)),
+      tokensPerMinute: Math.max(1, Math.floor(capacity.tpm * 0.8)),
+      requestsPerDay: capacity.rpd
+        ? Math.max(1, Math.floor(capacity.rpd * 0.8))
+        : 1e15,
+      tokensPerDay: 1e15,
+      spacingMs: Math.ceil(60000 / Math.max(1, Math.floor(capacity.rpm * 0.8))),
+      inputOnly: capacity.inputOnly,
+    };
+  }
   const base = provider === "groq" ? groq : cerebras;
   // Unlisted model capabilities/quotas are unknown: keep a smaller starter budget.
   return known[provider].has(config.model)
@@ -103,7 +124,8 @@ export function estimatedInputTokens(body: unknown): number {
 }
 export function outputBudget(config: ProviderConfig, schema: object): number {
   const policy = requestPolicy(config);
-  if (!policy) return config.provider === "gemini" ? 10000 : 7000;
+  if (!policy || !freeProvider(config))
+    return config.provider === "gemini" ? 10000 : 7000;
   const discovery =
     "properties" in schema &&
     schema.properties &&
@@ -121,7 +143,10 @@ interface State {
   inFlight: boolean;
   lastRequest: number;
   cooldown: number;
+  limitRPM?: number;
+  limitTPM?: number;
   remainingTokens?: { value: number; until: number };
+  remainingProjectTokens?: { value: number; until: number };
   remainingRequests?: { value: number; until: number };
   invalidKeys: Set<string>;
   deniedModels: Set<string>;
@@ -195,10 +220,28 @@ export class RequestGuard {
     state.records = state.records.filter((r) => r.at > this.now() - day);
     return state;
   }
+  effectivePolicy(config: ProviderConfig): RequestPolicy | null {
+    const base = requestPolicy(config),
+      state = this.state(config);
+    if (!base) return null;
+    const rpm = Math.min(base.requestsPerMinute, state.limitRPM ?? Infinity);
+    return {
+      ...base,
+      requestsPerMinute: rpm,
+      tokensPerMinute: Math.min(
+        base.tokensPerMinute,
+        state.limitTPM ?? Infinity,
+      ),
+      spacingMs:
+        freeProvider(config) && state.limitRPM === undefined
+          ? base.spacingMs
+          : Math.max(base.spacingMs, Math.ceil(60000 / rpm)),
+    };
+  }
   availability(config: ProviderConfig, tokens = 0): Availability {
     const state = this.state(config),
       now = this.now(),
-      policy = requestPolicy(config);
+      policy = this.effectivePolicy(config);
     if (state.invalidKeys.has(config.key))
       return {
         blocked: true,
@@ -211,6 +254,13 @@ export class RequestGuard {
         blocked: true,
         reason:
           "Access was denied. Change the key or model before trying again.",
+        retryAt: 0,
+      };
+    if (policy && tokens > policy.tokensPerMinute)
+      return {
+        blocked: true,
+        reason:
+          "This request exceeds your configured tokens/minute. Reduce context/output size or verify dashboard limits.",
         retryAt: 0,
       };
     if (state.inFlight)
@@ -246,12 +296,9 @@ export class RequestGuard {
         }
       }
     }
-    if (
-      state.remainingTokens &&
-      state.remainingTokens.until > now &&
-      state.remainingTokens.value < tokens
-    )
-      until = Math.max(until, state.remainingTokens.until);
+    for (const quota of [state.remainingTokens, state.remainingProjectTokens])
+      if (quota && quota.until > now && quota.value < tokens)
+        until = Math.max(until, quota.until);
     if (
       state.remainingRequests &&
       state.remainingRequests.until > now &&
@@ -268,10 +315,10 @@ export class RequestGuard {
     };
   }
   begin(config: ProviderConfig, tokens: number) {
-    const policy = requestPolicy(config);
+    const policy = this.effectivePolicy(config);
     if (policy && tokens > policy.tokensPerMinute)
       throw new Error(
-        "This request exceeds the starter token budget. Reduce the context or graph size.",
+        "This request exceeds the configured token limit. Reduce context/output size or verify your dashboard limits.",
       );
     const status = this.availability(config, tokens);
     if (status.blocked) throw new Error(status.reason);
@@ -309,6 +356,19 @@ export class RequestGuard {
         now + minute,
         resetTime(response.headers.get("retry-after"), now) || 0,
       );
+    const rpm = finiteHeader(
+      response.headers.get("x-ratelimit-limit-requests"),
+    );
+    const tokenLimits = [
+      "x-ratelimit-limit-tokens",
+      "x-ratelimit-limit-project-tokens",
+    ]
+      .map((h) => finiteHeader(response.headers.get(h)))
+      .filter((v): v is number => v !== null && v > 0);
+    if (config.provider === "openai" && rpm && rpm > 0)
+      state.limitRPM = Math.max(1, Math.floor(rpm * 0.8));
+    if (tokenLimits.length)
+      state.limitTPM = Math.max(1, Math.floor(Math.min(...tokenLimits) * 0.8));
     const remainingTokens = finiteHeader(
       response.headers.get("x-ratelimit-remaining-tokens") ??
         response.headers.get("x-ratelimit-remaining-tokens-minute"),
@@ -317,6 +377,18 @@ export class RequestGuard {
       response.headers.get("x-ratelimit-remaining-requests") ??
         response.headers.get("x-ratelimit-remaining-requests-day"),
     );
+    const projectTokens = finiteHeader(
+      response.headers.get("x-ratelimit-remaining-project-tokens"),
+    );
+    if (projectTokens !== null)
+      state.remainingProjectTokens = {
+        value: projectTokens,
+        until:
+          resetTime(
+            response.headers.get("x-ratelimit-reset-project-tokens"),
+            now,
+          ) || now + minute,
+      };
     if (remainingTokens !== null)
       state.remainingTokens = {
         value: remainingTokens,
@@ -335,7 +407,12 @@ export class RequestGuard {
             response.headers.get("x-ratelimit-reset-requests") ??
               response.headers.get("x-ratelimit-reset-requests-day"),
             now,
-          ) || now + day,
+          ) ||
+          now +
+            (config.provider === "openai" &&
+            response.headers.has("x-ratelimit-remaining-requests")
+              ? minute
+              : day),
       };
     this.emit();
   }

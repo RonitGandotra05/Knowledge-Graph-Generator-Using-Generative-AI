@@ -4,7 +4,7 @@
 
 [Interactive dark HTML](../output/evaluation/05v1-graph-dark.html) · [Light HTML](../output/evaluation/05v1-graph-light.html) · [Dark PNG](../output/evaluation/05v1-graph-dark.png) · [Light PNG](../output/evaluation/05v1-graph-light.png) · [Scalable SVG](../output/evaluation/05v1-graph-dark.svg) · [Editable graph JSON](../output/evaluation/05v1-graph.json) · [Rendering/source audit](../output/evaluation/05v1-audit.json) · [Entity benchmark](../output/evaluation/05v1-benchmark.json)
 
-The final HTML works offline, preserves evidence and edits, and offers circular/card nodes, layout controls, dark/light themes and image exports. The homepage remains intact; upload, focus, provider and graph steps use the paginated workspace. New projects preserve ongoing drafts in menu history. Credentials remain memory-only.
+The final HTML works offline, preserves evidence and edits, and offers circular/card nodes, layout controls, dark/light themes and image exports. The homepage remains intact. The evaluation originally used a paginated workspace; the subsequent [workspace redesign](WORKSPACE-REDESIGN.md) now shows upload, focus and provider setup together on one page. The live measurements below are unchanged. New projects preserve ongoing drafts in menu history. Credentials remain memory-only.
 
 Evaluation date: 2026-10-03 (Asia/Kolkata). Canonical repository: `/Users/ronitgandotra/Desktop/Knowledge-Graph-Generator-Using-Generative-AI`.
 

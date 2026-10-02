@@ -1023,3 +1023,96 @@ html[data-theme="light"] .orbit-two {
     transition: none;
   }
 }
+#workspace .estimate-assumptions > summary {
+  color: var(--muted);
+}
+#workspace .quota-notice {
+  font-size: 11px;
+  color: var(--accent);
+  margin: 6px 0;
+}
+#workspace .run-receipt {
+  padding: 10px 14px;
+}
+#workspace .receipt-details > summary {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+.receipt-details summary span {
+  float: right;
+  color: var(--accent);
+  margin-left: 12px;
+}
+.receipt-details strong {
+  display: block;
+  margin-top: 10px;
+}
+#workspace[data-stage="analysis"] .workspace-heading .eyebrow,
+#workspace[data-stage="analysis"] .workspace-heading p {
+  display: none;
+}
+#workspace[data-stage="analysis"] .workspace-heading h1 {
+  font-size: 20px;
+}
+#workspace[data-stage="analysis"] .workspace-heading {
+  margin-bottom: 16px;
+}
+#workspace[data-stage="analysis"] .graph-stage {
+  height: clamp(300px, calc(100dvh - 390px), 650px);
+}
+@media (min-width: 1100px) {
+  #workspace[data-stage="analysis"][data-run-phase="discovery"],
+  #workspace[data-stage="analysis"][data-run-phase="relationships"],
+  #workspace[data-stage="analysis"][data-run-phase="paused"] {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 0 18px;
+  }
+  #workspace[data-stage="analysis"] .workspace-heading,
+  #workspace[data-stage="analysis"] #status {
+    grid-column: 1 / -1;
+  }
+  #workspace[data-stage="analysis"] .mission-control {
+    grid-column: 1;
+    grid-row: 3;
+    align-self: start;
+  }
+  #workspace[data-stage="analysis"] #graph-result,
+  #workspace[data-stage="analysis"] #graph-placeholder {
+    grid-column: 2;
+    grid-row: 3;
+  }
+  #workspace[data-stage="analysis"] .mission-heading {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  #workspace[data-stage="analysis"] .mission-heading h2 {
+    font-size: 14px;
+  }
+  #workspace[data-stage="analysis"] .mission-metrics {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  #workspace[data-stage="analysis"] .mission-metrics strong {
+    font-size: 18px;
+  }
+  #workspace[data-stage="analysis"] .mission-metrics span {
+    font-size: 9px;
+  }
+  #workspace[data-stage="analysis"] .mission-control .fine-print {
+    font-size: 10px;
+  }
+  #workspace[data-stage="analysis"] .run-activity {
+    font-size: 10px;
+  }
+}
+#workspace[data-run-phase="complete"] #run-progress {
+  display: none;
+}
+@media (max-width: 760px) {
+  .receipt-details summary span {
+    float: none;
+    display: block;
+    margin: 6px 0 0;
+  }
+}

@@ -54,6 +54,10 @@ export const workspaceTemplate = /* HTML */ `<div class="workspace-heading">
         <strong id="run-cost">—</strong><span>provider charge · estimate</span>
       </div>
     </div>
+    <details id="run-paid-comparison" class="paid-comparison" hidden>
+      <summary>Paid providers can reduce this wait</summary>
+      <div id="run-paid-options"></div>
+    </details>
     <p id="run-usage-note" class="fine-print"></p>
     <ol
       id="run-activity"

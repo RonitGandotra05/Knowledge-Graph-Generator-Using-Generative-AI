@@ -1,3 +1,4 @@
+import { capacityProfile } from "../providers/capacity";
 import { workspaceTemplate } from "./workspace-template";
 import type {
   Analysis,
@@ -18,7 +19,7 @@ import {
   priceFor,
   type UsageEvent,
 } from "../providers/usage";
-import { estimateRun } from "../providers/estimate";
+import { estimateRun, paidAlternatives } from "../providers/estimate";
 import {
   parseTerms,
   selectContext,
@@ -26,7 +27,12 @@ import {
   type ContextSelection,
 } from "../retrieval/context";
 import { LLMProvider } from "../providers/client";
-import { safeOptions, requestPolicy, requestGuard } from "../providers/limits";
+import {
+  safeOptions,
+  requestPolicy,
+  requestGuard,
+  freeProvider,
+} from "../providers/limits";
 import {
   discoverCoverage,
   extractCoverage,
@@ -68,6 +74,12 @@ export class Workspace {
   private saveTimer = 0;
   private writes: Promise<unknown> = Promise.resolve();
   private restoring = false;
+  private automaticContext: number | null = null;
+  private comparisonCache: {
+    key: string;
+    html: string;
+    summary: string;
+  } | null = null;
   get currentId() {
     return this.draftId;
   }
@@ -291,10 +303,14 @@ export class Workspace {
     const key = JSON.stringify([
       this.signature(),
       config.billing,
+      config.capacity,
+      requestGuard.effectivePolicy(config),
       this.concepts,
       discoveryDone,
       discovery,
       relationships,
+      (this.discoveryProgress?.signature === this.signature() ||
+        this.discoverySignature === this.signature()) &&
       this.usage.calls
         ? Math.max(1000, this.usage.requestDurationMs / this.usage.calls)
         : null,
@@ -309,12 +325,48 @@ export class Workspace {
       discovery,
       relationships,
       config.billing === "free",
-      this.usage.calls
+      (this.discoveryProgress?.signature === this.signature() ||
+        this.discoverySignature === this.signature()) &&
+        this.usage.calls
         ? Math.max(1000, this.usage.requestDurationMs / this.usage.calls)
         : undefined,
+      requestGuard.effectivePolicy(config),
     );
     this.estimateCache = { key, value };
     return value;
+  }
+  private comparison() {
+    if (!this.doc) return "";
+    const config = this.provider.config(),
+      options = this.options();
+    const key = JSON.stringify([
+      this.draftId,
+      this.doc.name,
+      this.doc.characters,
+      this.doc.pages,
+      config.provider,
+      config.model,
+      config.capacity,
+      config.billing,
+      options,
+    ]);
+    if (this.comparisonCache?.key === key) return this.comparisonCache.html;
+    const alternatives = paidAlternatives(this.doc, [], options, config);
+    const summary = alternatives
+      .map(
+        ({ config: c, estimate: e }) =>
+          `${c.provider === "openai" ? "OpenAI" : "Gemini"} ${duration(e.durationMs)}–${duration(e.durationCeilingMs)}`,
+      )
+      .join(" · ");
+    const rows = alternatives
+      .map(({ config: alternative, estimate: e }) => {
+        const profile = capacityProfile(alternative)!;
+        return `<tr><th scope="row">${alternative.provider === "openai" ? "OpenAI · GPT-4.1 mini" : "Gemini · 2.5 Flash"}</th><td>${duration(e.durationMs)}–${duration(e.durationCeilingMs)}</td><td>${e.calls.toLocaleString()} calls</td><td>${money(e.costUSD!)}–${money(e.costCeilingUSD!)} USD</td></tr><tr class="capacity-basis"><td colspan="4">${esc(profile.label)} · app pacing ${e.requestsPerMinute} calls/min · ${e.tokensPerMinute?.toLocaleString()} ${profile.inputOnly ? "input " : ""}tokens/min. <a href="${profile.source}" target="_blank" rel="noopener noreferrer">Check limits ↗</a></td></tr>`;
+      })
+      .join("");
+    const html = `<p class="fine-print">Paid API capacity can shorten long quota waits. Calculated for these papers using each provider’s context size and pacing.</p><div class="provider-comparison"><table><caption class="sr-only">Paid provider timing and charges</caption><thead><tr><th>Provider</th><th>Time estimate</th><th>Requests</th><th>API charge</th></tr></thead><tbody>${rows}</tbody></table></div><p class="fine-print">Full fresh run · estimated API charge · 20% quota headroom. OpenAI uses published Tier 1; Gemini is a planning example until you enter AI Studio quotas in Models & connection options. Paid access does not guarantee a completion time. A ChatGPT subscription does not include OpenAI API billing. Parsing/OCR time is additional. Switching provider starts fresh extraction.</p>`;
+    this.comparisonCache = { key, html, summary };
+    return html;
   }
   private renderEstimate() {
     const plan = this.estimate(),
@@ -324,6 +376,7 @@ export class Workspace {
         '<p class="fine-print">Upload papers to estimate tokens, time and API charges.</p>';
       return;
     }
+    const comparison = this.comparison();
     const config = this.provider.config(),
       price = priceFor(config);
     const included =
@@ -332,7 +385,7 @@ export class Workspace {
       plan.costUSD === null
         ? "Unknown"
         : `${money(plan.costUSD)}–${money(plan.costCeilingUSD!)}`;
-    target.innerHTML = `<div class="estimate-label"><span>YOUR RUN, ESTIMATED</span><small>${included} paper${included === 1 ? "" : "s"} included</small></div><div class="estimate-summary"><div><strong>${plan.calls.toLocaleString()}</strong><span>API calls · up to</span></div><div><strong>${(plan.inputTokens + plan.outputTokens).toLocaleString()}–${plan.tokenCeiling.toLocaleString()}</strong><span>tokens · estimate</span></div><div><strong>${cost}</strong><span>provider API charge · USD</span></div><div><strong>${duration(plan.durationMs)}–${duration(plan.durationCeilingMs)}</strong><span>remaining time · estimate</span></div></div>${plan.quotaDays > 1 ? `<p class="quota-notice">May need ${plan.quotaDays} quota windows. Progress is saved between resets.</p>` : ""}<details class="estimate-assumptions"><summary>Estimate details & provider rates</summary><p class="fine-print">${plan.discoveryCalls} discovery + up to ${plan.relationshipCalls} relationship requests. ${plan.requestsPerMinute ? `App pacing: up to ${plan.requestsPerMinute} calls/min and ${plan.tokensPerMinute?.toLocaleString()} tokens/min. ` : "Requests run one at a time; timing updates during the run. "}Parsing/OCR is local and free.</p><p class="fine-print">${config.billing === "free" ? "Free tier selected: $0 only within your provider’s free quota. Account eligibility and quota are not readable from your key." : config.provider === "groq" || config.provider === "gemini" ? "Paid rates shown; eligible free-tier usage may cost $0. Choose your API plan above." : "You pay your provider directly."} ${price ? `Rates checked ${this.usage.pricingDate}. <a href="${price.source}" target="_blank" rel="noopener noreferrer">Provider pricing</a>.` : "No verified rate for this model/endpoint; check its provider pricing before proceeding."} Evidence Atlas charges $0. Prices exclude taxes/credits. Tokens and time vary by output and account limits.</p></details>`;
+    target.innerHTML = `<div class="estimate-label"><span>YOUR RUN, ESTIMATED</span><small>${included} paper${included === 1 ? "" : "s"} included</small></div><div class="estimate-summary"><div><strong>${plan.calls.toLocaleString()}</strong><span>API calls · up to</span></div><div><strong>${(plan.inputTokens + plan.outputTokens).toLocaleString()}–${plan.tokenCeiling.toLocaleString()}</strong><span>tokens · estimate</span></div><div><strong>${cost}</strong><span>provider API charge · USD</span></div><div><strong>${duration(plan.durationMs)}–${duration(plan.durationCeilingMs)}</strong><span>remaining time · estimate</span></div></div>${plan.quotaDays > 1 ? `<p class="quota-notice">May need ${plan.quotaDays} quota windows. Progress is saved between resets. Paid API providers may finish much sooner; see the comparison below.</p>` : ""}<details class="paid-comparison"><summary>${plan.quotaDays > 1 || plan.durationCeilingMs >= 3600000 ? `Paid alternatives: ${esc(this.comparisonCache!.summary)}` : "Compare paid provider times & costs"}</summary>${comparison}</details><details class="estimate-assumptions"><summary>Estimate details & provider rates</summary><p class="fine-print">${plan.discoveryCalls} discovery + up to ${plan.relationshipCalls} relationship requests. ${plan.requestsPerMinute ? `App pacing: up to ${plan.requestsPerMinute} calls/min and ${plan.tokensPerMinute?.toLocaleString()} ${requestPolicy(config)?.inputOnly ? "input " : ""}tokens/min. ${capacityProfile(config)?.label || "Conservative app quota"}. ` : "Requests run one at a time; timing updates during the run. "}Parsing/OCR is local and free.</p><p class="fine-print">${config.billing === "free" ? "Free tier selected: $0 only within your provider’s free quota. Account eligibility and quota are not readable from your key." : config.provider === "groq" || config.provider === "gemini" ? "Paid rates shown; eligible free-tier usage may cost $0. Choose your API plan above." : "You pay your provider directly."} ${price ? `Rates checked ${this.usage.pricingDate}. <a href="${price.source}" target="_blank" rel="noopener noreferrer">Provider pricing</a>.` : "No verified rate for this model/endpoint; check its provider pricing before proceeding."} Evidence Atlas charges $0. Prices exclude taxes/credits. Tokens and time vary by output and account limits.</p></details>`;
   }
 
   private renderProgress() {
@@ -382,6 +435,18 @@ export class Workspace {
             ? "PACING REQUESTS"
             : "LIVE ANALYSIS";
     $("#run-progress", this.root).classList.toggle("is-live", this.busy);
+    const alternatives = $("#run-paid-options", this.root);
+    const longWait =
+      this.phase !== "complete" &&
+      !!plan &&
+      (plan.quotaDays > 1 || plan.durationCeilingMs >= 3600000);
+    $("#run-paid-comparison", this.root).hidden = !longWait;
+    const comparison = longWait ? this.comparison() : "";
+    $("#run-paid-comparison summary", this.root).textContent = longWait
+      ? `Paid alternatives: ${this.comparisonCache!.summary}`
+      : "Paid providers can reduce this wait";
+    if (alternatives.innerHTML !== comparison)
+      alternatives.innerHTML = comparison;
     $("#run-calls", this.root).textContent = u.calls.toLocaleString();
     $("#run-tokens", this.root).textContent = u.totalTokens.toLocaleString();
     $("#run-cost", this.root).textContent =
@@ -470,6 +535,20 @@ export class Workspace {
       input.value = String(value);
       return value;
     };
+    const auto = Math.min(
+      defaults.contextTokens,
+      requestPolicy(this.provider.config())?.contextTokens ??
+        defaults.contextTokens,
+    );
+    const contextInput = $<HTMLInputElement>("#context-budget", this.root);
+    if (
+      !this.restoring &&
+      this.automaticContext !== null &&
+      this.automaticContext !== auto &&
+      Number(contextInput.value) === this.automaticContext
+    )
+      contextInput.value = String(auto);
+    this.automaticContext = auto;
     const options = {
       maxNodes: number("max-nodes", 2, 1500, defaults.maxNodes),
       maxEdges: number("max-edges", 1, 5000, defaults.maxEdges),
@@ -508,7 +587,7 @@ export class Workspace {
     }
     $("#provider-budget", this.root).hidden = !policy;
     $("#provider-budget", this.root).textContent = policy
-      ? `Starter limits: ${policy.maxNodes * factor} concepts, ${policy.maxEdges * factor} relationships, ${policy.contextTokens.toLocaleString()} context tokens. Calls are paced; account limits may vary.`
+      ? `Request limits: ${policy.maxNodes * factor} concepts, ${policy.maxEdges * factor} relationships, ${policy.contextTokens.toLocaleString()} context tokens. Calls are paced; account limits may vary.`
       : "";
     return safe;
   }
@@ -694,12 +773,18 @@ export class Workspace {
       policy = requestPolicy(config);
     const state = requestGuard.availability(
       config,
-      policy ? policy.inputTokens + policy.outputTokens : 0,
+      policy && freeProvider(config)
+        ? policy.inputTokens + policy.outputTokens
+        : 0,
     );
     $<HTMLButtonElement>("#analyze", this.root).disabled =
-      this.busy || !this.analysisReady || !config.key || state.blocked;
+      this.busy ||
+      !this.analysisReady ||
+      !config.key ||
+      !this.provider.validCapacity() ||
+      state.blocked;
     $<HTMLButtonElement>("#discover-concepts", this.root).disabled =
-      this.busy || !this.doc || state.blocked;
+      this.busy || !this.doc || !this.provider.validCapacity() || state.blocked;
   }
   private focus() {
     return $<HTMLTextAreaElement>("#focus", this.root).value;
@@ -1074,6 +1159,7 @@ export class Workspace {
         model: config.model,
         endpoint: config.endpoint,
         billing: config.billing,
+        capacity: config.capacity,
       },
       analysis: this.snapshot(),
       discoverySignature: this.discoverySignature,
@@ -1158,6 +1244,7 @@ export class Workspace {
     this.restoring = true;
     this.draftId = draft.id;
     this.doc = draft.document;
+    this.comparisonCache = null;
     this.papers = draft.papers || draft.document?.papers || [];
     this.usage = draft.usage || draft.analysis?.usage || emptyUsage();
     this.phase =

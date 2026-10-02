@@ -351,7 +351,20 @@ for (const paper of papers) {
         });
       });
       await page.locator("#api-key").fill("CORPUS-TEST-KEY");
+      // The production guard reserves maximum output when these test doubles
+      // omit usage. Advance a virtual clock through real quota windows rather
+      // than disabling pacing or treating an intermediate graph as completion.
+      await page.clock.install();
       await page.locator("#analyze").click();
+      await expect
+        .poll(
+          async () => {
+            await page.clock.fastForward(60001);
+            return page.locator("#run-badge").textContent();
+          },
+          { timeout: 60000, intervals: [100] },
+        )
+        .toBe("ANALYSIS COMPLETE");
       await expect(page.locator("#analysis-meta")).toContainText(
         "2 relationships",
       );

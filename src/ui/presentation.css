@@ -1361,3 +1361,41 @@ html[data-theme="light"] .orbit-two {
     height: calc(100dvh - 100px);
   }
 }
+
+#workspace .paid-comparison > summary {
+  font-size: 11px;
+  color: var(--accent);
+  padding: 4px 0;
+}
+#workspace .provider-comparison {
+  overflow-x: auto;
+  margin: 8px 0;
+}
+#workspace .provider-comparison table {
+  width: 100%;
+  font-size: 11px;
+  border-collapse: collapse;
+}
+#workspace .provider-comparison th,
+#workspace .provider-comparison td {
+  padding: 6px;
+  text-align: left;
+  vertical-align: top;
+}
+#workspace .provider-comparison th {
+  color: var(--text);
+}
+#workspace .capacity-basis td {
+  color: var(--muted);
+  font-size: 10px;
+  padding-top: 0;
+  border-bottom: 1px solid var(--border);
+}
+#workspace #capacity-options {
+  border-top: 1px solid var(--border);
+  margin-top: 8px;
+}
+#workspace #capacity-options input[type="checkbox"] {
+  width: auto;
+  margin-right: 6px;
+}

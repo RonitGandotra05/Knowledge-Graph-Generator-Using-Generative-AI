@@ -1,3 +1,4 @@
+import { safeCapacity, capacityProfile } from "../providers/capacity";
 import { $, escapeHTML as esc, readableError } from "./dom";
 import {
   LLMProvider,
@@ -5,7 +6,7 @@ import {
   type ProviderConfig,
   type ProviderId,
 } from "../providers/client";
-import { requestGuard, requestPolicy } from "../providers/limits";
+import { requestGuard, requestPolicy, freeProvider } from "../providers/limits";
 import { clearLegacyKeys } from "../storage/history";
 export class ProviderForm {
   private checking = false;
@@ -29,15 +30,16 @@ export class ProviderForm {
       <div class="key-label"><label for="api-key">API key</label><span class="key-info"><button id="key-info" type="button" aria-label="API key privacy" aria-describedby="key-privacy">ⓘ</button><span id="key-privacy" class="key-tooltip" role="tooltip">Memory only. No browser storage. Refresh clears your key.</span></span></div>
       <div class="key-input"><input id="api-key" type="password" placeholder="Enter your API key" autocomplete="off" spellcheck="false"><button type="button" id="reveal-key" aria-label="Reveal API key">Show</button></div>
       <div class="key-controls"><span class="fine-print">Cleared on refresh.</span><button type="button" id="clear-key" class="text-button">Clear key</button></div>
-      <label id="billing-plan-label" hidden>API plan<select id="billing-plan"><option value="standard">Paid / not sure</option><option value="free">Using a free tier</option></select><small>Used for cost estimates only. We cannot read your billing plan.</small></label>
+      <label id="billing-plan-label" hidden>API plan<select id="billing-plan"><option value="standard">Paid / not sure</option><option value="free">Using a free tier</option></select><small>Sets cost and quota assumptions. Your key does not reveal your plan.</small></label>
       <details class="connection-options"><summary>Models & connection options</summary><p id="provider-note" class="fine-print"></p><p id="provider-links" class="fine-print" hidden><a id="provider-key-link" target="_blank" rel="noopener noreferrer"></a> · <a id="provider-limits-link" target="_blank" rel="noopener noreferrer">Usage limits</a></p>
-      <div class="provider-actions"><button type="button" id="check-key" class="button secondary small">Check key & load models</button><span class="fine-print">Optional. No document text sent.</span></div></details><p id="request-state" class="fine-print" role="status"></p>`;
+      <div id="capacity-options" hidden><p id="capacity-note" class="fine-print"></p><label><input id="custom-capacity" type="checkbox"> Use my dashboard rate limits</label><div id="capacity-fields" class="provider-grid" hidden><label>Requests / minute<input id="capacity-rpm" type="number" min="1" max="100000" step="1"></label><label>Tokens / minute<input id="capacity-tpm" type="number" min="1" max="1000000000" step="1"></label><label>Requests / day<input id="capacity-rpd" type="number" min="0" max="1000000000" step="1"><small>0 = no daily cap configured</small></label></div><p class="fine-print">From your provider dashboard for this model/project. We leave 20% headroom; shared usage can still reduce capacity. Gemini counts input tokens/minute.</p></div><div class="provider-actions"><button type="button" id="check-key" class="button secondary small">Check key & load models</button><span class="fine-print">Optional. No document text sent.</span></div></details><p id="request-state" class="fine-print" role="status"></p>`;
     $("#provider", root).addEventListener("change", () => {
       this.changeProvider();
       this.changed();
     });
     $("#model", root).addEventListener("change", () => {
       this.recommendation();
+      this.capacity();
       this.changed();
       this.availability();
     });
@@ -45,10 +47,25 @@ export class ProviderForm {
       $<HTMLInputElement>("#model", root).value =
         providers[this.config().provider].models[0];
       this.recommendation();
+      this.capacity();
       this.changed();
       this.availability();
     });
-    $("#billing-plan", root).addEventListener("change", () => this.changed());
+    $("#billing-plan", root).addEventListener("change", () => {
+      this.capacity();
+      this.changed();
+    });
+    ["custom-capacity", "capacity-rpm", "capacity-tpm", "capacity-rpd"].forEach(
+      (id) =>
+        $("#" + id, root).addEventListener("change", () => {
+          $("#capacity-fields", root).hidden = !$<HTMLInputElement>(
+            "#custom-capacity",
+            root,
+          ).checked;
+          this.changed();
+          this.availability();
+        }),
+    );
     $("#endpoint", root).addEventListener("change", () => {
       this.clearKey();
       this.changed();
@@ -118,6 +135,14 @@ export class ProviderForm {
     $<HTMLInputElement>("#endpoint", this.root).value = config.endpoint;
     $<HTMLSelectElement>("#billing-plan", this.root).value =
       config.billing || "standard";
+    const custom = safeCapacity(config.capacity);
+    $<HTMLInputElement>("#custom-capacity", this.root).checked = !!custom;
+    if (custom)
+      for (const id of ["rpm", "tpm", "rpd"] as const)
+        $<HTMLInputElement>("#capacity-" + id, this.root).value = String(
+          custom[id],
+        );
+    this.capacity();
     this.recommendation();
     this.availability();
   }
@@ -131,6 +156,22 @@ export class ProviderForm {
       key: $<HTMLInputElement>("#api-key", this.root).value.trim(),
       model: $<HTMLInputElement>("#model", this.root).value.trim(),
       endpoint: $<HTMLInputElement>("#endpoint", this.root).value.trim(),
+      capacity:
+        ["openai", "gemini"].includes(
+          $<HTMLSelectElement>("#provider", this.root).value,
+        ) && $<HTMLInputElement>("#custom-capacity", this.root).checked
+          ? safeCapacity({
+              rpm: Number(
+                $<HTMLInputElement>("#capacity-rpm", this.root).value,
+              ),
+              tpm: Number(
+                $<HTMLInputElement>("#capacity-tpm", this.root).value,
+              ),
+              rpd: Number(
+                $<HTMLInputElement>("#capacity-rpd", this.root).value,
+              ),
+            })
+          : undefined,
       billing:
         ["groq", "gemini"].includes(
           $<HTMLSelectElement>("#provider", this.root).value,
@@ -138,6 +179,32 @@ export class ProviderForm {
           ? "free"
           : "standard",
     };
+  }
+  validCapacity() {
+    return (
+      !["openai", "gemini"].includes(this.config().provider) ||
+      !$<HTMLInputElement>("#custom-capacity", this.root).checked ||
+      !!this.config().capacity
+    );
+  }
+  private capacity() {
+    const config = this.config(),
+      profile = capacityProfile({ ...config, capacity: undefined });
+    $("#capacity-options", this.root).hidden = !["openai", "gemini"].includes(
+      config.provider,
+    );
+    $("#capacity-note", this.root).textContent = profile
+      ? `${profile.label}. ${profile.rpm} requests/min · ${profile.tpm.toLocaleString()} ${profile.inputOnly ? "input " : ""}tokens/min. Limits checked 2026-10-03.`
+      : "Model quotas vary. Enter your dashboard limits for an account-specific estimate.";
+    if (!$<HTMLInputElement>("#custom-capacity", this.root).checked && profile)
+      for (const id of ["rpm", "tpm", "rpd"] as const)
+        $<HTMLInputElement>("#capacity-" + id, this.root).value = String(
+          profile[id],
+        );
+    $("#capacity-fields", this.root).hidden = !$<HTMLInputElement>(
+      "#custom-capacity",
+      this.root,
+    ).checked;
   }
   private clearKey() {
     $<HTMLInputElement>("#api-key", this.root).value = "";
@@ -162,12 +229,21 @@ export class ProviderForm {
       policy = requestPolicy(config);
     const state = requestGuard.availability(
       config,
-      policy ? policy.inputTokens + policy.outputTokens : 0,
+      policy && freeProvider(config)
+        ? policy.inputTokens + policy.outputTokens
+        : 0,
     );
     const checkState = requestGuard.availability(config);
-    $("#request-state", this.root).textContent = config.key ? state.reason : "";
+    $("#request-state", this.root).textContent = config.key
+      ? !this.validCapacity()
+        ? "Enter valid whole-number dashboard limits."
+        : state.reason
+      : "";
     $<HTMLButtonElement>("#check-key", this.root).disabled =
-      this.checking || !config.key || checkState.blocked;
+      this.checking ||
+      !config.key ||
+      !this.validCapacity() ||
+      checkState.blocked;
   }
   private changeProvider() {
     const config = this.config(),
@@ -198,6 +274,8 @@ export class ProviderForm {
     }
     $<HTMLInputElement>("#api-key", this.root).placeholder =
       `Enter your ${p.label} API key`;
+    $<HTMLInputElement>("#custom-capacity", this.root).checked = false;
+    this.capacity();
     this.clearKey();
     this.recommendation();
   }

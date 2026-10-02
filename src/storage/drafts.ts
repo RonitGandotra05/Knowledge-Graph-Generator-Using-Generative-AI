@@ -1,3 +1,4 @@
+import { safeCapacity, type RateCapacity } from "../providers/capacity";
 import type {
   Analysis,
   Concept,
@@ -28,6 +29,7 @@ export interface Draft {
     model: string;
     endpoint: string;
     billing?: "standard" | "free";
+    capacity?: RateCapacity;
   };
   papers?: PaperRecord[];
   usage?: UsageTotals;
@@ -87,6 +89,7 @@ export function safeDraft(d: Draft): Draft {
       model: d.provider.model,
       endpoint: d.provider.endpoint,
       billing: d.provider.billing,
+      capacity: safeCapacity(d.provider.capacity),
     },
     analysis: d.analysis ? safeAnalysis(d.analysis) : null,
     papers: d.papers ? safePapers(d.papers) : undefined,

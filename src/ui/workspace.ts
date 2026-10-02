@@ -1177,7 +1177,7 @@ export class Workspace {
     this.renderConcepts();
     this.updateContext();
     if (draft.analysis) await this.showAnalysis(draft.analysis);
-    this.goStep(this.canVisit(draft.step) ? draft.step : this.doc ? 1 : 0);
+    this.goStep(draft.analysis ? 3 : 0);
     this.restoring = false;
     this.renderProgress();
     this.message(

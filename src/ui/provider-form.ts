@@ -15,7 +15,7 @@ export class ProviderForm {
     private changed: () => void = () => {},
   ) {
     clearLegacyKeys();
-    root.innerHTML = `<div class="section-head"><div><span class="step-index">03</span><h2>Connect your AI</h2></div><span class="section-note">Direct to your provider</span></div>
+    root.innerHTML = `<div class="section-head"><div><span class="panel-icon" aria-hidden="true">✧</span><h2>Connect your AI</h2></div><span class="section-note">Direct to your provider</span></div>
       <div class="provider-grid"><label>Provider<select id="provider">${Object.entries(
         providers,
       )
@@ -30,8 +30,8 @@ export class ProviderForm {
       <div class="key-input"><input id="api-key" type="password" placeholder="Enter your API key" autocomplete="off" spellcheck="false"><button type="button" id="reveal-key" aria-label="Reveal API key">Show</button></div>
       <div class="key-controls"><span class="fine-print">Cleared on refresh.</span><button type="button" id="clear-key" class="text-button">Clear key</button></div>
       <label id="billing-plan-label" hidden>API plan<select id="billing-plan"><option value="standard">Paid / not sure</option><option value="free">Using a free tier</option></select><small>Used for cost estimates only. We cannot read your billing plan.</small></label>
-      <p id="provider-note" class="fine-print"></p><p id="provider-links" class="fine-print" hidden><a id="provider-key-link" target="_blank" rel="noopener noreferrer"></a> · <a id="provider-limits-link" target="_blank" rel="noopener noreferrer">Usage limits</a></p>
-      <div class="provider-actions"><button type="button" id="check-key" class="button secondary small">Check key & load models</button><span class="fine-print">Optional. No document text sent.</span></div><p id="request-state" class="fine-print" role="status"></p>`;
+      <details class="connection-options"><summary>Models & connection options</summary><p id="provider-note" class="fine-print"></p><p id="provider-links" class="fine-print" hidden><a id="provider-key-link" target="_blank" rel="noopener noreferrer"></a> · <a id="provider-limits-link" target="_blank" rel="noopener noreferrer">Usage limits</a></p>
+      <div class="provider-actions"><button type="button" id="check-key" class="button secondary small">Check key & load models</button><span class="fine-print">Optional. No document text sent.</span></div></details><p id="request-state" class="fine-print" role="status"></p>`;
     $("#provider", root).addEventListener("change", () => {
       this.changeProvider();
       this.changed();

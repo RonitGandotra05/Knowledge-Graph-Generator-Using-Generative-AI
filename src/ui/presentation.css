@@ -121,3 +121,383 @@ html[data-theme="light"] .mission-control {
     display: none;
   }
 }
+/* One workspace, with all required inputs in view. */
+html[data-view="workspace"] main {
+  padding: 20px 32px;
+  max-width: 1240px;
+  margin: auto;
+}
+#workspace {
+  margin: 0;
+  padding: 0;
+}
+#workspace .workspace-heading {
+  margin: 0 0 18px;
+  align-items: center;
+}
+#workspace .workspace-heading .eyebrow {
+  font-size: 9px;
+  letter-spacing: 1.7px;
+  margin-bottom: 6px;
+}
+#workspace .workspace-heading h1 {
+  font-size: 28px;
+  line-height: 1.15;
+  letter-spacing: -1px;
+}
+#workspace .workspace-heading p {
+  font-size: 12px;
+  margin-top: 6px;
+}
+.workspace-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+#workspace .composer-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 14px;
+}
+#workspace .panel {
+  padding: 18px 22px;
+  margin: 0;
+  border-radius: 16px;
+  min-width: 0;
+}
+#workspace .section-head {
+  margin: 0 0 14px;
+}
+#workspace .section-head h2 {
+  font-size: 15px;
+  font-weight: 600;
+}
+.panel-icon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--surface-raised);
+  color: var(--accent);
+}
+#workspace label {
+  font-size: 12px;
+  line-height: 1.5;
+}
+#workspace input,
+#workspace select,
+#workspace textarea {
+  font-size: 12px;
+  padding: 9px 11px;
+  border-radius: 8px;
+  margin-top: 5px;
+}
+#workspace textarea {
+  min-height: 48px;
+  line-height: 1.5;
+  resize: vertical;
+}
+#workspace #terms {
+  min-height: 36px;
+  height: 36px;
+}
+#workspace #focus {
+  height: 56px;
+}
+#workspace .fine-print {
+  font-size: 11px;
+  line-height: 1.5;
+  margin: 7px 0;
+}
+.optional-label {
+  font-weight: 400;
+  color: var(--muted);
+  margin-left: 5px;
+  font-size: 10px;
+}
+#workspace .upload-zone {
+  min-height: 95px;
+  padding: 12px;
+  margin-bottom: 7px;
+  gap: 4px;
+  border-radius: 10px;
+  background:
+    radial-gradient(ellipse at top, #a2e2c409, transparent 80%), var(--bg);
+}
+#workspace .upload-icon {
+  font-size: 24px;
+  line-height: 24px;
+  margin: 0;
+}
+#workspace .upload-zone small {
+  margin: 0;
+  font-size: 10px;
+}
+#workspace .upload-zone > span:not(.upload-icon) {
+  display: none;
+}
+#workspace.has-papers .upload-zone {
+  min-height: 58px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 5px 12px;
+}
+#workspace.has-papers .upload-zone small {
+  flex-basis: 100%;
+}
+#workspace #source-form > label {
+  display: block;
+  margin-top: 12px;
+}
+#workspace #manual-terms {
+  margin-top: 9px;
+}
+#workspace .input-note {
+  margin: 4px 0 7px;
+  font-size: 10px;
+}
+#workspace details > summary {
+  font-size: 11px;
+  line-height: 1.5;
+  padding-block: 5px;
+}
+#workspace .concept-review,
+#workspace #discovery-controls {
+  margin: 4px 0 0;
+  border-top: 1px solid var(--border);
+}
+#workspace .concept-chips {
+  max-height: 160px;
+  overflow: auto;
+}
+#workspace .provider-grid {
+  gap: 12px;
+}
+#workspace .key-label {
+  margin-top: 12px;
+}
+#workspace .key-input input {
+  margin: 0;
+}
+#workspace .key-input button {
+  font-size: 11px;
+}
+#workspace .key-controls {
+  margin: 4px 0 8px;
+}
+#workspace .provider-actions {
+  margin: 8px 0;
+  gap: 10px;
+}
+#workspace .provider-actions button {
+  padding: 9px 12px;
+  font-size: 11px;
+}
+#workspace .connection-options {
+  border-top: 1px solid var(--border);
+  margin-top: 10px;
+}
+#workspace .context-panel {
+  grid-column: 1 / -1;
+  background: transparent;
+  padding: 14px 18px;
+}
+#workspace .run-estimate {
+  margin: 0 0 7px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+#workspace .estimate-label {
+  font-size: 9px;
+}
+#workspace .estimate-summary {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 10px 0;
+}
+#workspace .estimate-summary strong {
+  font-size: 20px;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+#workspace .estimate-summary span {
+  font-size: 10px;
+}
+#workspace .advanced-grid {
+  margin: 10px 0;
+}
+#workspace .context-panel > details {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 20px 0 0;
+}
+#workspace .context-panel > details[open] {
+  display: block;
+  margin: 8px 0;
+}
+#workspace #provider-budget {
+  display: none;
+}
+#workspace .build-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 8px;
+}
+#workspace .build-actions .send-disclosure {
+  flex: 1;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  font-size: 10px;
+  line-height: 1.5;
+  max-width: 560px;
+}
+#workspace .build-actions #analyze {
+  width: 245px;
+  padding: 14px 20px;
+  margin: 0;
+  flex-shrink: 0;
+}
+#workspace .context-panel > .center {
+  display: none;
+}
+#workspace .paper-collection {
+  gap: 6px;
+  margin: 9px 0;
+  max-height: 108px;
+  overflow: auto;
+  padding-right: 3px;
+}
+#workspace .paper-row {
+  gap: 9px;
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+#workspace .paper-row strong {
+  font-size: 11px;
+}
+#workspace .paper-row small {
+  font-size: 9px;
+  margin-top: 2px;
+}
+#workspace .paper-icon {
+  font-size: 17px;
+}
+#workspace .paper-status {
+  font-size: 9px;
+  padding: 3px 6px;
+}
+#workspace #status {
+  padding: 9px 12px;
+  margin: 0 0 12px;
+  font-size: 12px;
+}
+#workspace .mission-control {
+  margin: 0 0 16px;
+  padding: 20px;
+  background:
+    radial-gradient(ellipse at top left, #a2e2c40d, transparent 65%),
+    var(--surface);
+}
+#workspace #graph-result {
+  margin: 0;
+  padding: 0;
+  scroll-margin-top: 18px;
+}
+#workspace .result-heading {
+  margin: 0 0 16px;
+}
+#workspace .result-heading h2 {
+  font-size: 24px;
+}
+#workspace .run-receipt {
+  padding: 14px 16px;
+  margin: 0 0 14px;
+}
+#workspace .graph-warnings,
+#workspace #graph-warnings {
+  margin: 12px 0;
+}
+@media (min-width: 901px) and (max-height: 800px) {
+  html[data-view="workspace"] main {
+    padding-block: 14px;
+  }
+  #workspace .workspace-heading {
+    margin-bottom: 12px;
+  }
+  #workspace .workspace-heading .eyebrow {
+    display: none;
+  }
+  #workspace .panel {
+    padding: 14px 18px;
+  }
+  #workspace .section-head {
+    margin-bottom: 10px;
+  }
+  #workspace .upload-zone {
+    min-height: 82px;
+  }
+  #workspace .fine-print {
+    margin: 5px 0;
+  }
+  #workspace .key-label {
+    margin-top: 9px;
+  }
+}
+@media (max-width: 900px) {
+  html[data-view="workspace"] main {
+    padding: 20px;
+  }
+  #workspace .composer-grid {
+    grid-template-columns: 1fr;
+  }
+  #workspace .workspace-heading {
+    gap: 18px;
+  }
+  #workspace .workspace-heading h1 {
+    font-size: 26px;
+  }
+  #workspace .estimate-summary {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 600px) {
+  html[data-view="workspace"] main {
+    padding: 16px;
+  }
+  #workspace .workspace-heading {
+    align-items: start;
+  }
+  #workspace .workspace-heading p {
+    max-width: 220px;
+  }
+  .workspace-actions {
+    flex-direction: column;
+    align-items: end;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  #workspace .workspace-heading h1 {
+    font-size: 23px;
+  }
+  #workspace .panel {
+    padding: 17px;
+  }
+  #workspace .build-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  #workspace .build-actions #analyze {
+    width: 100%;
+  }
+  #workspace .estimate-summary strong {
+    font-size: 18px;
+  }
+  #workspace .mission-control {
+    padding: 16px;
+  }
+}

@@ -1,0 +1,134 @@
+[
+  {
+    "id": "attention",
+    "title": "Attention Is All You Need",
+    "source": "https://arxiv.org/abs/1706.03762",
+    "pdf": "https://arxiv.org/pdf/1706.03762v7",
+    "field": "Machine learning",
+    "terms": ["Transformer", "attention", "encoder", "decoder", "BLEU"],
+    "expectedText": "Attention Is All You Need",
+    "minimumPages": 10
+  },
+  {
+    "id": "gan",
+    "title": "Generative Adversarial Nets",
+    "source": "https://arxiv.org/abs/1406.2661",
+    "pdf": "https://arxiv.org/pdf/1406.2661v1",
+    "field": "Machine learning",
+    "terms": [
+      "generator",
+      "discriminator",
+      "minimax",
+      "backpropagation",
+      "distribution"
+    ],
+    "expectedText": "Generative Adversarial",
+    "minimumPages": 8
+  },
+  {
+    "id": "scikit-learn",
+    "title": "Scikit-learn: Machine Learning in Python",
+    "source": "https://www.jmlr.org/papers/v12/pedregosa11a.html",
+    "pdf": "https://www.jmlr.org/papers/volume12/pedregosa11a/pedregosa11a.pdf",
+    "field": "Scientific software",
+    "terms": [
+      "scikit-learn",
+      "Python",
+      "classification",
+      "regression",
+      "NumPy"
+    ],
+    "expectedText": "Machine Learning in Python",
+    "minimumPages": 6
+  },
+  {
+    "id": "ligo",
+    "title": "Observation of Gravitational Waves from a Binary Black Hole Merger",
+    "source": "https://arxiv.org/abs/1602.03837",
+    "pdf": "https://arxiv.org/pdf/1602.03837v1",
+    "field": "Physics",
+    "terms": [
+      "gravitational waves",
+      "black hole",
+      "general relativity",
+      "LIGO",
+      "GW150914"
+    ],
+    "expectedText": "Observation of Gravitational Waves",
+    "minimumPages": 10
+  },
+  {
+    "id": "vae",
+    "title": "Tutorial on Variational Autoencoders",
+    "source": "https://arxiv.org/abs/1606.05908",
+    "pdf": "https://arxiv.org/pdf/1606.05908v3",
+    "field": "Statistics",
+    "terms": [
+      "variational autoencoder",
+      "latent",
+      "Gaussian",
+      "decoder",
+      "likelihood"
+    ],
+    "expectedText": "Tutorial on Variational Autoencoders",
+    "minimumPages": 20
+  },
+  {
+    "id": "human-bacteria",
+    "title": "Revised Estimates for the Number of Human and Bacteria Cells in the Body",
+    "source": "https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1002533",
+    "pdf": "https://journals.plos.org/plosbiology/article/file?id=10.1371%2Fjournal.pbio.1002533&type=printable",
+    "field": "Biology",
+    "terms": [
+      "bacteria",
+      "human cells",
+      "colon",
+      "hematopoietic",
+      "red blood cells"
+    ],
+    "expectedText": "Revised Estimates",
+    "minimumPages": 10
+  },
+  {
+    "id": "prokaryote-diversity",
+    "title": "A census-based estimate of Earth's bacterial and archaeal diversity",
+    "source": "https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.3000106",
+    "pdf": "https://journals.plos.org/plosbiology/article/file?id=10.1371%2Fjournal.pbio.3000106&type=printable",
+    "field": "Microbial ecology",
+    "terms": ["Bacteria", "Archaea", "16S", "diversity", "OTUs"],
+    "expectedText": "census-based estimate",
+    "minimumPages": 15
+  },
+  {
+    "id": "species-richness",
+    "title": "Model uncertainties do not affect observed patterns of species richness in the Amazon",
+    "source": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0183785",
+    "pdf": "https://journals.plos.org/plosone/article/file?id=10.1371%2Fjournal.pone.0183785&type=printable",
+    "field": "Ecology",
+    "terms": [
+      "species richness",
+      "Amazon",
+      "MaxEnt",
+      "climate",
+      "distribution"
+    ],
+    "expectedText": "Model uncertainties",
+    "minimumPages": 10
+  },
+  {
+    "id": "gravitational-review-long",
+    "title": "Physics, Astrophysics and Cosmology with Gravitational Waves",
+    "source": "https://arxiv.org/abs/0903.0338",
+    "pdf": "https://arxiv.org/pdf/0903.0338v1",
+    "field": "Physics / long review",
+    "terms": [
+      "gravitational waves",
+      "LIGO",
+      "neutron stars",
+      "interferometers",
+      "general relativity"
+    ],
+    "expectedText": "Physics, Astrophysics and Cosmology",
+    "minimumPages": 80
+  }
+]

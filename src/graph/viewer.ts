@@ -477,6 +477,9 @@ export class GraphViewer {
     this.fitReadable();
   }
   private fitReadable() {
+    // Navigation can hide a running graph. Keep its layout intact until the
+    // actual canvas becomes visible and ResizeObserver supplies its dimensions.
+    if (this.cy.width() < 1 || this.cy.height() < 1) return;
     const elements = this.cy.elements(":visible");
     this.cy.fit(elements, 35);
     // A small graph saved on desktop should still show both endpoints on a

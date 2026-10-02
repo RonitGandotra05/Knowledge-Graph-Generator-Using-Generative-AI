@@ -22,6 +22,20 @@ $("#app").innerHTML = appShell;
 setupResearchScene();
 const workspace = new Workspace($("#workspace"), () => void renderHistory());
 let demo: GraphViewer | null = null;
+document.addEventListener("atlas-run-state", (event) => {
+  const { phase, busy, percent } = (
+    event as CustomEvent<{ phase: string; busy: boolean; percent: number }>
+  ).detail;
+  const button = $("#home-start");
+  button.textContent = busy
+    ? `View live research · ${percent}% ↗`
+    : phase === "complete"
+      ? "View your graph ↗"
+      : phase === "paused"
+        ? "Continue your research ↗"
+        : "Start mapping ↗";
+  button.classList.toggle("has-active-run", busy);
+});
 type View = "home" | "workspace" | "sample";
 let sampleReturn: View = "home";
 function showView(view: View, updateHash = true) {
@@ -167,7 +181,7 @@ function renderLibraryPage() {
         .slice(page * pageSize, (page + 1) * pageSize)
         .map(
           (item) =>
-            `<article class="history-card"><div><h3>${esc(item.name)}</h3><span class="history-status">${item.draft?.status === "ongoing" || item.analysis?.state === "paused" || item.analysis?.state === "building" || !item.analysis ? "Ongoing" : "Complete"}</span><p>${item.analysis ? item.analysis.graph.nodes.length + " concepts · " + item.analysis.graph.edges.length + " relationships" : "Step " + ((item.draft?.step || 0) + 1) + " · Your progress is saved"}</p><small>${new Date(item.updated).toLocaleString()}</small></div><div class="history-actions"><button class="button secondary small" data-open="${esc(item.id)}">${item.draft?.status === "ongoing" || !item.analysis ? "Resume" : "Open"} →</button>${item.analysis ? `<button class="text-button" data-export="${esc(item.id)}">Export</button>` : ""}<button class="text-button" data-delete="${esc(item.id)}" aria-label="Delete ${esc(item.name)}">Delete</button></div></article>`,
+            `<article class="history-card"><div><h3>${esc(item.name)}</h3><span class="history-status">${item.draft?.status === "ongoing" || item.analysis?.state === "paused" || item.analysis?.state === "building" || !item.analysis ? "Ongoing" : "Complete"}</span><p>${item.analysis ? item.analysis.graph.nodes.length + " concepts · " + item.analysis.graph.edges.length + " relationships" : "Research workspace · Your progress is saved"}</p><small>${new Date(item.updated).toLocaleString()}</small></div><div class="history-actions"><button class="button secondary small" data-open="${esc(item.id)}">${item.draft?.status === "ongoing" || !item.analysis ? "Resume" : "Open"} →</button>${item.analysis ? `<button class="text-button" data-export="${esc(item.id)}">Export</button>` : ""}<button class="text-button" data-delete="${esc(item.id)}" aria-label="Delete ${esc(item.name)}">Delete</button></div></article>`,
         )
         .join("")
     : '<div class="empty-history"><p>Your next discovery starts here.</p><small>Unfinished work and completed graphs appear automatically.</small></div>';
@@ -205,7 +219,13 @@ $("#history-items").addEventListener("click", async (e) => {
   const b = (e.target as HTMLElement).closest<HTMLElement>(
     "[data-open],[data-delete],[data-export]",
   );
-  if (!b || workspace.isBusy) return;
+  if (!b) return;
+  if (b.dataset.open === workspace.currentId) {
+    showView("workspace");
+    $<HTMLDialogElement>("#history-dialog").close();
+    return;
+  }
+  if (workspace.isBusy) return;
   const id = b.dataset.open || b.dataset.delete || b.dataset.export,
     item = library.find((i) => i.id === id);
   if (!item) return;

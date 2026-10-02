@@ -1116,3 +1116,142 @@ html[data-theme="light"] .orbit-two {
     margin: 6px 0 0;
   }
 }
+#home-start.has-active-run {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+#home-start.has-active-run::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-right: 8px;
+  box-shadow: 0 0 10px #a2e2c470;
+}
+/* Required fields keep full-width controls without depending on old columns. */
+#workspace .composer-grid label {
+  display: block;
+}
+#workspace .composer-grid input,
+#workspace .composer-grid select,
+#workspace .composer-grid textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+}
+#workspace .provider-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+}
+#workspace label.upload-zone {
+  display: flex;
+  flex-direction: column;
+}
+#workspace.has-papers label.upload-zone {
+  flex-direction: row;
+}
+#workspace .key-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+#workspace .key-input {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0;
+}
+#workspace .key-input input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+}
+#workspace .key-input button {
+  flex-shrink: 0;
+  padding: 0 13px;
+  border: 0;
+  background: transparent;
+}
+#workspace .composer-grid input[type="checkbox"] {
+  width: auto;
+}
+#workspace label.check-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+#workspace .composer-grid label > small {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  margin-top: 3px;
+}
+@media (min-width: 901px) and (max-height: 800px) {
+  #workspace #focus {
+    height: 46px;
+    min-height: 46px;
+  }
+  #workspace #source-form > label {
+    margin-top: 7px;
+  }
+  #workspace .input-note {
+    margin-bottom: 3px;
+  }
+  #workspace .composer-grid {
+    gap: 12px;
+  }
+}
+@media (min-width: 901px) and (max-height: 800px) {
+  .scene-float {
+    transform: translateY(-16px);
+  }
+}
+@media (min-width: 1150px) {
+  #workspace .composer-grid {
+    grid-template-columns: minmax(0, 1.24fr) minmax(0, 1fr) minmax(0, 0.92fr);
+    align-items: stretch;
+  }
+  #workspace .context-panel {
+    grid-column: 3;
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+  }
+  #workspace .context-panel > .section-head {
+    margin-bottom: 14px;
+  }
+  #workspace .estimate-summary {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 9px;
+  }
+  #workspace .estimate-summary strong {
+    font-size: 17px;
+  }
+  #workspace .estimate-label {
+    font-size: 8px;
+    letter-spacing: 0.6px;
+  }
+  #workspace .estimate-label small {
+    display: none;
+  }
+  #workspace .context-panel > details {
+    margin: 4px 0;
+  }
+  #workspace .build-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 16px;
+  }
+  #workspace .build-actions #analyze {
+    width: 100%;
+  }
+  #workspace .send-disclosure {
+    font-size: 10px;
+  }
+}

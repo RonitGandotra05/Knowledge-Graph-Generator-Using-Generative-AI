@@ -165,6 +165,12 @@ export const workspaceTemplate = /* HTML */ `<div class="workspace-heading">
       </section>
       <section class="panel" id="provider-form"></section>
       <section class="panel context-panel">
+        <div class="section-head">
+          <div>
+            <span class="panel-icon" aria-hidden="true">⌁</span>
+            <h2>Your graph</h2>
+          </div>
+        </div>
         <div id="run-estimate" class="run-estimate" aria-live="polite"></div>
         <p id="provider-budget" class="fine-print" hidden></p>
         <details>

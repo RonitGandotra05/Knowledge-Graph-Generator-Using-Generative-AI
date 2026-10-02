@@ -337,6 +337,21 @@ export class Workspace {
 
   private renderProgress() {
     const visible = this.phase !== "idle";
+    this.root.dataset.runPhase = this.phase;
+    document.dispatchEvent(
+      new CustomEvent("atlas-run-state", {
+        detail: {
+          phase: this.phase,
+          busy: this.busy && !!this.controller,
+          percent:
+            this.phase === "complete"
+              ? 100
+              : Number(
+                  $("#run-percent", this.root).textContent?.replace("%", ""),
+                ) || 0,
+        },
+      }),
+    );
     $("#run-progress", this.root).hidden = !visible;
     if (!visible) return;
     $("#resume-run", this.root).hidden = this.phase !== "paused" || this.busy;

@@ -92,10 +92,7 @@ test("drafts survive New graph and refresh, resume without keys, and history is 
   await page.locator("#provider").selectOption("groq");
   await page.locator("#api-key").fill("DO-NOT-PERSIST-KEY");
   await page.locator("#new-analysis").click();
-  await expect(page.locator('[data-step="0"]')).toHaveAttribute(
-    "aria-current",
-    "step",
-  );
+  await expect(page.locator("#focus")).toBeVisible();
   await expect(page.locator("#document-summary")).toBeHidden();
   await page.reload();
   await openHistory(page);
@@ -104,11 +101,11 @@ test("drafts survive New graph and refresh, resume without keys, and history is 
   await page.locator("[data-open]").click();
   await expect(page.locator("#api-key")).toHaveValue("");
   await expect(page.locator("#provider")).toHaveValue("groq");
-  await page.locator('[data-step="1"]').click();
+  await goBuild(page);
   await expect(page.locator("#focus")).toHaveValue(
     "Explain how attention connects these methods",
   );
-  await page.locator('[data-step="0"]').click();
+  await goBuild(page);
   await expect(page.locator("#document-summary")).toContainText("2 pages");
   await page.locator("#text-preview summary").click();
   await expect(page.locator("#extracted-text")).toContainText("decoder");

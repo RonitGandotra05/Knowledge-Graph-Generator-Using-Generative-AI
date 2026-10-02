@@ -4,13 +4,15 @@ export async function goFocus(
   keywords = "Transformer, attention",
   focus = "Explore the connections between these ideas",
 ) {
-  await page.locator('[data-step="1"]').click();
+  await goBuild(page);
   await page.locator("#focus").fill(focus);
   await page.locator("#terms").fill(keywords);
   await page.locator("#add-terms").click();
 }
 export async function goBuild(page: Page) {
-  await page.locator('[data-step="2"]').click();
+  if (await page.locator("#edit-setup").isVisible())
+    await page.locator("#edit-setup").click();
+  await expect(page.locator("#api-key")).toBeVisible();
 }
 export async function simplePaper(page: Page) {
   await page.locator("#document-file").setInputFiles({

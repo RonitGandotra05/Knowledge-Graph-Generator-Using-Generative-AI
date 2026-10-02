@@ -1,7 +1,8 @@
+import { goBuild } from "./helpers";
 import { test, expect } from "@playwright/test";
 import { simplePaper } from "./helpers";
 
-test("homepage leads to the guided workspace and preserves work across home and sample", async ({
+test("homepage leads to the unified workspace and preserves work across home and sample", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -26,9 +27,11 @@ test("homepage leads to the guided workspace and preserves work across home and 
   await page.locator('#home .hero-actions a[href="#workspace"]').click();
   await expect(page.locator("#home")).toBeHidden();
   await expect(page.locator("#workspace")).toBeVisible();
-  await expect(page.locator(".workflow-pages")).toBeVisible();
+  await expect(page.locator(".workflow-pages")).toHaveCount(0);
+  await expect(page.locator("#focus")).toBeVisible();
+  await expect(page.locator("#api-key")).toBeVisible();
   await simplePaper(page);
-  await page.locator('[data-step="1"]').click();
+  await goBuild(page);
   await page.locator("#focus").fill("Study attention in the Transformer");
   await page.locator(".brand").click();
   await expect(page.locator("#home")).toBeVisible();
@@ -43,10 +46,7 @@ test("homepage leads to the guided workspace and preserves work across home and 
   await expect(page.locator("#focus")).toHaveValue(
     "Study attention in the Transformer",
   );
-  await expect(page.locator('[data-step="1"]')).toHaveAttribute(
-    "aria-current",
-    "step",
-  );
+  await expect(page.locator("#focus")).toBeVisible();
   await page.locator(".brand").click();
   await page.goBack();
   await expect(page.locator("#workspace")).toBeVisible();

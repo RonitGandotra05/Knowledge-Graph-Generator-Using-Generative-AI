@@ -126,6 +126,10 @@ for (const provider of ["groq", "cerebras"] as const) {
     await expect(page.locator("#key-privacy")).toHaveText(
       "Memory only. No browser storage. Refresh clears your key.",
     );
+    if (
+      (await page.locator(".connection-options").getAttribute("open")) === null
+    )
+      await page.locator(".connection-options summary").click();
     await page.locator("#check-key").click();
     await expect(page.locator("#status")).toContainText("Key accepted");
     await page.clock.fastForward(16000);
@@ -201,6 +205,10 @@ for (const provider of ["groq", "cerebras"] as const) {
       await page.locator("#model").blur();
     }
     await page.locator("#api-key").fill("REJECTED-TEST-KEY");
+    if (
+      (await page.locator(".connection-options").getAttribute("open")) === null
+    )
+      await page.locator(".connection-options summary").click();
     await page.locator("#check-key").click();
     await expect(page.locator("#status")).toContainText("denied");
     await page.clock.fastForward(120000);

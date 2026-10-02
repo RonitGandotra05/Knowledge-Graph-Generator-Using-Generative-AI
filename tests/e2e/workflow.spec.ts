@@ -119,6 +119,8 @@ test("complete workflow, evidence, exports, history, keys, layouts, and themes",
   await page.locator("#reveal-key").click();
   await expect(page.locator("#api-key")).toHaveAttribute("type", "text");
   await page.locator("#reveal-key").click();
+  if ((await page.locator(".connection-options").getAttribute("open")) === null)
+    await page.locator(".connection-options summary").click();
   await page.locator("#check-key").click();
   await expect(page.locator("#status")).toContainText("Key accepted");
   await page.locator(".send-preview > summary").click();
@@ -227,7 +229,7 @@ test("AI discovery, hybrid review, malformed responses, and provider failures", 
   await upload(page);
   await concepts(page);
   await page.locator("#api-key").fill("TEST-SECRET");
-  await page.locator('[data-step="1"]').click();
+  await goBuild(page);
   await page.locator("#discovery-controls summary").click();
   await page.locator("#discover-concepts").click();
   await page.locator(".concept-review summary").click();
@@ -326,7 +328,7 @@ test("PDF text extraction and DOCX parsing", async ({ page }) => {
       ],
     }),
   );
-  await page.locator('[data-step="0"]').click();
+  await goBuild(page);
   await page.locator("#document-file").setInputFiles({
     name: "study.docx",
     mimeType:
@@ -513,7 +515,7 @@ test("uploaded research paper: OCR, matching, provenance, and context reduction"
     "All parsed sections",
   );
   await expect(page.locator("#context-estimate")).not.toContainText("—");
-  await page.locator('[data-step="0"]').click();
+  await goBuild(page);
   await page.locator("#text-preview").click();
   await expect(page.locator("#extracted-text")).toContainText("Autism");
   const download = page.waitForEvent("download");

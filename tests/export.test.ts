@@ -1,7 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { importAnalysis, jsonExport } from "../src/graph/export";
+import { importAnalysis, jsonExport, htmlExport } from "../src/graph/export";
 import { demoAnalysis } from "../src/ui/demo";
 describe("portable analyses", () => {
+  it("retains the third-party copyright and permission notice in standalone HTML", async () => {
+    const html = await htmlExport(demoAnalysis());
+    expect(html).toMatch(/Copyright \(c\) [^\n]+The Cytoscape Consortium/);
+    expect(html).toContain("Permission is hereby granted, free of charge");
+    expect(html).toContain("above copyright notice and this permission notice");
+  });
   it("allows only analysis fields and strips unrelated secrets", () => {
     const a = demoAnalysis();
     const contaminated = {

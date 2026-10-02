@@ -1,5 +1,5 @@
 import { build } from "esbuild";
-import { mkdir, copyFile } from "node:fs/promises";
+import { mkdir, copyFile, readFile } from "node:fs/promises";
 await mkdir("src/generated", { recursive: true });
 await build({
   entryPoints: ["src/graph/viewer.ts"],
@@ -10,6 +10,12 @@ await build({
   target: "es2022",
   outfile: "src/generated/viewer.js",
   legalComments: "inline",
+  banner: {
+    js:
+      "/*! Cytoscape.js\n" +
+      (await readFile("node_modules/cytoscape/LICENSE", "utf8")) +
+      "\n*/",
+  },
 });
 // Host OCR worker and WASM engine locally; only English language data is downloaded on demand.
 await mkdir("public/ocr", { recursive: true });
@@ -29,3 +35,7 @@ for (const name of [
     "node_modules/tesseract.js-core/" + name,
     "public/ocr/" + name,
   );
+
+// Ship the application terms and installed runtime dependency notices with static builds.
+const { writeDependencyNotices } = await import("./dependency-notices.mjs");
+await writeDependencyNotices();

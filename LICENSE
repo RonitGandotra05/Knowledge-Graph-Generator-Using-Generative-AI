@@ -1,0 +1,36 @@
+Evidence Atlas — Permission Required
+Copyright (c) 2026 Ronit Gandotra. All rights reserved.
+
+This notice applies to the original Evidence Atlas application code and
+accompanying original documentation, except where a file carries different
+terms or rights belong to another party.
+
+Prior written permission from the copyright holder is required to reuse,
+modify, incorporate, distribute, publish, sublicense or sell this original
+source code, or derivative applications made from it. Public availability of
+the source does not grant those permissions. This is not an MIT license.
+
+Ordinary operation of a publicly hosted Evidence Atlas application is
+permitted. You may use and share the knowledge graphs and image/JSON/HTML
+exports you generate, including the embedded viewer necessary to display an
+application-generated HTML export. This limited export permission does not
+authorize extracting that viewer to reuse as a separate software product.
+Rights in uploaded papers, quotations and other third-party content remain
+with their respective owners.
+
+Third-party libraries, dependencies and legacy materials retain their own
+licenses and rights. This notice does not replace those terms or assert
+ownership of third-party works. Applicable legal rights and rights granted
+by hosting-platform terms, including public GitHub viewing and forking
+rights, are unaffected.
+
+Permission requests: contact the repository maintainer at
+https://github.com/RonitGandotra05/Knowledge-Graph-Generator-Using-Generative-AI
+Include your intended use, distribution, modifications and attribution.
+Permission is granted only when explicitly confirmed in writing; silence
+or an unanswered request is not permission.
+
+THE ORIGINAL SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTIES OR GUARANTEES.
+To the extent permitted by applicable law, the copyright holder is not
+liable for claims or damages arising from its use. Nothing in this notice
+excludes rights or liabilities that cannot lawfully be excluded.

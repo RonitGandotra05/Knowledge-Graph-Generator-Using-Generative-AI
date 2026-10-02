@@ -22,7 +22,7 @@ Known models use a dated published-price snapshot, including applicable cache pr
 
 Pricing references checked on 2026-10-03: [OpenAI](https://developers.openai.com/api/docs/pricing), [Groq models](https://console.groq.com/docs/models), [Claude](https://platform.claude.com/docs/en/about-claude/pricing), [Gemini](https://ai.google.dev/gemini-api/docs/pricing).
 
-Duration combines serial request latency, minimum spacing, requests/minute and estimated tokens/minute. It starts with a provider-specific latency assumption and refines from observed request durations. Parsing/OCR has already finished when the Build estimate appears. Existing quota use and readable provider reset headers can extend waits. This is a range, not a promised completion time.
+Duration combines serial request latency, minimum spacing, requests/minute and estimated tokens/minute. It starts with a provider-specific latency assumption and refines from observed request durations. Parsing/OCR has already finished when the Build estimate appears. Existing quota use and readable provider reset headers can extend waits. This is a range, not a promised completion time. Long estimates show calculated paid-provider alternatives. OpenAI uses model-specific published Tier 1 limits with 20% headroom; Gemini uses explicitly labeled planning assumptions until dashboard quotas are entered. Higher account limits can be configured in Models & connection options. See [provider timing and a reproducible comparison](PROVIDER-TIMING.md).
 
 ## Groq pacing and large collections
 

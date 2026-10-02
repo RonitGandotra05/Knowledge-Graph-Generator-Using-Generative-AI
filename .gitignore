@@ -11,3 +11,12 @@ public/ocr/
 output/evaluation/
 
 public/licenses/
+
+# Keep the current public gallery; other test-generated screenshots remain local.
+docs/screenshots/*
+!docs/screenshots/home-dark.png
+!docs/screenshots/home-light.png
+!docs/screenshots/workspace-dark.png
+!docs/screenshots/workspace-light.png
+!docs/screenshots/graph-dark.png
+!docs/screenshots/graph-light.png

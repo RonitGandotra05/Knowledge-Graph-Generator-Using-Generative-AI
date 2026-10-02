@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive visualization of male infertility biomarkers and their relationships based on research papers">
+    <meta name="keywords" content="azoospermia, oligospermia, hypospermia, biomarkers, knowledge graph, medical research, visualization">
+    <meta name="author" content="Ronit Gandotra">
+    
+    <title>Male Infertility Knowledge Graphs</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/RonitGandotra05/Knowledge-Graph-Generator-Using-Generative-AI/main/favicon.png">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style type="text/css">
+        :root {
+            --primary-color: #00ff9d;
+            --primary-dark: #00cc7d;
+            --text-dark: #e0e0e0;
+            --text-light: #a0a0a0;
+            --bg-gradient: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            --transition: all 0.3s ease;
+            --card-bg: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            --card-highlight: rgba(255, 255, 255, 0.1);
+            --metallic-edge: rgba(255, 255, 255, 0.05);
+            --container-bg: rgba(25, 25, 25, 0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(0, 255, 157, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 157, 0.05) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 3rem;
+            background: var(--container-bg);
+            border-radius: 30px;
+            box-shadow: var(--card-shadow);
+            max-width: 1200px;
+            width: 90%;
+            margin: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        h1 {
+            color: var(--text-dark);
+            font-size: 3em;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0, 255, 157, 0.2);
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--text-dark), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+        
+        .description {
+            color: var(--text-light);
+            margin-bottom: 3rem;
+            font-size: 1.2em;
+            line-height: 1.8;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .graph-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 3rem;
+            padding: 0 20px;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3),
+                        inset 0 0 0 1px var(--metallic-edge);
+            transition: var(--transition);
+            text-decoration: none;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(
+                90deg, 
+                transparent, 
+                var(--card-highlight),
+                transparent
+            );
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4),
+                        inset 0 0 0 1px var(--metallic-edge);
+        }
+        
+        .card:hover::before {
+            opacity: 1;
+            left: 100%;
+            transition: 0.8s ease-in-out;
+        }
+        
+        .card h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8em;
+            font-weight: 600;
+            position: relative;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .card p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1em;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .button {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(0, 255, 157, 0.1);
+            color: var(--primary-color);
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 500;
+            gap: 8px;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            backdrop-filter: blur(5px);
+        }
+        
+        .button:hover {
+            background: rgba(0, 255, 157, 0.15);
+            transform: translateY(-2px);
+            border-color: rgba(0, 255, 157, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 255, 157, 0.1);
+        }
+        
+        .button i {
+            font-size: 1.1em;
+        }
+        
+        footer {
+            margin-top: 4rem;
+            color: var(--text-light);
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        footer a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem;
+            }
+            
+            h1 {
+                font-size: 2.5em;
+            }
+            
+            .description {
+                font-size: 1.1em;
+            }
+            
+            .graph-cards {
+                gap: 20px;
+            }
+            
+            .card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Male Infertility Knowledge Graphs</h1>
+        <p class="description">
+            Explore comprehensive, interactive visualizations of biomarkers and their relationships in male infertility conditions. 
+            Based on extensive research paper analysis and advanced data visualization techniques, each graph provides detailed insights 
+            into different aspects of male infertility.
+        </p>
+        
+        <div class="graph-cards">
+            <a href="azoospermia/html/azoospermia-graph.html" class="card">
+                <h2>Azoospermia</h2>
+                <p>Explore the biomarkers and relationships associated with Azoospermia through an interactive knowledge graph visualization.</p>
+                <span class="button">View Graph <i class="fas fa-arrow-right"></i></span>
+            </a>
+            
+            <a href="oligospermia/html/oligospermia-graph.html" class="card">
+                <h2>Oligospermia</h2>
+                <p>Discover the complex network of biomarkers and pathways involved in Oligospermia through this interactive visualization.</p>
+                <span class="button">View Graph <i class="fas fa-arrow-right"></i></span>
+            </a>
+            
+            <a href="asthenozoospermia/html/asthenozoospermia-graph.html" class="card">
+                <h2>Asthenozoospermia</h2>
+                <p>Visualize the interconnected biomarkers and mechanisms related to Asthenozoospermia in this interactive knowledge graph.</p>
+                <span class="button">View Graph <i class="fas fa-arrow-right"></i></span>
+            </a>
+            
+            <a href="teratospermia/html/teratospermia-graph.html" class="card">
+                <h2>Teratospermia</h2>
+                <p>Explore the biomarkers and relationships associated with Teratospermia through an interactive knowledge graph visualization.</p>
+                <span class="button">View Graph <i class="fas fa-arrow-right"></i></span>
+            </a>
+            
+            <a href="hypospermia/html/hypospermia-graph.html" class="card">
+                <h2>Hypospermia</h2>
+                <p>Discover the network of biomarkers and pathways involved in Hypospermia through this interactive visualization.</p>
+                <span class="button">View Graph <i class="fas fa-arrow-right"></i></span>
+            </a>
+        </div>
+        
+        <footer>
+            <p>Created by <a href="https://github.com/RonitGandotra05" target="_blank">Ronit Gandotra</a> | 
+            <a href="https://github.com/RonitGandotra05/Knowledge-Graph-Generator-Using-Generative-AI" target="_blank">
+                <i class="fab fa-github"></i> View on GitHub
+            </a></p>
+        </footer>
+    </div>
+</body>
+</html> 

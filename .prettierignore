@@ -1,0 +1,5 @@
+src/generated/
+public/ocr/
+node_modules/
+dist/
+.artifacts/

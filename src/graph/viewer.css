@@ -1,0 +1,427 @@
+.graph-viewer {
+  --g-bg: #0e1721;
+  --g-card: #121d28;
+  --g-border: #263543;
+  --g-fg: #dce7ef;
+  --g-muted: #92a5b5;
+  color: var(--g-fg);
+  background: var(--g-bg);
+  border: 1px solid var(--g-border);
+  border-radius: 14px;
+  overflow: hidden;
+  font:
+    14px system-ui,
+    sans-serif;
+}
+.graph-viewer[data-theme="light"] {
+  --g-bg: #f7fafb;
+  --g-card: #fff;
+  --g-border: #d5e0e6;
+  --g-fg: #263544;
+  --g-muted: #617586;
+}
+.graph-viewer button,
+.graph-viewer input,
+.graph-viewer select {
+  font: inherit;
+  color: var(--g-fg);
+  background: var(--g-card);
+  border: 1px solid var(--g-border);
+  border-radius: 7px;
+  padding: 8px 11px;
+}
+.graph-viewer button,
+.graph-viewer summary {
+  cursor: pointer;
+}
+.graph-viewer button:hover {
+  border-color: #78dcbc;
+}
+.graph-tools {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 14px;
+  border-bottom: 1px solid var(--g-border);
+  flex-wrap: wrap;
+}
+.graph-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 180px;
+}
+.graph-search span {
+  font-size: 28px;
+  color: var(--g-muted);
+}
+.graph-search input {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  outline-offset: 2px;
+}
+.graph-export {
+  position: relative;
+}
+.graph-export summary {
+  border: 1px solid var(--g-border);
+  border-radius: 7px;
+  padding: 8px 11px;
+  list-style: none;
+}
+.graph-export > div {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  padding: 6px;
+  background: var(--g-card);
+  border: 1px solid var(--g-border);
+  z-index: 5;
+  display: flex;
+  gap: 5px;
+}
+.graph-filter {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--g-border);
+  flex-wrap: wrap;
+}
+.graph-filter > span {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: var(--g-muted);
+}
+.type-toggle {
+  font-size: 11px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  cursor: pointer;
+}
+.type-toggle input {
+  accent-color: #78dcbc;
+  width: 12px;
+  height: 12px;
+}
+.type-toggle i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.confidence {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: var(--g-muted);
+}
+.confidence input {
+  width: 90px;
+  accent-color: #78dcbc;
+  padding: 0;
+}
+.graph-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+}
+.graph-stage {
+  height: 550px;
+  position: relative;
+  background-image: radial-gradient(var(--g-border) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.graph-canvas {
+  position: absolute;
+  inset: 0;
+}
+.graph-hint {
+  position: absolute;
+  bottom: 17px;
+  left: 18px;
+  font-size: 10px;
+  color: var(--g-muted);
+  pointer-events: none;
+}
+.graph-count {
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  font-size: 10px;
+  color: var(--g-muted);
+  pointer-events: none;
+}
+.evidence-panel {
+  border-left: 1px solid var(--g-border);
+  padding: 23px 20px;
+  background: var(--g-card);
+  overflow-y: auto;
+  max-height: 550px;
+}
+.inspector-eyebrow {
+  font-size: 9px;
+  letter-spacing: 1.6px;
+  color: var(--g-muted);
+  margin-bottom: 20px;
+}
+.inspector-mark {
+  font-size: 65px;
+  color: #78dcbc;
+  margin: 40px 0 5px;
+  opacity: 0.7;
+}
+.evidence-content h3 {
+  font-size: 19px;
+  line-height: 1.4;
+  font-weight: 550;
+  margin: 12px 0;
+}
+.evidence-content p {
+  font-size: 12px;
+  line-height: 1.75;
+  color: var(--g-muted);
+}
+.evidence-note {
+  font-size: 10px;
+  line-height: 1.7;
+  color: var(--g-muted);
+  border-top: 1px solid var(--g-border);
+  padding-top: 18px;
+  margin-top: 28px;
+}
+.evidence-badge {
+  display: inline-block;
+  color: #78dcbc;
+  background: #78dcbc13;
+  border: 1px solid #78dcbc35;
+  border-radius: 5px;
+  padding: 5px 8px;
+  font-size: 10px;
+}
+.graph-viewer[data-theme="light"] .evidence-badge {
+  color: #277963;
+}
+.predicate {
+  font-size: 12px;
+  color: #78dcbc;
+}
+.evidence-location {
+  font-size: 10px;
+  color: var(--g-muted);
+  margin: 22px 0 10px;
+}
+.evidence-content blockquote {
+  margin: 0 0 22px;
+  padding: 13px 15px;
+  border-left: 2px solid #78dcbc;
+  background: #78dcbc09;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.confidence-score {
+  font-size: 25px;
+  color: #78dcbc;
+}
+.confidence-score span {
+  font-size: 10px;
+  color: var(--g-muted);
+  margin-left: 8px;
+}
+.relationship-card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin: 9px 0;
+  line-height: 1.5;
+  font-size: 12px !important;
+}
+.relationship-card span {
+  display: block;
+  color: #78dcbc;
+  font-size: 11px;
+}
+.relationship-card small {
+  display: block;
+  color: var(--g-muted);
+  margin-top: 7px;
+}
+.accessible-graph {
+  border-top: 1px solid var(--g-border);
+  padding: 14px 18px;
+  font-size: 11px;
+}
+.accessible-graph summary span {
+  float: right;
+  color: var(--g-muted);
+  font-size: 10px;
+}
+.graph-list {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+  max-height: 240px;
+  overflow: auto;
+}
+.graph-list button {
+  font-size: 11px;
+  display: block;
+  text-align: left;
+  margin: 5px 0;
+  width: 100%;
+}
+.graph-viewer:fullscreen {
+  border-radius: 0;
+  overflow: auto;
+}
+.graph-viewer:fullscreen .graph-stage {
+  height: calc(100vh - 160px);
+}
+.graph-viewer:fullscreen .evidence-panel {
+  max-height: calc(100vh - 160px);
+}
+@media (max-width: 760px) {
+  .graph-body {
+    grid-template-columns: 1fr;
+  }
+  .graph-stage {
+    height: 430px;
+  }
+  .evidence-panel {
+    border-left: 0;
+    border-top: 1px solid var(--g-border);
+    max-height: 350px;
+  }
+  .inspector-mark {
+    margin: 0;
+    font-size: 35px;
+  }
+  .graph-filter {
+    gap: 10px;
+  }
+  .confidence {
+    margin-left: 0;
+  }
+  .graph-tools {
+    gap: 5px;
+  }
+  .graph-tools button,
+  .graph-tools select {
+    font-size: 11px;
+    padding: 8px;
+  }
+  .graph-hint {
+    font-size: 9px;
+  }
+  .graph-list {
+    grid-template-columns: 1fr;
+  }
+  .graph-tools select {
+    max-width: 120px;
+  }
+}
+.graph-editor label {
+  display: block;
+  font-size: 12px;
+  margin: 16px 0;
+}
+.graph-editor input,
+.graph-editor textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 6px;
+  font: inherit;
+  color: var(--g-fg);
+  background: var(--g-bg);
+  border: 1px solid var(--g-border);
+  border-radius: 7px;
+  padding: 10px;
+}
+.graph-editor input[type="color"] {
+  height: 42px;
+}
+.edit-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+.edit-actions button {
+  font-size: 12px;
+}
+.edit-error,
+.user-edit {
+  color: #d59546 !important;
+}
+.source-passage {
+  border: 1px solid var(--g-border);
+  border-radius: 8px;
+  margin-top: 12px;
+  padding: 12px;
+  font-size: 12px;
+}
+.source-passage summary {
+  line-height: 1.5;
+}
+.source-text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.source-passage mark {
+  background: #f1c36a44;
+  color: var(--g-fg);
+  padding: 2px 0;
+}
+.source-passage small {
+  font-size: 10px;
+  line-height: 1.6;
+  color: var(--g-muted);
+}
+.graph-body {
+  grid-template-columns: minmax(0, 1fr);
+}
+.graph-stage {
+  height: var(--graph-height, 760px);
+}
+.evidence-panel {
+  display: none;
+  max-height: none;
+  border-left: 0;
+  border-top: 1px solid var(--g-border);
+}
+.has-selection .evidence-panel {
+  display: block;
+}
+.evidence-content {
+  max-width: 780px;
+}
+.graph-viewer:fullscreen .graph-stage {
+  height: calc(100vh - 160px);
+}
+@media (max-width: 760px) {
+  .graph-body {
+    grid-template-columns: 1fr;
+  }
+  .graph-stage {
+    height: 460px;
+  }
+  .evidence-panel {
+    max-height: none;
+  }
+}
+
+/* Keep export controls in the toolbar flow when controls wrap on small screens. */
+.graph-export > div {
+  position: static;
+  margin-top: 6px;
+}
+/* Source inspection remains available while batches stream into the graph. */
+.is-building .edit-actions,
+.is-building [data-action="undo"],
+.is-building [data-action="redo"] {
+  display: none;
+}

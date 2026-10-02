@@ -1,4 +1,5 @@
 import { appShell } from "./ui/shell";
+import { setupResearchScene } from "./ui/scene";
 import "./style.css";
 import "./ui/presentation.css";
 import "./graph/viewer.css";
@@ -18,6 +19,7 @@ try {
 } catch {}
 document.documentElement.dataset.theme = theme;
 $("#app").innerHTML = appShell;
+setupResearchScene();
 const workspace = new Workspace($("#workspace"), () => void renderHistory());
 let demo: GraphViewer | null = null;
 type View = "home" | "workspace" | "sample";

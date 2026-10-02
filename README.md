@@ -1,125 +1,155 @@
-# Knowledge Graph Generator Using Generative AI
+<p align="center">
+  <img src="public/favicon.svg" width="64" alt="Evidence Atlas">
+</p>
+<h1 align="center">Evidence Atlas</h1>
+<p align="center"><strong>Your paper. A new perspective.</strong></p>
+<p align="center">Connect ideas across research papers.<br>Follow every connection back to its evidence.</p>
+<p align="center">
+  Browser-first · Any research field · Your AI provider · Offline exports
+</p>
+<p align="center">
+  <a href="#the-workspace">Explore</a> ·
+  <a href="#run-locally">Run locally</a> ·
+  <a href="docs/TESTING.md">Verification</a> ·
+  <a href="LICENSE">Code permissions</a>
+</p>
 
-An advanced tool that transforms research papers into interactive knowledge graphs using AI and Natural Language Processing. This project demonstrates automated extraction of entities, relationships, and insights from scientific literature, converting complex research into structured, visual knowledge networks.
+![Evidence Atlas: charcoal homepage with a three-dimensional research constellation](docs/screenshots/home-dark.png)
 
-## AI & NLP Technologies
+**Evidence Atlas turns up to ten research papers into an editable knowledge graph.** Upload your documents, optionally describe what interests you, and connect your own AI provider—all in one workspace. Watch concepts and relationships arrive, inspect the original quotations, and keep a graph you can explore offline.
 
-- **Large Language Models (LLMs)**: Extract complex relationships and insights from research papers
-- **Named Entity Recognition (NER)**: Identifies key entities, concepts, and technical terms from scientific text
-- **Relation Extraction**: Automatically discovers and maps relationships between identified entities
-- **Knowledge Graph Generation**: Transforms unstructured text into structured, interconnected knowledge networks
-- **Text Mining**: Advanced processing of research papers to extract relevant information
-- **Semantic Analysis**: Understanding context and meaning in scientific literature
-- **Automated Data Extraction**: Converts research findings into structured JSON format for visualization
+The extraction pipeline is **discipline neutral**: models, methods, materials, theories, measurements, findings and identifiers are discovered from the uploaded text. Biomedical examples are included as illustrations, not as a required ontology.
 
-## Technical Workflow
+## The workspace
 
-1. **Data Ingestion**: Process research papers in various formats (PDF, Text)
-2. **Text Analysis**: Apply NLP techniques to understand document structure and content
-3. **Entity Recognition**: Identify key concepts, terms, and relationships
-4. **Relationship Mapping**: Establish connections between entities using AI
-5. **Knowledge Graph Creation**: Generate structured graph data
-6. **Interactive Visualization**: Present data in an explorable network format
+![All required inputs together: papers, optional focus, provider, model and API key](docs/screenshots/workspace-dark.png)
 
-## Example Implementation
+| Read                                         | Connect                                             | Verify                                  | Keep                               |
+| :------------------------------------------- | :-------------------------------------------------- | :-------------------------------------- | :--------------------------------- |
+| Up to **10 papers** per project              | Live concept and relationship updates               | Source document, paragraph and PDF page | Editable nodes and relationships   |
+| Local parsing and automatic scanned-page OCR | Your provider, model and memory-only key            | Quotes checked against extracted text   | Circles or cards; optional physics |
+| Optional focus and keywords                  | Estimated calls, tokens, duration and provider cost | Clear partial/excluded document reports | Offline HTML, JSON, PNG and SVG    |
 
-This repository contains an implementation focusing on biomedical research papers, demonstrating:
+The homepage and workspace are separate views. The workspace shows the complete setup together; there is no step wizard. On standard desktop viewports, the homepage and initial setup fit at 100% zoom. Smaller screens keep readable controls with natural scrolling.
 
-1. Azoospermia
-2. Oligospermia
-3. Asthenozoospermia
-4. Teratospermia
-5. Hypospermia
+**Your work stays with you.** Returning to the homepage or opening the sample keeps the active analysis running. New graph saves the previous project first. The ☰ menu contains paginated History and theme controls; unfinished projects are marked **Ongoing**. Refresh preserves saved checkpoints but clears your API key.
 
-## Directory Structure
+## Graphs with room to think
 
-```
-project-root/
-├── condition-name/           # For each research topic
-│   ├── html/                # Graph visualization files
-│   ├── json/                # Structured data
-│   ├── mapping/             # Entity mapping files
-│   └── research_papers/     # Source documents
-├── index.html               # Main entry point
-├── 404.html                # Error page
-└── README.md               # This file
-```
+![Curated illustrative sample: individually colored circular concepts with visible labels and relationships](docs/screenshots/graph-dark.png)
 
-## Features
+Distinct colors, softly shaded nodes, complete wrapped labels and collision separation make the graph easier to read. Choose circles or cards; drag nodes, switch layouts, search, filter, zoom, or use fullscreen. Optional damped physics briefly settles nearby nodes after a drag.
 
-- AI-powered knowledge extraction and relationship mapping
-- Interactive knowledge graph visualization
-- Automated entity and relationship identification
-- Scientific citation linking
-- Physics-based graph layout
-- Responsive design
-- Cross-referenced research data
-- Topic-specific data organization
-- Natural Language Processing for scientific text analysis
+Click a node or relationship to inspect its source. Change a concept’s name, category or color; edit a relationship; delete a node; undo or redo your edits. Original evidence remains attached and edits are marked. Exported HTML bundles the same editable viewer and makes **no network requests**.
 
-## Technical Stack
+<details>
+<summary><strong>See the light theme</strong></summary>
 
-- HTML5
-- JavaScript
-- vis.js Network library
-- Custom CSS
-- Python NLP libraries
-- Large Language Models
-- Graph Database Integration
+![Warm light homepage](docs/screenshots/home-light.png)
 
-## Applications
+![Light workspace](docs/screenshots/workspace-light.png)
 
-This tool can be applied to various domains:
-- Scientific Research Analysis
-- Literature Review Automation
-- Academic Knowledge Mining
-- Research Trend Visualization
-- Cross-paper Citation Analysis
-- Concept Relationship Discovery
+![Light graph: curated illustrative sample](docs/screenshots/graph-light.png)
 
-## Usage
+</details>
 
-1. Navigate to the main visualization interface
-2. Select a research topic to explore its knowledge graph
-3. Click nodes to view detailed information
-4. Use the control panel for graph manipulation
-5. Drag nodes to rearrange relationships
-6. Toggle physics simulation for dynamic layouts
-7. Access original research through linked citations
+The included nine-node sample is **manually curated and illustrative**. It is not presented as a live AI result. Measured live Groq results and comparisons with the original HTML graphs are recorded separately in [the evaluation report](docs/LIVE_GROQ_ANALYSIS.md).
 
-## Local Development
+## Your AI, a clear estimate
 
-1. Clone the repository:
-```bash
-git clone https://github.com/RonitGandotra05/Knowledge-Graph-Generator-Using-Generative-AI.git
+| Provider          | Connection                                                |
+| :---------------- | :-------------------------------------------------------- |
+| OpenAI            | Direct API requests with structured output                |
+| Anthropic Claude  | Direct Messages API with a forced structured tool         |
+| Google Gemini     | Direct generation with a response schema                  |
+| Groq              | Direct OpenAI-compatible API with recommended presets     |
+| OpenAI-compatible | Your trusted endpoint and model; browser CORS is required |
+
+For a first run, [Groq offers a free tier](https://console.groq.com/docs/rate-limits), subject to account and model limits. **GPT-OSS 20B** is a suggested starting model; presets remain editable. Cerebras has no dedicated picker or free-access claim; a trusted compatible endpoint can still be entered.
+
+Before building, see approximate **calls, tokens, time and API cost**. During analysis, see actual progress, pacing waits and provider-reported usage. At completion, inspect the token and estimated-cost receipt. Unknown prices or missing usage remain unknown.
+
+**Evidence Atlas charges $0.** Any API charges belong to your provider; a ChatGPT subscription does not include OpenAI API usage. Free-plan cost estimates apply only when the selected account is eligible and stays within its quota. The provider’s billing record is authoritative.
+
+Requests run serially. Conservative minute/day budgets reserve estimated input plus maximum output; reported usage and readable quota headers refine the budget. Rejected keys are blocked, rate limits trigger cooldowns, and generation errors are not retried automatically. Large collections may require multiple quota windows, which appear in the estimate. Other tabs, applications and account usage remain outside the app’s view. See [request pacing and accounting](docs/MULTI-PAPER-WORKFLOW.md).
+
+## Privacy by design
+
+- **Local:** parsing, OCR, layouts, editing, quote validation, history and exports.
+- **Sent to your AI provider:** selected document excerpts and concept context when you start analysis. No intermediate application backend.
+- **API key:** this tab’s memory only. Never localStorage, sessionStorage, IndexedDB, history or exports. Refresh clears it. The key information button explains this briefly.
+- **Saved history:** parsed text, source paragraphs, graph data, checkpoints and non-secret settings in IndexedDB. Original uploaded files are not saved. Use exports for durable backups.
+- **Automatic OCR:** page images stay local. English language data downloads on demand; the static host may record ordinary access logs.
+
+Files support PDF, DOCX, TXT, Markdown, CSV and TSV; text formats are treated as text. Limits are **10 files**, **30 MB per file**, and **500 pages per PDF**. Unreadable files/pages are listed explicitly and excluded from evidence; other readable content continues.
+
+## Run locally
+
+Use **Node.js 22.12+** and npm:
+
+```sh
+npm ci
+npm run dev
 ```
 
-2. Open index.html in a modern web browser
+Open the localhost URL printed by Vite. No backend, account, database or `.env` file is required. Exploring the sample uses no API key or AI calls; add your key in the workspace to analyze documents.
 
-## Contributing
-
-Contributions are welcome! Please read our contributing guidelines before submitting pull requests.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Citation
-
-If you use this visualization in your research, please cite:
-
-```bibtex
-@misc{knowledge-graph-generator,
-  author = {Ronit Gandotra},
-  title = {Knowledge Graph Generator Using Generative AI},
-  year = {2024},
-  publisher = {GitHub},
-  url = {https://github.com/RonitGandotra05/Knowledge-Graph-Generator-Using-Generative-AI}
-}
+```sh
+npm run check                     # TypeScript
+npm test                          # Deterministic unit tests
+npx playwright install chromium
+npm run test:e2e                  # Browser workflows with controlled AI responses
+npm run build                    # Production app in dist/
+npm run preview                  # Serve the production build
+npm run format:check
 ```
 
-## Acknowledgments
+Deploy the **contents of `dist/`** to a static HTTPS host. Assets use relative paths. The root `index.html` is a Vite entry point; do not publish the unbuilt source as the app. Main-app parsing needs a web server; exported graph HTML opens directly from disk. Builds include application terms and runtime dependency notices under `dist/licenses/`.
 
-- vis.js Network library
-- Original research paper authors
-- Contributors and reviewers 
+## How it works
+
+```mermaid
+flowchart LR
+  A[Research papers] --> B[Local parsing + automatic OCR]
+  B --> C[Bounded discovery batches]
+  C --> D[AI concepts + relationships]
+  D --> E[Local quote and schema validation]
+  E --> F[Live editable graph]
+  F --> G[History + offline exports]
+```
+
+The model identifies concepts and relationships. It does **not** generate HTML, draw the graph, compute layouts, or manage source references. Discovery traverses parsed body passages in bounded batches; compact extraction requests use stable locally assigned node IDs. Per-paper passage IDs keep quotations and page indices distinct across a collection. Grounded concepts remain visible even when no supported relationship connects them.
+
+| Directory        | Responsibility                                         |
+| :--------------- | :----------------------------------------------------- |
+| `src/documents/` | Local parsing, OCR and per-file manifests              |
+| `src/retrieval/` | Matching, bounded context, coverage and budgets        |
+| `src/providers/` | Prompts, REST adapters, pacing, prices and usage       |
+| `src/graph/`     | Validation, rendering, editing and exports             |
+| `src/storage/`   | IndexedDB history and resumable drafts                 |
+| `src/ui/`        | Homepage, unified workspace, themes and dialogs        |
+| `tests/`         | Unit and browser checks                                |
+| `docs/`          | Evaluation reports, verification and screenshots       |
+| `legacy/`        | The original site and condition-specific HTML examples |
+
+Vanilla TypeScript and Vite; four core runtime libraries: **Cytoscape.js, PDF.js, Mammoth and Tesseract.js**. Heavy parsing/OCR/viewer modules load on demand. No embedding service, vector database or provider SDK is required. Read [the architectural decisions](docs/RESEARCH.md).
+
+## Verified, with honest limits
+
+The current suite covers **100 unit tests** and **39 browser scenarios**, including ten actual PDFs together (287 pages), automatic OCR of the uploaded scanned paper, offline exports, graph spacing/physics, draft recovery, live navigation and both themes. Desktop fit checks cover 1440×900, 1366×768 and 1280×720 at normal zoom; mobile checks cover horizontal containment and reduced motion.
+
+Automated AI responses are intercepted fixtures; they verify implementation behavior, not live semantic accuracy. Earlier user-authorized real Groq testing is documented separately. A valid quotation proves text provenance, **not scientific truth or correct interpretation**. Whole-paper traversal cannot guarantee that an LLM identifies every important node. Review the graph against the paper, especially when OCR, inference or ambiguous findings are involved.
+
+- [Verification and reproduction](docs/TESTING.md)
+- [Public-paper corpus and sources](docs/ONLINE-PAPER-TESTING.md)
+- [Live Groq results and original graph comparison](docs/LIVE_GROQ_ANALYSIS.md)
+- [Multi-paper processing, estimates and recovery](docs/MULTI-PAPER-WORKFLOW.md)
+- [Workspace and visual redesign report](docs/WORKSPACE-REDESIGN.md)
+
+## Original examples and code permissions
+
+The original repository history is retained. All **31 original tracked files** were preserved byte for byte under [`legacy/`](legacy/README.md), including azoospermia, oligospermia and the other condition-specific graphs. The app now lives at the repository root; the legacy graphs remain available for comparison.
+
+**Original code reuse requires prior written permission from Ronit Gandotra.** This is a source-available project under custom permission-required terms, not an MIT license. Using the hosted application and sharing generated graph exports are permitted under the stated exception. Dependencies and third-party content retain their own licenses and rights.
+
+Read [LICENSE](LICENSE), [third-party notices](THIRD-PARTY-NOTICES.md), and the [unsigned permission-record template](docs/CODE-USE-PERMISSION.md). To request approval, contact the [repository maintainer](https://github.com/RonitGandotra05/Knowledge-Graph-Generator-Using-Generative-AI) with your intended use and distribution.

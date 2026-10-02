@@ -17,6 +17,25 @@ const palette = [
   "#c4ce79",
   "#a5c2ce",
 ];
+// Exact hex colors are normalized on load and on edit. Shade locally for
+// readable dimensional fills shared by the canvas, PNG and SVG exports.
+function gradientStops(color: string, light: boolean) {
+  const rgb = [1, 3, 5].map((offset) =>
+    parseInt(color.slice(offset, offset + 2), 16),
+  );
+  const base = light ? 255 : 12;
+  return (light ? [0.13, 0.24, 0.1] : [0.25, 0.14, 0.06]).map(
+    (mix) =>
+      "#" +
+      rgb
+        .map((channel) =>
+          Math.round(base + (channel - base) * mix)
+            .toString(16)
+            .padStart(2, "0"),
+        )
+        .join(""),
+  );
+}
 // Keep the label inside its node so layouts reserve space for the actual text.
 function nodeLabel(label: string, circle = false) {
   const textWidth = circle ? 136 : 160;
@@ -236,16 +255,28 @@ export class GraphViewer {
           label: "data(displayLabel)",
           "background-color": "data(color)",
           "border-color": "data(color)",
-          "background-opacity": light ? 0.28 : 0.2,
-          "border-width": 2,
-          "border-opacity": 0.8,
+          "background-opacity": 1,
+          "background-fill":
+            this.settings.nodeShape === "circle"
+              ? "radial-gradient"
+              : "linear-gradient",
+          "background-gradient-stop-colors": (node) =>
+            gradientStops(node.data("color"), light),
+          "background-gradient-stop-positions": ["0%", "55%", "100%"],
+          "background-gradient-direction": "to-bottom-right",
+          "outline-width": 3,
+          "outline-color": "data(color)",
+          "outline-opacity": 0.06,
+          "outline-offset": 3,
+          "border-width": 1.5,
+          "border-opacity": 0.75,
           shape:
             this.settings.nodeShape === "circle"
               ? "ellipse"
               : "round-rectangle",
           width: "data(nodeWidth)",
           height: "data(labelHeight)",
-          color: light ? "#263544" : "#dee8f0",
+          color: light ? "#292b24" : "#f3f1ec",
           "font-family": "system-ui",
           "font-size": 15,
           "font-weight": 600,
@@ -262,15 +293,15 @@ export class GraphViewer {
         style: {
           label: "data(display)",
           width: 1.5,
-          "line-color": light ? "#94a9b5" : "#4f697b",
-          "target-arrow-color": light ? "#94a9b5" : "#4f697b",
+          "line-color": light ? "#91a18c" : "#647365",
+          "target-arrow-color": light ? "#91a18c" : "#647365",
           "target-arrow-shape": "triangle",
           "arrow-scale": 0.8,
           "curve-style": "bezier",
-          color: light ? "#506474" : "#98aebb",
+          color: light ? "#616958" : "#b2bcae",
           "font-size": 11,
           "text-rotation": "none",
-          "text-background-color": light ? "#f7fafb" : "#0e1721",
+          "text-background-color": light ? "#faf9f3" : "#11120f",
           "text-background-opacity": 1,
           "text-background-padding": "5px",
           "text-margin-y": -12,
@@ -933,7 +964,7 @@ export class GraphViewer {
         this.cy.png({
           output: "blob",
           full: true,
-          bg: this.settings.theme === "light" ? "#f7fafb" : "#0e1721",
+          bg: this.settings.theme === "light" ? "#faf9f3" : "#11120f",
           maxWidth: 4000,
           maxHeight: 4000,
         }) as Blob,
@@ -973,8 +1004,8 @@ export class GraphViewer {
   private svg() {
     const bounds = this.cy.elements(":visible").boundingBox(),
       padding = 130;
-    const fg = this.settings.theme === "light" ? "#263544" : "#dee8f0";
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${bounds.x1 - padding} ${bounds.y1 - padding} ${bounds.w + padding * 2} ${bounds.h + padding * 2}"><rect x="${bounds.x1 - padding}" y="${bounds.y1 - padding}" width="${bounds.w + padding * 2}" height="${bounds.h + padding * 2}" fill="${this.settings.theme === "light" ? "#f7fafb" : "#0e1721"}"/><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0L7 3L0 6" fill="#7192a4"/></marker></defs>${this.cy
+    const fg = this.settings.theme === "light" ? "#292b24" : "#f3f1ec";
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${bounds.x1 - padding} ${bounds.y1 - padding} ${bounds.w + padding * 2} ${bounds.h + padding * 2}"><rect x="${bounds.x1 - padding}" y="${bounds.y1 - padding}" width="${bounds.w + padding * 2}" height="${bounds.h + padding * 2}" fill="${this.settings.theme === "light" ? "#faf9f3" : "#11120f"}"/><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0L7 3L0 6" fill="#7192a4"/></marker></defs>${this.cy
       .edges(":visible")
       .map((e) => {
         const a = e.sourceEndpoint(),
@@ -994,20 +1025,29 @@ export class GraphViewer {
         }, []);
         const w = Math.max(...lines.map((line) => line.length)) * 6 + 12;
         const h = lines.length * 14 + 10;
-        return `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="#7192a4" ${e.data("kind") === "stated" ? "" : 'stroke-dasharray="5 4"'} marker-end="url(#arrow)"/><rect x="${mid.x - w / 2}" y="${mid.y - 12 - h / 2}" width="${w}" height="${h}" rx="4" fill="${this.settings.theme === "light" ? "#f7fafb" : "#0e1721"}"/><text text-anchor="middle" font-family="system-ui" font-size="11" fill="${fg}">${lines.map((line, i) => `<tspan x="${mid.x}" y="${mid.y - 12 - (lines.length - 1) * 7 + i * 14 + 4}">${esc(line)}</tspan>`).join("")}</text>`;
+        return `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="#7192a4" ${e.data("kind") === "stated" ? "" : 'stroke-dasharray="5 4"'} marker-end="url(#arrow)"/><rect x="${mid.x - w / 2}" y="${mid.y - 12 - h / 2}" width="${w}" height="${h}" rx="4" fill="${this.settings.theme === "light" ? "#faf9f3" : "#11120f"}"/><text text-anchor="middle" font-family="system-ui" font-size="11" fill="${fg}">${lines.map((line, i) => `<tspan x="${mid.x}" y="${mid.y - 12 - (lines.length - 1) * 7 + i * 14 + 4}">${esc(line)}</tspan>`).join("")}</text>`;
       })
       .join("")}${this.cy
       .nodes(":visible")
-      .map((n) => {
+      .map((n, i) => {
         const p = n.position();
         const width = n.width(),
           height = n.height();
         const lines = String(n.data("displayLabel")).split("\n");
+        const stops = gradientStops(
+          n.data("color"),
+          this.settings.theme === "light",
+        );
+        const gradient =
+          this.settings.nodeShape === "circle"
+            ? "radialGradient"
+            : "linearGradient";
+        const fill = `<defs><${gradient} id="node-fill-${i}">${stops.map((color, index) => `<stop offset="${[0, 55, 100][index]}%" stop-color="${color}"/>`).join("")}</${gradient}></defs>`;
         const shape =
           this.settings.nodeShape === "circle"
-            ? `<circle cx="${p.x}" cy="${p.y}" r="${width / 2}" fill="${n.data("color")}" fill-opacity="0.25" stroke="${n.data("color")}" stroke-width="2"/>`
-            : `<rect x="${p.x - width / 2}" y="${p.y - height / 2}" width="${width}" height="${height}" rx="12" fill="${n.data("color")}" fill-opacity="0.25" stroke="${n.data("color")}" stroke-width="2"/>`;
-        return `${shape}<text text-anchor="middle" font-family="system-ui" font-size="15" font-weight="600" fill="${fg}">${lines.map((line, i) => `<tspan x="${p.x}" y="${p.y - (lines.length - 1) * 10.5 + i * 21 + 5}">${esc(line)}</tspan>`).join("")}</text>`;
+            ? `<circle cx="${p.x}" cy="${p.y}" r="${width / 2}" fill="url(#node-fill-${i})" stroke="${n.data("color")}" stroke-width="2"/>`
+            : `<rect x="${p.x - width / 2}" y="${p.y - height / 2}" width="${width}" height="${height}" rx="12" fill="url(#node-fill-${i})" stroke="${n.data("color")}" stroke-width="2"/>`;
+        return `${fill}${shape}<text text-anchor="middle" font-family="system-ui" font-size="15" font-weight="600" fill="${fg}">${lines.map((line, i) => `<tspan x="${p.x}" y="${p.y - (lines.length - 1) * 10.5 + i * 21 + 5}">${esc(line)}</tspan>`).join("")}</text>`;
       })
       .join("")}</svg>`;
   }

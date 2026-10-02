@@ -1,9 +1,9 @@
 .graph-viewer {
-  --g-bg: #0e1721;
-  --g-card: #121d28;
-  --g-border: #263543;
-  --g-fg: #dce7ef;
-  --g-muted: #92a5b5;
+  --g-bg: #11120f;
+  --g-card: #171815;
+  --g-border: #30332b;
+  --g-fg: #f3f1ec;
+  --g-muted: #adb5a5;
   color: var(--g-fg);
   background: var(--g-bg);
   border: 1px solid var(--g-border);
@@ -14,11 +14,11 @@
     sans-serif;
 }
 .graph-viewer[data-theme="light"] {
-  --g-bg: #f7fafb;
-  --g-card: #fff;
-  --g-border: #d5e0e6;
-  --g-fg: #263544;
-  --g-muted: #617586;
+  --g-bg: #faf9f3;
+  --g-card: #fffef9;
+  --g-border: #dfdfd0;
+  --g-fg: #292b24;
+  --g-muted: #646d5a;
 }
 .graph-viewer button,
 .graph-viewer input,
@@ -424,4 +424,45 @@
 .is-building [data-action="undo"],
 .is-building [data-action="redo"] {
   display: none;
+}
+
+/* The canvas and standalone export share this finish. */
+.graph-viewer {
+  border-radius: 18px;
+  box-shadow: 0 18px 48px #00000012;
+}
+.graph-stage {
+  background-color: var(--g-bg);
+  background-image:
+    radial-gradient(ellipse at 50% 40%, #a2e2c407, transparent 65%),
+    radial-gradient(var(--g-border) 0.65px, transparent 0.65px);
+  background-size:
+    auto,
+    30px 30px;
+}
+.graph-tools {
+  background: var(--g-card);
+  padding: 12px 14px;
+}
+.graph-viewer button,
+.graph-viewer select {
+  border-radius: 8px;
+  font-size: 12px;
+}
+.graph-viewer button:hover {
+  background: var(--g-bg);
+  border-color: #96ba9b;
+}
+.graph-filter {
+  background: var(--g-bg);
+}
+.graph-hint {
+  border: 1px solid var(--g-border);
+  border-radius: 20px;
+  padding: 7px 12px;
+  background: var(--g-bg);
+  opacity: 0.9;
+}
+.graph-count {
+  font-variant-numeric: tabular-nums;
 }

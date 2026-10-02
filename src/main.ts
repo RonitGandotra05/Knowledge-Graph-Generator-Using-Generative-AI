@@ -1,5 +1,6 @@
 import { appShell } from "./ui/shell";
 import "./style.css";
+import "./ui/presentation.css";
 import "./graph/viewer.css";
 import { $, escapeHTML as esc, readableError } from "./ui/dom";
 import { Workspace } from "./ui/workspace";

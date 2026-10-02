@@ -1255,3 +1255,109 @@ html[data-theme="light"] .orbit-two {
     font-size: 10px;
   }
 }
+/* Give the graph the remaining viewport space rather than a second fixed page height. */
+@media (min-width: 901px) and (min-height: 700px) {
+  #workspace[data-stage="analysis"] {
+    height: calc(100dvh - 112px);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  #workspace[data-stage="analysis"] > .workspace-heading,
+  #workspace[data-stage="analysis"] > #status {
+    flex-shrink: 0;
+  }
+  #workspace[data-stage="analysis"] #graph-result {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+  #workspace[data-stage="analysis"] .result-heading {
+    margin-bottom: 10px;
+  }
+  #workspace[data-stage="analysis"] .result-heading h2 {
+    margin: 6px 0 4px;
+    font-size: 22px;
+  }
+  #workspace[data-stage="analysis"] .run-receipt {
+    margin: 0 0 8px;
+    padding: 8px 12px;
+  }
+  #workspace[data-stage="analysis"] #graph-warnings {
+    margin: 0 0 8px;
+  }
+  #workspace[data-stage="analysis"] .source-notes {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  #workspace[data-stage="analysis"] #graph-root {
+    flex: 1;
+    min-height: 0;
+    margin: 0;
+  }
+  #workspace[data-stage="analysis"] #graph-root.graph-viewer {
+    height: auto;
+    min-height: 290px;
+    display: flex;
+    flex-direction: column;
+  }
+  #workspace[data-stage="analysis"] .graph-body {
+    flex: 1;
+    min-height: 0;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+  #workspace[data-stage="analysis"] .graph-stage {
+    height: auto;
+    min-height: 120px;
+  }
+  #workspace[data-stage="analysis"] .graph-tools,
+  #workspace[data-stage="analysis"] .graph-filter,
+  #workspace[data-stage="analysis"] .accessible-graph {
+    flex-shrink: 0;
+    padding: 9px 12px;
+  }
+  #workspace[data-stage="analysis"] .graph-tools {
+    gap: 6px;
+  }
+  #workspace[data-stage="analysis"] .graph-tools button,
+  #workspace[data-stage="analysis"] .graph-tools select {
+    padding: 7px 9px;
+    font-size: 11px;
+  }
+  #workspace[data-stage="analysis"] .graph-search {
+    min-width: 125px;
+  }
+  #workspace[data-stage="analysis"] .graph-search input {
+    padding: 7px 5px;
+    font-size: 11px;
+  }
+  #workspace[data-stage="analysis"] .evidence-panel {
+    max-height: 30vh;
+    overflow: auto;
+  }
+  #workspace[data-stage="analysis"] .accessible-graph[open] {
+    max-height: 28vh;
+    overflow: auto;
+  }
+  #workspace[data-stage="analysis"] .mission-control {
+    min-height: 0;
+    max-height: 100%;
+    overflow: auto;
+    margin: 0;
+  }
+}
+@media (min-width: 1100px) and (min-height: 700px) {
+  #workspace[data-stage="analysis"][data-run-phase="discovery"],
+  #workspace[data-stage="analysis"][data-run-phase="relationships"],
+  #workspace[data-stage="analysis"][data-run-phase="paused"] {
+    display: grid;
+    grid-template-rows: auto auto minmax(0, 1fr);
+  }
+}
+@media (min-width: 901px) and (min-height: 700px) and (max-height: 800px) {
+  #workspace[data-stage="analysis"] {
+    height: calc(100dvh - 100px);
+  }
+}

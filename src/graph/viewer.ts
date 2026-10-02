@@ -482,23 +482,33 @@ export class GraphViewer {
     if (this.cy.width() < 1 || this.cy.height() < 1) return;
     const elements = this.cy.elements(":visible");
     this.cy.fit(elements, 35);
-    // A small graph saved on desktop should still show both endpoints on a
-    // phone, without shrinking their labels or centering empty edge space.
+    // Keep both endpoints readable when a small graph moves between a wide,
+    // short workspace and a tall phone canvas.
     const nodes = this.cy.nodes(":visible");
-    if (this.cy.width() < 600 && nodes.length === 2 && this.cy.zoom() < 0.8) {
+    if (nodes.length === 2 && this.cy.zoom() < 0.8) {
       const a = nodes[0].position(),
         b = nodes[1].position();
       const center = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
-      const nodeHeight = Math.max(nodes[0].height(), nodes[1].height());
+      const horizontal = this.cy.width() > this.cy.height() * 1.3;
+      const nodeExtent = horizontal
+        ? Math.max(nodes[0].width(), nodes[1].width())
+        : Math.max(nodes[0].height(), nodes[1].height());
+      const available = horizontal ? this.cy.width() : this.cy.height();
       const spacing = Math.max(
         240,
         Math.min(
           Math.hypot(b.x - a.x, b.y - a.y),
-          (this.cy.height() - 70) / 0.8 - nodeHeight,
+          (available - 70) / 0.8 - nodeExtent,
         ),
       );
-      nodes[0].position({ x: center.x, y: center.y - spacing / 2 });
-      nodes[1].position({ x: center.x, y: center.y + spacing / 2 });
+      nodes[0].position({
+        x: center.x - (horizontal ? spacing / 2 : 0),
+        y: center.y - (horizontal ? 0 : spacing / 2),
+      });
+      nodes[1].position({
+        x: center.x + (horizontal ? spacing / 2 : 0),
+        y: center.y + (horizontal ? 0 : spacing / 2),
+      });
       this.placeEdgeLabels();
       this.cy.fit(elements, 35);
     }

@@ -1,5 +1,5 @@
 import type { Concept, ExtractionOptions, ResearchDocument } from "../types";
-import type { ProviderConfig } from "./client";
+import { providers, type ProviderConfig } from "./client";
 import { coverageBatches } from "./coverage";
 import {
   outputBudget,
@@ -154,12 +154,12 @@ export function paidAlternatives(
     [
       {
         provider: "openai",
-        model: "gpt-4.1-mini",
+        model: providers.openai.models[0],
         endpoint: "https://api.openai.com/v1",
       },
       {
         provider: "gemini",
-        model: "gemini-2.5-flash",
+        model: providers.gemini.models[0],
         endpoint: "https://generativelanguage.googleapis.com/v1beta",
       },
     ] as const

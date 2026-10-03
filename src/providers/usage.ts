@@ -16,6 +16,7 @@ export interface UsageEvent {
   config: Omit<ProviderConfig, "key">;
 }
 export interface Price {
+  free?: boolean;
   input: number;
   output: number;
   cached: number;
@@ -29,6 +30,61 @@ const gemini = "https://ai.google.dev/gemini-api/docs/pricing";
 // USD / million tokens, standard synchronous text requests. Exact known models
 // only; unknown/private endpoints never inherit someone else's pricing.
 const prices: Record<string, Price> = {
+  "openai:gpt-6-luna": {
+    input: 0.1,
+    output: 0.5,
+    cached: 0.01,
+    write: 0.125,
+    source: openai,
+  },
+  "openai:gpt-6.1-sol": {
+    input: 2,
+    output: 10,
+    cached: 0.1,
+    write: 2.5,
+    source: openai,
+  },
+  "openai:gpt-6-astra": {
+    input: 10,
+    output: 50,
+    cached: 1,
+    write: 12.5,
+    source: openai,
+  },
+  "anthropic:claude-sonnet-5-5": {
+    input: 2,
+    output: 10,
+    cached: 0.2,
+    write: 2.5,
+    source: claude,
+  },
+  "anthropic:claude-opus-5-5": {
+    input: 4,
+    output: 20,
+    cached: 0.2,
+    write: 5,
+    source: claude,
+  },
+  "anthropic:claude-haiku-4-5-20251001": {
+    input: 1,
+    output: 5,
+    cached: 0.1,
+    write: 1.25,
+    source: claude,
+  },
+  "gemini:gemini-3.5-flash-lite": {
+    input: 0.3,
+    output: 2.5,
+    cached: 0.03,
+    free: true,
+    source: gemini,
+  },
+  "gemini:gemini-3.1-pro-preview": {
+    input: 2,
+    output: 12,
+    cached: 0.2,
+    source: gemini,
+  },
   "openai:gpt-4.1-mini": {
     input: 0.4,
     output: 1.6,
@@ -43,18 +99,26 @@ const prices: Record<string, Price> = {
     source: openai,
   },
   "groq:openai/gpt-oss-20b": {
+    free: true,
     input: 0.075,
     output: 0.3,
     cached: 0.037,
     source: groq,
   },
   "groq:openai/gpt-oss-120b": {
+    free: true,
     input: 0.15,
     output: 0.6,
     cached: 0.075,
     source: groq,
   },
-  "groq:qwen/qwen3.8-27b": { input: 0.8, output: 4, cached: 0.8, source: groq },
+  "groq:qwen/qwen3.8-27b": {
+    free: true,
+    input: 0.8,
+    output: 4,
+    cached: 0.8,
+    source: groq,
+  },
   "anthropic:claude-sonnet-4-5": {
     input: 3,
     output: 15,
@@ -70,9 +134,24 @@ const prices: Record<string, Price> = {
     source: claude,
   },
   "gemini:gemini-2.5-flash": {
+    free: true,
     input: 0.3,
     output: 2.5,
     cached: 0.03,
+    source: gemini,
+  },
+  "gemini:gemini-3.8-flash": {
+    free: true,
+    input: 0.75,
+    output: 3.75,
+    cached: 0.075,
+    source: gemini,
+  },
+  "gemini:gemini-3.1-flash-lite": {
+    free: true,
+    input: 0.25,
+    output: 1.5,
+    cached: 0.025,
     source: gemini,
   },
   "gemini:gemini-2.5-pro": {
@@ -97,6 +176,19 @@ export function priceFor(config: Omit<ProviderConfig, "key">): Price | null {
       return null;
     }
   }
+  // Google's introductory Flash 3.8 rates end on December 31, 2026.
+  if (
+    provider === "gemini" &&
+    config.model === "gemini-3.8-flash" &&
+    Date.now() >= Date.UTC(2027, 0, 1)
+  )
+    return {
+      input: 1.5,
+      output: 7.5,
+      cached: 0.15,
+      free: true,
+      source: gemini,
+    };
   return prices[`${provider}:${config.model}`] || null;
 }
 const n = (x: unknown) =>
@@ -156,7 +248,7 @@ export function tokenCost(
   price: Price | null,
   billing: "standard" | "free" = "standard",
 ): number | null {
-  if (billing === "free") return 0;
+  if (billing === "free" && price?.free) return 0;
   if (!price) return null;
   return (
     ((usage.inputTokens - usage.cachedInputTokens - usage.cacheWriteTokens) *

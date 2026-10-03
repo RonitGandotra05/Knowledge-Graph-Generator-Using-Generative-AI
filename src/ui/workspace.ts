@@ -27,7 +27,7 @@ import {
   occurrences,
   type ContextSelection,
 } from "../retrieval/context";
-import { LLMProvider } from "../providers/client";
+import { LLMProvider, providers } from "../providers/client";
 import {
   safeOptions,
   requestPolicy,
@@ -120,7 +120,13 @@ export class Workspace {
       void this.upload([
         new File([text], "Pasted research paper.txt", { type: "text/plain" }),
       ]).then(() => {
-        if (this.papers.some((paper) => paper.name === "Pasted research paper.txt" && paper.status !== "failed"))
+        if (
+          this.papers.some(
+            (paper) =>
+              paper.name === "Pasted research paper.txt" &&
+              paper.status !== "failed",
+          )
+        )
           $<HTMLTextAreaElement>("#paper-text", root).value = "";
       });
     });
@@ -378,7 +384,7 @@ export class Workspace {
     const rows = alternatives
       .map(({ config: alternative, estimate: e }) => {
         const profile = capacityProfile(alternative)!;
-        return `<tr><th scope="row">${alternative.provider === "openai" ? "OpenAI · GPT-4.1 mini" : "Gemini · 2.5 Flash"}</th><td>${duration(e.durationMs)}–${duration(e.durationCeilingMs)}</td><td>${e.calls.toLocaleString()} calls</td><td>${money(e.costUSD!)}–${money(e.costCeilingUSD!)} USD</td></tr><tr class="capacity-basis"><td colspan="4">${esc(profile.label)} · app pacing ${e.requestsPerMinute} calls/min · ${e.tokensPerMinute?.toLocaleString()} ${profile.inputOnly ? "input " : ""}tokens/min. <a href="${profile.source}" target="_blank" rel="noopener noreferrer">Check limits ↗</a></td></tr>`;
+        return `<tr><th scope="row">${esc(providers[alternative.provider].label)} · ${esc(alternative.model)}</th><td>${duration(e.durationMs)}–${duration(e.durationCeilingMs)}</td><td>${e.calls.toLocaleString()} calls</td><td>${money(e.costUSD!)}–${money(e.costCeilingUSD!)} USD</td></tr><tr class="capacity-basis"><td colspan="4">${esc(profile.label)} · app pacing ${e.requestsPerMinute} calls/min · ${e.tokensPerMinute?.toLocaleString()} ${profile.inputOnly ? "input " : ""}tokens/min. <a href="${profile.source}" target="_blank" rel="noopener noreferrer">Check limits ↗</a></td></tr>`;
       })
       .join("");
     const html = `<p class="fine-print">Paid API capacity can shorten long quota waits. Calculated for these papers using each provider’s context size and pacing.</p><div class="provider-comparison"><table><caption class="sr-only">Paid provider timing and charges</caption><thead><tr><th>Provider</th><th>Time estimate</th><th>Requests</th><th>API charge</th></tr></thead><tbody>${rows}</tbody></table></div>${noticeList(
@@ -430,13 +436,13 @@ export class Workspace {
         {
           label: "Pacing",
           text: plan.requestsPerMinute
-            ? `Up to ${plan.requestsPerMinute} calls/min · ${plan.tokensPerMinute?.toLocaleString()} ${requestPolicy(config)?.inputOnly ? "input " : ""}tokens/min. ${capacityProfile(config)?.label || "Conservative app quota"}.`
+            ? `App pacing: up to ${plan.requestsPerMinute} calls/min · ${plan.tokensPerMinute?.toLocaleString()} ${requestPolicy(config)?.inputOnly ? "input " : ""}tokens/min. ${capacityProfile(config)?.label || "Conservative app quota"}.`
             : "One request at a time. Timing updates during the run.",
         },
         {
           label: "Your plan",
           text:
-            config.billing === "free"
+            config.billing === "free" && priceFor(config)?.free
               ? "Free tier selected: $0 only within your provider’s free quota. Your key does not reveal eligibility or quota."
               : config.provider === "groq" || config.provider === "gemini"
                 ? "Paid rates shown. Eligible free-tier usage may cost $0; choose your API plan above."
@@ -607,7 +613,7 @@ export class Workspace {
               },
             ]
           : []),
-        ...(u.billing === "free"
+        ...(u.billing === "free" && u.estimatedCostUSD === 0
           ? [
               {
                 label: "Free tier",
@@ -1257,17 +1263,27 @@ export class Workspace {
     if (this.doc) {
       const remaining = new Set(this.papers.map((paper) => paper.id));
       const passages = this.doc.passages.filter((passage) =>
-        passage.paperId ? remaining.has(passage.paperId) : passage.paperName !== removed.name,
+        passage.paperId
+          ? remaining.has(passage.paperId)
+          : passage.paperName !== removed.name,
       );
       this.doc = this.papers.length
         ? {
             ...this.doc,
-            name: this.papers.length === 1 ? this.papers[0].name : `${this.papers.length} research papers`,
+            name:
+              this.papers.length === 1
+                ? this.papers[0].name
+                : `${this.papers.length} research papers`,
             pages: this.papers.reduce((sum, paper) => sum + paper.pages, 0),
-            characters: this.papers.reduce((sum, paper) => sum + paper.characters, 0),
+            characters: this.papers.reduce(
+              (sum, paper) => sum + paper.characters,
+              0,
+            ),
             passages,
             papers: this.papers,
-            warnings: this.doc.warnings.filter((warning) => !warning.startsWith(`${removed.name}:`)),
+            warnings: this.doc.warnings.filter(
+              (warning) => !warning.startsWith(`${removed.name}:`),
+            ),
             ocrPages: this.papers.flatMap((paper) => paper.ocrPages),
             skippedPages: this.papers.flatMap((paper) => paper.skippedPages),
           }

@@ -31,7 +31,7 @@ test("long Groq estimates show calculated paid alternatives and switching restor
     "Published OpenAI Tier 1",
   );
   await expect(page.locator(".provider-comparison")).toContainText(
-    "Paid planning example",
+    "App planning example",
   );
   await expect(page.locator(".provider-comparison")).toContainText("USD");
   await expect(page.locator("#context-budget")).toHaveValue("1000");

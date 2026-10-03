@@ -31,50 +31,105 @@ export interface CapacityProfile extends RateCapacity {
 export function capacityProfile(
   config: ProviderConfig,
 ): CapacityProfile | null {
+  let provider = config.provider;
+  if (provider === "compatible") {
+    try {
+      const url = new URL(config.endpoint),
+        path = url.pathname.replace(/\/$/, "");
+      if (url.origin === "https://api.groq.com" && path === "/openai/v1")
+        provider = "groq";
+      else if (url.origin === "https://api.cerebras.ai" && path === "/v1")
+        provider = "cerebras";
+      else return null;
+    } catch {
+      return null;
+    }
+  }
   // Dedicated providers use fixed official endpoints. Private compatible endpoints
   // must never inherit a public model's account limits merely from its name.
-  if (!["openai", "gemini"].includes(config.provider)) return null;
+  if (!["openai", "gemini", "anthropic", "groq", "cerebras"].includes(provider))
+    return null;
   const source =
-    config.provider === "openai"
+    provider === "openai"
       ? "https://developers.openai.com/api/docs/guides/rate-limits"
-      : "https://ai.google.dev/gemini-api/docs/rate-limits";
+      : provider === "anthropic"
+        ? "https://platform.claude.com/docs/en/api/rate-limits"
+        : provider === "groq"
+          ? "https://console.groq.com/docs/rate-limits"
+          : provider === "cerebras"
+            ? "https://inference-docs.cerebras.ai/support/rate-limits"
+            : "https://ai.google.dev/gemini-api/docs/rate-limits";
   const custom = safeCapacity(config.capacity);
   if (custom)
     return {
       ...custom,
       label: "Your dashboard limits",
       source,
-      inputOnly: config.provider === "gemini",
+      inputOnly: provider === "gemini",
     };
-  if (config.provider === "openai") {
-    if (!["gpt-4.1-mini", "gpt-4o-mini", "gpt-4.1"].includes(config.model))
+  if (provider === "groq") {
+    if (
+      ![
+        "openai/gpt-oss-20b",
+        "openai/gpt-oss-120b",
+        "qwen/qwen3.8-27b",
+      ].includes(config.model)
+    )
+      return null;
+    return {
+      rpm: 30,
+      tpm: 8000,
+      rpd: 1000,
+      label: "Published Groq free-tier baseline · verify organization limits",
+      source,
+      inputOnly: false,
+    };
+  }
+  if (provider === "cerebras") {
+    if (!["qwen-3.8-27b", "gpt-oss-120b"].includes(config.model)) return null;
+    return {
+      rpm: 5,
+      tpm: 30000,
+      rpd: 0,
+      label: "Published Cerebras trial baseline · $5 credit expires in 30 days",
+      source,
+      inputOnly: false,
+    };
+  }
+  if (provider === "openai") {
+    if (
+      ![
+        "gpt-6-luna",
+        "gpt-6.1-sol",
+        "gpt-6-astra",
+        "gpt-4.1-mini",
+        "gpt-4o-mini",
+        "gpt-4.1",
+      ].includes(config.model)
+    )
       return null;
     return {
       rpm: 500,
-      tpm: config.model === "gpt-4.1" ? 30000 : 200000,
-      rpd: config.model === "gpt-4.1" ? 0 : 10000,
+      tpm: /^gpt-6/.test(config.model)
+        ? 500000
+        : config.model === "gpt-4.1"
+          ? 30000
+          : 200000,
+      rpd:
+        /^gpt-6/.test(config.model) || config.model === "gpt-4.1" ? 0 : 10000,
       label: "Published OpenAI Tier 1 · verify your project",
       source: `https://developers.openai.com/api/docs/models/${config.model}`,
       inputOnly: false,
     };
   }
-  // Google does not publish a universal synchronous paid-quota table. These are
-  // explicitly labeled app planning scenarios, never claimed as Google's limits.
-  return config.billing === "free"
-    ? {
-        rpm: 5,
-        tpm: 20000,
-        rpd: 50,
-        label: "Conservative free-tier assumption · verify in AI Studio",
-        source,
-        inputOnly: true,
-      }
-    : {
-        rpm: 60,
-        tpm: 120000,
-        rpd: 3000,
-        label: "Paid planning example · enter AI Studio limits",
-        source,
-        inputOnly: true,
-      };
+  // Account-specific quotas cannot be inferred from a key or billing selection.
+  // This is application pacing, not a published quota or a promise of access.
+  return {
+    rpm: provider === "anthropic" ? 10 : 60,
+    tpm: provider === "anthropic" ? 40000 : 120000,
+    rpd: 0,
+    label: "App planning example · actual account quotas unknown",
+    source,
+    inputOnly: provider === "gemini",
+  };
 }

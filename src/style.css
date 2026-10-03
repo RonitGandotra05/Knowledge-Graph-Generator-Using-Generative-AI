@@ -1763,9 +1763,13 @@ html[data-view="home"] .header-right {
   border-radius: 10px;
   background: var(--bg);
 }
-.parse-progress > div { min-width: 0; }
+.parse-progress > div {
+  min-width: 0;
+}
 .parse-progress strong,
-.parse-progress small { display: block; }
+.parse-progress small {
+  display: block;
+}
 .parse-progress small {
   margin-top: 3px;
   color: var(--muted);
@@ -1778,17 +1782,26 @@ html[data-view="home"] .header-right {
   border: 2px solid var(--border);
   border-top-color: var(--accent);
   border-radius: 50%;
-  animation: parse-spin .8s linear infinite;
+  animation: parse-spin 0.8s linear infinite;
 }
-@keyframes parse-spin { to { transform: rotate(360deg); } }
+@keyframes parse-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 .paste-paper {
   margin: 8px 0;
   padding: 9px 12px;
   border: 1px solid var(--border);
   border-radius: 10px;
 }
-.paste-paper > summary { cursor: pointer; }
-.paste-paper textarea { width: 100%; resize: vertical; }
+.paste-paper > summary {
+  cursor: pointer;
+}
+.paste-paper textarea {
+  width: 100%;
+  resize: vertical;
+}
 .sr-only {
   position: absolute;
   width: 1px;

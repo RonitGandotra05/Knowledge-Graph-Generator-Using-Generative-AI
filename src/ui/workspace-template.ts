@@ -97,14 +97,38 @@ export const workspaceTemplate = /* HTML */ `<div class="workspace-heading">
         >
         <details id="paste-paper" class="paste-paper">
           <summary>Paste a research paper</summary>
-          <p class="fine-print">Paste the full paper text here. It will be parsed locally in your browser.</p>
-          <label for="paper-text" class="sr-only">Full research paper text</label>
-          <textarea id="paper-text" rows="7" placeholder="Paste the full text of your research paper…"></textarea>
-          <button type="button" id="add-pasted-paper" class="button secondary small">Add pasted paper</button>
+          <p class="fine-print">
+            Paste the full paper text here. It will be parsed locally in your
+            browser.
+          </p>
+          <label for="paper-text" class="sr-only"
+            >Full research paper text</label
+          >
+          <textarea
+            id="paper-text"
+            rows="7"
+            placeholder="Paste the full text of your research paper…"
+          ></textarea>
+          <button
+            type="button"
+            id="add-pasted-paper"
+            class="button secondary small"
+          >
+            Add pasted paper
+          </button>
         </details>
-        <div id="parse-progress" class="parse-progress" role="status" aria-live="polite" hidden>
+        <div
+          id="parse-progress"
+          class="parse-progress"
+          role="status"
+          aria-live="polite"
+          hidden
+        >
           <span class="parse-spinner" aria-hidden="true"></span>
-          <div><strong>Parsing your paper</strong><small id="parse-detail">Preparing local parser…</small></div>
+          <div>
+            <strong>Parsing your paper</strong
+            ><small id="parse-detail">Preparing local parser…</small>
+          </div>
         </div>
         <p class="fine-print">
           Automatic local OCR for scanned pages. Unreadable files/pages are

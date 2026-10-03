@@ -33,26 +33,41 @@ export const providers: Record<
   openai: {
     label: "OpenAI",
     endpoint: "https://api.openai.com/v1",
-    models: ["gpt-4.1-mini", "gpt-4.1", "gpt-4o-mini"],
-    note: "Direct request to OpenAI. Choose a model available to your account.",
+    models: ["gpt-6-luna", "gpt-6.1-sol", "gpt-6-astra"],
+    limitsUrl: "https://developers.openai.com/api/docs/guides/rate-limits",
+    keyUrl: "https://platform.openai.com/api-keys",
+    note: "Verified 2026-10-03. GPT-6 presets support JSON schemas. Paid API; ChatGPT subscriptions do not include API usage. Verify your project limits.",
   },
   anthropic: {
     label: "Anthropic Claude",
     endpoint: "https://api.anthropic.com/v1",
-    models: ["claude-sonnet-4-5", "claude-haiku-4-5"],
-    note: "Browser access uses Anthropic’s explicit direct-browser-access header. Use a restricted key on a trusted device.",
+    models: [
+      "claude-sonnet-5-5",
+      "claude-opus-5-5",
+      "claude-haiku-4-5-20251001",
+    ],
+    limitsUrl: "https://platform.claude.com/docs/en/api/rate-limits",
+    keyUrl: "https://platform.claude.com/settings/keys",
+    note: "Verified 2026-10-03. Claude 5.5 uses native JSON schemas. Paid API with account-specific limits. Haiku 4.5 retirement is not sooner than 2026-10-15. Browser access uses Anthropic’s direct-browser-access header.",
   },
   gemini: {
     label: "Google Gemini",
     endpoint: "https://generativelanguage.googleapis.com/v1beta",
-    models: ["gemini-2.5-flash", "gemini-2.5-pro"],
-    note: "Direct request to Google’s Gemini API. Choose an available model.",
+    models: [
+      "gemini-3.1-flash-lite",
+      "gemini-3.8-flash",
+      "gemini-3.5-flash-lite",
+      "gemini-3.1-pro-preview",
+    ],
+    note: "Verified 2026-10-03. Free text tiers apply to Flash and Flash-Lite; Pro Preview is paid-only. Quotas are account-specific in AI Studio. Direct request to Google’s Gemini API. Check key & load models verifies JSON generation with your selected model; listed models can still have account restrictions.",
+    keyUrl: "https://aistudio.google.com/api-keys",
+    limitsUrl: "https://ai.google.dev/gemini-api/docs/rate-limits",
   },
   groq: {
     label: "Groq",
     endpoint: "https://api.groq.com/openai/v1",
     models: ["openai/gpt-oss-20b", "openai/gpt-oss-120b", "qwen/qwen3.8-27b"],
-    note: "Direct requests to Groq. Model access and usage limits depend on your account.",
+    note: "Verified 2026-10-03. These presets have a published free tier of 30 RPM, 8,000 TPM, 1,000 RPD and 200,000 TPD. Your organization dashboard is authoritative.",
     keyUrl: "https://console.groq.com/keys",
     limitsUrl: "https://console.groq.com/docs/rate-limits",
   },
@@ -60,14 +75,14 @@ export const providers: Record<
     label: "Cerebras",
     endpoint: "https://api.cerebras.ai/v1",
     models: ["qwen-3.8-27b", "gpt-oss-120b"],
-    note: "Direct requests to Cerebras. Choose a model available to your account.",
+    note: "Verified 2026-10-03. No permanent free tier: $5 trial with verified payment method, expires after 30 days. Verify account limits.",
     keyUrl: "https://cloud.cerebras.ai/",
     limitsUrl: "https://inference-docs.cerebras.ai/support/rate-limits",
   },
   compatible: {
     label: "OpenAI-compatible",
     endpoint: "https://api.groq.com/openai/v1",
-    models: ["llama-3.3-70b-versatile"],
+    models: ["openai/gpt-oss-20b"],
     note: "Endpoint must support browser CORS and chat completions with JSON mode. HTTPS required, except localhost.",
   },
 };
@@ -116,6 +131,31 @@ export function providerError(status: number): string {
     return "The AI provider is temporarily unavailable. Try again later.";
   return `Provider rejected the request (HTTP ${status}). Check model availability and structured output support.`;
 }
+export function geminiModelId(model: string): string {
+  return model.trim().replace(/^models\//, "");
+}
+async function responseError(response: Response, config: ProviderConfig) {
+  const fallback = providerError(response.status);
+  if (config.provider !== "gemini") return fallback;
+  const data = await response.json().catch(() => null);
+  const message = data?.error?.message;
+  const detail =
+    typeof message === "string"
+      ? message
+          .replaceAll(config.key, "[redacted]")
+          .replaceAll(config.key.trim(), "[redacted]")
+          .replaceAll(encodeURIComponent(config.key), "[redacted]")
+          .replace(/\s+/g, " ")
+          .slice(0, 700)
+      : "";
+  const guidance =
+    response.status === 404
+      ? `Gemini model "${geminiModelId(config.model)}" is unavailable for this account or API. Use the recommended model, then Check key & load models.`
+      : response.status === 400
+        ? "Gemini rejected the request (HTTP 400). Check the API key and selected model’s JSON schema support."
+        : fallback;
+  return detail ? `${guidance} Google: ${detail}` : guidance;
+}
 export class LLMProvider {
   constructor(
     private config: ProviderConfig,
@@ -151,17 +191,25 @@ export class LLMProvider {
         max_tokens: outputTokens,
         system: security + system,
         messages: [{ role: "user", content: prompt }],
-        tools: [
-          {
-            name: "extract",
-            description: "Return structured research extraction",
-            input_schema: schema,
-          },
-        ],
-        tool_choice: { type: "tool", name: "extract" },
+        ...(/^(claude-(?:sonnet|opus)-5-5|claude-haiku-4-5)/.test(model)
+          ? { output_config: { format: { type: "json_schema", schema } } }
+          : {
+              tools: [
+                {
+                  name: "extract",
+                  description: "Return structured research extraction",
+                  input_schema: schema,
+                },
+              ],
+              tool_choice: { type: "tool", name: "extract" },
+            }),
       };
     } else if (provider === "gemini") {
-      url = base + "/models/" + encodeURIComponent(model) + ":generateContent";
+      url =
+        base +
+        "/models/" +
+        encodeURIComponent(geminiModelId(model)) +
+        ":generateContent";
       headers["x-goog-api-key"] = key;
       body = {
         systemInstruction: { parts: [{ text: security + system }] },
@@ -197,6 +245,9 @@ export class LLMProvider {
         ...(provider === "compatible"
           ? { max_tokens: outputTokens }
           : { max_completion_tokens: outputTokens }),
+        ...(provider === "openai" && /^gpt-6/.test(model)
+          ? { reasoning_effort: model === "gpt-6-luna" ? "none" : "low" }
+          : {}),
         ...(reasoningEffort(this.config)
           ? { reasoning_effort: reasoningEffort(this.config) }
           : {}),
@@ -245,7 +296,7 @@ export class LLMProvider {
       this.guard.observe(this.config, response);
       if (!response.ok) {
         if ([401, 403, 429].includes(response.status)) actualTokens = 0;
-        throw new Error(providerError(response.status));
+        throw new Error(await responseError(response, this.config));
       }
       const data = await response.json();
       usage = reportedUsage(provider, data);
@@ -271,13 +322,19 @@ export class LLMProvider {
             x.type === "tool_use" && x.name === "extract",
         );
         if (tool) return tool.input;
+        const text = data.content
+          ?.filter((x: { type: string }) => x.type === "text")
+          .map((x: { text: string }) => x.text)
+          .join("");
+        if (text) return parseJSON(text);
       }
       if (provider === "gemini") {
         const candidate = data.candidates?.[0];
         if (candidate?.finishReason === "MAX_TOKENS")
           throw new Error("Model output was truncated. Reduce graph limits.");
         const content = candidate?.content?.parts
-          ?.map((x: { text?: string }) => x.text || "")
+          ?.filter((x: { thought?: boolean }) => !x.thought)
+          .map((x: { text?: string }) => x.text || "")
           .join("");
         if (content) return parseJSON(content);
       } else if (provider !== "anthropic") {
@@ -328,8 +385,10 @@ export class LLMProvider {
       headers["x-api-key"] = c.key;
       headers["anthropic-version"] = "2023-06-01";
       headers["anthropic-dangerous-direct-browser-access"] = "true";
-    } else if (c.provider === "gemini") headers["x-goog-api-key"] = c.key;
-    else headers.Authorization = "Bearer " + c.key;
+    } else if (c.provider === "gemini") {
+      headers["x-goog-api-key"] = c.key;
+      url += "?pageSize=1000";
+    } else headers.Authorization = "Bearer " + c.key;
     const ticket = this.guard.begin(c, 0);
     try {
       const response = await fetch(url, {
@@ -343,13 +402,18 @@ export class LLMProvider {
         referrerPolicy: "no-referrer",
       });
       this.guard.observe(c, response);
-      if (!response.ok) throw new Error(providerError(response.status));
+      if (!response.ok) throw new Error(await responseError(response, c));
       const data = await response.json();
       const models =
         c.provider === "gemini"
           ? data.models
-              ?.filter((m: { supportedGenerationMethods?: string[] }) =>
-                m.supportedGenerationMethods?.includes("generateContent"),
+              ?.filter(
+                (m: { name: string; supportedGenerationMethods?: string[] }) =>
+                  m.supportedGenerationMethods?.includes("generateContent") &&
+                  /^models\/gemini-/.test(m.name) &&
+                  !/(?:image|tts|audio|live|embedding|robotics|computer-use|transcribe)/i.test(
+                    m.name,
+                  ),
               )
               .map((m: { name: string }) => m.name.replace(/^models\//, ""))
           : data.data?.map((m: { id: string }) => m.id);
@@ -367,5 +431,27 @@ export class LLMProvider {
     } finally {
       ticket.finish(0);
     }
+  }
+  async checkStructuredOutput(signal?: AbortSignal): Promise<void> {
+    const result = await this.structured(
+      "Verify this model can return schema-constrained JSON.",
+      'Return {"ok":true}. No document content is supplied.',
+      {
+        type: "object",
+        properties: { ok: { type: "boolean" } },
+        required: ["ok"],
+        additionalProperties: false,
+      },
+      signal,
+    );
+    if (
+      !result ||
+      typeof result !== "object" ||
+      !("ok" in result) ||
+      result.ok !== true
+    )
+      throw new Error(
+        "The model did not pass the structured JSON check. Choose another model.",
+      );
   }
 }

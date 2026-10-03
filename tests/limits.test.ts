@@ -188,7 +188,7 @@ describe("memory-only request pacing", () => {
   it("protects rolling daily request and token budgets within the tab", () => {
     let now = 0;
     const guard = new RequestGuard(() => now);
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < 800; i++) {
       now = i * 60000;
       guard.begin(config, 0).finish(0);
     }
@@ -198,7 +198,7 @@ describe("memory-only request pacing", () => {
     expect(guard.availability(config).blocked).toBe(false);
     guard.reset();
     now = 0;
-    for (let i = 0; i < 18; i++) {
+    for (let i = 0; i < 29; i++) {
       now = i * 60000;
       guard.begin(config, 5500).finish(5500);
     }

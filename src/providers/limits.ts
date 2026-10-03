@@ -1,4 +1,4 @@
-import { capacityProfile } from "./capacity";
+import { capacityProfile, safeCapacity } from "./capacity";
 import type { ProviderConfig } from "./client";
 import type { ExtractionOptions } from "../types";
 
@@ -21,10 +21,10 @@ const groq: RequestPolicy = {
   maxEdges: 500,
   inputTokens: 3000,
   outputTokens: 2600,
-  requestsPerMinute: 20,
-  tokensPerMinute: 6000,
-  requestsPerDay: 80,
-  tokensPerDay: 100000,
+  requestsPerMinute: 24,
+  tokensPerMinute: 6400,
+  requestsPerDay: 800,
+  tokensPerDay: 160000,
   spacingMs: 2500,
 };
 const cerebras: RequestPolicy = {
@@ -35,8 +35,8 @@ const cerebras: RequestPolicy = {
   outputTokens: 5000,
   requestsPerMinute: 4,
   tokensPerMinute: 24000,
-  requestsPerDay: 100,
-  tokensPerDay: 200000,
+  requestsPerDay: 1e15,
+  tokensPerDay: 800000,
   spacingMs: 15000,
 };
 const known = {
@@ -54,9 +54,12 @@ export function freeProvider(
     return config.provider;
   if (config.provider === "compatible") {
     try {
-      const host = new URL(config.endpoint).hostname;
-      if (host === "api.groq.com") return "groq";
-      if (host === "api.cerebras.ai") return "cerebras";
+      const url = new URL(config.endpoint),
+        path = url.pathname.replace(/\/$/, "");
+      if (url.origin === "https://api.groq.com" && path === "/openai/v1")
+        return "groq";
+      if (url.origin === "https://api.cerebras.ai" && path === "/v1")
+        return "cerebras";
     } catch {
       /* Endpoint validation reports this before any request. */
     }
@@ -69,8 +72,7 @@ export function requestPolicy(config: ProviderConfig): RequestPolicy | null {
     const capacity = capacityProfile(config);
     if (!capacity) return null;
     return {
-      contextTokens:
-        config.provider === "gemini" && config.billing === "free" ? 1000 : 6000,
+      contextTokens: 6000,
       maxNodes: 150,
       maxEdges: 500,
       inputTokens: 25000,
@@ -85,7 +87,19 @@ export function requestPolicy(config: ProviderConfig): RequestPolicy | null {
       inputOnly: capacity.inputOnly,
     };
   }
-  const base = provider === "groq" ? groq : cerebras;
+  let base = provider === "groq" ? groq : cerebras;
+  const custom = safeCapacity(config.capacity);
+  if (custom)
+    base = {
+      ...base,
+      requestsPerMinute: Math.max(1, Math.floor(custom.rpm * 0.8)),
+      tokensPerMinute: Math.max(1, Math.floor(custom.tpm * 0.8)),
+      requestsPerDay: custom.rpd
+        ? Math.max(1, Math.floor(custom.rpd * 0.8))
+        : 1e15,
+      tokensPerDay: config.billing === "free" ? base.tokensPerDay : 1e15,
+      spacingMs: Math.ceil(60000 / Math.max(1, Math.floor(custom.rpm * 0.8))),
+    };
   // Unlisted model capabilities/quotas are unknown: keep a smaller starter budget.
   return known[provider].has(config.model)
     ? base

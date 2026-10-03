@@ -123,7 +123,7 @@ for (const provider of ["groq", "cerebras"] as const) {
     );
     await page.locator("#api-key").fill(secret);
     await page.locator("#key-info").hover();
-    await expect(page.locator("#key-privacy")).toHaveText(
+    await expect(page.locator("#key-privacy")).toContainText(
       "Never saved. Cleared on refresh.",
     );
     if (

@@ -9,7 +9,7 @@ import { documentFromPages } from "../src/documents/text";
 import { safeDraft, type Draft } from "../src/storage/drafts";
 const openai: ProviderConfig = {
   provider: "openai",
-  model: "gpt-4.1-mini",
+  model: "gpt-6-luna",
   endpoint: "https://api.openai.com/v1",
   key: "DUMMY",
 };
@@ -28,20 +28,20 @@ describe("provider capacity and timing", () => {
   it("uses verified model-specific Tier 1 rates with headroom, and labels Gemini assumptions", () => {
     expect(capacityProfile(openai)).toMatchObject({
       rpm: 500,
-      tpm: 200000,
-      rpd: 10000,
+      tpm: 500000,
+      rpd: 0,
     });
     expect(requestPolicy(openai)).toMatchObject({
       requestsPerMinute: 400,
-      tokensPerMinute: 160000,
-      requestsPerDay: 8000,
+      tokensPerMinute: 400000,
+      requestsPerDay: 1e15,
     });
     expect(
       requestPolicy({ ...openai, model: "gpt-4.1" })?.tokensPerMinute,
     ).toBe(24000);
     expect(capacityProfile(gemini)?.label).toContain("planning example");
     expect(capacityProfile({ ...gemini, billing: "free" })?.label).toContain(
-      "assumption",
+      "actual account quotas unknown",
     );
     expect(requestPolicy(gemini)?.inputOnly).toBe(true);
   });
@@ -83,7 +83,7 @@ describe("provider capacity and timing", () => {
       paidAlternatives(large(), [], defaults, config)[0].config.capacity,
     ).toEqual(config.capacity);
   });
-  it("never imports public capacity into unknown/private providers or loosens Groq guards", () => {
+  it("never imports public capacity into unknown/private providers and honors explicit Groq dashboard limits", () => {
     expect(capacityProfile({ ...openai, model: "unknown" })).toBeNull();
     expect(
       capacityProfile({
@@ -100,7 +100,7 @@ describe("provider capacity and timing", () => {
         model: "openai/gpt-oss-20b",
         capacity: { rpm: 5000, tpm: 1e6, rpd: 0 },
       })?.tokensPerMinute,
-    ).toBe(6000);
+    ).toBe(800000);
   });
   it("adapts to lower response and project ceilings without repeated oversized requests", () => {
     const guard = new RequestGuard(() => 0);
@@ -196,11 +196,11 @@ describe("provider capacity and timing", () => {
     expect(guard.availability(config, 3500).retryAt).toBe(1250); // request spacing only; 500 input + 3500 fits.
   });
   it("sanitizes saved quota fields and never persists nested keys", () => {
-    const capacity = { rpm: 500, tpm: 200000, rpd: 10000, key: "SECRET" };
+    const capacity = { rpm: 500, tpm: 500000, rpd: 0, key: "SECRET" };
     expect(safeCapacity(capacity)).toEqual({
       rpm: 500,
-      tpm: 200000,
-      rpd: 10000,
+      tpm: 500000,
+      rpd: 0,
     });
     expect(safeCapacity({ rpm: 5, tpm: 20000, rpd: 0.5 })).toBeUndefined();
     expect(safeCapacity({ rpm: NaN, tpm: 1, rpd: 0 })).toBeUndefined();

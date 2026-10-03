@@ -62,18 +62,18 @@ The included nine-node sample is **manually curated and illustrative**. It is no
 | Provider          | Connection                                                |
 | :---------------- | :-------------------------------------------------------- |
 | OpenAI            | Direct API requests with structured output                |
-| Anthropic Claude  | Direct Messages API with a forced structured tool         |
+| Anthropic Claude  | Direct Messages API with native JSON schema output        |
 | Google Gemini     | Direct generation with a response schema                  |
 | Groq              | Direct OpenAI-compatible API with recommended presets     |
 | OpenAI-compatible | Your trusted endpoint and model; browser CORS is required |
 
 For a first run, [Groq offers a free tier](https://console.groq.com/docs/rate-limits), subject to account and model limits. **GPT-OSS 20B** is a suggested starting model; presets remain editable. Cerebras has no dedicated picker or free-access claim; a trusted compatible endpoint can still be entered.
 
-Before building, see approximate **calls, tokens, time and API cost**. Long quota waits show calculated OpenAI and Gemini alternatives; expand the comparison for calls, charges and assumptions. Optional dashboard limits make the estimate match your project. See [provider timing](docs/PROVIDER-TIMING.md). During analysis, see actual progress, pacing waits and provider-reported usage. At completion, inspect the token and estimated-cost receipt. Unknown prices or missing usage remain unknown.
+Before building, see approximate **calls, tokens, time and API cost**. Long quota waits show calculated OpenAI and Gemini alternatives; expand the comparison for calls, charges and assumptions. Optional dashboard limits make the estimate match your project. See [current models, pricing and quotas](docs/PROVIDER-AUDIT.md) and [provider timing](docs/PROVIDER-TIMING.md). During analysis, see actual progress, pacing waits and provider-reported usage. At completion, inspect the token and estimated-cost receipt. Unknown prices or missing usage remain unknown.
 
 **Evidence Atlas charges $0.** Any API charges belong to your provider; a ChatGPT subscription does not include OpenAI API usage. Free-plan cost estimates apply only when the selected account is eligible and stays within its quota. The provider’s billing record is authoritative.
 
-Requests run serially. Conservative minute/day budgets reserve estimated input plus maximum output (Gemini TPM reserves input only); reported usage and readable quota headers refine the budget. OpenAI presets use published Tier 1 rates with 20% headroom; Gemini scenarios are labeled assumptions until you enter AI Studio limits. Rejected keys are blocked, rate limits trigger cooldowns, and generation errors are not retried automatically. Large collections may require multiple quota windows, which appear in the estimate. Other tabs, applications and account usage remain outside the app’s view. See [request pacing and accounting](docs/MULTI-PAPER-WORKFLOW.md).
+Requests run serially. Conservative minute/day budgets reserve estimated input plus maximum output (Gemini TPM reserves input only); reported usage and readable quota headers refine the budget. OpenAI presets use published Tier 1 rates with 20% headroom; Gemini and Claude use clearly labeled app pacing examples until you enter dashboard limits; no universal daily quota is invented. Rejected keys are blocked, rate limits trigger cooldowns, and generation errors are not retried automatically. Large collections may require multiple quota windows, which appear in the estimate. Other tabs, applications and account usage remain outside the app’s view. See [request pacing and accounting](docs/MULTI-PAPER-WORKFLOW.md).
 
 ## Privacy by design
 

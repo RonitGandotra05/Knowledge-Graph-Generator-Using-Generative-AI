@@ -7,7 +7,7 @@ export async function goFocus(
   await goBuild(page);
   await page.locator("#focus").fill(focus);
   await page.locator("#terms").fill(keywords);
-  await page.locator("#add-terms").click();
+  await page.locator("#terms").blur();
 }
 export async function goBuild(page: Page) {
   if (await page.locator("#edit-setup").isVisible())

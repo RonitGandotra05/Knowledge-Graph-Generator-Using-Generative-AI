@@ -264,8 +264,8 @@ describe("preflight and remaining estimates", () => {
     });
     expect(e.calls).toBe(4);
     expect(e.tokenCeiling).toBeGreaterThan(e.inputTokens + e.outputTokens);
-    expect(e.requestsPerMinute).toBe(20);
-    expect(e.tokensPerMinute).toBe(6000);
+    expect(e.requestsPerMinute).toBe(24);
+    expect(e.tokensPerMinute).toBe(6400);
     expect(e.durationCeilingMs).toBeGreaterThanOrEqual(e.durationMs);
     expect(e.costUSD).toBeGreaterThan(0);
   });

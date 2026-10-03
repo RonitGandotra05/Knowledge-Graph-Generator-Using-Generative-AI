@@ -3,6 +3,7 @@ import { safeCapacity, capacityProfile } from "../providers/capacity";
 import { $, escapeHTML as esc, readableError } from "./dom";
 import {
   LLMProvider,
+  geminiModelId,
   providers,
   type ProviderConfig,
   type ProviderId,
@@ -31,9 +32,9 @@ export class ProviderForm {
       <div class="key-label"><label for="api-key">API key</label><span class="key-info"><button id="key-info" type="button" aria-label="API key privacy" aria-describedby="key-privacy" aria-controls="key-privacy" aria-expanded="false">ⓘ</button><span id="key-privacy" class="key-tooltip" role="tooltip"><strong>API key privacy</strong>Never saved. Cleared on refresh.</span></span></div>
       <div class="key-input"><input id="api-key" type="password" placeholder="Enter your API key" autocomplete="off" spellcheck="false"><button type="button" id="reveal-key" aria-label="Reveal API key">Show</button></div>
       <div class="key-controls"><span class="fine-print">Cleared on refresh.</span><button type="button" id="clear-key" class="text-button">Clear key</button></div>
-      <label id="billing-plan-label" hidden>API plan<select id="billing-plan"><option value="standard">Paid / not sure</option><option value="free">Using a free tier</option></select><small>Sets cost and quota assumptions. Your key does not reveal your plan.</small></label>
+      <label id="billing-plan-label" hidden>API plan<select id="billing-plan"><option value="standard">Paid / not sure</option><option value="free">Using a free tier</option></select><small>Free estimates apply only to eligible models/accounts. Your key does not reveal your plan.</small></label>
       <details class="connection-options"><summary>Models & connection options</summary><p id="provider-note" class="fine-print"></p><p id="provider-links" class="fine-print" hidden><a id="provider-key-link" target="_blank" rel="noopener noreferrer"></a> · <a id="provider-limits-link" target="_blank" rel="noopener noreferrer">Usage limits</a></p>
-      <div id="capacity-options" hidden><div id="capacity-note" class="fine-print"></div><label><input id="custom-capacity" type="checkbox"> Use my dashboard rate limits</label><div id="capacity-fields" class="provider-grid" hidden><label>Requests / minute<input id="capacity-rpm" type="number" min="1" max="100000" step="1"></label><label>Tokens / minute<input id="capacity-tpm" type="number" min="1" max="1000000000" step="1"></label><label>Requests / day<input id="capacity-rpd" type="number" min="0" max="1000000000" step="1"><small>0 = no daily cap configured</small></label></div><p class="fine-print">Use limits from your provider dashboard. We keep 20% headroom; shared usage can reduce capacity.</p></div><div class="provider-actions"><button type="button" id="check-key" class="button secondary small">Check key & load models</button><span class="fine-print">Optional. No document text sent.</span></div></details><p id="request-state" class="fine-print" role="status"></p>`;
+      <div id="capacity-options" hidden><div id="capacity-note" class="fine-print"></div><label><input id="custom-capacity" type="checkbox"> Use my dashboard rate limits</label><div id="capacity-fields" class="provider-grid" hidden><label>Requests / minute<input id="capacity-rpm" type="number" min="1" max="100000" step="1"></label><label>Tokens / minute<input id="capacity-tpm" type="number" min="1" max="1000000000" step="1"></label><label>Requests / day<input id="capacity-rpd" type="number" min="0" max="1000000000" step="1"><small>0 = no daily cap configured</small></label></div><p class="fine-print">Use limits from your provider dashboard. For Claude, enter the smaller of input and output TPM for conservative pacing; its separate quotas still apply. We keep 20% headroom; shared usage can reduce capacity.</p></div><div class="provider-actions"><button type="button" id="check-key" class="button secondary small">Check key & load models</button><span class="fine-print">Optional. No document text sent.</span></div></details><p id="request-state" class="fine-print" role="status"></p>`;
     $("#provider", root).addEventListener("change", () => {
       this.changeProvider();
       this.changed();
@@ -69,6 +70,7 @@ export class ProviderForm {
     );
     $("#endpoint", root).addEventListener("change", () => {
       this.clearKey();
+      this.capacity();
       this.changed();
     });
     $("#reveal-key", root).addEventListener("click", () => {
@@ -117,7 +119,39 @@ export class ProviderForm {
       this.checking = true;
       this.availability();
       try {
-        const models = await new LLMProvider(this.config()).listModels();
+        const config = this.config();
+        const client = new LLMProvider(config);
+        const current = () => {
+          const now = this.config();
+          return (
+            now.provider === config.provider &&
+            now.key === config.key &&
+            now.model === config.model &&
+            now.endpoint === config.endpoint
+          );
+        };
+        const models = await client.listModels();
+        if (!current()) return;
+        if (config.provider === "gemini") {
+          this.message(
+            `Checking structured JSON with ${geminiModelId(config.model)}…`,
+          );
+          while (true) {
+            if (!current()) return;
+            const state = requestGuard.availability(config);
+            if (!state.blocked) break;
+            if (!state.retryAt || state.retryAt - Date.now() > 20000)
+              throw new Error(state.reason);
+            await new Promise((resolve) =>
+              setTimeout(
+                resolve,
+                Math.max(1, Math.min(1000, state.retryAt! - Date.now())),
+              ),
+            );
+          }
+          await client.checkStructuredOutput();
+          if (!current()) return;
+        }
         $("#models", root).innerHTML = models
           .map(
             (m) =>
@@ -125,7 +159,9 @@ export class ProviderForm {
           )
           .join("");
         this.message(
-          `Key accepted. ${models.length} model IDs available; choose a model supporting structured extraction.`,
+          config.provider === "gemini"
+            ? `Key accepted. ${geminiModelId(config.model)} passed structured JSON generation. ${models.length} text model IDs listed; account access can vary.`
+            : `Key accepted. ${models.length} model IDs available; choose a model supporting structured extraction.`,
         );
       } catch (e) {
         this.message(readableError(e), true);
@@ -168,9 +204,15 @@ export class ProviderForm {
       model: $<HTMLInputElement>("#model", this.root).value.trim(),
       endpoint: $<HTMLInputElement>("#endpoint", this.root).value.trim(),
       capacity:
-        ["openai", "gemini"].includes(
-          $<HTMLSelectElement>("#provider", this.root).value,
-        ) && $<HTMLInputElement>("#custom-capacity", this.root).checked
+        [
+          "openai",
+          "gemini",
+          "anthropic",
+          "groq",
+          "cerebras",
+          "compatible",
+        ].includes($<HTMLSelectElement>("#provider", this.root).value) &&
+        $<HTMLInputElement>("#custom-capacity", this.root).checked
           ? safeCapacity({
               rpm: Number(
                 $<HTMLInputElement>("#capacity-rpm", this.root).value,
@@ -193,7 +235,14 @@ export class ProviderForm {
   }
   validCapacity() {
     return (
-      !["openai", "gemini"].includes(this.config().provider) ||
+      ![
+        "openai",
+        "gemini",
+        "anthropic",
+        "groq",
+        "cerebras",
+        "compatible",
+      ].includes(this.config().provider) ||
       !$<HTMLInputElement>("#custom-capacity", this.root).checked ||
       !!this.config().capacity
     );
@@ -201,9 +250,8 @@ export class ProviderForm {
   private capacity() {
     const config = this.config(),
       profile = capacityProfile({ ...config, capacity: undefined });
-    $("#capacity-options", this.root).hidden = !["openai", "gemini"].includes(
-      config.provider,
-    );
+    $("#capacity-options", this.root).hidden =
+      config.provider === "compatible" && !profile;
     $("#capacity-note", this.root).innerHTML = profile
       ? noticeList([
           { label: "Quota basis", text: profile.label },
@@ -213,7 +261,7 @@ export class ProviderForm {
           },
           { label: "Checked", text: "2026-10-03" },
         ])
-      : "Enter your dashboard limits for an account-specific estimate.";
+      : "Enter your dashboard limits for an account-specific estimate. This model’s quotas are unknown.";
     if (!$<HTMLInputElement>("#custom-capacity", this.root).checked && profile)
       for (const id of ["rpm", "tpm", "rpd"] as const)
         $<HTMLInputElement>("#capacity-" + id, this.root).value = String(
@@ -239,7 +287,7 @@ export class ProviderForm {
         ? "First run: GPT-OSS 20B recommended."
         : "Choose a model available to your account. Presets are editable.";
     $("#recommended-model", this.root).hidden =
-      !["groq", "cerebras"].includes(config.provider) ||
+      !["groq", "cerebras", "gemini"].includes(config.provider) ||
       config.model === p.models[0];
   }
   private availability() {
@@ -279,6 +327,10 @@ export class ProviderForm {
     );
     $<HTMLSelectElement>("#billing-plan", this.root).value = "standard";
     $("#provider-note", this.root).textContent = p.note;
+    $(".provider-actions .fine-print", this.root).textContent =
+      config.provider === "gemini"
+        ? "Optional. Small JSON generation uses your API quota. No document text sent."
+        : "Optional. No document text sent.";
     $("#provider-links", this.root).hidden = !p.keyUrl;
     const keyLink = $<HTMLAnchorElement>("#provider-key-link", this.root),
       limitsLink = $<HTMLAnchorElement>("#provider-limits-link", this.root);

@@ -1,3 +1,7 @@
+# Historical provider timing evaluation
+
+Current presets and quotas supersede the snapshot below: see [provider audit — October 3, 2026](PROVIDER-AUDIT.md). The timings below were measured with the earlier configuration.
+
 # Provider timing and paid alternatives
 
 Verified on **2026-10-03**. This change makes long quota waits actionable: the workspace shows calculated OpenAI and Gemini alternatives, with calls, duration and estimated API charges. These are workload estimates, not fixed promises of a one-hour completion.

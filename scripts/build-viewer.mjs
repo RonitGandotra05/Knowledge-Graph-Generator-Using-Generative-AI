@@ -1,5 +1,7 @@
 import { build } from "esbuild";
 import { mkdir, copyFile, readFile } from "node:fs/promises";
+import { createRequire } from "node:module";
+const require = createRequire(import.meta.url);
 await mkdir("src/generated", { recursive: true });
 await build({
   entryPoints: ["src/graph/viewer.ts"],
@@ -10,6 +12,24 @@ await build({
   target: "es2022",
   outfile: "src/generated/viewer.js",
   legalComments: "inline",
+  plugins: [
+    {
+      name: "inline-pdf-worker",
+      setup(build) {
+        build.onResolve({ filter: /pdf\.worker\.min\.mjs\?raw$/ }, (args) => ({
+          path: require.resolve(args.path.replace(/\?raw$/, "")),
+          namespace: "worker-source",
+        }));
+        build.onLoad(
+          { filter: /.*/, namespace: "worker-source" },
+          async (args) => ({
+            contents: `export default ${JSON.stringify(await readFile(args.path, "utf8"))}`,
+            loader: "js",
+          }),
+        );
+      },
+    },
+  ],
   banner: {
     js:
       "/*! Cytoscape.js\n" +

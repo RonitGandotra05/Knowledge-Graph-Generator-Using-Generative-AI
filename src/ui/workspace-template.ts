@@ -5,6 +5,9 @@ export const workspaceTemplate = /* HTML */ `<div class="workspace-heading">
       <p>Papers, a focus, your AI. Everything you need in one place.</p>
     </div>
     <div class="workspace-actions">
+      <button id="new-analysis" class="button secondary small">
+        New graph +
+      </button>
       <button
         type="button"
         id="edit-setup"
@@ -58,7 +61,10 @@ export const workspaceTemplate = /* HTML */ `<div class="workspace-heading">
       <summary>Paid providers can reduce this wait</summary>
       <div id="run-paid-options"></div>
     </details>
-    <p id="run-usage-note" class="fine-print"></p>
+    <details class="run-usage-details">
+      <summary>Usage details</summary>
+      <p id="run-usage-note" class="fine-print"></p>
+    </details>
     <ol
       id="run-activity"
       class="run-activity"
@@ -110,10 +116,7 @@ export const workspaceTemplate = /* HTML */ `<div class="workspace-heading">
             placeholder="e.g. Compare the proposed method, key findings and supporting evidence."
           ></textarea>
         </label>
-        <p class="fine-print">
-          Leave blank to explore the paper broadly, or describe what matters to
-          you.
-        </p>
+        <p class="fine-print">Leave blank to explore the whole paper.</p>
         <div id="manual-terms">
           <label
             >A few keywords (optional)<textarea
@@ -136,8 +139,7 @@ export const workspaceTemplate = /* HTML */ `<div class="workspace-heading">
         <details id="discovery-controls">
           <summary>Review suggested concepts</summary>
           <p class="fine-print">
-            Review all readable paper sections in bounded requests. Refine
-            suggestions before extracting relationships.
+            Review suggested concepts before building relationships.
           </p>
           <button
             type="button"
@@ -222,8 +224,7 @@ export const workspaceTemplate = /* HTML */ `<div class="workspace-heading">
             <div><strong>—</strong><span>approx. input tokens</span></div>
           </div>
           <div id="context-note" class="context-note">
-            Upload a paper and select concepts to preview exactly which excerpts
-            will be sent.
+            Upload a paper to preview the excerpts sent to AI.
           </div>
           <details id="context-preview">
             <summary>
@@ -240,9 +241,8 @@ export const workspaceTemplate = /* HTML */ `<div class="workspace-heading">
         </details>
         <div class="build-actions">
           <div class="send-disclosure">
-            Excerpts go directly to your AI provider. You pay any API charges to
-            them; Evidence Atlas charges nothing. ChatGPT subscriptions do not
-            include OpenAI API usage.
+            Excerpts go to your AI provider. You pay its API charges; Evidence
+            Atlas charges $0.
           </div>
           <button id="analyze" class="button primary full" disabled>
             Build my graph <span>↗</span>

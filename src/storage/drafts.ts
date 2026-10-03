@@ -1,3 +1,4 @@
+import { safePDFLines } from "../documents/pdf-location";
 import { safeCapacity, type RateCapacity } from "../providers/capacity";
 import type {
   Analysis,
@@ -65,6 +66,7 @@ export function safeDraft(d: Draft): Draft {
             paperId: p.paperId,
             paperName: p.paperName,
             text: p.text,
+            pdfLines: safePDFLines(p.pdfLines),
             page: p.page,
             paragraph: p.paragraph,
             section: p.section,

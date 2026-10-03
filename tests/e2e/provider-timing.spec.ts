@@ -25,7 +25,7 @@ test("long Groq estimates show calculated paid alternatives and switching restor
   );
   await expect(
     page.locator("#run-estimate .paid-comparison summary"),
-  ).toContainText(/OpenAI .*Gemini/);
+  ).toHaveText("Compare paid providers");
   await page.locator("#run-estimate .paid-comparison summary").click();
   await expect(page.locator(".provider-comparison")).toContainText(
     "Published OpenAI Tier 1",

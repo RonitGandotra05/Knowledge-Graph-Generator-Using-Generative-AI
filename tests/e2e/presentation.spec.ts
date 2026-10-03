@@ -14,8 +14,10 @@ test("home and complete setup fit desktop viewports in both themes without hidin
     await page.setViewportSize(viewport);
     for (const theme of ["dark", "light"]) {
       await page.goto("/");
-      if ((await page.locator("html").getAttribute("data-theme")) !== theme)
-        await page.locator("#home-theme").click();
+      if ((await page.locator("html").getAttribute("data-theme")) !== theme) {
+        await page.locator("#menu-toggle").click();
+        await page.locator("#theme-toggle").click();
+      }
       await expect(page.locator("#home .hero-actions")).toBeVisible();
       await expect(page.locator("#home .home-footer")).toBeInViewport();
       await expect
@@ -123,7 +125,8 @@ test("an active analysis continues on the homepage and reopens through ongoing h
   await page.locator(".brand").click();
   await expect(page.locator("#home")).toBeVisible();
   await expect(page.locator("#home-start")).toContainText("View live research");
-  await page.locator("#home-nav [data-history]").click();
+  await page.locator("#menu-toggle").click();
+  await page.locator("#show-history").click();
   await expect(
     page.locator("#history-items .history-status").first(),
   ).toHaveText("Ongoing");

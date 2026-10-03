@@ -1619,8 +1619,7 @@ html[data-view="home"] .header-right {
     font-size: 7px;
     letter-spacing: 2px;
   }
-  html[data-view="home"] #home-nav,
-  #home-start {
+  html[data-view="home"] #home-nav {
     display: none;
   }
   html[data-view="home"] #menu-toggle {

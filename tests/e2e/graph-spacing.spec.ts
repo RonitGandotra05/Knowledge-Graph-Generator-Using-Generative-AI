@@ -80,7 +80,8 @@ test("sample labels fit inside separate cards in every layout and theme", async 
   await expect(root.locator(".evidence-panel")).toBeVisible();
   const stage = await root.locator(".graph-stage").boundingBox();
   const inspector = await root.locator(".evidence-panel").boundingBox();
-  expect(inspector!.y).toBeGreaterThanOrEqual(stage!.y + stage!.height - 1);
+  expect(inspector!.y).toBeGreaterThanOrEqual(Math.max(0, stage!.y));
+  expect(inspector!.y).toBeLessThan(stage!.y + stage!.height);
   await root.locator(".graph-export summary").click();
   const pending = page.waitForEvent("download");
   await root.locator('[data-action="svg"]').click();

@@ -1,3 +1,4 @@
+import { noticeList } from "./notices";
 import { safeCapacity, capacityProfile } from "../providers/capacity";
 import { $, escapeHTML as esc, readableError } from "./dom";
 import {
@@ -27,12 +28,12 @@ export class ProviderForm {
       <p id="model-recommendation" class="fine-print"></p><button id="recommended-model" type="button" class="text-button" hidden>Use recommended model</button>
       <p id="provider-start" class="fine-print">For a first run, <a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer">Groq</a> offers a free tier. Usage limits apply.</p>
       <label id="endpoint-label" hidden>API base URL<input id="endpoint" type="url" value="https://api.groq.com/openai/v1" placeholder="https://your-provider.example/v1"><small>Your key and context go to this address. Only use a trusted endpoint with browser CORS.</small></label>
-      <div class="key-label"><label for="api-key">API key</label><span class="key-info"><button id="key-info" type="button" aria-label="API key privacy" aria-describedby="key-privacy">ⓘ</button><span id="key-privacy" class="key-tooltip" role="tooltip">Memory only. No browser storage. Refresh clears your key.</span></span></div>
+      <div class="key-label"><label for="api-key">API key</label><span class="key-info"><button id="key-info" type="button" aria-label="API key privacy" aria-describedby="key-privacy" aria-controls="key-privacy" aria-expanded="false">ⓘ</button><span id="key-privacy" class="key-tooltip" role="tooltip"><strong>API key privacy</strong>Never saved. Cleared on refresh.</span></span></div>
       <div class="key-input"><input id="api-key" type="password" placeholder="Enter your API key" autocomplete="off" spellcheck="false"><button type="button" id="reveal-key" aria-label="Reveal API key">Show</button></div>
       <div class="key-controls"><span class="fine-print">Cleared on refresh.</span><button type="button" id="clear-key" class="text-button">Clear key</button></div>
       <label id="billing-plan-label" hidden>API plan<select id="billing-plan"><option value="standard">Paid / not sure</option><option value="free">Using a free tier</option></select><small>Sets cost and quota assumptions. Your key does not reveal your plan.</small></label>
       <details class="connection-options"><summary>Models & connection options</summary><p id="provider-note" class="fine-print"></p><p id="provider-links" class="fine-print" hidden><a id="provider-key-link" target="_blank" rel="noopener noreferrer"></a> · <a id="provider-limits-link" target="_blank" rel="noopener noreferrer">Usage limits</a></p>
-      <div id="capacity-options" hidden><p id="capacity-note" class="fine-print"></p><label><input id="custom-capacity" type="checkbox"> Use my dashboard rate limits</label><div id="capacity-fields" class="provider-grid" hidden><label>Requests / minute<input id="capacity-rpm" type="number" min="1" max="100000" step="1"></label><label>Tokens / minute<input id="capacity-tpm" type="number" min="1" max="1000000000" step="1"></label><label>Requests / day<input id="capacity-rpd" type="number" min="0" max="1000000000" step="1"><small>0 = no daily cap configured</small></label></div><p class="fine-print">From your provider dashboard for this model/project. We leave 20% headroom; shared usage can still reduce capacity. Gemini counts input tokens/minute.</p></div><div class="provider-actions"><button type="button" id="check-key" class="button secondary small">Check key & load models</button><span class="fine-print">Optional. No document text sent.</span></div></details><p id="request-state" class="fine-print" role="status"></p>`;
+      <div id="capacity-options" hidden><div id="capacity-note" class="fine-print"></div><label><input id="custom-capacity" type="checkbox"> Use my dashboard rate limits</label><div id="capacity-fields" class="provider-grid" hidden><label>Requests / minute<input id="capacity-rpm" type="number" min="1" max="100000" step="1"></label><label>Tokens / minute<input id="capacity-tpm" type="number" min="1" max="1000000000" step="1"></label><label>Requests / day<input id="capacity-rpd" type="number" min="0" max="1000000000" step="1"><small>0 = no daily cap configured</small></label></div><p class="fine-print">Use limits from your provider dashboard. We keep 20% headroom; shared usage can reduce capacity.</p></div><div class="provider-actions"><button type="button" id="check-key" class="button secondary small">Check key & load models</button><span class="fine-print">Optional. No document text sent.</span></div></details><p id="request-state" class="fine-print" role="status"></p>`;
     $("#provider", root).addEventListener("change", () => {
       this.changeProvider();
       this.changed();
@@ -80,18 +81,28 @@ export class ProviderForm {
         show ? "Hide API key" : "Reveal API key",
       );
     });
-    $("#key-info", root).addEventListener("click", () =>
-      $(".key-info", root).classList.toggle("is-open"),
-    );
+    const keyInfo = $(".key-info", root),
+      keyButton = $("#key-info", root);
+    keyButton.addEventListener("click", () => {
+      keyInfo.classList.remove("is-dismissed");
+      const open = keyInfo.classList.toggle("is-open");
+      keyButton.setAttribute("aria-expanded", String(open));
+      if (!open) keyInfo.classList.add("is-dismissed");
+    });
+    for (const event of ["pointerenter", "focusin"])
+      keyInfo.addEventListener(event, () =>
+        keyInfo.classList.remove("is-dismissed"),
+      );
+    const dismissKeyInfo = () => {
+      keyInfo.classList.remove("is-open");
+      keyInfo.classList.add("is-dismissed");
+      keyButton.setAttribute("aria-expanded", "false");
+    };
     root.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        $(".key-info", root).classList.remove("is-open");
-        (document.activeElement as HTMLElement)?.blur();
-      }
+      if (e.key === "Escape") dismissKeyInfo();
     });
     document.addEventListener("pointerdown", (e) => {
-      if (!(e.target as Element).closest(".key-info"))
-        $(".key-info", root).classList.remove("is-open");
+      if (!(e.target as Element).closest(".key-info")) dismissKeyInfo();
     });
     $("#api-key", root).addEventListener("input", () => {
       this.availability();
@@ -193,9 +204,16 @@ export class ProviderForm {
     $("#capacity-options", this.root).hidden = !["openai", "gemini"].includes(
       config.provider,
     );
-    $("#capacity-note", this.root).textContent = profile
-      ? `${profile.label}. ${profile.rpm} requests/min · ${profile.tpm.toLocaleString()} ${profile.inputOnly ? "input " : ""}tokens/min. Limits checked 2026-10-03.`
-      : "Model quotas vary. Enter your dashboard limits for an account-specific estimate.";
+    $("#capacity-note", this.root).innerHTML = profile
+      ? noticeList([
+          { label: "Quota basis", text: profile.label },
+          {
+            label: "Per minute",
+            text: `${profile.rpm} requests · ${profile.tpm.toLocaleString()} ${profile.inputOnly ? "input " : ""}tokens`,
+          },
+          { label: "Checked", text: "2026-10-03" },
+        ])
+      : "Enter your dashboard limits for an account-specific estimate.";
     if (!$<HTMLInputElement>("#custom-capacity", this.root).checked && profile)
       for (const id of ["rpm", "tpm", "rpd"] as const)
         $<HTMLInputElement>("#capacity-" + id, this.root).value = String(
@@ -218,8 +236,8 @@ export class ProviderForm {
       p = providers[config.provider];
     $("#model-recommendation", this.root).textContent =
       config.provider === "groq"
-        ? "Recommended: GPT-OSS 20B for a first run. GPT-OSS 120B is also supported."
-        : "Choose a model supporting structured output. Presets are editable and account-dependent.";
+        ? "First run: GPT-OSS 20B recommended."
+        : "Choose a model available to your account. Presets are editable.";
     $("#recommended-model", this.root).hidden =
       !["groq", "cerebras"].includes(config.provider) ||
       config.model === p.models[0];

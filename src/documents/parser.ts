@@ -1,5 +1,6 @@
 import { documentFromPages } from "./text";
-import type { ResearchDocument } from "../types";
+import type { ResearchDocument, PDFLine } from "../types";
+import { locatePDFQuote } from "./pdf-location";
 const maxBytes = 30 * 1024 * 1024;
 export async function parseDocument(
   file: File,
@@ -59,16 +60,27 @@ export async function parseDocument(
       );
       const skippedPages: number[] = [];
       const ocrPages: number[] = [];
+      const pageLines = new Map<number, PDFLine[]>();
       let ocrFailure = "";
       if (sparsePages.length && useOCR) {
         try {
           const { ocrPDF } = await import("./ocr");
-          await ocrPDF(pdf, progress, sparsePages, (pageNumber, text) => {
-            if (text && /[\p{L}]{3}/u.test(text) && text.trim().length >= 30) {
-              pages[pageNumber - 1] = text;
-              ocrPages.push(pageNumber);
-            } else skippedPages.push(pageNumber);
-          });
+          await ocrPDF(
+            pdf,
+            progress,
+            sparsePages,
+            (pageNumber, text, lines) => {
+              if (
+                text &&
+                /[\p{L}]{3}/u.test(text) &&
+                text.trim().length >= 30
+              ) {
+                pages[pageNumber - 1] = text;
+                ocrPages.push(pageNumber);
+                if (lines) pageLines.set(pageNumber, lines);
+              } else skippedPages.push(pageNumber);
+            },
+          );
         } catch (error) {
           ocrFailure =
             error instanceof Error
@@ -90,6 +102,10 @@ export async function parseDocument(
               : "This PDF has no extractable text."),
         );
       const result = documentFromPages(file.name, pages);
+      for (const passage of result.passages) {
+        const lines = pageLines.get(passage.page!);
+        if (lines) passage.pdfLines = locatePDFQuote(lines, passage.text);
+      }
       result.ocrPages = ocrPages;
       result.skippedPages = [...new Set(skippedPages)].sort((a, b) => a - b);
       if (ocrPages.length)

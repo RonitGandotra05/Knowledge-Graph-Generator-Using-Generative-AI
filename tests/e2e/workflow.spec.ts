@@ -1,7 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import { readFile, mkdir } from "node:fs/promises";
 import { goFocus, goBuild, openHistory, menuClick } from "./helpers";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 const text =
   "Abstract\n\nAutism spectrum disorder (ASD) is associated with dysbiosis of the gut microbiome.\n\nMethods\n\nMachine learning identifies important microbial biomarkers related to ASD.\n\nResults\n\nSutterella and Prevotella are significant microbial biomarkers. Gut microbiome features were analyzed using machine learning.";
 async function upload(page: Page) {
@@ -610,7 +610,85 @@ test("uploaded research paper: OCR, matching, provenance, and context reduction"
   await expect(page.locator("#graph-root .evidence-location")).toContainText(
     "PDF page",
   );
+  await expect(page.locator("#graph-root .evidence-location")).toContainText(
+    "05v1.pdf",
+  );
+  const jsonDownload = page.waitForEvent("download");
+  await page.locator("#export-json").click();
+  const { readFile } = await import("node:fs/promises");
+  const analysis = JSON.parse(
+    await readFile((await (await jsonDownload).path())!, "utf8"),
+  );
+  const normalize = (text: string) =>
+    text.normalize("NFKC").replace(/\s+/g, " ").toLowerCase();
+  for (const edge of analysis.graph.edges) {
+    const source = analysis.sources.find((p: any) => p.id === edge.passageId);
+    expect(source).toBeDefined();
+    expect(normalize(source.text)).toContain(normalize(edge.evidence));
+    expect(edge.paperName).toBe("05v1.pdf");
+    expect(edge.paperId).toBe(source.paperId);
+    expect(edge.page).toBe(source.page);
+    expect(edge.paragraph).toBe(source.paragraph);
+  }
+  expect(analysis.graph.nodes.every((n: any) => n.sources?.length)).toBe(true);
+  const savedSource = analysis.sources.find(
+    (p: any) => p.id === analysis.graph.edges[0].passageId,
+  );
+  expect(savedSource.pdfLines.length).toBeGreaterThan(0);
+  await page.locator("#graph-root [data-edge]").first().click();
+  await page
+    .locator("#graph-root .evidence-content .source-jump")
+    .first()
+    .click();
+  const pdfPreview = page.getByRole("dialog", {
+    name: "Source PDF preview",
+    exact: true,
+  });
+  await expect(pdfPreview.locator(".pdf-preview-status")).toContainText(
+    "highlighted",
+  );
+  await expect(pdfPreview.locator(".pdf-preview-location")).toContainText(
+    "PDF page 1 of 14",
+  );
+  await page.screenshot({ path: ".artifacts/pdf-preview-uploaded-paper.png" });
+  await pdfPreview.getByRole("button", { name: "Close PDF preview" }).click();
   const html = page.waitForEvent("download");
   await page.locator("#export-html").click();
   await (await html).saveAs(".artifacts/paper-test-graph.html");
+  const offline = await page.context().newPage();
+  await offline.setViewportSize({ width: 1280, height: 720 });
+  await offline.goto("file://" + resolve(".artifacts/paper-test-graph.html"));
+  await offline.locator(".accessible-graph summary").click();
+  await offline.locator("[data-edge]").first().click();
+  await expect(offline.locator(".evidence-location")).toContainText("05v1.pdf");
+  await expect(offline.locator("blockquote")).toHaveText(
+    analysis.graph.edges[0].evidence,
+  );
+  await offline.locator(".source-passage summary").click();
+  await expect(offline.locator(".source-text mark")).toHaveText(
+    analysis.graph.edges[0].evidence,
+  );
+  const panel = await offline.locator(".evidence-panel").boundingBox();
+  expect(panel!.y).toBeGreaterThanOrEqual(0);
+  expect(panel!.y + panel!.height).toBeLessThanOrEqual(720);
+  await expect(
+    offline.getByRole("button", { name: "Close evidence", exact: true }),
+  ).toBeInViewport();
+  await offline.locator(".evidence-content .source-jump").first().click();
+  const offlinePreview = offline.getByRole("dialog", {
+    name: "Source PDF preview",
+    exact: true,
+  });
+  await offlinePreview
+    .locator("input[type=file]")
+    .setInputFiles(process.env.PAPER_PATH!);
+  await expect(offlinePreview.locator(".pdf-preview-status")).toContainText(
+    "highlighted",
+  );
+  await offline.screenshot({
+    path: ".artifacts/pdf-preview-generated-offline.png",
+  });
+  expect(offline.url()).toBe(
+    "file://" + resolve(".artifacts/paper-test-graph.html"),
+  );
 });

@@ -1,3 +1,4 @@
+import type { PDFPreview, PDFPreviewOptions } from "../documents/pdf-preview";
 import cytoscape from "cytoscape";
 import type {
   Analysis,
@@ -82,6 +83,7 @@ export class GraphViewer {
   private cy: cytoscape.Core;
   private types: string[];
   private selected: string | null = null;
+  private pdfPreview: PDFPreview | null = null;
   private resize: ResizeObserver;
   private events = new AbortController();
   private undoStack: KnowledgeGraph[] = [];
@@ -93,6 +95,7 @@ export class GraphViewer {
     private root: HTMLElement,
     public analysis: Analysis,
     private changed: () => void = () => {},
+    private pdfOptions: PDFPreviewOptions = {},
   ) {
     this.settings = {
       ...analysis.settings,
@@ -106,7 +109,7 @@ export class GraphViewer {
     this.types = [...new Set(analysis.graph.nodes.map((n) => n.type))];
     root.classList.add("graph-viewer");
     root.dataset.theme = this.settings.theme;
-    root.innerHTML = `<div class="graph-tools"><label class="graph-search"><span aria-hidden="true">⌕</span><input aria-label="Search graph nodes" placeholder="Find a concept…"></label><select aria-label="Graph layout"><option value="cose">Force directed</option><option value="circle">Radial</option><option value="breadthfirst">Hierarchical</option><option value="concentric">Concentric</option><option value="grid">Grid</option></select><select aria-label="Node shape"><option value="circle">Circles</option><option value="card">Cards</option></select><button data-action="physics" aria-pressed="${this.settings.physics}" title="Automatically settle after dragging; stops when stable">Physics ${this.settings.physics ? "on" : "off"}</button><button data-action="fit" title="Show the entire graph">Overview</button><button data-action="readable" title="Show readable labels; drag to explore">Read labels</button><button data-action="zoom-in" aria-label="Zoom in">+</button><button data-action="zoom-out" aria-label="Zoom out">−</button><button data-action="reset">Arrange</button><button data-action="undo" disabled>Undo</button><button data-action="redo" disabled>Redo</button><button data-action="fullscreen" aria-label="Fullscreen graph">⛶</button><button data-action="theme" aria-label="Toggle graph theme">◐</button><details class="graph-export"><summary>Image ↓</summary><div><button data-action="png">PNG</button><button data-action="svg">SVG</button></div></details></div><div class="graph-filter"><span>ENTITY TYPES</span>${this.types.map((t, i) => `<label class="type-toggle"><input type="checkbox" data-type="${esc(t)}" ${this.settings.hiddenTypes.includes(t) ? "" : "checked"}><i style="background:${palette[i % palette.length]}"></i>${esc(t)}</label>`).join("")}<label class="confidence">Confidence ≥ <output>${Math.round(this.settings.confidence * 100)}%</output><input aria-label="Minimum confidence" type="range" min="0" max="100" value="${this.settings.confidence * 100}"></label></div><div class="graph-body"><div class="graph-stage"><div class="graph-canvas" role="img" aria-label="Interactive research knowledge graph. Use the concept and relationship lists to inspect evidence with a keyboard."></div><div class="graph-hint">Drag to explore · Scroll to zoom · Select a connection for evidence</div><div class="graph-count"></div></div><aside class="evidence-panel" aria-label="Evidence inspector"><div class="inspector-eyebrow">EVIDENCE INSPECTOR</div><div class="evidence-content"></div></aside></div><details class="accessible-graph"><summary>Browse concepts & relationships <span>Keyboard accessible</span></summary><div class="graph-list"></div></details>`;
+    root.innerHTML = `<div class="graph-tools"><label class="graph-search"><span aria-hidden="true">⌕</span><input aria-label="Search graph nodes" placeholder="Find a concept…"></label><select aria-label="Graph layout"><option value="cose">Force directed</option><option value="circle">Radial</option><option value="breadthfirst">Hierarchical</option><option value="concentric">Concentric</option><option value="grid">Grid</option></select><select aria-label="Node shape"><option value="circle">Circles</option><option value="card">Cards</option></select><button data-action="physics" aria-pressed="${this.settings.physics}" title="Automatically settle after dragging; stops when stable">Physics ${this.settings.physics ? "on" : "off"}</button><button data-action="fit" title="Show the entire graph">Overview</button><button data-action="readable" title="Show readable labels; drag to explore">Read labels</button><button data-action="zoom-in" aria-label="Zoom in">+</button><button data-action="zoom-out" aria-label="Zoom out">−</button><button data-action="reset">Arrange</button><button data-action="undo" disabled>Undo</button><button data-action="redo" disabled>Redo</button><button data-action="fullscreen" aria-label="Fullscreen graph">⛶</button><button data-action="theme" aria-label="Toggle graph theme">◐</button><details class="graph-export"><summary>Image ↓</summary><div><button data-action="png">PNG</button><button data-action="svg">SVG</button></div></details></div><div class="graph-filter"><span>ENTITY TYPES</span>${this.types.map((t, i) => `<label class="type-toggle"><input type="checkbox" data-type="${esc(t)}" ${this.settings.hiddenTypes.includes(t) ? "" : "checked"}><i style="background:${palette[i % palette.length]}"></i>${esc(t)}</label>`).join("")}<label class="confidence">Confidence ≥ <output>${Math.round(this.settings.confidence * 100)}%</output><input aria-label="Minimum confidence" type="range" min="0" max="100" value="${this.settings.confidence * 100}"></label></div><div class="graph-body"><div class="graph-stage"><div class="graph-canvas" role="img" aria-label="Interactive research knowledge graph. Use the concept and relationship lists to inspect evidence with a keyboard."></div><div class="graph-hint">Drag to explore · Scroll to zoom · Select a concept or connection for evidence</div><div class="graph-count"></div><aside class="evidence-panel" popover="manual" tabindex="-1" aria-label="Evidence inspector"><div class="evidence-header"><div><span class="inspector-eyebrow">EVIDENCE INSPECTOR</span><small class="evidence-scroll-hint">Scroll for sources and details</small></div><button data-action="close-evidence" aria-label="Close evidence">×</button></div><div class="evidence-content"></div></aside></div></div><details class="accessible-graph"><summary>Browse concepts & relationships <span>Keyboard accessible</span></summary><div class="graph-list"></div></details>`;
     root.style.setProperty(
       "--graph-height",
       `${Math.min(1200, Math.max(760, 760 + (analysis.graph.nodes.length - 20) * 12))}px`,
@@ -234,6 +237,8 @@ export class GraphViewer {
         if (!el) return;
         if (el.dataset.node) this.inspectNode(el.dataset.node);
         else if (el.dataset.edge) this.inspectEdge(el.dataset.edge);
+        else if (el.dataset.action === "preview-source")
+          void this.previewSource(el.dataset.passage!, el.dataset.quote!);
         else this.action(el.dataset.action!);
       },
       { signal: this.events.signal },
@@ -241,8 +246,43 @@ export class GraphViewer {
     this.resize = new ResizeObserver(() => {
       this.cy.resize();
       this.fitReadable();
+      this.positionEvidence();
     });
     this.resize.observe($(".graph-stage", root));
+    const reposition = () => this.positionEvidence();
+    window.addEventListener("scroll", reposition, {
+      capture: true,
+      signal: this.events.signal,
+    });
+    window.addEventListener("resize", reposition, {
+      signal: this.events.signal,
+    });
+    root.addEventListener("toggle", reposition, {
+      capture: true,
+      signal: this.events.signal,
+    });
+    window.addEventListener("hashchange", () => this.closeEvidence(), {
+      signal: this.events.signal,
+    });
+    window.addEventListener("popstate", () => this.closeEvidence(), {
+      signal: this.events.signal,
+    });
+    document.addEventListener(
+      "click",
+      (event) => {
+        if (this.selected && !root.contains(event.target as Node))
+          this.closeEvidence();
+      },
+      { capture: true, signal: this.events.signal },
+    );
+    document.addEventListener(
+      "keydown",
+      (event) => {
+        if (event.key === "Escape" && this.selected && !this.pdfPreview?.isOpen)
+          this.closeEvidence();
+      },
+      { signal: this.events.signal },
+    );
     this.emptyEvidence();
     this.filter();
   }
@@ -425,8 +465,136 @@ export class GraphViewer {
   }
   private emptyEvidence() {
     this.root.classList.remove("has-selection");
+    const panel = $(".evidence-panel", this.root);
+    if (panel.matches(":popover-open")) panel.hidePopover();
     $(".evidence-content", this.root).innerHTML =
       `<div class="inspector-mark">⌁</div><h3>Follow the evidence.</h3><p>Select a concept or connection to see its supporting passage, source location, and interpretation.</p><div class="evidence-note">A quoted passage confirms the source text exists. It does not independently verify the AI’s interpretation.</div>`;
+  }
+  private closeEvidence() {
+    this.pdfPreview?.close();
+    const panel = $(".evidence-panel", this.root);
+    const hadFocus = panel.contains(document.activeElement);
+    this.selected = null;
+    this.cy.elements().removeClass("muted focused");
+    this.emptyEvidence();
+    if (hadFocus) {
+      const canvas = $(".graph-canvas", this.root);
+      canvas.tabIndex = 0;
+      canvas.focus({ preventScroll: true });
+    }
+  }
+  private positionEvidence() {
+    const panel = $(".evidence-panel", this.root);
+    if (!this.selected) return;
+    const graph = this.root.getBoundingClientRect();
+    const stage = $(".graph-stage", this.root).getBoundingClientRect();
+    const left = Math.max(12, graph.left + 12);
+    const right = Math.min(window.innerWidth - 12, graph.right - 12);
+    const bottom = Math.min(window.innerHeight - 12, graph.bottom - 12);
+    let top = Math.max(12, stage.top + 12);
+    // A short workspace canvas needs the full graph area for readable evidence.
+    if (bottom - top < 280) top = Math.max(12, graph.top + 12);
+    if (bottom - top < 100 || right - left < 100) {
+      if (panel.matches(":popover-open")) panel.hidePopover();
+      return;
+    }
+    const width = Math.min(420, right - left);
+    Object.assign(panel.style, {
+      left: `${right - width}px`,
+      top: `${top}px`,
+      width: `${width}px`,
+      maxHeight: `${Math.min(620, bottom - top)}px`,
+    });
+    if (!panel.matches(":popover-open")) panel.showPopover();
+    panel.classList.toggle(
+      "is-scrollable",
+      panel.scrollHeight > panel.clientHeight + 1,
+    );
+  }
+  private revealEvidence() {
+    const graph = this.root.getBoundingClientRect();
+    if (
+      Math.min(window.innerHeight, graph.bottom) - Math.max(0, graph.top) <
+      280
+    )
+      $(".graph-stage", this.root).scrollIntoView({
+        block: "center",
+        behavior: "instant",
+      });
+    this.positionEvidence();
+    const panel = $(".evidence-panel", this.root);
+    panel.scrollTop = 0;
+    panel.focus({ preventScroll: true });
+  }
+  private sourceLocation(
+    ref: Pick<
+      SourceReference,
+      "passageId" | "paperId" | "paperName" | "page" | "paragraph" | "section"
+    >,
+  ) {
+    const saved = this.analysis.sources?.find((p) => p.id === ref.passageId);
+    const paperId = saved?.paperId || ref.paperId;
+    const paper = this.analysis.papers?.find((p) => p.id === paperId);
+    const page = saved?.page ?? ref.page;
+    const paragraph = saved?.paragraph || ref.paragraph;
+    return [
+      saved?.paperName ||
+        ref.paperName ||
+        paper?.name ||
+        this.analysis.documentName,
+      page ? `PDF page ${page}` : "",
+      paragraph ? `Paragraph ${paragraph}` : "",
+      saved?.section || ref.section,
+    ]
+      .filter(Boolean)
+      .join(" · ");
+  }
+  private paperCitation(paperId?: string) {
+    const paper = this.analysis.papers?.find((p) => p.id === paperId);
+    if (!paper?.citation) return "";
+    const doi =
+      paper.doi && /^10\.\d{4,9}\/[\w.()/:-]+$/i.test(paper.doi)
+        ? paper.doi
+        : "";
+    return `<p class="paper-citation"><cite>${esc(paper.citation)}</cite>${doi ? ` <a href="https://doi.org/${esc(doi)}" target="_blank" rel="noopener">DOI: ${esc(doi)} ↗</a>` : ""}</p>`;
+  }
+  private jumpMarkup(ref: SourceReference) {
+    if (
+      !ref.page ||
+      !/\.pdf$/i.test(ref.paperName || this.analysis.documentName)
+    )
+      return "";
+    return `<button class="source-jump" data-action="preview-source" data-passage="${esc(ref.passageId)}" data-quote="${esc(ref.quote)}">Go to this line</button>`;
+  }
+  private async previewSource(passageId: string, quote: string) {
+    const saved = this.analysis.sources?.find((p) => p.id === passageId);
+    const edge = this.analysis.graph.edges.find(
+      (e) => e.passageId === passageId,
+    );
+    const ref = this.analysis.graph.nodes
+      .flatMap((n) => n.sources || [])
+      .find((r) => r.passageId === passageId);
+    const source =
+      saved ||
+      (edge || ref
+        ? {
+            id: passageId,
+            text: quote,
+            page: edge?.page || ref?.page || null,
+            paragraph: edge?.paragraph || ref?.paragraph || 0,
+            section: edge?.section || ref?.section || "Source",
+            paperId: edge?.paperId || ref?.paperId,
+            paperName:
+              edge?.paperName || ref?.paperName || this.analysis.documentName,
+            terms: [],
+          }
+        : null);
+    if (!source?.page) return;
+    const { PDFPreview } = await import("../documents/pdf-preview");
+    if (this.events.signal.aborted) return;
+    this.pdfPreview ||= new PDFPreview(this.root, this.pdfOptions);
+    const paper = this.analysis.papers?.find((p) => p.id === source.paperId);
+    await this.pdfPreview.open(source, quote, paper);
   }
   inspectNode(id: string) {
     const n = this.node(id);
@@ -435,23 +603,26 @@ export class GraphViewer {
     const edges = this.analysis.graph.edges.filter(
       (e) => e.source === id || e.target === id,
     );
+    const references = n.sources || [];
     $(".evidence-content", this.root).innerHTML =
-      `<span class="evidence-badge">${esc(n.type)}</span><h3>${esc(n.label)}</h3>${n.aliases.length ? `<p>Also known as: ${esc(n.aliases.join(", "))}</p>` : ""}<p>${edges.length} connections</p>${edges.map((e) => `<button class="relationship-card" data-edge="${esc(e.id)}">${esc(this.node(e.source)?.label)} <span>${esc(e.relationship.replace(/_/g, " "))}</span> ${esc(this.node(e.target)?.label)} <small>${e.page ? "PDF page " + e.page + " · " : ""}${e.paragraph ? "Paragraph " + e.paragraph : "Source reference unavailable"} · ${Math.round(e.confidence * 100)}%</small></button>`).join("") || "<p>No relationships. A concept’s presence alone does not establish a connection.</p>"}`;
-    $(".evidence-content", this.root).insertAdjacentHTML(
-      "beforeend",
-      `${n.edited ? '<p class="user-edit">Edited by you · original evidence retained</p>' : ""}<div class="edit-actions"><button data-action="edit-node">Edit concept</button><button data-action="delete-node">Delete concept</button></div><h4>Source passages</h4>${(n.sources || []).map((r) => this.sourceMarkup(r)).join("") || "<p>Source paragraphs are unavailable for this older graph. Connections below retain their quotes.</p>"}`,
-    );
+      `<span class="evidence-badge">${esc(n.type)}</span><h3>${esc(n.label)}</h3>${n.aliases.length ? `<p>Also known as: ${esc(n.aliases.join(", "))}</p>` : ""}
+      <h4>Evidence from the paper</h4>${references[0] ? `<div class="evidence-location">${esc(this.sourceLocation(references[0]))}</div><blockquote>${esc(references[0].quote)}</blockquote>${this.jumpMarkup(references[0])}` : ""}${references.map((r) => this.sourceMarkup(r)).join("") || "<p>This saved graph has no separate concept passage. Select a connection below to read its saved evidence.</p>"}
+      <h4>${edges.length} connections</h4>${edges.map((e) => `<button class="relationship-card" data-edge="${esc(e.id)}">${esc(this.node(e.source)?.label)} <span>${esc(e.relationship.replace(/_/g, " "))}</span> ${esc(this.node(e.target)?.label)} <small>${esc(this.sourceLocation({ ...e, paragraph: e.paragraph || 0 }))}</small></button>`).join("") || "<p>No relationships. A concept’s presence alone does not establish a connection.</p>"}
+      ${n.edited ? '<p class="user-edit">Edited by you · original evidence retained</p>' : ""}<div class="edit-actions"><button data-action="edit-node">Edit concept</button><button data-action="delete-node">Delete concept</button></div>`;
+    this.revealEvidence();
   }
   inspectEdge(id: string) {
     const e = this.analysis.graph.edges.find((e) => e.id === id);
     if (!e) return;
     this.focus(id);
+    const reference = { ...e, paragraph: e.paragraph || 0, quote: e.evidence };
+    const curated = this.analysis.provider === "Curated demo";
     $(".evidence-content", this.root).innerHTML =
-      `<span class="evidence-badge">${esc(e.kind === "stated" ? "Directly stated" : e.kind === "implied" ? "Strongly implied" : "AI inferred")}</span><h3>${esc(this.node(e.source)?.label)}</h3><div class="predicate">↓ ${esc(e.relationship.replace(/_/g, " "))}</div><h3>${esc(this.node(e.target)?.label)}</h3><div class="evidence-location">${e.page ? "PDF page " + e.page + " · " : ""}${e.paragraph ? "Paragraph " + e.paragraph + " · " : ""}${esc(e.section)}</div><blockquote>${esc(e.evidence)}</blockquote><div class="inspector-eyebrow">MODEL INTERPRETATION</div><p>${esc(e.explanation || "No additional explanation supplied.")}</p><div class="confidence-score">${Math.round(e.confidence * 100)}% <span>model confidence</span></div><div class="evidence-note">Confidence is an uncalibrated model estimate. Check the source and scientific context before drawing conclusions.</div>`;
-    $(".evidence-content", this.root).insertAdjacentHTML(
-      "beforeend",
-      `${e.edited ? '<p class="user-edit">Edited by you · evidence quote unchanged</p>' : ""}<div class="edit-actions"><button data-action="edit-edge">Edit relationship</button><button data-action="delete-edge">Delete relationship</button></div>${this.sourceMarkup({ passageId: e.passageId, page: e.page, paragraph: e.paragraph || 0, section: e.section, quote: e.evidence, paperId: e.paperId, paperName: e.paperName })}`,
-    );
+      `<span class="evidence-badge">${esc(e.kind === "stated" ? "Directly stated" : e.kind === "implied" ? "Strongly implied" : "AI inferred")}</span><h3>${esc(this.node(e.source)?.label)}</h3><div class="predicate">↓ ${esc(e.relationship.replace(/_/g, " "))}</div><h3>${esc(this.node(e.target)?.label)}</h3><div class="evidence-location">${esc(this.sourceLocation(reference))}</div><blockquote>${esc(e.evidence)}</blockquote>${this.jumpMarkup(reference)}
+      ${this.sourceMarkup(reference)}
+      <details class="evidence-interpretation"><summary>${curated ? "Curated sample interpretation" : "Model interpretation"}</summary><p>${esc(e.explanation || "No additional explanation supplied.")}</p>${curated ? "" : `<div class="confidence-score">${Math.round(e.confidence * 100)}% <span>model confidence</span></div><div class="evidence-note">Confidence is an uncalibrated model estimate. Check the source and scientific context before drawing conclusions.</div>`}</details>
+      ${e.edited ? '<p class="user-edit">Edited by you · evidence quote unchanged</p>' : ""}<div class="edit-actions"><button data-action="edit-edge">Edit relationship</button><button data-action="delete-edge">Delete relationship</button></div>`;
+    this.revealEvidence();
   }
   private runLayout() {
     this.stopPhysics();
@@ -759,7 +930,7 @@ export class GraphViewer {
       : esc(text);
     const lines = range ? text.slice(0, range[0]).split("\n").length : 1;
     const end = range ? text.slice(0, range[1]).split("\n").length : lines;
-    return `<details class="source-passage"><summary>${ref.paperName ? esc(ref.paperName) + " · " : ""}${ref.page ? "PDF page " + ref.page + " · " : ""}${ref.paragraph ? "Paragraph " + ref.paragraph : "Source location unavailable"}</summary><p class="source-location">${esc(ref.section)} · ${esc(ref.passageId)}</p><p class="source-text">${highlighted}</p><small>${source ? `Extracted text lines ${lines}${end !== lines ? "–" + end : ""}. Highlighted text supports this element.` : "Saved quote only; original paragraph unavailable."}</small></details>`;
+    return `${this.paperCitation(source?.paperId || ref.paperId)}<details class="source-passage"><summary>${esc(this.sourceLocation(ref))}</summary><p class="source-text">${highlighted}</p>${this.jumpMarkup(ref)}<small>${source ? `Extracted text lines ${lines}${end !== lines ? "–" + end : ""}. Highlighted text supports this element.` : "Saved evidence quote; full source paragraph was not included in this graph."}</small></details>`;
   }
   private commit(graph: KnowledgeGraph) {
     if (this.liveReadOnly) return;
@@ -867,6 +1038,7 @@ export class GraphViewer {
     $<HTMLInputElement>(".graph-editor input", this.root).focus();
   }
   private action(action: string) {
+    if (action === "close-evidence") this.closeEvidence();
     if (action === "physics") {
       this.settings.physics = !this.settings.physics;
       const button = $<HTMLButtonElement>('[data-action="physics"]', this.root);
@@ -1065,6 +1237,7 @@ export class GraphViewer {
       .join("")}</svg>`;
   }
   destroy() {
+    this.pdfPreview?.destroy();
     this.stopPhysics();
     this.events.abort();
     this.resize.disconnect();

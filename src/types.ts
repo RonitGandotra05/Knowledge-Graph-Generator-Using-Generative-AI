@@ -1,6 +1,9 @@
 export interface PaperRecord {
   id: string;
   name: string;
+  citation?: string;
+  doi?: string;
+  fingerprint?: string;
   status: "ready" | "partial" | "failed";
   pages: number;
   characters: number;
@@ -24,6 +27,13 @@ export interface UsageTotals {
   pricingDate: string;
   billing: "standard" | "free";
 }
+export interface PDFLine {
+  text: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 export interface Passage {
   paperId?: string;
   paperName?: string;
@@ -33,6 +43,7 @@ export interface Passage {
   section: string;
   paragraph: number;
   terms: string[];
+  pdfLines?: PDFLine[];
 }
 export interface ResearchDocument {
   name: string;

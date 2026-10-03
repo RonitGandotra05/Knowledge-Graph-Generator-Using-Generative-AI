@@ -40,6 +40,23 @@ export function attachProvenance(
       )[0];
       if (!match) continue;
       used.set(passage.id, passage);
+      let start = Math.max(0, match[0] - 80);
+      let end = Math.min(passage.text.length, match[1] + 120);
+      // Keep saved snippets contiguous, but avoid starting or ending mid-word.
+      while (
+        start > 0 &&
+        start < match[0] &&
+        /\S/.test(passage.text[start - 1]) &&
+        /\S/.test(passage.text[start])
+      )
+        start++;
+      while (
+        end > match[1] &&
+        end < passage.text.length &&
+        /\S/.test(passage.text[end - 1]) &&
+        /\S/.test(passage.text[end])
+      )
+        end--;
       node.sources.push({
         passageId: passage.id,
         paperId: passage.paperId,
@@ -47,10 +64,7 @@ export function attachProvenance(
         paragraph: passage.paragraph,
         page: passage.page,
         section: passage.section,
-        quote: passage.text.slice(
-          Math.max(0, match[0] - 80),
-          Math.min(passage.text.length, match[1] + 120),
-        ),
+        quote: passage.text.slice(start, end).trim(),
       });
       perPaper.set(scope, (perPaper.get(scope) || 0) + 1);
     }

@@ -16,7 +16,7 @@ test("public research content and links are available without JavaScript", async
     "interactive knowledge graphs",
   );
   await expect(page.locator(".app-header")).toHaveCount(1);
-  await expect(page.locator('a[href="/guide/"]')).toHaveAttribute(
+  await expect(page.locator(".header-guide")).toHaveAttribute(
     "target",
     "_blank",
   );
@@ -42,7 +42,7 @@ test("public research content and links are available without JavaScript", async
       expect(json).not.toMatch(/aggregateRating|reviewRating/);
     }
   }
-  await expect(page.locator("h1")).toContainText("knowledge graph");
+  await expect(page.locator("h1")).toContainText("How to use Evidence Atlas");
   await expect(
     page.getByRole("link", { name: "Evidence Atlas homepage" }),
   ).toHaveAttribute("href", "/");
@@ -53,7 +53,7 @@ test("public research content and links are available without JavaScript", async
       await page.evaluate(() => document.documentElement.scrollWidth),
     ).toBeLessThanOrEqual(390);
     await expect(
-      page.getByRole("link", { name: "Open workspace" }),
+      page.getByRole("banner").getByRole("link", { name: "Open workspace" }),
     ).toBeVisible();
   }
   const robots = await request.get("/robots.txt");
@@ -81,9 +81,9 @@ test("the rendered homepage hydrates once and keeps workspace state", async ({
   await page.locator(".brand").click();
   const [guide] = await Promise.all([
     page.waitForEvent("popup"),
-    page.getByRole("link", { name: "Research graph guide" }).click(),
+    page.locator(".header-guide").click(),
   ]);
-  await expect(guide.locator("h1")).toContainText("knowledge graph");
+  await expect(guide.locator("h1")).toContainText("How to use Evidence Atlas");
   await guide.close();
   await page.locator("#home-start").click();
   await expect(page.locator("#focus")).toHaveValue(

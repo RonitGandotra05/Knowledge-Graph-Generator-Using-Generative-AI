@@ -65,16 +65,16 @@
     <a class="skip-link" href="#guide">Skip to guide</a>
     <header>
       <a class="brand" href="/">evidence<span>atlas</span></a
-      ><a class="button" href="/#workspace">Open workspace ↗</a>
+      ><a class="button" href="/#workspace">Open workspace →</a>
     </header>
     <main id="guide">
-      <p class="eyebrow">RESEARCH, CONNECTED</p>
-      <h1>From research paper to knowledge graph.</h1>
+      <p class="eyebrow">RESEARCH GRAPH GUIDE</p>
+      <h1>How to use Evidence Atlas</h1>
       <p class="intro">
-        A knowledge graph represents concepts as nodes and their relationships
-        as connections. Evidence Atlas helps you explore those connections
-        across research documents, with the original quotations close at hand.
+        Build a graph from your papers, check the original evidence, and keep a
+        copy.
       </p>
+      <a class="button" href="/#sample">Try the sample graph →</a>
       <nav aria-label="On this page">
         <a href="#build">Build a graph</a
         ><a href="#evidence">Check the evidence</a
@@ -83,73 +83,81 @@
       </nav>
       <section id="build">
         <h2>Turn PDFs into an AI knowledge graph</h2>
-        <ol>
+        <ol class="guide-steps">
           <li>
-            <strong>Upload your papers.</strong> Add up to 10 documents in the
-            <a href="/#workspace">research workspace</a>. PDFs are parsed in
-            your browser. Scanned pages use automatic English OCR; unreadable
-            pages and excluded files are reported.
+            <strong>Upload.</strong> Add up to 10 papers in the
+            <a href="/#workspace">workspace</a>. PDF text and scanned pages are
+            read locally; unreadable pages are reported.
           </li>
           <li>
-            <strong>Add an optional focus.</strong> Describe your research
-            question or enter a few keywords. The AI uses this context to help
-            identify relevant concepts, alongside concepts discovered in the
-            paper.
+            <strong>Focus.</strong> Optionally add a research question or
+            keywords. Leave blank to explore the whole paper.
           </li>
           <li>
-            <strong>Connect your provider.</strong> Choose OpenAI, Claude,
-            Gemini, Groq or a compatible API, then enter your model and key.
-            Review the estimated tokens, provider cost and duration before
-            starting.
+            <strong>Connect.</strong> Choose your AI provider, model and API
+            key. Review the estimated time, tokens and cost.
           </li>
           <li>
-            <strong>Watch the graph grow.</strong> Concepts and supported
-            relationships appear as document sections are analyzed. Processing
-            is paced to the selected provider's limits.
+            <strong>Build.</strong> Click <b>Build my graph</b>. Concepts and
+            supported relationships appear as the papers are analyzed.
           </li>
         </ol>
-        <p>
-          The tool works across research fields. A computer science paper might
-          connect a model to a training method; a materials paper might connect
-          a composition to a measured property. It does not require a biological
-          vocabulary.
+        <p class="note">
+          Works across research fields. Your provider may charge for API use;
+          the app charges $0.
         </p>
       </section>
       <section id="evidence">
         <h2>Follow relationships back to the source</h2>
-        <p>
-          Click a node or relationship to inspect the source document, paragraph
-          and quoted evidence. PDF references use the PDF page index, which can
-          differ from a page number printed inside the paper.
-        </p>
-        <p>
-          A quotation matching the extracted text does not establish that an AI
-          interpretation is correct. Read the surrounding paragraph, check the
-          relationship's direction and distinguish a reported association from a
-          causal claim. OCR can also introduce errors.
-        </p>
-        <p>
-          When comparing multiple papers, use the source references to see which
-          document supports each connection. Treat the graph as a way to
-          navigate the literature, rather than proof that every important
-          finding has been captured.
+        <ol class="guide-steps">
+          <li>
+            <strong>Inspect.</strong> Click a node or connection. Its evidence
+            opens inside the graph, with the paper, page, paragraph and quote.
+          </li>
+          <li>
+            <strong>Go to this line.</strong> Open the original PDF in a compact
+            popup in the same tab. Matching lines are highlighted. Use + / − to
+            zoom, <b>Fit width</b> to reset, and drag or scroll to read around
+            them.
+          </li>
+          <li>
+            <strong>Reattach if needed.</strong> History and offline HTML do not
+            store the original PDF. Choose the same source file when prompted.
+          </li>
+          <li>
+            <strong>Verify.</strong> Read the surrounding text and check the
+            relationship's direction. AI and OCR can be wrong; a matching quote
+            does not prove the interpretation.
+          </li>
+        </ol>
+        <p class="note">
+          PDF page numbers refer to the file's page order, which may differ from
+          printed page numbers. Missing or unmatched text is reported rather
+          than highlighted.
         </p>
       </section>
       <section id="keep">
         <h2>Edit your graph and keep an offline copy</h2>
-        <p>
-          Rename or recolor nodes, edit relationships, delete unwanted concepts,
-          and undo or redo changes. Original evidence remains attached and edits
-          are marked. Switch between circles and cards, drag nodes, use optional
-          physics, search, zoom or open fullscreen.
-        </p>
-        <p>
-          Export interactive HTML for an offline viewer, JSON to preserve graph
-          data, or PNG and SVG images. Choose the light or dark theme you want
-          before exporting.
-          <a href="/#sample">Explore the illustrative sample graph</a> to try
-          the controls without an API key.
-        </p>
+        <ul class="guide-steps">
+          <li>
+            <strong>Explore.</strong> Search, zoom, drag nodes or open
+            fullscreen. Switch between circles and cards.
+          </li>
+          <li>
+            <strong>Edit.</strong> Rename and recolor nodes or edit
+            relationships. Undo and redo are available; original evidence stays
+            attached.
+          </li>
+          <li>
+            <strong>Save.</strong> Drafts save automatically in this browser.
+            <b>New graph</b> keeps your previous work in <b>History</b>.
+          </li>
+          <li>
+            <strong>Export.</strong> Choose HTML for an interactive offline
+            graph, JSON for graph data, or PNG / SVG for an image. Set your
+            preferred theme first.
+          </li>
+        </ul>
       </section>
       <section id="questions">
         <h2>Common questions</h2>
@@ -191,7 +199,7 @@
       </section>
       <p class="callout">
         Ready to connect your research?
-        <a class="button" href="/#workspace">Create your knowledge graph ↗</a>
+        <a class="button" href="/#workspace">Open workspace →</a>
       </p>
     </main>
     <footer>

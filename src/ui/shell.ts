@@ -6,23 +6,18 @@ export const appShell = /* HTML */ `<header class="app-header">
         ><small>RESEARCH, CONNECTED</small></span
       ></a
     >
-    <nav id="home-nav" aria-label="Homepage navigation">
-      <a href="#workspace">Workspace</a
-      ><button data-history>Local history</button
-      ><button data-info="how">How it works</button
-      ><button id="home-theme" aria-label="Switch to light mode">◐</button>
-    </nav>
     <div class="header-right">
-      <a id="home-start" class="button secondary" href="#workspace"
-        >Start mapping ↗</a
-      >
       <div id="workspace-header">
-        <span id="draft-state" role="status"
-          >Your work stays in this browser</span
-        ><button id="new-analysis" class="button secondary small">
-          New graph +
-        </button>
+        <span id="draft-state" role="status">Work stays in this browser</span>
       </div>
+      <a
+        class="header-guide"
+        href="/guide/"
+        target="_blank"
+        rel="noopener"
+        aria-label="How to use — research graph guide (opens in a new tab)"
+        >How to use ↗</a
+      >
       <button
         id="menu-toggle"
         aria-label="Open menu"
@@ -36,7 +31,6 @@ export const appShell = /* HTML */ `<header class="app-header">
       <button id="show-history">History</button
       ><button id="theme-toggle">Switch to light mode</button
       ><button id="explore-demo">Try a sample</button
-      ><button data-info="how">How it works</button
       ><button data-info="privacy">Privacy</button
       ><button data-info="security">API key security</button
       ><button data-info="terms">Terms of use</button>
@@ -66,7 +60,7 @@ export const appShell = /* HTML */ `<header class="app-header">
     <div class="result-heading">
       <div>
         <h2 id="history-title">Your graphs</h2>
-        <p>Pick up where you left off. Saved only in this browser.</p>
+        <p>Saved in this browser. Resume, export or delete.</p>
       </div>
       <button id="close-history" aria-label="Close history">×</button>
     </div>
@@ -78,17 +72,26 @@ export const appShell = /* HTML */ `<header class="app-header">
     </div>
     <button id="clear-history" class="text-button">Delete all history</button>
   </dialog>
-  <dialog id="info-dialog">
-    <button class="dialog-close" aria-label="Close information">×</button>
-    <h2></h2>
-    <p></p>
+  <dialog id="info-dialog" aria-labelledby="info-title">
+    <div class="notice-heading">
+      <h2 id="info-title"></h2>
+      <button class="dialog-close" aria-label="Close information">×</button>
+    </div>
+    <div class="info-content"></div>
   </dialog>
-  <dialog id="confirm-dialog">
-    <h2>Delete all local work?</h2>
-    <p>This removes saved graphs and unfinished drafts from this browser.</p>
+  <dialog
+    id="confirm-dialog"
+    aria-labelledby="delete-title"
+    aria-describedby="delete-description"
+  >
+    <h2 id="delete-title">Delete all local work?</h2>
+    <p id="delete-description">
+      Saved graphs and drafts will be removed from this browser. This cannot be
+      undone.
+    </p>
     <div class="dialog-actions">
       <button id="cancel-delete" class="button secondary">Cancel</button
-      ><button id="confirm-delete" class="button primary">
+      ><button id="confirm-delete" class="button danger">
         Delete all history
       </button>
     </div>

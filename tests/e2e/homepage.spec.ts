@@ -10,18 +10,21 @@ test("homepage leads to the unified workspace and preserves work across home and
   await expect(page.locator("#home h1")).toContainText("Your paper.");
   await expect(page.locator("#home h1 em")).toHaveText("perspective.");
   await expect(page.locator("#workspace")).toBeHidden();
-  await expect(page.locator("#home-nav")).toBeVisible();
+  await expect(page.locator("#menu-toggle")).toBeVisible();
+  await expect(page.locator("#app-menu")).toBeHidden();
   await page.screenshot({
     path: "docs/screenshots/home-dark.png",
     fullPage: true,
   });
-  await page.locator("#home-theme").click();
+  await page.locator("#menu-toggle").click();
+  await page.locator("#theme-toggle").click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await page.screenshot({
     path: "docs/screenshots/home-light.png",
     fullPage: true,
   });
-  await page.locator("#home-nav [data-history]").click();
+  await page.locator("#menu-toggle").click();
+  await page.locator("#show-history").click();
   await expect(page.locator("#history-dialog")).toBeVisible();
   await page.locator("#close-history").click();
   await page.locator('#home .hero-actions a[href="#workspace"]').click();

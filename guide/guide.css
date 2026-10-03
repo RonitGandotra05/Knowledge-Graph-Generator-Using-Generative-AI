@@ -174,3 +174,22 @@ footer {
     scroll-behavior: auto;
   }
 }
+.guide-steps {
+  padding-left: 24px;
+}
+.guide-steps li {
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.note {
+  color: var(--muted);
+  font-size: 14px;
+  padding-left: 16px;
+  border-left: 2px solid var(--accent);
+}
+footer {
+  padding-bottom: 110px;
+}

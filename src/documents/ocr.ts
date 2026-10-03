@@ -1,10 +1,11 @@
 import type { PDFDocumentProxy } from "pdfjs-dist";
 import { ocrRegions } from "./columns";
+import type { PDFLine } from "../types";
 export async function ocrPDF(
   pdf: PDFDocumentProxy,
   progress: (message: string) => void,
   pageNumbers: number[] = Array.from({ length: pdf.numPages }, (_, i) => i + 1),
-  onPage?: (page: number, text: string | null) => void,
+  onPage?: (page: number, text: string | null, lines?: PDFLine[]) => void,
 ): Promise<string[]> {
   const { createWorker, PSM } = await import("tesseract.js");
   progress("Loading local OCR engine and English language data…");
@@ -78,6 +79,7 @@ export async function ocrPDF(
           canvas.height,
         );
         const texts: string[] = [];
+        const lines: PDFLine[] = [];
         for (const region of regions) {
           const crop = document.createElement("canvas");
           crop.width = region.width;
@@ -98,7 +100,7 @@ export async function ocrPDF(
           let timeout: ReturnType<typeof setTimeout>;
           recognizing = true;
           const result = await Promise.race([
-            worker.recognize(crop),
+            worker.recognize(crop, {}, { text: true, blocks: true }),
             failure,
             new Promise<never>((_, reject) => {
               timeout = setTimeout(
@@ -110,10 +112,22 @@ export async function ocrPDF(
           recognizing = false;
           crop.width = crop.height = 0;
           texts.push(result.data.text);
+          for (const block of result.data.blocks || [])
+            for (const paragraph of block.paragraphs)
+              for (const line of paragraph.lines) {
+                const box = line.bbox;
+                lines.push({
+                  text: line.text.trim(),
+                  x: (region.left + box.x0) / canvas.width,
+                  y: (region.top + box.y0) / canvas.height,
+                  width: (box.x1 - box.x0) / canvas.width,
+                  height: (box.y1 - box.y0) / canvas.height,
+                });
+              }
         }
         const text = texts.join("\n\n");
         pages.push(text);
-        onPage?.(i, text);
+        onPage?.(i, text, lines);
         canvas.width = canvas.height = 0;
         page.cleanup();
       } catch (error) {

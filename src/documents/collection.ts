@@ -54,6 +54,15 @@ export async function parseCollection(
     };
     let document: ResearchDocument | null = null;
     try {
+      if (/\.pdf$/i.test(file.name)) {
+        const digest = await crypto.subtle.digest(
+          "SHA-256",
+          await file.arrayBuffer(),
+        );
+        paper.fingerprint = Array.from(new Uint8Array(digest), (byte) =>
+          byte.toString(16).padStart(2, "0"),
+        ).join("");
+      }
       document = await parseDocument(file, (message) =>
         progress(
           `Paper ${index + 1}/${files.length} · ${file.name}: ${message}`,

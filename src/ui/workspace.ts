@@ -1,3 +1,4 @@
+import { noticeList, statusNotice } from "./notices";
 import { capacityProfile } from "../providers/capacity";
 import { workspaceTemplate } from "./workspace-template";
 import type {
@@ -50,6 +51,7 @@ export class Workspace {
   private concepts: Concept[] = [];
   private provider: ProviderForm;
   private viewer: GraphViewer | null = null;
+  private pdfFiles = new Map<string, File>();
   private analysis: Analysis | null = null;
   private controller: AbortController | null = null;
   private busy = false;
@@ -364,7 +366,26 @@ export class Workspace {
         return `<tr><th scope="row">${alternative.provider === "openai" ? "OpenAI · GPT-4.1 mini" : "Gemini · 2.5 Flash"}</th><td>${duration(e.durationMs)}–${duration(e.durationCeilingMs)}</td><td>${e.calls.toLocaleString()} calls</td><td>${money(e.costUSD!)}–${money(e.costCeilingUSD!)} USD</td></tr><tr class="capacity-basis"><td colspan="4">${esc(profile.label)} · app pacing ${e.requestsPerMinute} calls/min · ${e.tokensPerMinute?.toLocaleString()} ${profile.inputOnly ? "input " : ""}tokens/min. <a href="${profile.source}" target="_blank" rel="noopener noreferrer">Check limits ↗</a></td></tr>`;
       })
       .join("");
-    const html = `<p class="fine-print">Paid API capacity can shorten long quota waits. Calculated for these papers using each provider’s context size and pacing.</p><div class="provider-comparison"><table><caption class="sr-only">Paid provider timing and charges</caption><thead><tr><th>Provider</th><th>Time estimate</th><th>Requests</th><th>API charge</th></tr></thead><tbody>${rows}</tbody></table></div><p class="fine-print">Full fresh run · estimated API charge · 20% quota headroom. OpenAI uses published Tier 1; Gemini is a planning example until you enter AI Studio quotas in Models & connection options. Paid access does not guarantee a completion time. A ChatGPT subscription does not include OpenAI API billing. Parsing/OCR time is additional. Switching provider starts fresh extraction.</p>`;
+    const html = `<p class="fine-print">Paid API capacity can shorten long quota waits. Calculated for these papers using each provider’s context size and pacing.</p><div class="provider-comparison"><table><caption class="sr-only">Paid provider timing and charges</caption><thead><tr><th>Provider</th><th>Time estimate</th><th>Requests</th><th>API charge</th></tr></thead><tbody>${rows}</tbody></table></div>${noticeList(
+      [
+        {
+          label: "Basis",
+          text: "Fresh run with 20% quota headroom. OpenAI uses Tier 1; enter your Gemini dashboard limits for an account-specific estimate.",
+        },
+        {
+          label: "Timing",
+          text: "Local parsing/OCR is additional. Paid access does not guarantee completion time.",
+        },
+        {
+          label: "Billing",
+          text: "API charges are separate from ChatGPT subscriptions.",
+        },
+        {
+          label: "Switching",
+          text: "Changing provider starts fresh extraction.",
+        },
+      ],
+    )}`;
     this.comparisonCache = { key, html, summary };
     return html;
   }
@@ -385,7 +406,37 @@ export class Workspace {
       plan.costUSD === null
         ? "Unknown"
         : `${money(plan.costUSD)}–${money(plan.costCeilingUSD!)}`;
-    target.innerHTML = `<div class="estimate-label"><span>YOUR RUN, ESTIMATED</span><small>${included} paper${included === 1 ? "" : "s"} included</small></div><div class="estimate-summary"><div><strong>${plan.calls.toLocaleString()}</strong><span>API calls · up to</span></div><div><strong>${(plan.inputTokens + plan.outputTokens).toLocaleString()}–${plan.tokenCeiling.toLocaleString()}</strong><span>tokens · estimate</span></div><div><strong>${cost}</strong><span>provider API charge · USD</span></div><div><strong>${duration(plan.durationMs)}–${duration(plan.durationCeilingMs)}</strong><span>remaining time · estimate</span></div></div>${plan.quotaDays > 1 ? `<p class="quota-notice">May need ${plan.quotaDays} quota windows. Progress is saved between resets. Paid API providers may finish much sooner; see the comparison below.</p>` : ""}<details class="paid-comparison"><summary>${plan.quotaDays > 1 || plan.durationCeilingMs >= 3600000 ? `Paid alternatives: ${esc(this.comparisonCache!.summary)}` : "Compare paid provider times & costs"}</summary>${comparison}</details><details class="estimate-assumptions"><summary>Estimate details & provider rates</summary><p class="fine-print">${plan.discoveryCalls} discovery + up to ${plan.relationshipCalls} relationship requests. ${plan.requestsPerMinute ? `App pacing: up to ${plan.requestsPerMinute} calls/min and ${plan.tokensPerMinute?.toLocaleString()} ${requestPolicy(config)?.inputOnly ? "input " : ""}tokens/min. ${capacityProfile(config)?.label || "Conservative app quota"}. ` : "Requests run one at a time; timing updates during the run. "}Parsing/OCR is local and free.</p><p class="fine-print">${config.billing === "free" ? "Free tier selected: $0 only within your provider’s free quota. Account eligibility and quota are not readable from your key." : config.provider === "groq" || config.provider === "gemini" ? "Paid rates shown; eligible free-tier usage may cost $0. Choose your API plan above." : "You pay your provider directly."} ${price ? `Rates checked ${this.usage.pricingDate}. <a href="${price.source}" target="_blank" rel="noopener noreferrer">Provider pricing</a>.` : "No verified rate for this model/endpoint; check its provider pricing before proceeding."} Evidence Atlas charges $0. Prices exclude taxes/credits. Tokens and time vary by output and account limits.</p></details>`;
+    target.innerHTML = `<div class="estimate-label"><span>YOUR RUN, ESTIMATED</span><small>${included} paper${included === 1 ? "" : "s"} included</small></div><div class="estimate-summary"><div><strong>${plan.calls.toLocaleString()}</strong><span>API calls · up to</span></div><div><strong>${(plan.inputTokens + plan.outputTokens).toLocaleString()}–${plan.tokenCeiling.toLocaleString()}</strong><span>tokens · estimate</span></div><div><strong>${cost}</strong><span>provider API charge · USD</span></div><div><strong>${duration(plan.durationMs)}–${duration(plan.durationCeilingMs)}</strong><span>remaining time · estimate</span></div></div>${plan.quotaDays > 1 ? `<div class="quota-notice"><strong>May need ${plan.quotaDays} quota windows.</strong><span>Progress is saved between resets. Paid API providers may finish much sooner.</span></div>` : ""}<details class="paid-comparison"><summary>Compare paid providers</summary>${comparison}</details><details class="estimate-assumptions"><summary>Estimate details & provider rates</summary>${noticeList(
+      [
+        {
+          label: "Requests",
+          text: `${plan.discoveryCalls} discovery + up to ${plan.relationshipCalls} relationship requests.`,
+        },
+        {
+          label: "Pacing",
+          text: plan.requestsPerMinute
+            ? `Up to ${plan.requestsPerMinute} calls/min · ${plan.tokensPerMinute?.toLocaleString()} ${requestPolicy(config)?.inputOnly ? "input " : ""}tokens/min. ${capacityProfile(config)?.label || "Conservative app quota"}.`
+            : "One request at a time. Timing updates during the run.",
+        },
+        {
+          label: "Your plan",
+          text:
+            config.billing === "free"
+              ? "Free tier selected: $0 only within your provider’s free quota. Your key does not reveal eligibility or quota."
+              : config.provider === "groq" || config.provider === "gemini"
+                ? "Paid rates shown. Eligible free-tier usage may cost $0; choose your API plan above."
+                : "You pay your provider directly.",
+        },
+        {
+          label: "App fee",
+          text: "Evidence Atlas: $0. Parsing/OCR is local and free.",
+        },
+        {
+          label: "Accuracy",
+          text: "Estimates vary with output and account limits. Taxes and credits are excluded.",
+        },
+      ],
+    )}<p class="fine-print">${price ? `<a href="${price.source}" target="_blank" rel="noopener noreferrer">Provider pricing ↗</a> · checked ${this.usage.pricingDate}` : "No verified rate for this model. Check provider pricing before starting."}</p></details>`;
   }
 
   private renderProgress() {
@@ -442,9 +493,8 @@ export class Workspace {
       (plan.quotaDays > 1 || plan.durationCeilingMs >= 3600000);
     $("#run-paid-comparison", this.root).hidden = !longWait;
     const comparison = longWait ? this.comparison() : "";
-    $("#run-paid-comparison summary", this.root).textContent = longWait
-      ? `Paid alternatives: ${this.comparisonCache!.summary}`
-      : "Paid providers can reduce this wait";
+    $("#run-paid-comparison summary", this.root).textContent =
+      "Compare paid providers";
     if (alternatives.innerHTML !== comparison)
       alternatives.innerHTML = comparison;
     $("#run-calls", this.root).textContent = u.calls.toLocaleString();
@@ -522,7 +572,46 @@ export class Workspace {
     if (!u) return;
     const excluded =
       analysis.papers?.filter((p) => p.status === "failed") || [];
-    target.innerHTML = `<details class="receipt-details"><summary>${u.calls} calls · ${u.totalTokens.toLocaleString()} reported tokens · ${u.estimatedCostUSD === null ? "charge unknown" : money(u.estimatedCostUSD) + " USD estimate"} <span>API usage ↓</span></summary><strong>${analysis.state === "paused" ? "Usage so far" : "Your API usage"}</strong><p>${u.calls} calls · ${u.inputTokens.toLocaleString()} input + ${u.outputTokens.toLocaleString()} output = ${u.totalTokens.toLocaleString()} reported tokens · ${duration(u.elapsedMs)}</p><p>Estimated provider charge: ${u.estimatedCostUSD === null ? "unknown" : money(u.estimatedCostUSD)} USD. Evidence Atlas: $0.${u.unknownCalls ? ` Usage missing for ${u.unknownCalls} call(s); total tokens/charge are incomplete.` : " Based on provider-reported usage, published rates and your selected plan; final billing may differ."}${u.billing === "free" ? " Free-tier selection assumes your account is eligible and within quota." : ""}</p>${excluded.length ? `<p>Excluded papers: ${excluded.map((p) => esc(p.name)).join(", ")}. They contributed no text to the graph.</p>` : ""}</details>`;
+    target.innerHTML = `<details class="receipt-details"><summary>${u.calls} calls · ${u.totalTokens.toLocaleString()} reported tokens · ${u.estimatedCostUSD === null ? "charge unknown" : money(u.estimatedCostUSD) + " USD estimate"} <span>API usage ↓</span></summary>${noticeList(
+      [
+        {
+          label: "Tokens",
+          text: `${u.inputTokens.toLocaleString()} input + ${u.outputTokens.toLocaleString()} output = ${u.totalTokens.toLocaleString()} reported tokens.`,
+        },
+        { label: "Elapsed", text: duration(u.elapsedMs) },
+        {
+          label: "Provider",
+          text: `${u.estimatedCostUSD === null ? "Charge unknown" : money(u.estimatedCostUSD) + " USD estimated"}. Final billing may differ.`,
+        },
+        { label: "App fee", text: "Evidence Atlas: $0." },
+        ...(u.unknownCalls
+          ? [
+              {
+                label: "Missing usage",
+                text: `${u.unknownCalls} call(s) have no report. Tokens and charges are incomplete.`,
+              },
+            ]
+          : []),
+        ...(u.billing === "free"
+          ? [
+              {
+                label: "Free tier",
+                text: "Assumes your account is eligible and within quota.",
+              },
+            ]
+          : []),
+        ...(excluded.length
+          ? [
+              {
+                label: "Excluded papers",
+                text:
+                  excluded.map((p) => p.name).join(", ") +
+                  ". No text from these papers was used.",
+              },
+            ]
+          : []),
+      ],
+    )}</details>`;
   }
 
   private options(): ExtractionOptions {
@@ -594,7 +683,7 @@ export class Workspace {
   private message(text: string, error = false) {
     const status = $("#status", this.root);
     status.hidden = false;
-    status.textContent = text;
+    status.innerHTML = statusNotice(text, error);
     status.className = error ? "status error" : "status";
     status.setAttribute("role", error ? "alert" : "status");
     if (this.busy && this.controller) {
@@ -666,6 +755,12 @@ export class Workspace {
       );
       this.doc = result.document;
       this.papers = result.papers;
+      this.pdfFiles.clear();
+      for (const [index, file] of files.entries()) {
+        const paper = result.papers[index];
+        if (paper.status !== "failed" && /\.pdf$/i.test(file.name))
+          this.pdfFiles.set(paper.id, file);
+      }
       const count = this.papers.filter((p) => p.status !== "failed").length;
       $<HTMLInputElement>("#max-nodes", this.root).value = String(
         defaults.maxNodes * Math.max(1, count),
@@ -762,7 +857,7 @@ export class Workspace {
       '<p class="fine-print">No context selected yet. Add terms found in the document.</p>';
     this.renderEstimate();
     $("#context-note", this.root).textContent = this.doc
-      ? `All parsed sections are reviewed in bounded requests. These are representative keyword matches. ${selection?.missing.length ? "Not found: " + selection.missing.join(", ") + ". " : ""}${selected > options.maxNodes ? "Increase the concept limit or select fewer concepts." : ""} Token estimates vary by model.`
+      ? `All parsed sections are reviewed. Preview shows keyword matches. ${selection?.missing.length ? "Not found: " + selection.missing.join(", ") + ". " : ""}${selected > options.maxNodes ? "Increase the concept limit or select fewer concepts." : ""} Token estimates vary by model.`
       : "Upload a paper to preview evidence.";
     this.analysisReady = !!this.doc;
     this.updateNavigation();
@@ -1058,7 +1153,7 @@ export class Workspace {
           ? "PROGRESS SAVED"
           : "ANALYSIS COMPLETE";
     $("#graph-warnings", this.root).innerHTML = analysis.warnings.length
-      ? `<details class="source-notes"><summary>Source notes · ${analysis.warnings.length}</summary>${analysis.warnings.map((w) => `<p class="graph-warning">${esc(w)}</p>`).join("")}</details>`
+      ? `<details class="source-notes"><summary>Source notes · ${analysis.warnings.length}</summary><ul class="notice-bullets">${analysis.warnings.map((w) => `<li class="graph-warning">${esc(w)}</li>`).join("")}</ul></details>`
       : "";
     if (this.viewer && this.viewer.analysis.id === analysis.id) {
       this.viewer.updateLive(analysis);
@@ -1068,10 +1163,15 @@ export class Workspace {
     }
     this.viewer?.destroy();
     const { GraphViewer } = await import("../graph/viewer");
-    this.viewer = new GraphViewer($("#graph-root", this.root), analysis, () => {
-      this.updateAnalysisHeading();
-      this.scheduleSave();
-    });
+    this.viewer = new GraphViewer(
+      $("#graph-root", this.root),
+      analysis,
+      () => {
+        this.updateAnalysisHeading();
+        this.scheduleSave();
+      },
+      { files: this.pdfFiles },
+    );
     this.viewer.setReadOnly(this.busy);
     this.goStep(3);
     if (!this.busy)
@@ -1206,6 +1306,7 @@ export class Workspace {
     this.restoring = true;
     this.viewer?.destroy();
     this.viewer = null;
+    this.pdfFiles.clear();
     this.analysis = null;
     this.doc = null;
     this.papers = [];
@@ -1242,6 +1343,7 @@ export class Workspace {
     if (this.busy) return;
     await this.flushDraft();
     this.restoring = true;
+    this.pdfFiles.clear();
     this.draftId = draft.id;
     this.doc = draft.document;
     this.comparisonCache = null;
@@ -1264,6 +1366,7 @@ export class Workspace {
     };
     this.viewer?.destroy();
     this.viewer = null;
+    this.pdfFiles.clear();
     this.analysis = null;
     $<HTMLTextAreaElement>("#focus", this.root).value = draft.focus;
     $<HTMLTextAreaElement>("#terms", this.root).value = draft.keywords;

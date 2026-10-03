@@ -116,8 +116,7 @@ html[data-theme="light"] .mission-control {
     width: 28px;
     height: 28px;
   }
-  #home-nav,
-  #home-start {
+  #home-nav {
     display: none;
   }
 }
@@ -1399,4 +1398,272 @@ html[data-theme="light"] .orbit-two {
 #workspace #capacity-options input[type="checkbox"] {
   width: auto;
   margin-right: 6px;
+}
+
+/* Keep secondary navigation in the same menu on every screen. */
+html[data-view="home"] .header-right {
+  margin-left: auto;
+}
+html[data-view="home"] #menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+#app-menu {
+  top: calc(100% - 4px);
+  z-index: 30;
+  max-width: calc(100vw - 48px);
+}
+/* Reserve bottom space for the hosting badge, including on narrow screens. */
+#home .home-footer {
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px 0 110px;
+  gap: 14px;
+}
+#home .footer-links {
+  flex-wrap: wrap;
+  row-gap: 12px;
+}
+
+/* Short notices use a consistent label, spacing and optional detail disclosure. */
+.header-guide {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 12px 4px;
+}
+.header-guide:hover,
+.header-guide:focus-visible {
+  color: var(--accent);
+}
+.workspace-actions {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.notice-list {
+  margin: 12px 0;
+}
+.notice-list > div {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.notice-list > div:last-child {
+  border-bottom: 0;
+}
+.notice-list dt {
+  font-weight: 650;
+  color: var(--text);
+}
+.notice-list dd {
+  margin: 0;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.notice-details > summary,
+.run-usage-details > summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 12px;
+  padding: 10px 0;
+}
+.notice-details p {
+  margin: 8px 0 0;
+  font-size: inherit;
+  line-height: 1.6;
+}
+.notice-kind {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 650;
+  margin-right: 8px;
+}
+.notice-message {
+  overflow-wrap: anywhere;
+}
+#workspace .notice-list,
+#workspace .notice-bullets {
+  font-size: 12px;
+  line-height: 1.6;
+}
+#workspace .notice-list > div {
+  padding: 7px 0;
+}
+#workspace .quota-notice {
+  font-size: 12px;
+  line-height: 1.6;
+}
+.quota-notice > * {
+  display: block;
+}
+.notice-bullets {
+  padding-left: 18px;
+}
+.notice-bullets li {
+  margin: 8px 0;
+}
+#info-dialog {
+  padding: 0;
+  width: min(560px, calc(100% - 32px));
+  max-height: min(680px, calc(100dvh - 32px));
+  overflow: hidden;
+}
+#info-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+.notice-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-shrink: 0;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.notice-heading h2 {
+  font-size: 21px;
+  margin: 0;
+}
+.dialog-close,
+#close-history {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 24px;
+  cursor: pointer;
+}
+.info-content {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 24px 20px;
+  font-size: 14px;
+  line-height: 1.65;
+}
+#history-dialog,
+#confirm-dialog {
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+#history-dialog .result-heading {
+  position: sticky;
+  top: -28px;
+  z-index: 1;
+  background: var(--surface);
+  padding: 12px 0;
+  align-items: flex-start;
+}
+#history-dialog h2 {
+  font-size: 22px;
+  margin: 0;
+}
+#history-dialog .result-heading p {
+  margin: 6px 0 0;
+  line-height: 1.6;
+}
+#clear-history {
+  border-top: 1px solid var(--border);
+  display: block;
+  width: 100%;
+  padding: 16px 0 0;
+  text-align: left;
+  color: #d97575;
+}
+#confirm-dialog {
+  padding: 24px;
+  max-width: 460px;
+}
+#confirm-dialog h2 {
+  font-size: 22px;
+  margin: 0;
+}
+#confirm-dialog p {
+  font-size: 14px;
+  line-height: 1.65;
+}
+.button.danger {
+  background: #9c3131;
+  border: 1px solid #9c3131;
+  color: #fff;
+}
+.key-tooltip {
+  font-size: 12px;
+}
+.key-tooltip strong {
+  display: block;
+  margin-bottom: 4px;
+}
+@media (max-width: 620px) {
+  .header-guide {
+    font-size: 12px;
+  }
+  html[data-view="home"] .brand > span {
+    font-size: 21px;
+  }
+  html[data-view="home"] .brand small {
+    display: none;
+  }
+  .notice-list > div {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+  .notice-heading {
+    padding: 14px 18px;
+  }
+  .info-content {
+    padding-inline: 18px;
+  }
+  #history-dialog .result-heading {
+    top: -18px;
+  }
+  .dialog-actions {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+}
+.key-info.is-dismissed .key-tooltip {
+  visibility: hidden;
+}
+#workspace .workspace-heading > div {
+  min-width: 0;
+}
+@media (max-width: 620px) {
+  #workspace .workspace-heading {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  #workspace .workspace-actions {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+}
+@media (max-width: 360px) {
+  .app-header,
+  html[data-view="home"] .app-header {
+    padding-inline: 12px;
+    gap: 8px;
+  }
+  .app-header .brand > span,
+  html[data-view="home"] .app-header .brand > span {
+    font-size: 18px;
+  }
+  .brand {
+    gap: 8px;
+  }
 }

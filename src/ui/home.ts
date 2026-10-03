@@ -13,7 +13,7 @@ export const homePage = /* HTML */ `<section
         relationships, follow the evidence, and make the bigger picture yours.
       </p>
       <div class="hero-actions">
-        <a class="button primary" href="#workspace"
+        <a id="home-start" class="button primary" href="#workspace"
           >Map your research <span aria-hidden="true">↗</span></a
         ><button id="home-demo" class="button ghost">
           Explore a sample <span aria-hidden="true">→</span>

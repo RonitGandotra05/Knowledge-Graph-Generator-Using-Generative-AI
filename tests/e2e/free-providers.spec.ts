@@ -124,7 +124,7 @@ for (const provider of ["groq", "cerebras"] as const) {
     await page.locator("#api-key").fill(secret);
     await page.locator("#key-info").hover();
     await expect(page.locator("#key-privacy")).toHaveText(
-      "Memory only. No browser storage. Refresh clears your key.",
+      "Never saved. Cleared on refresh.",
     );
     if (
       (await page.locator(".connection-options").getAttribute("open")) === null

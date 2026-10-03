@@ -95,7 +95,16 @@ async function openDemo(updateHash = true) {
     const a = demoAnalysis();
     a.settings.theme = theme;
     const { GraphViewer } = await import("./graph/viewer");
-    demo = new GraphViewer($("#demo-graph"), a);
+    demo = new GraphViewer($("#demo-graph"), a, () => {}, {
+      load: async (paperId) => {
+        if (paperId !== "demo-paper") return null;
+        const response = await fetch(
+          new URL(import.meta.env.BASE_URL + "samples/05v1.pdf", location.href),
+        );
+        if (!response.ok) return null;
+        return response.blob();
+      },
+    });
   }
 }
 $("#explore-demo").addEventListener("click", () => void openDemo());
@@ -106,10 +115,6 @@ $("#close-demo").addEventListener("click", () => {
   demo = null;
 });
 function themeLabel() {
-  $("#home-theme").setAttribute(
-    "aria-label",
-    `Switch to ${theme === "dark" ? "light" : "dark"} mode`,
-  );
   $("#theme-toggle").textContent =
     `Switch to ${theme === "dark" ? "light" : "dark"} mode`;
 }
@@ -126,7 +131,6 @@ function toggleTheme() {
   } catch {}
 }
 $("#theme-toggle").addEventListener("click", toggleTheme);
-$("#home-theme").addEventListener("click", toggleTheme);
 document.querySelectorAll<HTMLElement>("[data-info]").forEach((b) =>
   b.addEventListener("click", () => {
     closeMenu();

@@ -11,6 +11,17 @@ export function safePapers(papers: PaperRecord[]): PaperRecord[] {
     .map((p) => ({
       id: p.id.slice(0, 100),
       name: p.name.slice(0, 500),
+      fingerprint:
+        typeof p.fingerprint === "string" &&
+        /^[a-f0-9]{64}$/.test(p.fingerprint)
+          ? p.fingerprint
+          : undefined,
+      citation:
+        typeof p.citation === "string" ? p.citation.slice(0, 2000) : undefined,
+      doi:
+        typeof p.doi === "string" && /^10\.\d{4,9}\/[\w.()/:-]+$/i.test(p.doi)
+          ? p.doi.slice(0, 200)
+          : undefined,
       status:
         p.status === "ready"
           ? "ready"

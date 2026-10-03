@@ -6,7 +6,16 @@ import type {
   GraphSettings,
   SourceReference,
 } from "../types";
-import { editNode, deleteNode, editRelationship, nodeColor } from "./edit";
+import {
+  editNode,
+  deleteNode,
+  deleteNodes,
+  editRelationship,
+  addNode,
+  addRelationship,
+  nodeColor,
+} from "./edit";
+import { appearanceSettings, appearanceDefaults } from "./settings";
 import { quoteRange } from "./provenance";
 import { $, escapeHTML as esc, download } from "../ui/dom";
 const palette = [
@@ -38,11 +47,17 @@ function gradientStops(color: string, light: boolean) {
   );
 }
 // Keep the label inside its node so layouts reserve space for the actual text.
-function nodeLabel(label: string, circle = false) {
-  const textWidth = circle ? 136 : 160;
+function nodeLabel(label: string, settings: GraphSettings) {
+  const shape = settings.nodeShape;
+  const circle = shape === "circle";
+  const scale = settings.graphScale || 1;
+  const size = settings.nodeSize || 1;
+  const font = (settings.nodeFontSize || 15) * scale;
+  const lineHeight = font * 1.4;
+  const textWidth = (circle ? 136 : 160) * size * scale;
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d")!;
-  context.font = "600 15px system-ui";
+  context.font = `600 ${font}px system-ui`;
   const lines: string[] = [];
   let line = "";
   const words = label.split(/\s+/).flatMap((word) => {
@@ -67,22 +82,49 @@ function nodeLabel(label: string, circle = false) {
   }
   if (line) lines.push(line);
   const diameter = Math.max(
-    112,
+    112 * size * scale,
     Math.hypot(
       Math.max(0, ...lines.map((line) => context.measureText(line).width)),
-      lines.length * 21,
-    ) + 32,
+      lines.length * lineHeight,
+    ) +
+      32 * scale,
   );
   return {
-    nodeWidth: circle ? diameter : 188,
+    nodeWidth: circle
+      ? diameter
+      : shape === "diamond"
+        ? Math.max(
+            188 * size * scale,
+            2 *
+              (Math.max(
+                0,
+                ...lines.map((line) => context.measureText(line).width),
+              ) +
+                24 * scale),
+          )
+        : shape === "ellipse"
+          ? Math.max(188 * size * scale, diameter * 1.25)
+          : 188 * size * scale,
     displayLabel: lines.join("\n"),
-    labelHeight: circle ? diameter : Math.max(64, lines.length * 21 + 28),
+    labelHeight: circle
+      ? diameter
+      : shape === "ellipse"
+        ? diameter
+        : shape === "diamond"
+          ? Math.max(
+              90 * size * scale,
+              2 * (lines.length * lineHeight + 24 * scale),
+            )
+          : Math.max(64 * size * scale, lines.length * lineHeight + 28 * scale),
   };
 }
 export class GraphViewer {
   private cy: cytoscape.Core;
   private types: string[];
   private selected: string | null = null;
+  private multiSelection = new Set<string>();
+  private selectionMode = false;
+  private panelPosition: { x: number; y: number } | null = null;
   private pdfPreview: PDFPreview | null = null;
   private resize: ResizeObserver;
   private events = new AbortController();
@@ -99,7 +141,7 @@ export class GraphViewer {
   ) {
     this.settings = {
       ...analysis.settings,
-      nodeShape: analysis.settings.nodeShape === "circle" ? "circle" : "card",
+      ...appearanceSettings(analysis.settings),
       physics: analysis.settings.physics !== false,
       hiddenTypes: [...analysis.settings.hiddenTypes],
     };
@@ -109,7 +151,55 @@ export class GraphViewer {
     this.types = [...new Set(analysis.graph.nodes.map((n) => n.type))];
     root.classList.add("graph-viewer");
     root.dataset.theme = this.settings.theme;
-    root.innerHTML = `<div class="graph-tools"><label class="graph-search"><span aria-hidden="true">⌕</span><input aria-label="Search graph nodes" placeholder="Find a concept…"></label><select aria-label="Graph layout"><option value="cose">Force directed</option><option value="circle">Radial</option><option value="breadthfirst">Hierarchical</option><option value="concentric">Concentric</option><option value="grid">Grid</option></select><select aria-label="Node shape"><option value="circle">Circles</option><option value="card">Cards</option></select><button data-action="physics" aria-pressed="${this.settings.physics}" title="Automatically settle after dragging; stops when stable">Physics ${this.settings.physics ? "on" : "off"}</button><button data-action="fit" title="Show the entire graph">Overview</button><button data-action="readable" title="Show readable labels; drag to explore">Read labels</button><button data-action="zoom-in" aria-label="Zoom in">+</button><button data-action="zoom-out" aria-label="Zoom out">−</button><button data-action="reset">Arrange</button><button data-action="undo" disabled>Undo</button><button data-action="redo" disabled>Redo</button><button data-action="fullscreen" aria-label="Fullscreen graph">⛶</button><button data-action="theme" aria-label="Toggle graph theme">◐</button><details class="graph-export"><summary>Image ↓</summary><div><button data-action="png">PNG</button><button data-action="svg">SVG</button></div></details></div><div class="graph-filter"><span>ENTITY TYPES</span>${this.types.map((t, i) => `<label class="type-toggle"><input type="checkbox" data-type="${esc(t)}" ${this.settings.hiddenTypes.includes(t) ? "" : "checked"}><i style="background:${palette[i % palette.length]}"></i>${esc(t)}</label>`).join("")}<label class="confidence">Confidence ≥ <output>${Math.round(this.settings.confidence * 100)}%</output><input aria-label="Minimum confidence" type="range" min="0" max="100" value="${this.settings.confidence * 100}"></label></div><div class="graph-body"><div class="graph-stage"><div class="graph-canvas" role="img" aria-label="Interactive research knowledge graph. Use the concept and relationship lists to inspect evidence with a keyboard."></div><div class="graph-hint">Drag to explore · Ctrl/⌘ + scroll to zoom · Select a concept or connection for evidence</div><div class="graph-count"></div><aside class="evidence-panel" popover="manual" tabindex="-1" aria-label="Evidence inspector"><div class="evidence-header"><div><span class="inspector-eyebrow">EVIDENCE INSPECTOR</span><small class="evidence-scroll-hint">Scroll for sources and details</small></div><button data-action="close-evidence" aria-label="Close evidence">×</button></div><div class="evidence-content"></div></aside></div></div><details class="accessible-graph"><summary>Browse concepts & relationships <span>Keyboard accessible</span></summary><div class="graph-list"></div></details>`;
+    root.innerHTML = `<div class="graph-tools"><label class="graph-search"><span aria-hidden="true">⌕</span><input aria-label="Search graph nodes" placeholder="Find a concept…"></label><select aria-label="Graph layout"><option value="cose">Force directed</option><option value="circle">Radial</option><option value="breadthfirst">Hierarchical</option><option value="concentric">Concentric</option><option value="grid">Grid</option></select><select aria-label="Node shape"><option value="circle">Circles</option><option value="card">Cards</option><option value="ellipse">Ovals</option><option value="diamond">Diamonds</option></select><button data-action="physics" aria-pressed="${this.settings.physics}" title="Automatically settle after dragging; stops when stable">Physics ${this.settings.physics ? "on" : "off"}</button><button data-action="fit" title="Show the entire graph">Overview</button><button data-action="readable" title="Show readable labels; drag to explore">Read labels</button><button data-action="zoom-in" aria-label="Zoom in">+</button><button data-action="zoom-out" aria-label="Zoom out">−</button><button data-action="reset">Arrange</button><button data-action="add-node">+ Concept</button><button data-action="select-mode" aria-pressed="false">Select multiple</button><button data-action="undo" disabled>Undo</button><button data-action="redo" disabled>Redo</button><button data-action="fullscreen" aria-label="Fullscreen graph">⛶</button><button data-action="theme" aria-label="Toggle graph theme">◐</button><details class="graph-export"><summary>Image ↓</summary><div><button data-action="png">PNG</button><button data-action="svg">SVG</button></div></details></div><details class="graph-customize"><summary>Customize <span>Size, spacing &amp; labels</span></summary><div class="customize-controls">${[
+      [
+        "graphScale",
+        "Overall graph size",
+        50,
+        160,
+        Math.round(this.settings.graphScale! * 100),
+        "%",
+      ],
+      [
+        "nodeSize",
+        "Node size",
+        70,
+        160,
+        Math.round(this.settings.nodeSize! * 100),
+        "%",
+      ],
+      [
+        "edgeLength",
+        "Connection length",
+        24,
+        240,
+        this.settings.edgeLength,
+        "",
+      ],
+      [
+        "nodeFontSize",
+        "Node text size",
+        10,
+        24,
+        this.settings.nodeFontSize,
+        "px",
+      ],
+      [
+        "edgeFontSize",
+        "Connection text size",
+        7,
+        18,
+        this.settings.edgeFontSize,
+        "px",
+      ],
+    ]
+      .map(
+        ([key, label, min, max, value, unit]) =>
+          `<label>${label}<output>${value}${unit}</output><input type="range" aria-label="${label}" data-setting="${key}" data-unit="${unit}" min="${min}" max="${max}" value="${value}"></label>`,
+      )
+      .join(
+        "",
+      )}<label class="labels-toggle"><input type="checkbox" data-setting="showEdgeLabels" ${this.settings.showEdgeLabels ? "checked" : ""}> Show connection labels</label><div class="customize-presets"><button data-action="compact">Compact</button><button data-action="comfortable">Comfortable</button><button data-action="appearance-reset">Reset appearance</button></div></div></details><div class="selection-bar" hidden><span role="status">0 concepts selected</span><button data-action="select-all">Select all visible</button><button data-action="clear-selection">Clear</button><button data-action="delete-selected" disabled>Delete selected</button></div><div class="graph-filter"><span>ENTITY TYPES</span>${this.types.map((t, i) => `<label class="type-toggle"><input type="checkbox" data-type="${esc(t)}" ${this.settings.hiddenTypes.includes(t) ? "" : "checked"}><i style="background:${palette[i % palette.length]}"></i>${esc(t)}</label>`).join("")}<label class="confidence">Confidence ≥ <output>${Math.round(this.settings.confidence * 100)}%</output><input aria-label="Minimum confidence" type="range" min="0" max="100" value="${this.settings.confidence * 100}"></label></div><div class="graph-body"><div class="graph-stage"><div class="graph-canvas" role="img" aria-label="Interactive research knowledge graph. Use the concept and relationship lists to inspect evidence with a keyboard."></div><div class="graph-hint">Drag to explore · Ctrl/⌘ + scroll to zoom · Select a concept or connection for evidence</div><div class="graph-count"></div><aside class="evidence-panel" popover="manual" tabindex="-1" aria-label="Evidence inspector"><div class="evidence-header" tabindex="0" aria-label="Move inspector with arrow keys or drag" title="Drag to move · Arrow keys to move"><div><span class="inspector-eyebrow">EVIDENCE INSPECTOR</span><small class="evidence-scroll-hint">Drag header to move · Scroll for details</small></div><button data-action="close-evidence" aria-label="Close evidence">×</button></div><div class="evidence-content"></div></aside></div></div><details class="accessible-graph"><summary>Browse concepts & relationships <span>Keyboard accessible</span></summary><div class="graph-list"></div></details>`;
     root.style.setProperty(
       "--graph-height",
       `${Math.min(1200, Math.max(760, 760 + (analysis.graph.nodes.length - 20) * 12))}px`,
@@ -120,7 +210,7 @@ export class GraphViewer {
         ...analysis.graph.nodes.map((n, i) => ({
           data: {
             ...n,
-            ...nodeLabel(n.label, this.settings.nodeShape === "circle"),
+            ...nodeLabel(n.label, this.settings),
             color: n.color || nodeColor(analysis.graph.nodes.indexOf(n)),
           },
           position: this.settings.positions?.[n.id] || {
@@ -136,19 +226,7 @@ export class GraphViewer {
         })),
       ],
       style: this.style(),
-      layout: {
-        name: analysis.settings.positions ? "preset" : this.settings.layout,
-        animate: false,
-        randomize: false,
-        padding: 90,
-        nodeRepulsion: () => 45000,
-        idealEdgeLength: () => 240,
-        nodeOverlap: 35,
-        componentSpacing: 180,
-        spacingFactor: 1.6,
-        avoidOverlap: true,
-        nodeDimensionsIncludeLabels: true,
-      } as cytoscape.LayoutOptions,
+      layout: { name: "preset" },
       minZoom: 0.15,
       maxZoom: 4,
       wheelSensitivity: 0.2,
@@ -160,11 +238,27 @@ export class GraphViewer {
       });
       this.cy.fit(undefined, 65);
     }
-    if (!this.settings.positions) this.orientLayout();
-    this.separateNodes();
-    this.placeEdgeLabels();
-    this.fitReadable();
-    this.cy.on("tap", "node", (event) => this.inspectNode(event.target.id()));
+    if (!this.settings.positions) this.runLayout();
+    else {
+      this.separateNodes();
+      this.placeEdgeLabels();
+      this.fitReadable();
+    }
+    this.cy.on("tap", "node", (event) => {
+      const original = event.originalEvent as MouseEvent | undefined;
+      if (
+        this.selectionMode ||
+        original?.shiftKey ||
+        original?.metaKey ||
+        original?.ctrlKey
+      )
+        this.toggleSelection(event.target.id());
+      else this.inspectNode(event.target.id());
+    });
+    this.cy.on("boxselect", "node", (event) => {
+      this.multiSelection.add(event.target.id());
+      this.updateSelection();
+    });
     this.cy.on("tap", "edge", (event) => this.inspectEdge(event.target.id()));
     this.cy.on("tap", (event) => {
       if (event.target === this.cy) {
@@ -187,11 +281,9 @@ export class GraphViewer {
     const shape = $<HTMLSelectElement>('select[aria-label="Node shape"]', root);
     shape.value = this.settings.nodeShape!;
     shape.addEventListener("change", () => {
-      this.settings.nodeShape = shape.value === "circle" ? "circle" : "card";
+      this.settings.nodeShape = shape.value as GraphSettings["nodeShape"];
       this.cy.nodes().forEach((node) => {
-        node.data(
-          nodeLabel(node.data("label"), this.settings.nodeShape === "circle"),
-        );
+        node.data(nodeLabel(node.data("label"), this.settings));
       });
       this.cy.style(this.style());
       this.runLayout();
@@ -213,13 +305,41 @@ export class GraphViewer {
       },
       { signal: this.events.signal },
     );
-    const confidence = $<HTMLInputElement>('input[type="range"]', root);
+    const confidence = $<HTMLInputElement>(
+      'input[aria-label="Minimum confidence"]',
+      root,
+    );
     confidence.addEventListener("input", () => {
       this.settings.confidence = Number(confidence.value) / 100;
-      $("output", root).textContent = confidence.value + "%";
+      $(".confidence output", root).textContent = confidence.value + "%";
       this.filter();
       this.changed();
     });
+    root.addEventListener(
+      "input",
+      (event) => {
+        const input = event.target as HTMLInputElement;
+        const key = input.dataset.setting;
+        if (!key) return;
+        const previous = this.settings.graphScale!;
+        const previousGap = this.settings.edgeLength!;
+        if (key === "showEdgeLabels")
+          this.settings.showEdgeLabels = input.checked;
+        else {
+          const value = Number(input.value);
+          Object.assign(this.settings, {
+            [key]: ["graphScale", "nodeSize"].includes(key)
+              ? value / 100
+              : value,
+          });
+          input.parentElement!.querySelector("output")!.textContent =
+            input.value + input.dataset.unit;
+        }
+        this.applyAppearance(previous, previousGap);
+      },
+      { signal: this.events.signal },
+    );
+    this.enableInspectorDrag();
     this.cy.on("grab", "node", () => this.stopPhysics());
     this.cy.on("dragfree", "node", (event) => {
       if (this.settings.physics) this.settlePhysics(event.target.id());
@@ -235,11 +355,17 @@ export class GraphViewer {
           "[data-action],[data-node],[data-edge]",
         );
         if (!el) return;
-        if (el.dataset.node) this.inspectNode(el.dataset.node);
+        if (el.dataset.node)
+          this.selectionMode
+            ? this.toggleSelection(el.dataset.node)
+            : this.inspectNode(el.dataset.node);
         else if (el.dataset.edge) this.inspectEdge(el.dataset.edge);
         else if (el.dataset.action === "preview-source")
           void this.previewSource(el.dataset.passage!, el.dataset.quote!);
-        else this.action(el.dataset.action!);
+        else if (el.dataset.action === "manage-edge") {
+          this.inspectEdge(el.dataset.id!);
+          this.editor("edge");
+        } else this.action(el.dataset.action!);
       },
       { signal: this.events.signal },
     );
@@ -302,7 +428,10 @@ export class GraphViewer {
     document.addEventListener(
       "click",
       (event) => {
-        if (this.selected && !root.contains(event.target as Node))
+        if (
+          (this.selected || this.root.classList.contains("creating")) &&
+          !root.contains(event.target as Node)
+        )
           this.closeEvidence();
       },
       { capture: true, signal: this.events.signal },
@@ -310,13 +439,311 @@ export class GraphViewer {
     document.addEventListener(
       "keydown",
       (event) => {
-        if (event.key === "Escape" && this.selected && !this.pdfPreview?.isOpen)
+        if (
+          event.key === "Escape" &&
+          (this.selected || this.root.classList.contains("creating")) &&
+          !this.pdfPreview?.isOpen
+        )
           this.closeEvidence();
       },
       { signal: this.events.signal },
     );
     this.emptyEvidence();
     this.filter();
+  }
+  private gap() {
+    return this.settings.edgeLength! * this.settings.graphScale!;
+  }
+  private syncAppearanceControls() {
+    this.root
+      .querySelectorAll<HTMLInputElement>("[data-setting]")
+      .forEach((input) => {
+        const key = input.dataset.setting as keyof typeof appearanceDefaults;
+        if (key === "showEdgeLabels")
+          input.checked = this.settings.showEdgeLabels!;
+        else {
+          input.value = String(
+            Math.round(
+              this.settings[key]! *
+                (["graphScale", "nodeSize"].includes(key) ? 100 : 1),
+            ),
+          );
+          input.parentElement!.querySelector("output")!.textContent =
+            input.value + input.dataset.unit;
+        }
+      });
+  }
+  private applyAppearance(previousScale: number, previousGap: number) {
+    this.stopPhysics();
+    const ratio =
+      ((this.settings.graphScale! / previousScale) *
+        (180 + this.settings.edgeLength!)) /
+      (180 + previousGap);
+    const center = this.cy.nodes().boundingBox();
+    const cx = (center.x1 + center.x2) / 2,
+      cy = (center.y1 + center.y2) / 2;
+    this.cy.batch(() =>
+      this.cy.nodes().forEach((node) => {
+        node.data(nodeLabel(node.data("label"), this.settings));
+        const p = node.position();
+        node.position({
+          x: cx + (p.x - cx) * ratio,
+          y: cy + (p.y - cy) * ratio,
+        });
+      }),
+    );
+    this.cy.style(this.style());
+    this.separateNodes();
+    this.placeEdgeLabels();
+    this.cy.center(this.cy.elements(":visible"));
+    this.changed();
+  }
+  private compactLayout() {
+    this.separateNodes();
+    const nodes = this.cy.nodes(":visible").toArray();
+    if (nodes.length < 2) return;
+    if (this.settings.layout === "cose") {
+      // Settle to the same spring lengths before the first frame is shown.
+      for (let step = 0; step < 240; step++) {
+        this.cy.edges(":visible").forEach((edge) => {
+          const a = edge.source(),
+            b = edge.target(),
+            pa = a.position(),
+            pb = b.position();
+          const dx = pb.x - pa.x,
+            dy = pb.y - pa.y,
+            distance = Math.max(1, Math.hypot(dx, dy));
+          const rest = (a.outerWidth() + b.outerWidth()) / 2 + this.gap();
+          if (Math.abs(distance - rest) <= rest * 0.15) return;
+          const shift = (distance - rest) * 0.035;
+          a.position({
+            x: pa.x + (dx / distance) * shift,
+            y: pa.y + (dy / distance) * shift,
+          });
+          b.position({
+            x: pb.x - (dx / distance) * shift,
+            y: pb.y - (dy / distance) * shift,
+          });
+        });
+        if (step % 4 === 0) this.separateNodes();
+      }
+    }
+    // Contract sparse radial/grid layouts uniformly until the closest pair has
+    // only the requested clearance. This preserves their recognizable shape.
+    let factor = 0;
+    for (let i = 0; i < nodes.length; i++)
+      for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i],
+          b = nodes[j];
+        const dx = Math.abs(a.position("x") - b.position("x")),
+          dy = Math.abs(a.position("y") - b.position("y"));
+        factor = Math.max(
+          factor,
+          Math.min(
+            dx > 0
+              ? ((a.outerWidth() + b.outerWidth()) / 2 + this.gap() / 2) / dx
+              : Infinity,
+            dy > 0
+              ? ((a.outerHeight() + b.outerHeight()) / 2 + this.gap() / 2) / dy
+              : Infinity,
+          ),
+        );
+      }
+    if (factor > 0 && factor < 1) {
+      const bounds = this.cy.nodes(":visible").boundingBox();
+      const center = {
+        x: (bounds.x1 + bounds.x2) / 2,
+        y: (bounds.y1 + bounds.y2) / 2,
+      };
+      nodes.forEach((n) =>
+        n.position({
+          x: center.x + (n.position("x") - center.x) * factor,
+          y: center.y + (n.position("y") - center.y) * factor,
+        }),
+      );
+    }
+  }
+  private toggleSelection(id: string) {
+    this.closeEvidence();
+    if (this.multiSelection.has(id)) this.multiSelection.delete(id);
+    else this.multiSelection.add(id);
+    this.updateSelection();
+  }
+  private updateSelection() {
+    const visible = new Set(this.cy.nodes(":visible").map((n) => n.id()));
+    this.multiSelection = new Set(
+      [...this.multiSelection].filter((id) => visible.has(id)),
+    );
+    this.cy.nodes().forEach((n) => {
+      n.toggleClass("multi-selected", this.multiSelection.has(n.id()));
+    });
+    const bar = $(".selection-bar", this.root);
+    bar.hidden = !this.selectionMode && !this.multiSelection.size;
+    $(".selection-bar span", this.root).textContent =
+      `${this.multiSelection.size} concepts selected · Deletions can be undone`;
+    $<HTMLButtonElement>(
+      '[data-action="delete-selected"]',
+      this.root,
+    ).disabled = !this.multiSelection.size || this.liveReadOnly;
+    $('[data-action="select-mode"]', this.root).setAttribute(
+      "aria-pressed",
+      String(this.selectionMode),
+    );
+    this.cy.boxSelectionEnabled(this.selectionMode);
+    this.cy.userPanningEnabled(!this.selectionMode);
+    $(".graph-hint", this.root).textContent = this.selectionMode
+      ? "Click concepts or drag a box to select · Turn off Select multiple to pan"
+      : "Drag to explore · Ctrl/⌘ + scroll to zoom · Shift-click to select multiple";
+  }
+  private enableInspectorDrag() {
+    const panel = $(".evidence-panel", this.root),
+      header = $(".evidence-header", this.root);
+    let drag: { x: number; y: number; left: number; top: number } | null = null;
+    const move = (x: number, y: number) => {
+      const bounds = panel.getBoundingClientRect();
+      this.panelPosition = {
+        x: Math.max(12, Math.min(window.innerWidth - bounds.width - 12, x)),
+        y: Math.max(
+          12,
+          Math.min(window.innerHeight - Math.min(bounds.height, 80) - 12, y),
+        ),
+      };
+      this.positionEvidence();
+    };
+    header.addEventListener(
+      "pointerdown",
+      (event) => {
+        if ((event.target as Element).closest("button") || event.button !== 0)
+          return;
+        const bounds = panel.getBoundingClientRect();
+        drag = {
+          x: event.clientX,
+          y: event.clientY,
+          left: bounds.left,
+          top: bounds.top,
+        };
+        header.setPointerCapture(event.pointerId);
+        event.preventDefault();
+      },
+      { signal: this.events.signal },
+    );
+    header.addEventListener(
+      "pointermove",
+      (event) => {
+        if (drag)
+          move(
+            drag.left + event.clientX - drag.x,
+            drag.top + event.clientY - drag.y,
+          );
+      },
+      { signal: this.events.signal },
+    );
+    header.addEventListener(
+      "pointerup",
+      () => {
+        drag = null;
+      },
+      { signal: this.events.signal },
+    );
+    header.addEventListener(
+      "pointercancel",
+      () => {
+        drag = null;
+      },
+      { signal: this.events.signal },
+    );
+    header.addEventListener(
+      "keydown",
+      (event) => {
+        if (
+          event.target !== header ||
+          !["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(
+            event.key,
+          )
+        )
+          return;
+        event.preventDefault();
+        const bounds = panel.getBoundingClientRect(),
+          step = event.shiftKey ? 40 : 12;
+        move(
+          bounds.left +
+            (event.key === "ArrowLeft"
+              ? -step
+              : event.key === "ArrowRight"
+                ? step
+                : 0),
+          bounds.top +
+            (event.key === "ArrowUp"
+              ? -step
+              : event.key === "ArrowDown"
+                ? step
+                : 0),
+        );
+      },
+      { signal: this.events.signal },
+    );
+  }
+  private endpointOptions(selected?: string) {
+    return this.analysis.graph.nodes
+      .map(
+        (n) =>
+          `<option value="${esc(n.id)}" ${n.id === selected ? "selected" : ""}>${esc(n.label)}</option>`,
+      )
+      .join("");
+  }
+  private connectionFields(
+    source?: string,
+    target?: string,
+    relationship = "",
+    explanation = "",
+  ) {
+    return `<label>From<select name="source" aria-label="Connection from">${this.endpointOptions(source)}</select></label><label>To<select name="target" aria-label="Connection to">${this.endpointOptions(target)}</select></label><label>Relationship<input name="relationship" maxlength="100" placeholder="e.g. supports, relates to, depends on" value="${esc(relationship.replace(/_/g, " "))}" required></label><label>Description<textarea name="explanation" maxlength="1200" rows="3" placeholder="Describe why these concepts are connected">${esc(explanation)}</textarea></label>`;
+  }
+  private createEditor(kind: "node" | "edge") {
+    if (this.liveReadOnly) return;
+    const from = this.node(this.selected || "")?.id;
+    if (kind === "edge" && this.analysis.graph.nodes.length < 2) return;
+    this.root.classList.add("has-selection", "creating");
+    $(".evidence-content", this.root).innerHTML =
+      `<form class="graph-editor"><h3>Add ${kind === "node" ? "concept" : "connection"}</h3>${
+        kind === "node"
+          ? `<label>Name<input name="label" maxlength="120" required></label><label>Category<input name="type" maxlength="60" value="Concept" required></label><label>Color<input name="color" type="color" value="${nodeColor(this.analysis.graph.nodes.length)}"></label><label>Your notes<textarea name="notes" maxlength="4000" rows="3"></textarea></label>`
+          : this.connectionFields(
+              from,
+              this.analysis.graph.nodes.find((n) => n.id !== from)?.id,
+            )
+      }<p>Added by you. Paper evidence is not claimed.</p><p class="edit-error" role="alert"></p><div class="edit-actions"><button type="submit">Add ${kind === "node" ? "concept" : "connection"}</button><button type="button" data-action="cancel-edit">Cancel</button></div></form>`;
+    this.revealEvidence();
+    $(".graph-editor", this.root).addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (this.liveReadOnly) return;
+      const data = new FormData(event.target as HTMLFormElement);
+      try {
+        const graph =
+          kind === "node"
+            ? addNode(
+                this.analysis.graph,
+                String(data.get("label")),
+                String(data.get("type")),
+                String(data.get("color")),
+                String(data.get("notes")),
+              )
+            : addRelationship(
+                this.analysis.graph,
+                String(data.get("source")),
+                String(data.get("target")),
+                String(data.get("relationship")),
+                String(data.get("explanation")),
+              );
+        this.selected =
+          kind === "node" ? graph.nodes.at(-1)!.id : graph.edges.at(-1)!.id;
+        this.root.classList.remove("creating");
+        this.commit(graph);
+      } catch (error) {
+        $(".edit-error", this.root).textContent = (error as Error).message;
+      }
+    });
+    $<HTMLInputElement>(".graph-editor input", this.root).focus();
   }
   private style(): cytoscape.StylesheetJson {
     const light = this.settings.theme === "light";
@@ -345,17 +772,22 @@ export class GraphViewer {
           shape:
             this.settings.nodeShape === "circle"
               ? "ellipse"
-              : "round-rectangle",
+              : this.settings.nodeShape === "ellipse"
+                ? "ellipse"
+                : this.settings.nodeShape === "diamond"
+                  ? "diamond"
+                  : "round-rectangle",
           width: "data(nodeWidth)",
           height: "data(labelHeight)",
           color: light ? "#292b24" : "#f3f1ec",
           "font-family": "system-ui",
-          "font-size": 15,
+          "font-size": this.settings.nodeFontSize! * this.settings.graphScale!,
           "font-weight": 600,
+          "line-height": 1.4,
           "text-valign": "center",
           "text-halign": "center",
           "text-wrap": "wrap",
-          "text-max-width": "164px",
+          "text-max-width": `${160 * this.settings.nodeSize! * this.settings.graphScale!}px`,
           "z-index": 10,
           "overlay-opacity": 0,
         },
@@ -363,7 +795,7 @@ export class GraphViewer {
       {
         selector: "edge",
         style: {
-          label: "data(display)",
+          label: this.settings.showEdgeLabels ? "data(display)" : "",
           width: 1.5,
           "line-color": light ? "#91a18c" : "#647365",
           "target-arrow-color": light ? "#91a18c" : "#647365",
@@ -371,14 +803,15 @@ export class GraphViewer {
           "arrow-scale": 0.8,
           "curve-style": "bezier",
           color: light ? "#616958" : "#b2bcae",
-          "font-size": 11,
+          "font-size": this.settings.edgeFontSize! * this.settings.graphScale!,
+          "line-height": 1.3,
           "text-rotation": "none",
           "text-background-color": light ? "#faf9f3" : "#11120f",
           "text-background-opacity": 1,
           "text-background-padding": "5px",
           "text-margin-y": -12,
           "text-wrap": "wrap",
-          "text-max-width": "110px",
+          "text-max-width": `${110 * this.settings.graphScale!}px`,
         },
       },
       {
@@ -397,6 +830,14 @@ export class GraphViewer {
         },
       },
       { selector: "edge.focused", style: { width: 3 } },
+      {
+        selector: "node.multi-selected",
+        style: {
+          "border-width": 5,
+          "border-color": "#ffcf70",
+          "overlay-opacity": 0.1,
+        },
+      },
       { selector: ".hidden", style: { display: "none" } },
     ];
   }
@@ -459,6 +900,7 @@ export class GraphViewer {
       this.emptyEvidence();
     }
     this.search();
+    this.updateSelection();
   }
   private search() {
     const term = $<HTMLInputElement>(
@@ -482,6 +924,7 @@ export class GraphViewer {
     if (found.length) this.cy.fit(found.closedNeighborhood(), 100);
   }
   private focus(id: string) {
+    this.root.classList.remove("creating");
     this.root.classList.add("has-selection");
     this.selected = id;
     const el = this.cy.getElementById(id);
@@ -496,7 +939,7 @@ export class GraphViewer {
     return this.analysis.graph.nodes.find((n) => n.id === id);
   }
   private emptyEvidence() {
-    this.root.classList.remove("has-selection");
+    this.root.classList.remove("has-selection", "creating");
     const panel = $(".evidence-panel", this.root);
     if (panel.matches(":popover-open")) panel.hidePopover();
     $(".evidence-content", this.root).innerHTML =
@@ -517,7 +960,7 @@ export class GraphViewer {
   }
   private positionEvidence() {
     const panel = $(".evidence-panel", this.root);
-    if (!this.selected) return;
+    if (!this.selected && !this.root.classList.contains("creating")) return;
     const graph = this.root.getBoundingClientRect();
     const stage = $(".graph-stage", this.root).getBoundingClientRect();
     const left = Math.max(12, graph.left + 12);
@@ -531,11 +974,18 @@ export class GraphViewer {
       return;
     }
     const width = Math.min(420, right - left);
+    const height = Math.min(620, bottom - top);
+    const x = this.panelPosition
+      ? Math.max(left, Math.min(right - width, this.panelPosition.x))
+      : right - width;
+    const y = this.panelPosition
+      ? Math.max(top, Math.min(bottom - 120, this.panelPosition.y))
+      : top;
     Object.assign(panel.style, {
-      left: `${right - width}px`,
-      top: `${top}px`,
+      left: `${x}px`,
+      top: `${y}px`,
       width: `${width}px`,
-      maxHeight: `${Math.min(620, bottom - top)}px`,
+      maxHeight: `${Math.min(620, bottom - y)}px`,
     });
     if (!panel.matches(":popover-open")) panel.showPopover();
     panel.classList.toggle(
@@ -638,9 +1088,9 @@ export class GraphViewer {
     const references = n.sources || [];
     $(".evidence-content", this.root).innerHTML =
       `<span class="evidence-badge">${esc(n.type)}</span><h3>${esc(n.label)}</h3>${n.aliases.length ? `<p>Also known as: ${esc(n.aliases.join(", "))}</p>` : ""}
-      <h4>Evidence from the paper</h4>${references[0] ? `<div class="evidence-location">${esc(this.sourceLocation(references[0]))}</div><blockquote>${esc(references[0].quote)}</blockquote>${this.jumpMarkup(references[0])}` : ""}${references.map((r) => this.sourceMarkup(r)).join("") || "<p>This saved graph has no separate concept passage. Select a connection below to read its saved evidence.</p>"}
-      <h4>${edges.length} connections</h4>${edges.map((e) => `<button class="relationship-card" data-edge="${esc(e.id)}">${esc(this.node(e.source)?.label)} <span>${esc(e.relationship.replace(/_/g, " "))}</span> ${esc(this.node(e.target)?.label)} <small>${esc(this.sourceLocation({ ...e, paragraph: e.paragraph || 0 }))}</small></button>`).join("") || "<p>No relationships. A concept’s presence alone does not establish a connection.</p>"}
-      ${n.edited ? '<p class="user-edit">Edited by you · original evidence retained</p>' : ""}<div class="edit-actions"><button data-action="edit-node">Edit concept</button><button data-action="delete-node">Delete concept</button></div>`;
+      ${n.notes ? `<h4>Your notes</h4><p class="concept-notes">${esc(n.notes)}</p>` : ""}<h4>Evidence from the paper</h4>${references[0] ? `<div class="evidence-location">${esc(this.sourceLocation(references[0]))}</div><blockquote>${esc(references[0].quote)}</blockquote>${this.jumpMarkup(references[0])}` : ""}${references.map((r) => this.sourceMarkup(r)).join("") || "<p>This saved graph has no separate concept passage. Select a connection below to read its saved evidence.</p>"}
+      <h4>${edges.length} connections</h4>${edges.map((e) => `<button class="relationship-card" data-edge="${esc(e.id)}">${esc(this.node(e.source)?.label)} <span>${esc(e.relationship.replace(/_/g, " "))}</span> ${esc(this.node(e.target)?.label)} <small>${e.manual ? "Your connection" : esc(this.sourceLocation({ ...e, paragraph: e.paragraph || 0 }))}</small></button>`).join("") || "<p>No relationships. A concept’s presence alone does not establish a connection.</p>"}
+      ${n.edited ? `<p class="user-edit">Edited by you${references.length ? " · original evidence retained" : ""}</p>` : ""}<div class="edit-actions"><button data-action="edit-node">Edit concept</button><button data-action="add-edge">+ Connection</button><button data-action="delete-node">Delete concept</button></div>`;
     this.revealEvidence();
   }
   inspectEdge(id: string) {
@@ -650,10 +1100,9 @@ export class GraphViewer {
     const reference = { ...e, paragraph: e.paragraph || 0, quote: e.evidence };
     const curated = this.analysis.provider === "Curated demo";
     $(".evidence-content", this.root).innerHTML =
-      `<span class="evidence-badge">${esc(e.kind === "stated" ? "Directly stated" : e.kind === "implied" ? "Strongly implied" : "AI inferred")}</span><h3>${esc(this.node(e.source)?.label)}</h3><div class="predicate">↓ ${esc(e.relationship.replace(/_/g, " "))}</div><h3>${esc(this.node(e.target)?.label)}</h3><div class="evidence-location">${esc(this.sourceLocation(reference))}</div><blockquote>${esc(e.evidence)}</blockquote>${this.jumpMarkup(reference)}
-      ${this.sourceMarkup(reference)}
-      <details class="evidence-interpretation"><summary>${curated ? "Curated sample interpretation" : "Model interpretation"}</summary><p>${esc(e.explanation || "No additional explanation supplied.")}</p>${curated ? "" : `<div class="confidence-score">${Math.round(e.confidence * 100)}% <span>model confidence</span></div><div class="evidence-note">Confidence is an uncalibrated model estimate. Check the source and scientific context before drawing conclusions.</div>`}</details>
-      ${e.edited ? '<p class="user-edit">Edited by you · evidence quote unchanged</p>' : ""}<div class="edit-actions"><button data-action="edit-edge">Edit relationship</button><button data-action="delete-edge">Delete relationship</button></div>`;
+      `<span class="evidence-badge">${esc(e.manual ? "Your connection" : e.kind === "stated" ? "Directly stated" : e.kind === "implied" ? "Strongly implied" : "AI inferred")}</span><h3>${esc(this.node(e.source)?.label)}</h3><div class="predicate">↓ ${esc(e.relationship.replace(/_/g, " "))}</div><h3>${esc(this.node(e.target)?.label)}</h3>${e.manual ? `<p class="user-edit">Added by you · no paper evidence claimed</p><p>${esc(e.explanation || "No description yet.")}</p>` : `<div class="evidence-location">${esc(this.sourceLocation(reference))}</div><blockquote>${esc(e.evidence)}</blockquote>${this.jumpMarkup(reference)}${this.sourceMarkup(reference)}`}
+      ${e.manual ? "" : `<details class="evidence-interpretation"><summary>${curated ? "Curated sample interpretation" : "Model interpretation"}</summary><p>${esc(e.explanation || "No additional explanation supplied.")}</p>${curated ? "" : `<div class="confidence-score">${Math.round(e.confidence * 100)}% <span>model confidence</span></div><div class="evidence-note">Confidence is an uncalibrated model estimate. Check the source and scientific context before drawing conclusions.</div>`}</details>`}
+      ${e.edited && !e.manual ? '<p class="user-edit">Edited by you · evidence quote unchanged</p>' : ""}<div class="edit-actions"><button data-action="edit-edge">Edit relationship</button><button data-action="delete-edge">Delete relationship</button></div>`;
     this.revealEvidence();
   }
   private runLayout() {
@@ -665,16 +1114,20 @@ export class GraphViewer {
         animate: false,
         randomize: false,
         padding: 35,
-        nodeRepulsion: () => 45000,
-        idealEdgeLength: () => 240,
-        nodeOverlap: 35,
-        componentSpacing: 180,
-        spacingFactor: 1.6,
+        nodeRepulsion: () => 6000 * this.settings.graphScale! ** 2,
+        idealEdgeLength: () => this.gap(),
+        nodeOverlap: this.gap() / 3,
+        componentSpacing: this.gap(),
+        spacingFactor: 1,
+        minNodeSpacing: this.gap() / 2,
+        concentric: (node: cytoscape.NodeSingular) => node.degree(),
+        levelWidth: () => Math.max(1, this.cy.nodes().maxDegree(false) / 3),
         avoidOverlap: true,
         nodeDimensionsIncludeLabels: true,
       } as cytoscape.LayoutOptions)
       .run();
     this.orientLayout();
+    this.compactLayout();
     this.separateNodes();
     this.placeEdgeLabels();
     this.fitReadable();
@@ -743,31 +1196,19 @@ export class GraphViewer {
           y: center.y + (p.x - center.x),
         });
       });
-    // Use both canvas dimensions instead of fitting a tall, narrow cluster into
-    // the available height and shrinking all of its labels.
-    const positions = nodes.map((node) => node.position());
-    const minX = Math.min(...positions.map((p) => p.x)),
-      maxX = Math.max(...positions.map((p) => p.x));
-    const minY = Math.min(...positions.map((p) => p.y)),
-      maxY = Math.max(...positions.map((p) => p.y));
-    const columns = Math.ceil(Math.sqrt(nodes.length));
-    const spanX = Math.max(this.cy.width() - 300, columns * 240);
-    const spanY = Math.max(this.cy.height() - 170, columns * 130);
-    nodes.forEach((node) => {
-      const p = node.position();
-      node.position({
-        x: maxX > minX ? ((p.x - minX) / (maxX - minX)) * spanX : 0,
-        y: maxY > minY ? ((p.y - minY) / (maxY - minY)) * spanY : 0,
-      });
-    });
   }
+
   private placeEdgeLabels() {
+    if (!this.settings.showEdgeLabels) return;
     const occupied = this.cy
       .nodes(":visible")
       .map((node) => node.boundingBox());
     for (const edge of this.cy.edges(":visible")) {
-      let best = { x: 0, y: -12, score: Infinity };
-      for (const y of [-12, -35, 35, -65, 65, -100, 100]) {
+      let best = { x: 0, y: -12, score: Infinity, collisions: Infinity };
+      for (const y of [
+        -12, -35, 35, -65, 65, -100, 100, -140, 140, -180, 180, -240, 240, -320,
+        320, -440, 440,
+      ]) {
         for (const x of [0, -45, 45, -90, 90]) {
           edge.style({ "text-margin-x": x, "text-margin-y": y });
           const box = edge.boundingBox({
@@ -790,10 +1231,10 @@ export class GraphViewer {
             0,
           );
           const score = collisions * 1000 + Math.abs(x) + Math.abs(y + 12);
-          if (score < best.score) best = { x, y, score };
-          if (collisions === 0 && x === 0 && y === -12) break;
+          if (score < best.score) best = { x, y, score, collisions };
+          if (collisions === 0) break;
         }
-        if (best.score === 0) break;
+        if (best.collisions === 0) break;
       }
       edge.style({ "text-margin-x": best.x, "text-margin-y": best.y });
       occupied.push(
@@ -840,9 +1281,13 @@ export class GraphViewer {
           let fx = (dx / distance) * repulsion,
             fy = (dy / distance) * repulsion;
           const overlapX =
-            (a.outerWidth() + b.outerWidth()) / 2 + 48 - Math.abs(dx);
+            (a.boundingBox().w + b.boundingBox().w) / 2 +
+            this.gap() / 2 -
+            Math.abs(dx);
           const overlapY =
-            (a.outerHeight() + b.outerHeight()) / 2 + 48 - Math.abs(dy);
+            (a.boundingBox().h + b.boundingBox().h) / 2 +
+            this.gap() / 2 -
+            Math.abs(dy);
           if (overlapX > 0 && overlapY > 0) {
             if (overlapX < overlapY) fx += (dx >= 0 ? 1 : -1) * overlapX * 0.12;
             else fy += (dy >= 0 ? 1 : -1) * overlapY * 0.12;
@@ -861,8 +1306,14 @@ export class GraphViewer {
         const dx = b.position("x") - a.position("x"),
           dy = b.position("y") - a.position("y");
         const distance = Math.max(1, Math.hypot(dx, dy));
-        const rest = Math.max(240, (a.outerWidth() + b.outerWidth()) / 2 + 100);
-        const spring = (distance - rest) * 0.006;
+        const rest = (a.outerWidth() + b.outerWidth()) / 2 + this.gap();
+        // Preserve deliberately arranged layouts. Force layouts settle to the
+        // same target used on first render, with a quiet zone for stable toggles.
+        const spring =
+          this.settings.layout === "cose" &&
+          Math.abs(distance - rest) > rest * 0.15
+            ? (distance - rest) * 0.006
+            : 0;
         const fx = (dx / distance) * spring,
           fy = (dy / distance) * spring;
         forces[i].x += fx;
@@ -917,9 +1368,13 @@ export class GraphViewer {
           const dx = pb.x - pa.x,
             dy = pb.y - pa.y;
           const overlapX =
-            (a.outerWidth() + b.outerWidth()) / 2 + 48 - Math.abs(dx);
+            (a.boundingBox().w + b.boundingBox().w) / 2 +
+            this.gap() / 2 -
+            Math.abs(dx);
           const overlapY =
-            (a.outerHeight() + b.outerHeight()) / 2 + 48 - Math.abs(dy);
+            (a.boundingBox().h + b.boundingBox().h) / 2 +
+            this.gap() / 2 -
+            Math.abs(dy);
           if (overlapX <= 0 || overlapY <= 0) continue;
           const horizontal = overlapX < overlapY;
           const shift = (horizontal ? overlapX : overlapY) / 2 + 1;
@@ -939,11 +1394,44 @@ export class GraphViewer {
       }
       if (!moved) break;
     }
+    // A tightly packed hierarchy can exhaust the iterative relaxation. Move
+    // any remaining collision to the closest free position on a horizontal or
+    // vertical ray, checking the actual outline and label bounds first.
+    for (const node of nodes) {
+      if (node.id() === pinned) continue;
+      const own = node.boundingBox(),
+        position = node.position();
+      const others = nodes
+        .filter((n) => n !== node)
+        .map((n) => n.boundingBox());
+      const clearance = this.gap() / 2;
+      const clear = (dx: number, dy: number) =>
+        others.every(
+          (box) =>
+            own.x2 + dx + clearance <= box.x1 ||
+            own.x1 + dx - clearance >= box.x2 ||
+            own.y2 + dy + clearance <= box.y1 ||
+            own.y1 + dy - clearance >= box.y2,
+        );
+      if (clear(0, 0)) continue;
+      const candidates = others
+        .flatMap((box) => [
+          { x: box.x1 - own.x2 - clearance - 1, y: 0 },
+          { x: box.x2 - own.x1 + clearance + 1, y: 0 },
+          { x: 0, y: box.y1 - own.y2 - clearance - 1 },
+          { x: 0, y: box.y2 - own.y1 + clearance + 1 },
+        ])
+        .sort((a, b) => Math.hypot(a.x, a.y) - Math.hypot(b.x, b.y));
+      const offset = candidates.find((p) => clear(p.x, p.y));
+      if (offset)
+        node.position({ x: position.x + offset.x, y: position.y + offset.y });
+    }
   }
   private liveReadOnly = false;
   setReadOnly(value: boolean) {
     this.liveReadOnly = value;
     this.root.classList.toggle("is-building", value);
+    this.updateSelection();
   }
   updateLive(analysis: Analysis) {
     this.analysis = analysis;
@@ -985,15 +1473,12 @@ export class GraphViewer {
       ...this.analysis.graph.nodes.map((n, i) => ({
         data: {
           ...n,
-          ...nodeLabel(n.label, this.settings.nodeShape === "circle"),
+          ...nodeLabel(n.label, this.settings),
           color: n.color || nodeColor(i),
         },
         position: positions?.[n.id] || {
-          x: (i % Math.ceil(Math.sqrt(this.analysis.graph.nodes.length))) * 280,
-          y:
-            Math.floor(
-              i / Math.ceil(Math.sqrt(this.analysis.graph.nodes.length)),
-            ) * 280,
+          x: (this.cy.width() / 2 - this.cy.pan().x) / this.cy.zoom(),
+          y: (this.cy.height() / 2 - this.cy.pan().y) / this.cy.zoom(),
         },
       })),
       ...this.analysis.graph.edges.map((e) => ({
@@ -1031,17 +1516,36 @@ export class GraphViewer {
     this.changed();
   }
   private editor(kind: "node" | "edge") {
+    if (this.liveReadOnly) return;
     if (!this.selected) return;
     const node = this.node(this.selected),
       edge = this.analysis.graph.edges.find((e) => e.id === this.selected);
     const fields =
       kind === "node" && node
-        ? `<label>Name<input name="label" maxlength="120" value="${esc(node.label)}" required></label><label>Category<input name="type" maxlength="60" value="${esc(node.type)}" required></label><label>Color<input name="color" type="color" value="${node.color || nodeColor(this.analysis.graph.nodes.indexOf(node))}"></label>`
+        ? `<label>Name<input name="label" maxlength="120" value="${esc(node.label)}" required></label><label>Category<input name="type" maxlength="60" value="${esc(node.type)}" required></label><label>Color<input name="color" type="color" value="${node.color || nodeColor(this.analysis.graph.nodes.indexOf(node))}"></label><label>Your notes<textarea name="notes" maxlength="4000" rows="3">${esc(node.notes || "")}</textarea></label>`
         : edge
-          ? `<label>Relationship<input name="relationship" maxlength="100" value="${esc(edge.relationship.replace(/_/g, " "))}" required></label><label>Your interpretation<textarea name="explanation" maxlength="1200" rows="4">${esc(edge.explanation)}</textarea></label><p>Original quote and source stay unchanged. Changes are labeled as your edits.</p>`
+          ? this.connectionFields(
+              edge.source,
+              edge.target,
+              edge.relationship,
+              edge.explanation,
+            ) +
+            `<p>${edge.manual ? "Your connection; no paper evidence claimed." : "Original evidence stays unchanged. Verify it when changing endpoints."}</p>`
           : "";
     $(".evidence-content", this.root).innerHTML =
-      `<form class="graph-editor"><h3>${kind === "node" ? "Edit concept" : "Edit relationship"}</h3>${fields}<p class="edit-error" role="alert"></p><div class="edit-actions"><button type="submit">Save changes</button><button type="button" data-action="cancel-edit">Cancel</button></div></form>`;
+      `<form class="graph-editor"><h3>${kind === "node" ? "Edit concept" : "Edit relationship"}</h3>${fields}<p class="edit-error" role="alert"></p><div class="edit-actions"><button type="submit">Save changes</button><button type="button" data-action="cancel-edit">Cancel</button>${kind === "edge" ? `<button type="button" data-action="delete-edge">Delete relationship</button>` : ""}</div></form>${
+        kind === "node" && node
+          ? `<section class="edit-connections"><h4>Connections</h4><p>Open a connection to change its endpoints, description or delete it.</p>${
+              this.analysis.graph.edges
+                .filter((e) => e.source === node.id || e.target === node.id)
+                .map(
+                  (e) =>
+                    `<button class="relationship-card" data-action="manage-edge" data-id="${esc(e.id)}">${esc(this.node(e.source)?.label)} → ${esc(e.relationship.replace(/_/g, " "))} → ${esc(this.node(e.target)?.label)}</button>`,
+                )
+                .join("") || "<p>No connections yet.</p>"
+            }<button data-action="add-edge">+ Connection</button></section>`
+          : ""
+      }`;
     $(".graph-editor", this.root).addEventListener("submit", (event) => {
       event.preventDefault();
       const data = new FormData(event.target as HTMLFormElement),
@@ -1055,18 +1559,22 @@ export class GraphViewer {
                 String(data.get("label")),
                 String(data.get("type")),
                 String(data.get("color")),
+                String(data.get("notes")),
               )
             : editRelationship(
                 this.analysis.graph,
                 id,
                 String(data.get("relationship")),
                 String(data.get("explanation")),
+                String(data.get("source")),
+                String(data.get("target")),
               ),
         );
       } catch (error) {
         $(".edit-error", this.root).textContent = (error as Error).message;
       }
     });
+    this.revealEvidence();
     $<HTMLInputElement>(".graph-editor input", this.root).focus();
   }
   private action(action: string) {
@@ -1098,11 +1606,54 @@ export class GraphViewer {
         "confirm-delete",
         "undo",
         "redo",
+        "add-node",
+        "add-edge",
+        "delete-selected",
       ].includes(action)
     )
       return;
+    if (action === "select-mode") {
+      this.selectionMode = !this.selectionMode;
+      this.closeEvidence();
+      this.cy.selectionType(this.selectionMode ? "additive" : "single");
+      this.updateSelection();
+    }
+    if (action === "select-all") {
+      this.cy.nodes(":visible").forEach((n) => {
+        this.multiSelection.add(n.id());
+      });
+      this.updateSelection();
+    }
+    if (action === "clear-selection") {
+      this.multiSelection.clear();
+      this.cy.nodes().unselect();
+      this.updateSelection();
+    }
+    if (action === "delete-selected" && this.multiSelection.size) {
+      this.commit(deleteNodes(this.analysis.graph, [...this.multiSelection]));
+      this.multiSelection.clear();
+      this.updateSelection();
+    }
+    if (action === "add-node") this.createEditor("node");
+    if (action === "add-edge") this.createEditor("edge");
+    if (["compact", "comfortable", "appearance-reset"].includes(action)) {
+      const previous = this.settings.graphScale!,
+        previousGap = this.settings.edgeLength!;
+      Object.assign(
+        this.settings,
+        appearanceDefaults,
+        action === "compact"
+          ? { graphScale: 0.8, nodeSize: 0.9, edgeLength: 36, edgeFontSize: 9 }
+          : action === "comfortable"
+            ? { nodeSize: 1.15, edgeLength: 110, edgeFontSize: 12 }
+            : {},
+      );
+      this.syncAppearanceControls();
+      this.applyAppearance(previous, previousGap);
+    }
     if (action === "edit-node") this.editor("node");
     if (action === "edit-edge") this.editor("edge");
+    if (action === "cancel-edit" && !this.selected) this.closeEvidence();
     if (action === "cancel-edit" && this.selected)
       this.node(this.selected)
         ? this.inspectNode(this.selected)
@@ -1152,8 +1703,11 @@ export class GraphViewer {
       this.root
         .querySelectorAll<HTMLInputElement>("[data-type]")
         .forEach((x) => (x.checked = true));
-      $<HTMLInputElement>('input[type="range"]', this.root).value = "0";
-      $("output", this.root).textContent = "0%";
+      $<HTMLInputElement>(
+        'input[aria-label="Minimum confidence"]',
+        this.root,
+      ).value = "0";
+      $(".confidence output", this.root).textContent = "0%";
       $<HTMLInputElement>(
         'input[aria-label="Search graph nodes"]',
         this.root,
@@ -1197,6 +1751,7 @@ export class GraphViewer {
     this.settings.theme = theme;
     this.root.dataset.theme = theme;
     this.cy.style(this.style());
+    this.placeEdgeLabels();
     this.changed();
     this.root.dispatchEvent(
       new CustomEvent("graph-theme-change", { bubbles: true, detail: theme }),
@@ -1232,17 +1787,41 @@ export class GraphViewer {
           x: midpoint.x + parseFloat(e.style("text-margin-x")),
           y: midpoint.y + parseFloat(e.style("text-margin-y")) + 12,
         };
-        const label = String(e.data("display"));
-        const lines = label.split(/\s+/).reduce<string[]>((out, word) => {
-          const last = out.length - 1;
-          if (last >= 0 && (out[last] + " " + word).length <= 18)
-            out[last] += " " + word;
-          else out.push(word);
-          return out;
-        }, []);
-        const w = Math.max(...lines.map((line) => line.length)) * 6 + 12;
-        const h = lines.length * 14 + 10;
-        return `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="#7192a4" ${e.data("kind") === "stated" ? "" : 'stroke-dasharray="5 4"'} marker-end="url(#arrow)"/><rect x="${mid.x - w / 2}" y="${mid.y - 12 - h / 2}" width="${w}" height="${h}" rx="4" fill="${this.settings.theme === "light" ? "#faf9f3" : "#11120f"}"/><text text-anchor="middle" font-family="system-ui" font-size="11" fill="${fg}">${lines.map((line, i) => `<tspan x="${mid.x}" y="${mid.y - 12 - (lines.length - 1) * 7 + i * 14 + 4}">${esc(line)}</tspan>`).join("")}</text>`;
+        const font = this.settings.edgeFontSize! * this.settings.graphScale!;
+        const label = this.settings.showEdgeLabels
+          ? String(e.data("display"))
+          : "";
+        const context = document.createElement("canvas").getContext("2d")!;
+        context.font = `${font}px system-ui`;
+        const lines: string[] = [];
+        let current = "";
+        for (const word of label.split(/\s+/)) {
+          const next = (current + " " + word).trim();
+          if (
+            current &&
+            context.measureText(next).width > 110 * this.settings.graphScale!
+          ) {
+            lines.push(current);
+            current = word;
+          } else current = next;
+        }
+        if (current) lines.push(current);
+        const w =
+          Math.max(0, ...lines.map((line) => context.measureText(line).width)) +
+          10;
+        const control = e.controlPoints() || [];
+        let path = `M${a.x} ${a.y}`;
+        if (!control.length) path += ` L${b.x} ${b.y}`;
+        else
+          control.forEach((point, i) => {
+            const next = control[i + 1];
+            const end = next
+              ? { x: (point.x + next.x) / 2, y: (point.y + next.y) / 2 }
+              : b;
+            path += ` Q${point.x} ${point.y} ${end.x} ${end.y}`;
+          });
+        const h = lines.length * font * 1.3 + 10;
+        return `<path d="${path}" fill="none" stroke="#7192a4" ${e.data("kind") === "stated" ? "" : 'stroke-dasharray="5 4"'} marker-end="url(#arrow)"/>${label ? `<rect x="${mid.x - w / 2}" y="${mid.y - 12 - h / 2}" width="${w}" height="${h}" rx="4" fill="${this.settings.theme === "light" ? "#faf9f3" : "#11120f"}"/><text text-anchor="middle" font-family="system-ui" font-size="${font}" fill="${fg}">${lines.map((line, i) => `<tspan x="${mid.x}" y="${mid.y - 12 - (lines.length - 1) * font * 0.65 + i * font * 1.3 + font * 0.36}">${esc(line)}</tspan>`).join("")}</text>` : ""}`;
       })
       .join("")}${this.cy
       .nodes(":visible")
@@ -1260,11 +1839,16 @@ export class GraphViewer {
             ? "radialGradient"
             : "linearGradient";
         const fill = `<defs><${gradient} id="node-fill-${i}">${stops.map((color, index) => `<stop offset="${[0, 55, 100][index]}%" stop-color="${color}"/>`).join("")}</${gradient}></defs>`;
+        const font = this.settings.nodeFontSize! * this.settings.graphScale!;
         const shape =
           this.settings.nodeShape === "circle"
             ? `<circle cx="${p.x}" cy="${p.y}" r="${width / 2}" fill="url(#node-fill-${i})" stroke="${n.data("color")}" stroke-width="2"/>`
-            : `<rect x="${p.x - width / 2}" y="${p.y - height / 2}" width="${width}" height="${height}" rx="12" fill="url(#node-fill-${i})" stroke="${n.data("color")}" stroke-width="2"/>`;
-        return `${fill}${shape}<text text-anchor="middle" font-family="system-ui" font-size="15" font-weight="600" fill="${fg}">${lines.map((line, i) => `<tspan x="${p.x}" y="${p.y - (lines.length - 1) * 10.5 + i * 21 + 5}">${esc(line)}</tspan>`).join("")}</text>`;
+            : this.settings.nodeShape === "ellipse"
+              ? `<ellipse cx="${p.x}" cy="${p.y}" rx="${width / 2}" ry="${height / 2}" fill="url(#node-fill-${i})" stroke="${n.data("color")}" stroke-width="2"/>`
+              : this.settings.nodeShape === "diamond"
+                ? `<polygon points="${p.x},${p.y - height / 2} ${p.x + width / 2},${p.y} ${p.x},${p.y + height / 2} ${p.x - width / 2},${p.y}" fill="url(#node-fill-${i})" stroke="${n.data("color")}" stroke-width="2"/>`
+                : `<rect x="${p.x - width / 2}" y="${p.y - height / 2}" width="${width}" height="${height}" rx="12" fill="url(#node-fill-${i})" stroke="${n.data("color")}" stroke-width="2"/>`;
+        return `${fill}${shape}<text text-anchor="middle" font-family="system-ui" font-size="${font}" font-weight="600" fill="${fg}">${lines.map((line, i) => `<tspan x="${p.x}" y="${p.y - (lines.length - 1) * font * 0.7 + i * font * 1.4 + font / 3}">${esc(line)}</tspan>`).join("")}</text>`;
       })
       .join("")}</svg>`;
   }

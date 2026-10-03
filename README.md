@@ -159,3 +159,11 @@ The original repository history is retained. All **31 original tracked files** w
 **Original code reuse requires prior written permission from Ronit Gandotra.** This is a source-available project under custom permission-required terms, not an MIT license. Using the hosted application and sharing generated graph exports are permitted under the stated exception. Dependencies and third-party content retain their own licenses and rights.
 
 Read [LICENSE](LICENSE), [third-party notices](THIRD-PARTY-NOTICES.md), and the [unsigned permission-record template](docs/CODE-USE-PERMISSION.md). To request approval, contact the [repository maintainer](https://github.com/RonitGandotra05/Knowledge-Graph-Generator-Using-Generative-AI) with your intended use and distribution.
+
+### Personal graph editing
+
+The graph editor includes a collapsible **Customize** panel for overall scale, node size, node and connection fonts, desired connection spacing, and connection-label visibility. Compact and Comfortable presets keep these settings coordinated. All five layouts use measured node bounds to keep labels inside separate nodes; concentric spacing is compact by default. Physics uses the same spacing target as the initial layout and preserves radial, hierarchical and grid arrangements.
+
+Use **+ Concept** to add ideas with personal notes. **Edit concept** includes a connection list; open a connection to change its endpoints or description, or delete it. **+ Connection** creates a directed relationship between two concepts, clearly marked as a personal connection without paper evidence. **Select multiple** supports clicks, a selection box and the keyboard-accessible concept list; Shift-click selects directly. Batch deletions cascade to connections and can be undone or redone.
+
+The evidence inspector moves by dragging its header or using arrow keys while the header is focused. Appearance, notes and personal connections survive browser drafts, JSON import/export and interactive offline HTML exports. PNG and SVG use the chosen sizes, fonts, shapes and label visibility.

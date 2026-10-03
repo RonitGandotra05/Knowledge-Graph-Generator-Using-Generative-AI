@@ -1,3 +1,5 @@
+import { appearanceSettings } from "./settings";
+import { addRelationship } from "./edit";
 import { safePDFLines } from "../documents/pdf-location";
 import { safeUsage } from "../providers/usage";
 import { safePapers } from "../documents/metadata";
@@ -32,6 +34,7 @@ export function safeAnalysis(a: Analysis): Analysis {
         aliases: [...n.aliases],
         color: /^#[0-9a-f]{6}$/i.test(n.color || "") ? n.color : undefined,
         edited: n.edited || undefined,
+        notes: n.notes?.slice(0, 4000),
         sources: n.sources?.map((r) => ({
           passageId: r.passageId,
           paperId: r.paperId,
@@ -43,6 +46,7 @@ export function safeAnalysis(a: Analysis): Analysis {
         })),
       })),
       edges: a.graph.edges.map((e) => ({
+        manual: e.manual || undefined,
         id: e.id,
         source: e.source,
         target: e.target,
@@ -74,7 +78,7 @@ export function safeAnalysis(a: Analysis): Analysis {
     settings: {
       theme: a.settings.theme,
       layout: a.settings.layout,
-      nodeShape: a.settings.nodeShape === "circle" ? "circle" : "card",
+      ...appearanceSettings(a.settings),
       physics: a.settings.physics !== false,
       confidence: a.settings.confidence,
       hiddenTypes: [...a.settings.hiddenTypes],
@@ -170,7 +174,10 @@ export function importAnalysis(text: string): Analysis {
       id: `import-${i}`,
       paperId: s(e?.paperId) || undefined,
       paperName: s(e?.paperName) || undefined,
-      text: typeof e?.evidence === "string" ? e.evidence.slice(0, 4000) : "",
+      text:
+        e?.manual !== true && typeof e?.evidence === "string"
+          ? e.evidence.slice(0, 4000)
+          : "",
       page:
         Number.isInteger(e?.page) && Number(e.page) > 0 ? Number(e.page) : null,
       section: s(e?.section, "Imported evidence"),
@@ -180,10 +187,12 @@ export function importAnalysis(text: string): Analysis {
   );
   const importedGraph = {
     ...raw.graph,
-    edges: raw.graph.edges.map((e: Record<string, unknown>, i: number) => ({
-      ...e,
-      passageId: `import-${i}`,
-    })),
+    edges: raw.graph.edges
+      .map((e: Record<string, unknown>, i: number) => ({
+        ...e,
+        passageId: `import-${i}`,
+      }))
+      .filter((e: Record<string, unknown>) => e.manual !== true),
   };
   const { graph, warnings } = validateGraph(importedGraph, source, {
     maxNodes: 1500,
@@ -227,6 +236,10 @@ export function importAnalysis(text: string): Analysis {
         ? original.color
         : undefined;
       n.edited = original.edited === true || undefined;
+      n.notes =
+        typeof original.notes === "string"
+          ? original.notes.slice(0, 4000)
+          : undefined;
       n.sources = Array.isArray(original.sources)
         ? original.sources.slice(0, 50).flatMap((r: any) => {
             const p = sources.find((p) => p.id === r?.passageId);
@@ -260,6 +273,31 @@ export function importAnalysis(text: string): Analysis {
       Math.abs(p.y) < 1e6
     )
       positions[n.id] = { x: p.x, y: p.y };
+  }
+  // Manual connections use the editing validator and never acquire source proof.
+  const importedId = (id: unknown) => {
+    const original = raw.graph.nodes.find((n: GraphNodeLike) => n?.id === id);
+    return graph.nodes.find(
+      (n) => n.label.toLowerCase() === String(original?.label).toLowerCase(),
+    )?.id;
+  };
+  for (const edge of raw.graph.edges.slice(0, 5000)) {
+    if (edge?.manual !== true) continue;
+    const from = importedId(edge.source),
+      to = importedId(edge.target);
+    if (!from || !to || typeof edge.relationship !== "string") continue;
+    try {
+      const added = addRelationship(
+        graph,
+        from,
+        to,
+        edge.relationship,
+        typeof edge.explanation === "string" ? edge.explanation : "",
+      );
+      graph.edges = added.edges;
+    } catch {
+      warnings.push("An invalid or duplicate manual connection was omitted.");
+    }
   }
   let concepts = [];
   try {
@@ -295,7 +333,7 @@ export function importAnalysis(text: string): Analysis {
       )
         ? settings.layout
         : "cose",
-      nodeShape: settings.nodeShape === "circle" ? "circle" : "card",
+      ...appearanceSettings(settings),
       physics: settings.physics !== false,
       confidence: Math.min(1, num(settings.confidence)),
       hiddenTypes: Array.isArray(settings.hiddenTypes)
@@ -335,5 +373,6 @@ interface GraphNodeLike {
   label: string;
   color?: string;
   edited?: boolean;
+  notes?: string;
   sources?: SourceReference[];
 }

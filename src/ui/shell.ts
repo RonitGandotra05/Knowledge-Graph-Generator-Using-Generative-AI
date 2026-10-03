@@ -1,4 +1,6 @@
 import { homePage } from "./home";
+const menuIcon = (drawing: string) =>
+  `<svg class="app-menu-icon" aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${drawing}</svg>`;
 export const appShell = /* HTML */ `<header class="app-header">
     <a class="brand" href="#home" aria-label="Evidence Atlas home"
       ><img src="./favicon.svg" alt="" width="34" height="34" /><span
@@ -28,12 +30,37 @@ export const appShell = /* HTML */ `<header class="app-header">
       </button>
     </div>
     <nav id="app-menu" hidden aria-label="Application menu">
-      <button id="show-history">History</button
-      ><button id="theme-toggle">Switch to light mode</button
-      ><button id="explore-demo">Try a sample</button
-      ><button data-info="privacy">Privacy</button
-      ><button data-info="security">API key security</button
-      ><button data-info="terms">Terms of use</button>
+      <button id="show-history">
+        ${menuIcon('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>')}<span
+          >History</span
+        >
+      </button>
+      <button id="theme-toggle">
+        ${menuIcon('<circle cx="12" cy="12" r="9"/><path d="M12 3v18M12 3a9 9 0 0 1 0 18" fill="currentColor"/>')}<span
+          class="app-menu-label"
+          >Switch to light mode</span
+        >
+      </button>
+      <button id="explore-demo">
+        ${menuIcon('<circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="12" cy="18" r="3"/><path d="M9 6h6M7.5 9l3 6M16.5 9l-3 6"/>')}<span
+          >Try a sample</span
+        >
+      </button>
+      <button data-info="privacy">
+        ${menuIcon('<path d="M12 3l8 3v6c0 5-8 9-8 9s-8-4-8-9V6z"/><path d="M8 12l3 3 5-6"/>')}<span
+          >Privacy</span
+        >
+      </button>
+      <button data-info="security">
+        ${menuIcon('<circle cx="8" cy="9" r="5"/><path d="M12 13l8 8M16 17l3-3M18 19l3-3"/>')}<span
+          >API key security</span
+        >
+      </button>
+      <button data-info="terms">
+        ${menuIcon('<path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6"/>')}<span
+          >Terms of use</span
+        >
+      </button>
     </nav>
   </header>
   <main>

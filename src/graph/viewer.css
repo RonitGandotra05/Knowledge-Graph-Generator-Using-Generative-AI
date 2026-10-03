@@ -727,3 +727,99 @@
     max-height: 84px;
   }
 }
+
+/* Progressive controls: customization and batch tools stay out of the canvas. */
+.graph-customize {
+  border-bottom: 1px solid var(--g-border);
+  padding: 12px 18px;
+}
+.graph-customize summary {
+  font-size: 13px;
+}
+.graph-customize summary span {
+  color: var(--g-muted);
+  font-size: 11px;
+  margin-left: 12px;
+}
+.customize-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px 24px;
+  padding: 18px 0 4px;
+}
+.customize-controls label {
+  font-size: 12px;
+}
+.customize-controls output {
+  float: right;
+  color: var(--g-muted);
+}
+.customize-controls input[type="range"] {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 10px 0;
+  accent-color: #78dcbc;
+}
+.labels-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.customize-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  grid-column: 1 / -1;
+}
+.selection-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--g-border);
+}
+.selection-bar[hidden] {
+  display: none;
+}
+.selection-bar span {
+  flex: 1;
+  font-size: 12px;
+  color: var(--g-muted);
+}
+.graph-viewer button[aria-pressed="true"] {
+  border-color: #78dcbc;
+}
+.graph-viewer button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.evidence-header {
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+.evidence-header:active {
+  cursor: grabbing;
+}
+.evidence-header button {
+  cursor: pointer;
+}
+.graph-editor select {
+  width: 100%;
+  margin-top: 6px;
+}
+.concept-notes {
+  white-space: pre-wrap;
+}
+.edit-connections {
+  border-top: 1px solid var(--g-border);
+  margin-top: 20px;
+  padding-top: 8px;
+}
+.is-building [data-action="add-node"],
+.is-building [data-action="add-edge"],
+.is-building .edit-connections {
+  display: none;
+}

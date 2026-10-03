@@ -1735,3 +1735,14 @@ html[data-view="home"] #menu-toggle {
     height: clamp(460px, 65svh, 680px);
   }
 }
+
+#app-menu button {
+  gap: 12px;
+}
+.app-menu-icon {
+  width: 22px;
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 20px;
+  color: var(--muted);
+}

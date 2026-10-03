@@ -115,7 +115,7 @@ $("#close-demo").addEventListener("click", () => {
   demo = null;
 });
 function themeLabel() {
-  $("#theme-toggle").textContent =
+  $("#theme-toggle .app-menu-label").textContent =
     `Switch to ${theme === "dark" ? "light" : "dark"} mode`;
 }
 themeLabel();

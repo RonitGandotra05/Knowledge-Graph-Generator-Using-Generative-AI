@@ -78,9 +78,11 @@ export interface GraphNode {
   sources?: SourceReference[];
   color?: string;
   edited?: boolean;
+  notes?: string;
 }
 export type EvidenceKind = "stated" | "implied" | "inferred";
 export interface GraphEdge {
+  manual?: boolean;
   paperId?: string;
   paperName?: string;
   id: string;
@@ -104,7 +106,13 @@ export interface KnowledgeGraph {
 export interface GraphSettings {
   theme: "dark" | "light";
   layout: string;
-  nodeShape?: "circle" | "card";
+  nodeShape?: "circle" | "card" | "ellipse" | "diamond";
+  graphScale?: number;
+  nodeSize?: number;
+  nodeFontSize?: number;
+  edgeFontSize?: number;
+  edgeLength?: number;
+  showEdgeLabels?: boolean;
   physics?: boolean;
   confidence: number;
   hiddenTypes: string[];

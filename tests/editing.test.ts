@@ -146,3 +146,116 @@ describe("source mapping and graph edits", () => {
     expect(JSON.parse(serialized).focus).toBe("attention");
   });
 });
+
+import { addNode, addRelationship, deleteNodes } from "../src/graph/edit";
+import { appearanceSettings } from "../src/graph/settings";
+
+describe("personal graph authoring", () => {
+  it("round-trips personal notes, manual connections and appearance without inventing evidence", () => {
+    const a = demoAnalysis();
+    a.graph = addNode(
+      a.graph,
+      "My hypothesis",
+      "Personal",
+      "#abcdef",
+      "Check this next week\n<not html>",
+    );
+    const n = a.graph.nodes.at(-1)!;
+    a.graph = addRelationship(
+      a.graph,
+      n.id,
+      a.graph.nodes[0].id,
+      "may relate to",
+      "A connection I want to explore",
+    );
+    a.settings = {
+      ...a.settings,
+      graphScale: 0.7,
+      nodeSize: 1.2,
+      nodeFontSize: 18,
+      edgeFontSize: 8,
+      edgeLength: 24,
+      showEdgeLabels: false,
+      nodeShape: "diamond",
+    };
+    const restored = importAnalysis(jsonExport(a));
+    expect(restored.settings).toMatchObject(a.settings);
+    expect(
+      restored.graph.nodes.find((n) => n.label === "My hypothesis")?.notes,
+    ).toBe("Check this next week\n<not html>");
+    const manual = restored.graph.edges.find((e) => e.manual)!;
+    expect(manual).toMatchObject({
+      relationship: "may_relate_to",
+      explanation: "A connection I want to explore",
+      evidence: "",
+      passageId: "",
+      manual: true,
+    });
+    expect(restored.graph.edges).toHaveLength(a.graph.edges.length);
+    expect(restored.warnings.some((w) => w.includes("invalid"))).toBe(false);
+    const remaining = deleteNodes(restored.graph, [
+      manual.source,
+      manual.target,
+    ]);
+    expect(remaining.nodes).toHaveLength(restored.graph.nodes.length - 2);
+    expect(
+      remaining.edges.some(
+        (e) =>
+          [manual.source, manual.target].includes(e.source) ||
+          [manual.source, manual.target].includes(e.target),
+      ),
+    ).toBe(false);
+  });
+  it("validates endpoints, duplicates, notes and hostile appearance values", () => {
+    const graph = demoAnalysis().graph,
+      [a, b, c] = graph.nodes;
+    expect(() => addRelationship(graph, a.id, a.id, "relates", "")).toThrow(
+      "different",
+    );
+    expect(() =>
+      addRelationship(graph, a.id, "missing", "relates", ""),
+    ).toThrow("existing");
+    const added = addRelationship(
+      graph,
+      a.id,
+      b.id,
+      "custom relationship",
+      "note",
+    );
+    expect(() =>
+      addRelationship(added, a.id, b.id, "custom relationship", ""),
+    ).toThrow("already");
+    const edge = added.edges.at(-1)!;
+    const rewired = editRelationship(
+      added,
+      edge.id,
+      "custom relationship",
+      "new note",
+      a.id,
+      c.id,
+    );
+    expect(rewired.edges.at(-1)).toMatchObject({
+      source: a.id,
+      target: c.id,
+      explanation: "new note",
+    });
+    expect(
+      appearanceSettings({
+        graphScale: NaN,
+        nodeFontSize: Infinity,
+        edgeLength: -5,
+        edgeFontSize: 900,
+      }),
+    ).toMatchObject({
+      graphScale: 1,
+      nodeFontSize: 15,
+      edgeLength: 24,
+      edgeFontSize: 18,
+    });
+    expect(
+      addNode(graph, "New", "Personal", "#abcdef", "x".repeat(5000)).nodes.at(
+        -1,
+      )?.notes,
+    ).toHaveLength(4000);
+  });
+});

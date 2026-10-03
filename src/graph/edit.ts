@@ -6,6 +6,7 @@ export function editNode(
   label: string,
   type: string,
   color: string,
+  notes?: string,
 ): KnowledgeGraph {
   label = clean(label, 120);
   type = clean(type, 60);
@@ -22,14 +23,32 @@ export function editNode(
   return {
     ...graph,
     nodes: graph.nodes.map((n) =>
-      n.id === id ? { ...n, label, type, color, edited: true } : n,
+      n.id === id
+        ? {
+            ...n,
+            label,
+            type,
+            color,
+            notes: notes === undefined ? n.notes : clean(notes, 4000),
+            edited: true,
+          }
+        : n,
     ),
   };
 }
 export function deleteNode(graph: KnowledgeGraph, id: string): KnowledgeGraph {
+  return deleteNodes(graph, [id]);
+}
+export function deleteNodes(
+  graph: KnowledgeGraph,
+  ids: string[],
+): KnowledgeGraph {
+  const selected = new Set(ids);
   return {
-    nodes: graph.nodes.filter((n) => n.id !== id),
-    edges: graph.edges.filter((e) => e.source !== id && e.target !== id),
+    nodes: graph.nodes.filter((n) => !selected.has(n.id)),
+    edges: graph.edges.filter(
+      (e) => !selected.has(e.source) && !selected.has(e.target),
+    ),
   };
 }
 export function editRelationship(
@@ -37,17 +56,22 @@ export function editRelationship(
   id: string,
   relationship: string,
   explanation: string,
+  source?: string,
+  target?: string,
 ): KnowledgeGraph {
   const edge = graph.edges.find((e) => e.id === id);
   if (!edge) throw new Error("Relationship no longer exists.");
+  source ||= edge.source;
+  target ||= edge.target;
+  validateEndpoints(graph, source, target);
   const label = clean(relationship, 100).replace(/\s+/g, "_");
   if (!label) throw new Error("Enter a relationship label.");
   if (
     graph.edges.some(
       (e) =>
         e.id !== id &&
-        e.source === edge.source &&
-        e.target === edge.target &&
+        e.source === source &&
+        e.target === target &&
         e.relationship.toLowerCase() === label.toLowerCase(),
     )
   )
@@ -58,6 +82,8 @@ export function editRelationship(
       e.id === id
         ? {
             ...e,
+            source,
+            target,
             relationship: label,
             explanation: clean(explanation, 1200),
             edited: true,
@@ -65,6 +91,70 @@ export function editRelationship(
         : e,
     ),
   };
+}
+function validateEndpoints(
+  graph: KnowledgeGraph,
+  source: string,
+  target: string,
+) {
+  if (source === target) throw new Error("Choose two different concepts.");
+  if (![source, target].every((id) => graph.nodes.some((n) => n.id === id)))
+    throw new Error("Choose existing concepts for both ends.");
+}
+export function addNode(
+  graph: KnowledgeGraph,
+  label: string,
+  type: string,
+  color: string,
+  notes = "",
+): KnowledgeGraph {
+  const id = `user-node-${crypto.randomUUID()}`;
+  return editNode(
+    {
+      ...graph,
+      nodes: [...graph.nodes, { id, label: "", type: "Concept", aliases: [] }],
+    },
+    id,
+    label,
+    type,
+    color,
+    notes,
+  );
+}
+export function addRelationship(
+  graph: KnowledgeGraph,
+  source: string,
+  target: string,
+  relationship: string,
+  explanation: string,
+): KnowledgeGraph {
+  validateEndpoints(graph, source, target);
+  const id = `user-edge-${crypto.randomUUID()}`;
+  return editRelationship(
+    {
+      ...graph,
+      edges: [
+        ...graph.edges,
+        {
+          id,
+          source,
+          target,
+          relationship: "",
+          explanation: "",
+          confidence: 1,
+          evidence: "",
+          passageId: "",
+          page: null,
+          section: "Your connection",
+          kind: "inferred",
+          manual: true,
+        },
+      ],
+    },
+    id,
+    relationship,
+    explanation,
+  );
 }
 export function nodeColor(index: number): string {
   const hue = ((index * 137.508 + 155) % 360) / 60,

@@ -174,7 +174,7 @@ describe("personal graph authoring", () => {
       nodeSize: 1.2,
       nodeFontSize: 18,
       edgeFontSize: 8,
-      edgeLength: 24,
+      edgeLength: 0,
       showEdgeLabels: false,
       nodeShape: "diamond",
     };
@@ -249,7 +249,7 @@ describe("personal graph authoring", () => {
     ).toMatchObject({
       graphScale: 1,
       nodeFontSize: 15,
-      edgeLength: 24,
+      edgeLength: 0,
       edgeFontSize: 18,
     });
     expect(

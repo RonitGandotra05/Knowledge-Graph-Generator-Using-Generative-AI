@@ -192,13 +192,22 @@ export function validateGraph(
       /^(?:causes|leads_to|induces|drives|promotes|prevents|cures|results_in)$/u.test(
         relationship,
       );
+    // A comparative occurrence report is not an explicit causal statement.
+    // Keep other empirical mechanisms and clearly stated causal evidence intact.
+    const comparativeOccurrence =
+      relationship === "causes" &&
+      kind === "stated" &&
+      /\b(?:occurred|reported|observed|incidence)\b/iu.test(evidence) &&
+      /\b(?:placebo|comparator|control group|both groups)\b/iu.test(evidence) &&
+      !/\b(?:caus\w*|attribut\w*|due to|result\w* from)\b/iu.test(evidence);
     const hedged =
       /\b(?:may|might|could|can|possibly|potentially|hypothes\w*|suggest\w*)\b/iu.test(
         evidence,
       );
     if (
       e.edited !== true &&
-      (wrongFeatureRole ||
+      (comparativeOccurrence ||
+        wrongFeatureRole ||
         wrongMetricRole ||
         (causal && hedged && kind !== "inferred"))
     ) {

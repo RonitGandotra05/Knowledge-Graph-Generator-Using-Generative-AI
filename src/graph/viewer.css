@@ -766,6 +766,12 @@
   align-items: center;
   gap: 8px;
 }
+.customize-note {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--g-muted);
+  font-size: 12px;
+}
 .customize-presets {
   display: flex;
   flex-wrap: wrap;

@@ -7,6 +7,7 @@ import {
 import { documentFromPages } from "../src/documents/text";
 import { attachProvenance } from "../src/graph/provenance";
 import { defaults } from "../src/types";
+import { validateGraph } from "../src/graph/validate";
 import type { LLMProvider } from "../src/providers/client";
 
 describe("complete evidence coverage", () => {
@@ -378,4 +379,52 @@ it("grounds compact scientific labels across an explicitly inserted acronym whil
   expect(
     occurrences("enzyme (unrelated) transporter", "enzyme transporter"),
   ).toHaveLength(0);
+});
+
+it("does not turn an adverse event occurrence in comparator groups into a stated cause", () => {
+  const evidence =
+    "Bell’s palsy occurred in the vaccine group and the placebo group during the observation period of the trial.";
+  const doc = documentFromPages("trial.pdf", [evidence]);
+  const nodes = [
+    { id: "v", label: "vaccine", type: "Intervention", aliases: [] },
+    { id: "b", label: "Bell’s palsy", type: "Condition", aliases: [] },
+  ];
+  const edge = {
+    source: "v",
+    target: "b",
+    relationship: "causes",
+    kind: "stated",
+    confidence: 0.9,
+    evidence,
+    passageId: doc.passages[0].id,
+  };
+  expect(
+    validateGraph({ nodes, edges: [edge] }, doc.passages, defaults).graph.edges,
+  ).toHaveLength(0);
+  expect(
+    validateGraph(
+      { nodes, edges: [{ ...edge, relationship: "events_reported_after" }] },
+      doc.passages,
+      defaults,
+    ).graph.edges,
+  ).toHaveLength(1);
+  const causalDoc = documentFromPages("mechanism.pdf", [
+    "The vaccine caused Bell’s palsy in the control group through the explicitly established mechanism.",
+  ]);
+  expect(
+    validateGraph(
+      {
+        nodes,
+        edges: [
+          {
+            ...edge,
+            evidence: causalDoc.passages[0].text,
+            passageId: causalDoc.passages[0].id,
+          },
+        ],
+      },
+      causalDoc.passages,
+      defaults,
+    ).graph.edges,
+  ).toHaveLength(1);
 });

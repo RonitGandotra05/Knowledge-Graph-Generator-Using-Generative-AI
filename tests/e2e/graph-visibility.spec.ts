@@ -78,10 +78,13 @@ for (const viewport of [
       .toBeLessThan(beforeScroll - 50);
     expect(await zoom()).toBeCloseTo(beforeZoom, 5);
     if (viewport.width > 760) {
+      // Ordinary page scrolling can move the old graph coordinate below the
+      // viewport. Target the visible canvas before testing modified wheel zoom.
+      await root.locator(".graph-canvas").scrollIntoViewIfNeeded();
       const canvasBox = await stage.boundingBox();
       await page.mouse.move(
         canvasBox!.x + canvasBox!.width / 2,
-        Math.max(60, canvasBox!.y + 180),
+        Math.min(viewport.height - 40, Math.max(60, canvasBox!.y + 180)),
       );
       await page.keyboard.down("Control");
       await page.mouse.wheel(0, -120);

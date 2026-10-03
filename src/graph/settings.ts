@@ -21,11 +21,11 @@ export function appearanceSettings(settings: Partial<GraphSettings>) {
       ? Math.min(max, Math.max(min, value))
       : fallback;
   return {
-    graphScale: bounded(settings.graphScale, 1, 0.5, 1.6),
-    nodeSize: bounded(settings.nodeSize, 1, 0.7, 1.6),
-    nodeFontSize: bounded(settings.nodeFontSize, 15, 10, 24),
-    edgeFontSize: bounded(settings.edgeFontSize, 11, 7, 18),
-    edgeLength: bounded(settings.edgeLength, 70, 24, 240),
+    graphScale: bounded(settings.graphScale, 1, 0.1, 1.6),
+    nodeSize: bounded(settings.nodeSize, 1, 0.15, 1.6),
+    nodeFontSize: bounded(settings.nodeFontSize, 15, 4, 24),
+    edgeFontSize: bounded(settings.edgeFontSize, 11, 4, 18),
+    edgeLength: bounded(settings.edgeLength, 70, 0, 240),
     showEdgeLabels: settings.showEdgeLabels !== false,
     nodeShape: (["circle", "card", "ellipse", "diamond"].includes(
       settings.nodeShape || "",

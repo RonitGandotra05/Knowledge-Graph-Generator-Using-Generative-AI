@@ -54,10 +54,21 @@ function nodeLabel(label: string, settings: GraphSettings) {
   const size = settings.nodeSize || 1;
   const font = (settings.nodeFontSize || 15) * scale;
   const lineHeight = font * 1.4;
-  const textWidth = (circle ? 136 : 160) * size * scale;
+  // Shrinking the shell must not turn words into a tall stack of letters.
+  // Keep a text-dependent floor; font and graph scale can shrink that floor.
+  const padding = Math.max(font * 0.55, 14 * size * scale);
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d")!;
   context.font = `600 ${font}px system-ui`;
+  const longestWord = Math.max(
+    0,
+    ...label.split(/\s+/).map((word) => context.measureText(word).width),
+  );
+  const textWidth = Math.max(
+    font * 5,
+    Math.min(longestWord, font * 14),
+    (circle ? 136 : 160) * size * scale,
+  );
   const lines: string[] = [];
   let line = "";
   const words = label.split(/\s+/).flatMap((word) => {
@@ -87,7 +98,7 @@ function nodeLabel(label: string, settings: GraphSettings) {
       Math.max(0, ...lines.map((line) => context.measureText(line).width)),
       lines.length * lineHeight,
     ) +
-      32 * scale,
+      padding * 2,
   );
   return {
     nodeWidth: circle
@@ -100,11 +111,11 @@ function nodeLabel(label: string, settings: GraphSettings) {
                 0,
                 ...lines.map((line) => context.measureText(line).width),
               ) +
-                24 * scale),
+                padding),
           )
         : shape === "ellipse"
           ? Math.max(188 * size * scale, diameter * 1.25)
-          : 188 * size * scale,
+          : Math.max(188 * size * scale, textWidth + padding * 2),
     displayLabel: lines.join("\n"),
     labelHeight: circle
       ? diameter
@@ -113,9 +124,12 @@ function nodeLabel(label: string, settings: GraphSettings) {
         : shape === "diamond"
           ? Math.max(
               90 * size * scale,
-              2 * (lines.length * lineHeight + 24 * scale),
+              2 * (lines.length * lineHeight + padding),
             )
-          : Math.max(64 * size * scale, lines.length * lineHeight + 28 * scale),
+          : Math.max(
+              64 * size * scale,
+              lines.length * lineHeight + padding * 2,
+            ),
   };
 }
 export class GraphViewer {
@@ -131,6 +145,7 @@ export class GraphViewer {
   private undoStack: KnowledgeGraph[] = [];
   private redoStack: KnowledgeGraph[] = [];
   private physicsFrame = 0;
+  private routingFrame = 0;
   private positionCache: NonNullable<GraphSettings["positions"]> = {};
   settings: GraphSettings;
   constructor(
@@ -155,7 +170,7 @@ export class GraphViewer {
       [
         "graphScale",
         "Overall graph size",
-        50,
+        10,
         160,
         Math.round(this.settings.graphScale! * 100),
         "%",
@@ -163,23 +178,16 @@ export class GraphViewer {
       [
         "nodeSize",
         "Node size",
-        70,
+        15,
         160,
         Math.round(this.settings.nodeSize! * 100),
         "%",
       ],
-      [
-        "edgeLength",
-        "Connection length",
-        24,
-        240,
-        this.settings.edgeLength,
-        "",
-      ],
+      ["edgeLength", "Connection length", 0, 240, this.settings.edgeLength, ""],
       [
         "nodeFontSize",
         "Node text size",
-        10,
+        4,
         24,
         this.settings.nodeFontSize,
         "px",
@@ -187,7 +195,7 @@ export class GraphViewer {
       [
         "edgeFontSize",
         "Connection text size",
-        7,
+        4,
         18,
         this.settings.edgeFontSize,
         "px",
@@ -199,7 +207,7 @@ export class GraphViewer {
       )
       .join(
         "",
-      )}<label class="labels-toggle"><input type="checkbox" data-setting="showEdgeLabels" ${this.settings.showEdgeLabels ? "checked" : ""}> Show connection labels</label><div class="customize-presets"><button data-action="compact">Compact</button><button data-action="comfortable">Comfortable</button><button data-action="appearance-reset">Reset appearance</button></div></div></details><div class="selection-bar" hidden><span role="status">0 concepts selected</span><button data-action="select-all">Select all visible</button><button data-action="clear-selection">Clear</button><button data-action="delete-selected" disabled>Delete selected</button></div><div class="graph-filter"><span>ENTITY TYPES</span>${this.types.map((t, i) => `<label class="type-toggle"><input type="checkbox" data-type="${esc(t)}" ${this.settings.hiddenTypes.includes(t) ? "" : "checked"}><i style="background:${palette[i % palette.length]}"></i>${esc(t)}</label>`).join("")}<label class="confidence">Confidence ≥ <output>${Math.round(this.settings.confidence * 100)}%</output><input aria-label="Minimum confidence" type="range" min="0" max="100" value="${this.settings.confidence * 100}"></label></div><div class="graph-body"><div class="graph-stage"><div class="graph-canvas" role="img" aria-label="Interactive research knowledge graph. Use the concept and relationship lists to inspect evidence with a keyboard."></div><div class="graph-hint">Drag to explore · Ctrl/⌘ + scroll to zoom · Select a concept or connection for evidence</div><div class="graph-count"></div><aside class="evidence-panel" popover="manual" tabindex="-1" aria-label="Evidence inspector"><div class="evidence-header" tabindex="0" aria-label="Move inspector with arrow keys or drag" title="Drag to move · Arrow keys to move"><div><span class="inspector-eyebrow">EVIDENCE INSPECTOR</span><small class="evidence-scroll-hint">Drag header to move · Scroll for details</small></div><button data-action="close-evidence" aria-label="Close evidence">×</button></div><div class="evidence-content"></div></aside></div></div><details class="accessible-graph"><summary>Browse concepts & relationships <span>Keyboard accessible</span></summary><div class="graph-list"></div></details>`;
+      )}<label class="labels-toggle"><input type="checkbox" data-setting="showEdgeLabels" ${this.settings.showEdgeLabels ? "checked" : ""}> Show connection labels</label><p class="customize-note">Nodes keep enough room for their text. Reduce text size for tighter nodes; use Read labels to inspect tiny graphs.</p><div class="customize-presets"><button data-action="compact">Compact</button><button data-action="comfortable">Comfortable</button><button data-action="appearance-reset">Reset appearance</button></div></div></details><div class="selection-bar" hidden><span role="status">0 concepts selected</span><button data-action="select-all">Select all visible</button><button data-action="clear-selection">Clear</button><button data-action="delete-selected" disabled>Delete selected</button></div><div class="graph-filter"><span>ENTITY TYPES</span>${this.types.map((t, i) => `<label class="type-toggle"><input type="checkbox" data-type="${esc(t)}" ${this.settings.hiddenTypes.includes(t) ? "" : "checked"}><i style="background:${palette[i % palette.length]}"></i>${esc(t)}</label>`).join("")}<label class="confidence">Confidence ≥ <output>${Math.round(this.settings.confidence * 100)}%</output><input aria-label="Minimum confidence" type="range" min="0" max="100" value="${this.settings.confidence * 100}"></label></div><div class="graph-body"><div class="graph-stage"><div class="graph-canvas" role="img" aria-label="Interactive research knowledge graph. Use the concept and relationship lists to inspect evidence with a keyboard."></div><div class="graph-hint">Drag to explore · Ctrl/⌘ + scroll to zoom · Select a concept or connection for evidence</div><div class="graph-count"></div><aside class="evidence-panel" popover="manual" tabindex="-1" aria-label="Evidence inspector"><div class="evidence-header" tabindex="0" aria-label="Move inspector with arrow keys or drag" title="Drag to move · Arrow keys to move"><div><span class="inspector-eyebrow">EVIDENCE INSPECTOR</span><small class="evidence-scroll-hint">Drag header to move · Scroll for details</small></div><button data-action="close-evidence" aria-label="Close evidence">×</button></div><div class="evidence-content"></div></aside></div></div><details class="accessible-graph"><summary>Browse concepts & relationships <span>Keyboard accessible</span></summary><div class="graph-list"></div></details>`;
     root.style.setProperty(
       "--graph-height",
       `${Math.min(1200, Math.max(760, 760 + (analysis.graph.nodes.length - 20) * 12))}px`,
@@ -227,8 +235,8 @@ export class GraphViewer {
       ],
       style: this.style(),
       layout: { name: "preset" },
-      minZoom: 0.15,
-      maxZoom: 4,
+      minZoom: 0.02,
+      maxZoom: 40,
       wheelSensitivity: 0.2,
     });
     if (this.settings.positions) {
@@ -341,6 +349,13 @@ export class GraphViewer {
     );
     this.enableInspectorDrag();
     this.cy.on("grab", "node", () => this.stopPhysics());
+    this.cy.on("drag", "node", () => {
+      if (!this.routingFrame)
+        this.routingFrame = requestAnimationFrame(() => {
+          this.routingFrame = 0;
+          this.placeEdgeLabels();
+        });
+    });
     this.cy.on("dragfree", "node", (event) => {
       if (this.settings.physics) this.settlePhysics(event.target.id());
       else {
@@ -475,16 +490,25 @@ export class GraphViewer {
   }
   private applyAppearance(previousScale: number, previousGap: number) {
     this.stopPhysics();
+    const nodes = this.cy.nodes();
+    const extent = () =>
+      nodes.reduce(
+        (sum, node) => sum + Math.max(node.width(), node.height()),
+        0,
+      ) / Math.max(1, nodes.length);
+    const oldExtent = extent();
+    nodes.forEach((node) => {
+      node.data(nodeLabel(node.data("label"), this.settings));
+    });
+    this.cy.style(this.style());
     const ratio =
-      ((this.settings.graphScale! / previousScale) *
-        (180 + this.settings.edgeLength!)) /
-      (180 + previousGap);
+      (extent() + this.gap()) /
+      Math.max(0.01, oldExtent + previousGap * previousScale);
     const center = this.cy.nodes().boundingBox();
     const cx = (center.x1 + center.x2) / 2,
       cy = (center.y1 + center.y2) / 2;
     this.cy.batch(() =>
       this.cy.nodes().forEach((node) => {
-        node.data(nodeLabel(node.data("label"), this.settings));
         const p = node.position();
         node.position({
           x: cx + (p.x - cx) * ratio,
@@ -747,6 +771,10 @@ export class GraphViewer {
   }
   private style(): cytoscape.StylesheetJson {
     const light = this.settings.theme === "light";
+    const nodeDetail =
+      this.settings.graphScale! * Math.min(1, this.settings.nodeFontSize! / 15);
+    const edgeDetail =
+      this.settings.graphScale! * Math.min(1, this.settings.edgeFontSize! / 11);
     return [
       {
         selector: "node",
@@ -763,11 +791,11 @@ export class GraphViewer {
             gradientStops(node.data("color"), light),
           "background-gradient-stop-positions": ["0%", "55%", "100%"],
           "background-gradient-direction": "to-bottom-right",
-          "outline-width": 3,
+          "outline-width": 3 * nodeDetail,
           "outline-color": "data(color)",
           "outline-opacity": 0.06,
-          "outline-offset": 3,
-          "border-width": 1.5,
+          "outline-offset": 3 * nodeDetail,
+          "border-width": 1.5 * nodeDetail,
           "border-opacity": 0.75,
           shape:
             this.settings.nodeShape === "circle"
@@ -787,7 +815,7 @@ export class GraphViewer {
           "text-valign": "center",
           "text-halign": "center",
           "text-wrap": "wrap",
-          "text-max-width": `${160 * this.settings.nodeSize! * this.settings.graphScale!}px`,
+          "text-max-width": "10000px",
           "z-index": 10,
           "overlay-opacity": 0,
         },
@@ -796,20 +824,28 @@ export class GraphViewer {
         selector: "edge",
         style: {
           label: this.settings.showEdgeLabels ? "data(display)" : "",
-          width: 1.5,
+          width: 1.5 * edgeDetail,
           "line-color": light ? "#91a18c" : "#647365",
           "target-arrow-color": light ? "#91a18c" : "#647365",
           "target-arrow-shape": "triangle",
-          "arrow-scale": 0.8,
-          "curve-style": "bezier",
+          "arrow-scale": 0.8 * edgeDetail,
+          "line-dash-pattern": [6 * edgeDetail, 4 * edgeDetail],
+          "curve-style": "unbundled-bezier",
+          "control-point-distances": 0,
+          "control-point-weights": 0.5,
+          "edge-distances": "node-position",
           color: light ? "#616958" : "#b2bcae",
           "font-size": this.settings.edgeFontSize! * this.settings.graphScale!,
           "line-height": 1.3,
           "text-rotation": "none",
           "text-background-color": light ? "#faf9f3" : "#11120f",
           "text-background-opacity": 1,
-          "text-background-padding": "5px",
-          "text-margin-y": -12,
+          "text-background-padding": `${3 * edgeDetail}px`,
+          "text-background-shape": "roundrectangle",
+          "text-margin-x": 0,
+          "text-margin-y": 0,
+          "min-zoomed-font-size": 0,
+          "font-family": "system-ui",
           "text-wrap": "wrap",
           "text-max-width": `${110 * this.settings.graphScale!}px`,
         },
@@ -899,6 +935,8 @@ export class GraphViewer {
       this.selected = null;
       this.emptyEvidence();
     }
+    this.separateNodes();
+    this.placeEdgeLabels();
     this.search();
     this.updateSelection();
   }
@@ -1120,6 +1158,7 @@ export class GraphViewer {
         componentSpacing: this.gap(),
         spacingFactor: 1,
         minNodeSpacing: this.gap() / 2,
+        equidistant: false,
         concentric: (node: cytoscape.NodeSingular) => node.degree(),
         levelWidth: () => Math.max(1, this.cy.nodes().maxDegree(false) / 3),
         avoidOverlap: true,
@@ -1132,7 +1171,7 @@ export class GraphViewer {
     this.placeEdgeLabels();
     this.fitReadable();
   }
-  private fitReadable() {
+  private fitReadable(readLabels = false) {
     // Navigation can hide a running graph. Keep its layout intact until the
     // actual canvas becomes visible and ResizeObserver supplies its dimensions.
     if (this.cy.width() < 1 || this.cy.height() < 1) return;
@@ -1170,8 +1209,22 @@ export class GraphViewer {
     }
     // Large graphs remain complete; initial text must still be legible.
     // Overview deliberately fits every node; panning/zooming explores details.
-    if (this.cy.zoom() < 0.8) {
-      this.cy.zoom(0.8);
+    // Automatic layout fitting must not magnify a deliberately tiny graph.
+    // The explicit Read labels action can zoom into that same compact geometry.
+    if (!readLabels && this.cy.zoom() > 1.25) {
+      this.cy.zoom(1.25);
+      this.cy.center(elements);
+    }
+    const readableZoom = readLabels
+      ? Math.max(
+          12 / (this.settings.nodeFontSize! * this.settings.graphScale!),
+          this.settings.showEdgeLabels
+            ? 9 / (this.settings.edgeFontSize! * this.settings.graphScale!)
+            : 0,
+        )
+      : 0.8;
+    if (this.cy.zoom() < readableZoom) {
+      this.cy.zoom(Math.min(this.cy.maxZoom(), readableZoom));
       this.cy.center(elements);
     }
   }
@@ -1199,44 +1252,86 @@ export class GraphViewer {
   }
 
   private placeEdgeLabels() {
-    if (!this.settings.showEdgeLabels) return;
+    // The label is always the actual midpoint of its curve. Route the edge
+    // around text instead of detaching the text from its relationship.
+    const scale = this.settings.graphScale!;
     const occupied = this.cy
       .nodes(":visible")
       .map((node) => node.boundingBox());
-    for (const edge of this.cy.edges(":visible")) {
-      let best = { x: 0, y: -12, score: Infinity, collisions: Infinity };
-      for (const y of [
-        -12, -35, 35, -65, 65, -100, 100, -140, 140, -180, 180, -240, 240, -320,
-        320, -440, 440,
-      ]) {
-        for (const x of [0, -45, 45, -90, 90]) {
-          edge.style({ "text-margin-x": x, "text-margin-y": y });
-          const box = edge.boundingBox({
-            includeNodes: false,
-            includeEdges: false,
-            includeLabels: true,
-          });
-          const collisions = occupied.reduce(
-            (sum, other) =>
-              sum +
-              Math.max(
-                0,
-                Math.min(box.x2 + 8, other.x2) - Math.max(box.x1 - 8, other.x1),
-              ) *
+    const edges = this.cy
+      .edges(":visible")
+      .toArray()
+      .sort(
+        (a, b) =>
+          String(b.data("display")).length - String(a.data("display")).length ||
+          a.id().localeCompare(b.id()),
+      );
+    for (const edge of edges) {
+      edge.style({ "text-margin-x": 0, "text-margin-y": 0 });
+      if (!this.settings.showEdgeLabels) continue;
+      const a = edge.source().position(),
+        b = edge.target().position();
+      const distance = Math.hypot(b.x - a.x, b.y - a.y);
+      const step = Math.max(
+        16 * scale,
+        this.settings.edgeFontSize! * scale * 2,
+      );
+      let best = { bend: 0, weight: 0.5, score: Infinity };
+      // Prefer short, symmetrical curves. Weight alternatives let a label move
+      // along its edge when a midpoint is blocked by another concept.
+      for (let level = 0; level <= 96; level++) {
+        for (const bend of level ? [level * step, -level * step] : [0]) {
+          for (const weight of [0.5, 0.35, 0.65, 0.2, 0.8]) {
+            edge.style({
+              "control-point-distances": bend,
+              "control-point-weights": weight,
+            });
+            const box = edge.boundingBox({
+              includeNodes: false,
+              includeEdges: false,
+              includeLabels: true,
+            });
+            const midpoint = edge.midpoint();
+            // A straight edge between touching outlines has no drawable segment.
+            // Never accept an empty box as a successful collision-free label.
+            if (
+              !Number.isFinite(midpoint?.x) ||
+              !Number.isFinite(midpoint?.y) ||
+              !Number.isFinite(box.x1) ||
+              !Number.isFinite(box.y1) ||
+              box.w <= 0 ||
+              box.h <= 0
+            )
+              continue;
+            const margin = 4 * scale;
+            const collisions = occupied.reduce(
+              (sum, other) =>
+                sum +
                 Math.max(
                   0,
-                  Math.min(box.y2 + 8, other.y2) -
-                    Math.max(box.y1 - 8, other.y1),
-                ),
-            0,
-          );
-          const score = collisions * 1000 + Math.abs(x) + Math.abs(y + 12);
-          if (score < best.score) best = { x, y, score, collisions };
-          if (collisions === 0) break;
+                  Math.min(box.x2 + margin, other.x2) -
+                    Math.max(box.x1 - margin, other.x1),
+                ) *
+                  Math.max(
+                    0,
+                    Math.min(box.y2 + margin, other.y2) -
+                      Math.max(box.y1 - margin, other.y1),
+                  ),
+              0,
+            );
+            const score =
+              (collisions * 10000) / (scale * scale) +
+              Math.abs(bend) +
+              Math.abs(weight - 0.5) * distance;
+            if (score < best.score) best = { bend, weight, score };
+          }
         }
-        if (best.collisions === 0) break;
+        if (best.score < (level + 1) * step) break;
       }
-      edge.style({ "text-margin-x": best.x, "text-margin-y": best.y });
+      edge.style({
+        "control-point-distances": best.bend,
+        "control-point-weights": best.weight,
+      });
       occupied.push(
         edge.boundingBox({
           includeNodes: false,
@@ -1277,7 +1372,10 @@ export class GraphViewer {
           const dx = b.position("x") - a.position("x"),
             dy = b.position("y") - a.position("y");
           const distance = Math.max(1, Math.hypot(dx, dy));
-          const repulsion = Math.min(5, 2500 / (distance * distance));
+          const repulsion = Math.min(
+            5 * this.settings.graphScale!,
+            (2500 * this.settings.graphScale! ** 3) / (distance * distance),
+          );
           let fx = (dx / distance) * repulsion,
             fy = (dy / distance) * repulsion;
           const overlapX =
@@ -1377,7 +1475,9 @@ export class GraphViewer {
             Math.abs(dy);
           if (overlapX <= 0 || overlapY <= 0) continue;
           const horizontal = overlapX < overlapY;
-          const shift = (horizontal ? overlapX : overlapY) / 2 + 1;
+          const shift =
+            (horizontal ? overlapX : overlapY) / 2 +
+            0.1 * this.settings.graphScale!;
           const direction = (horizontal ? dx : dy) >= 0 ? 1 : -1;
           const aScale = a.id() === pinned ? 0 : b.id() === pinned ? 2 : 1;
           const bScale = b.id() === pinned ? 0 : a.id() === pinned ? 2 : 1;
@@ -1688,12 +1788,15 @@ export class GraphViewer {
       this.refreshGraph();
     }
     if (action === "fit") this.cy.fit(this.cy.elements(":visible"), 35);
-    if (action === "readable") this.fitReadable();
+    if (action === "readable") this.fitReadable(true);
     if (action === "zoom-in" || action === "zoom-out")
       this.cy.zoom({
         level: Math.max(
-          0.15,
-          Math.min(4, this.cy.zoom() * (action === "zoom-in" ? 1.3 : 1 / 1.3)),
+          this.cy.minZoom(),
+          Math.min(
+            this.cy.maxZoom(),
+            this.cy.zoom() * (action === "zoom-in" ? 1.3 : 1 / 1.3),
+          ),
         ),
         renderedPosition: { x: this.cy.width() / 2, y: this.cy.height() / 2 },
       });
@@ -1775,7 +1878,7 @@ export class GraphViewer {
   }
   private svg() {
     const bounds = this.cy.elements(":visible").boundingBox(),
-      padding = 130;
+      padding = 30 * this.settings.graphScale!;
     const fg = this.settings.theme === "light" ? "#292b24" : "#f3f1ec";
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${bounds.x1 - padding} ${bounds.y1 - padding} ${bounds.w + padding * 2} ${bounds.h + padding * 2}"><rect x="${bounds.x1 - padding}" y="${bounds.y1 - padding}" width="${bounds.w + padding * 2}" height="${bounds.h + padding * 2}" fill="${this.settings.theme === "light" ? "#faf9f3" : "#11120f"}"/><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0L7 3L0 6" fill="#7192a4"/></marker></defs>${this.cy
       .edges(":visible")
@@ -1783,10 +1886,7 @@ export class GraphViewer {
         const a = e.sourceEndpoint(),
           b = e.targetEndpoint(),
           midpoint = e.midpoint();
-        const mid = {
-          x: midpoint.x + parseFloat(e.style("text-margin-x")),
-          y: midpoint.y + parseFloat(e.style("text-margin-y")) + 12,
-        };
+        const mid = midpoint;
         const font = this.settings.edgeFontSize! * this.settings.graphScale!;
         const label = this.settings.showEdgeLabels
           ? String(e.data("display"))
@@ -1806,9 +1906,10 @@ export class GraphViewer {
           } else current = next;
         }
         if (current) lines.push(current);
+        const labelPadding = parseFloat(e.style("text-background-padding"));
         const w =
           Math.max(0, ...lines.map((line) => context.measureText(line).width)) +
-          10;
+          labelPadding * 2;
         const control = e.controlPoints() || [];
         let path = `M${a.x} ${a.y}`;
         if (!control.length) path += ` L${b.x} ${b.y}`;
@@ -1820,8 +1921,11 @@ export class GraphViewer {
               : b;
             path += ` Q${point.x} ${point.y} ${end.x} ${end.y}`;
           });
-        const h = lines.length * font * 1.3 + 10;
-        return `<path d="${path}" fill="none" stroke="#7192a4" ${e.data("kind") === "stated" ? "" : 'stroke-dasharray="5 4"'} marker-end="url(#arrow)"/>${label ? `<rect x="${mid.x - w / 2}" y="${mid.y - 12 - h / 2}" width="${w}" height="${h}" rx="4" fill="${this.settings.theme === "light" ? "#faf9f3" : "#11120f"}"/><text text-anchor="middle" font-family="system-ui" font-size="${font}" fill="${fg}">${lines.map((line, i) => `<tspan x="${mid.x}" y="${mid.y - 12 - (lines.length - 1) * font * 0.65 + i * font * 1.3 + font * 0.36}">${esc(line)}</tspan>`).join("")}</text>` : ""}`;
+        const h = lines.length * font * 1.3 + labelPadding * 2;
+        const stroke = e.style("line-color");
+        const strokeWidth = parseFloat(e.style("width"));
+        const dash = String(e.style("line-dash-pattern")).replace(/px/g, "");
+        return `<defs><marker id="arrow-${esc(e.id())}" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0L7 3L0 6" fill="${e.style("target-arrow-color")}"/></marker></defs><path d="${path}" fill="none" stroke="${stroke}" stroke-width="${strokeWidth}" ${e.data("kind") === "stated" ? "" : `stroke-dasharray="${dash}"`} marker-end="url(#arrow-${esc(e.id())})"/>${label ? `<rect x="${mid.x - w / 2}" y="${mid.y - h / 2}" width="${w}" height="${h}" rx="4" fill="${this.settings.theme === "light" ? "#faf9f3" : "#11120f"}"/><text text-anchor="middle" font-family="system-ui" font-size="${font}" fill="${fg}">${lines.map((line, i) => `<tspan x="${mid.x}" y="${mid.y - (lines.length - 1) * font * 0.65 + i * font * 1.3 + font * 0.36}">${esc(line)}</tspan>`).join("")}</text>` : ""}`;
       })
       .join("")}${this.cy
       .nodes(":visible")
@@ -1840,19 +1944,21 @@ export class GraphViewer {
             : "linearGradient";
         const fill = `<defs><${gradient} id="node-fill-${i}">${stops.map((color, index) => `<stop offset="${[0, 55, 100][index]}%" stop-color="${color}"/>`).join("")}</${gradient}></defs>`;
         const font = this.settings.nodeFontSize! * this.settings.graphScale!;
+        const border = parseFloat(n.style("border-width"));
         const shape =
           this.settings.nodeShape === "circle"
-            ? `<circle cx="${p.x}" cy="${p.y}" r="${width / 2}" fill="url(#node-fill-${i})" stroke="${n.data("color")}" stroke-width="2"/>`
+            ? `<circle cx="${p.x}" cy="${p.y}" r="${width / 2}" fill="url(#node-fill-${i})" stroke="${n.data("color")}" stroke-width="${border}"/>`
             : this.settings.nodeShape === "ellipse"
-              ? `<ellipse cx="${p.x}" cy="${p.y}" rx="${width / 2}" ry="${height / 2}" fill="url(#node-fill-${i})" stroke="${n.data("color")}" stroke-width="2"/>`
+              ? `<ellipse cx="${p.x}" cy="${p.y}" rx="${width / 2}" ry="${height / 2}" fill="url(#node-fill-${i})" stroke="${n.data("color")}" stroke-width="${border}"/>`
               : this.settings.nodeShape === "diamond"
-                ? `<polygon points="${p.x},${p.y - height / 2} ${p.x + width / 2},${p.y} ${p.x},${p.y + height / 2} ${p.x - width / 2},${p.y}" fill="url(#node-fill-${i})" stroke="${n.data("color")}" stroke-width="2"/>`
-                : `<rect x="${p.x - width / 2}" y="${p.y - height / 2}" width="${width}" height="${height}" rx="12" fill="url(#node-fill-${i})" stroke="${n.data("color")}" stroke-width="2"/>`;
+                ? `<polygon points="${p.x},${p.y - height / 2} ${p.x + width / 2},${p.y} ${p.x},${p.y + height / 2} ${p.x - width / 2},${p.y}" fill="url(#node-fill-${i})" stroke="${n.data("color")}" stroke-width="${border}"/>`
+                : `<rect x="${p.x - width / 2}" y="${p.y - height / 2}" width="${width}" height="${height}" rx="${Math.min(12, width / 4, height / 4)}" fill="url(#node-fill-${i})" stroke="${n.data("color")}" stroke-width="${border}"/>`;
         return `${fill}${shape}<text text-anchor="middle" font-family="system-ui" font-size="${font}" font-weight="600" fill="${fg}">${lines.map((line, i) => `<tspan x="${p.x}" y="${p.y - (lines.length - 1) * font * 0.7 + i * font * 1.4 + font / 3}">${esc(line)}</tspan>`).join("")}</text>`;
       })
       .join("")}</svg>`;
   }
   destroy() {
+    if (this.routingFrame) cancelAnimationFrame(this.routingFrame);
     this.pdfPreview?.destroy();
     this.stopPhysics();
     this.events.abort();

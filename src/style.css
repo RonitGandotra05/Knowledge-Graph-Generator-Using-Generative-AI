@@ -1355,9 +1355,6 @@ main {
 .context-panel #context-note {
   font-size: 12px;
 }
-#discovery-controls {
-  margin-top: 18px;
-}
 .concept-review {
   margin-top: 14px;
 }
@@ -1730,6 +1727,78 @@ html[data-view="home"] .header-right {
 .paper-row.failed .paper-status,
 .paper-row.failed .paper-icon {
   color: #e6a17f;
+}
+.paper-list-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 16px 0 0;
+  font-size: 12px;
+}
+.paper-remove {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+}
+.paper-remove:hover {
+  color: #e6a17f;
+  border-color: #e6a17f;
+}
+.parse-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  margin: 10px 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+}
+.parse-progress > div { min-width: 0; }
+.parse-progress strong,
+.parse-progress small { display: block; }
+.parse-progress small {
+  margin-top: 3px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.parse-spinner {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: parse-spin .8s linear infinite;
+}
+@keyframes parse-spin { to { transform: rotate(360deg); } }
+.paste-paper {
+  margin: 8px 0;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.paste-paper > summary { cursor: pointer; }
+.paste-paper textarea { width: 100%; resize: vertical; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 .run-estimate {
   border: 1px solid var(--border);

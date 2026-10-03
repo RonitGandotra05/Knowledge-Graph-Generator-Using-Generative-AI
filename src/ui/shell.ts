@@ -24,7 +24,7 @@ export const appShell = /* HTML */ `<header class="app-header">
         aria-expanded="false"
         aria-controls="app-menu"
       >
-        ☰
+        <span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
       </button>
     </div>
     <nav id="app-menu" hidden aria-label="Application menu">

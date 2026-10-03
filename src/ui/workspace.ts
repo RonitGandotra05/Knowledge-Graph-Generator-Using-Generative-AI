@@ -111,6 +111,27 @@ export class Workspace {
     upload.addEventListener("change", () => {
       if (upload.files?.length) void this.upload([...upload.files]);
     });
+    $("#add-pasted-paper", root).addEventListener("click", () => {
+      const text = $<HTMLTextAreaElement>("#paper-text", root).value.trim();
+      if (!text) {
+        this.message("Paste the research paper text first.", true);
+        return;
+      }
+      void this.upload([
+        new File([text], "Pasted research paper.txt", { type: "text/plain" }),
+      ]).then(() => {
+        if (this.papers.some((paper) => paper.name === "Pasted research paper.txt" && paper.status !== "failed"))
+          $<HTMLTextAreaElement>("#paper-text", root).value = "";
+      });
+    });
+    $("#document-summary", root).addEventListener("click", (event) => {
+      const button = (event.target as HTMLElement).closest<HTMLButtonElement>(
+        "[data-remove-paper]",
+      );
+      if (button) void this.removePaper(button.dataset.removePaper || "");
+      if ((event.target as HTMLElement).closest("[data-clear-papers]"))
+        void this.clearPapers();
+    });
     const drop = $("#drop-zone", root);
     drop.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
@@ -129,7 +150,6 @@ export class Workspace {
       const files = e.dataTransfer?.files;
       if (files?.length && !this.busy) void this.upload([...files]);
     });
-    $("#add-terms", root).addEventListener("click", () => this.addTerms());
     $("#edit-setup", root).addEventListener("click", () => this.goStep(0));
     for (const id of ["focus", "terms"])
       $("#" + id, root).addEventListener("input", () => {
@@ -172,11 +192,6 @@ export class Workspace {
         $("#" + id, root).addEventListener("change", () =>
           this.updateContext(),
         ),
-    );
-    $("#discover-concepts", root).addEventListener(
-      "click",
-      () =>
-        void this.discover().catch((e) => this.message(readableError(e), true)),
     );
     $("#analyze", root).addEventListener("click", () => void this.analyze());
     $("#resume-run", root).addEventListener("click", () => {
@@ -736,6 +751,8 @@ export class Workspace {
       }
     }
     this.setBusy(true);
+    $("#parse-progress", this.root).hidden = false;
+    $("#parse-detail", this.root).textContent = "Preparing local parser…";
     this.papers = [];
     this.doc = null;
     this.concepts = [];
@@ -747,7 +764,10 @@ export class Workspace {
     try {
       const result = await parseCollection(
         files,
-        (text) => this.message(text),
+        (text) => {
+          $("#parse-detail", this.root).textContent = text;
+          this.message(text);
+        },
         (entries) => {
           this.papers = entries.map((e) => e.paper);
           this.renderDocument();
@@ -781,6 +801,7 @@ export class Workspace {
     } catch (error) {
       this.message(readableError(error), true);
     } finally {
+      $("#parse-progress", this.root).hidden = true;
       this.setBusy(false);
       this.updateContext();
       $<HTMLInputElement>("#document-file", this.root).value = "";
@@ -827,7 +848,6 @@ export class Workspace {
     const selection = this.context(),
       selected = this.concepts.filter((c) => c.selected).length,
       options = this.options();
-    $("#discovery-controls", this.root).hidden = !this.provider.config().key;
     const discoveryMode = true;
     $("#discovery-estimate", this.root).hidden = !discoveryMode;
     $("#discovery-preview", this.root).hidden = !discoveryMode;
@@ -878,8 +898,6 @@ export class Workspace {
       !config.key ||
       !this.provider.validCapacity() ||
       state.blocked;
-    $<HTMLButtonElement>("#discover-concepts", this.root).disabled =
-      this.busy || !this.doc || !this.provider.validCapacity() || state.blocked;
   }
   private focus() {
     return $<HTMLTextAreaElement>("#focus", this.root).value;
@@ -1216,10 +1234,10 @@ export class Workspace {
     $("#text-preview", this.root).hidden = !this.doc;
     if (papers.length) {
       $("#document-summary", this.root).innerHTML =
-        `<div class="paper-collection" aria-label="Uploaded papers">${papers.map((p) => `<article class="paper-row ${p.status}"><span class="paper-icon">${p.status === "failed" ? "!" : "▤"}</span><div><strong>${esc(p.name)}</strong><small>${p.status === "failed" ? `Excluded · ${esc(p.error || "Unreadable file")}` : `${p.pages ? p.pages + " pages · " : "paragraph references · "}${p.characters.toLocaleString()} characters · Parsed locally${p.ocrPages.length ? " · automatic OCR on " + p.ocrPages.length + " page(s)" : ""}${p.skippedPages.length ? " · excluded pages " + p.skippedPages.join(", ") : ""}`}</small></div><span class="paper-status">${p.status === "failed" ? "Excluded" : p.status === "partial" ? "Partially included" : "Included"}</span></article>`).join("")}</div>`;
+        `<div class="paper-list-heading"><strong>Uploaded papers and parsed content</strong><button type="button" class="text-button" data-clear-papers>Clear all</button></div><div class="paper-collection" aria-label="Uploaded papers">${papers.map((p) => `<article class="paper-row ${p.status}"><span class="paper-icon">${p.status === "failed" ? "!" : "▤"}</span><div><strong>${esc(p.name)}</strong><small>${p.status === "failed" ? `Excluded · ${esc(p.error || "Unreadable file")}` : `${p.pages ? p.pages + " pages · " : "paragraph references · "}${p.characters.toLocaleString()} characters · Parsed locally${p.ocrPages.length ? " · automatic OCR on " + p.ocrPages.length + " page(s)" : ""}${p.skippedPages.length ? " · excluded pages " + p.skippedPages.join(", ") : ""}`}</small></div><span class="paper-status">${p.status === "failed" ? "Excluded" : p.status === "partial" ? "Partially included" : "Included"}</span><button type="button" class="paper-remove" data-remove-paper="${esc(p.id)}" aria-label="Remove ${esc(p.name)} and its parsed content" title="Remove paper and parsed content">×</button></article>`).join("")}</div>`;
     } else if (this.doc)
       $("#document-summary", this.root).innerHTML =
-        `<div class="document-card"><span>▤</span><div><strong>${esc(this.doc.name)}</strong><small>${this.doc.pages ? this.doc.pages + " pages · " : ""}${this.doc.characters.toLocaleString()} characters · Parsed locally</small></div><i>✓</i></div>`;
+        `<div class="paper-list-heading"><strong>Uploaded paper and parsed content</strong><button type="button" class="text-button" data-clear-papers>Clear all</button></div><div class="document-card"><span>▤</span><div><strong>${esc(this.doc.name)}</strong><small>${this.doc.pages ? this.doc.pages + " pages · " : ""}${this.doc.characters.toLocaleString()} characters · Parsed locally</small></div><i>✓</i></div>`;
     if (this.doc)
       $("#extracted-text", this.root).textContent = this.doc.passages
         .slice(0, 12)
@@ -1228,6 +1246,64 @@ export class Workspace {
             `${p.paperName ? p.paperName + " · " : ""}${p.page ? "PDF page " + p.page + " · " : ""}Paragraph ${p.paragraph}\n${p.text}`,
         )
         .join("\n\n");
+  }
+  private async removePaper(id: string) {
+    if (!id || this.busy) return;
+    await this.flushDraft();
+    const removed = this.papers.find((paper) => paper.id === id);
+    if (!removed) return;
+    this.papers = this.papers.filter((paper) => paper.id !== id);
+    this.pdfFiles.delete(id);
+    if (this.doc) {
+      const remaining = new Set(this.papers.map((paper) => paper.id));
+      const passages = this.doc.passages.filter((passage) =>
+        passage.paperId ? remaining.has(passage.paperId) : passage.paperName !== removed.name,
+      );
+      this.doc = this.papers.length
+        ? {
+            ...this.doc,
+            name: this.papers.length === 1 ? this.papers[0].name : `${this.papers.length} research papers`,
+            pages: this.papers.reduce((sum, paper) => sum + paper.pages, 0),
+            characters: this.papers.reduce((sum, paper) => sum + paper.characters, 0),
+            passages,
+            papers: this.papers,
+            warnings: this.doc.warnings.filter((warning) => !warning.startsWith(`${removed.name}:`)),
+            ocrPages: this.papers.flatMap((paper) => paper.ocrPages),
+            skippedPages: this.papers.flatMap((paper) => paper.skippedPages),
+          }
+        : null;
+    }
+    this.resetAnalysisForSources();
+    this.renderDocument();
+    this.updateContext();
+    this.scheduleSave();
+    this.message(`${removed.name} and its parsed content were removed.`);
+  }
+  private async clearPapers() {
+    if (this.busy || (!this.papers.length && !this.doc)) return;
+    await this.flushDraft();
+    this.papers = [];
+    this.doc = null;
+    this.pdfFiles.clear();
+    this.resetAnalysisForSources();
+    this.renderDocument();
+    this.updateContext();
+    this.scheduleSave();
+    this.message("Uploaded papers and parsed content were removed.");
+  }
+  private resetAnalysisForSources() {
+    this.viewer?.destroy();
+    this.viewer = null;
+    this.analysis = null;
+    this.phase = "idle";
+    this.activity = [];
+    this.discoveryProgress = undefined;
+    this.extractionProgress = undefined;
+    this.discoverySignature = "";
+    this.concepts = [];
+    this.draftId = crypto.randomUUID();
+    this.renderConcepts();
+    this.goStep(0);
   }
   private draft(): Draft | null {
     if (

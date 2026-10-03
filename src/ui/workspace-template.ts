@@ -95,6 +95,17 @@ export const workspaceTemplate = /* HTML */ `<div class="workspace-heading">
             >Up to 10 files · PDF, DOCX or text · 30 MB per file</small
           ></label
         >
+        <details id="paste-paper" class="paste-paper">
+          <summary>Paste a research paper</summary>
+          <p class="fine-print">Paste the full paper text here. It will be parsed locally in your browser.</p>
+          <label for="paper-text" class="sr-only">Full research paper text</label>
+          <textarea id="paper-text" rows="7" placeholder="Paste the full text of your research paper…"></textarea>
+          <button type="button" id="add-pasted-paper" class="button secondary small">Add pasted paper</button>
+        </details>
+        <div id="parse-progress" class="parse-progress" role="status" aria-live="polite" hidden>
+          <span class="parse-spinner" aria-hidden="true"></span>
+          <div><strong>Parsing your paper</strong><small id="parse-detail">Preparing local parser…</small></div>
+        </div>
         <p class="fine-print">
           Automatic local OCR for scanned pages. Unreadable files/pages are
           clearly listed.
@@ -126,29 +137,8 @@ export const workspaceTemplate = /* HTML */ `<div class="workspace-heading">
               placeholder="e.g. attention, renewable energy, materials"
             ></textarea>
           </label>
-          <div class="input-note">
-            Separate keywords with commas.<button
-              type="button"
-              id="add-terms"
-              class="text-button"
-            >
-              Find keywords
-            </button>
-          </div>
+          <div class="input-note">Separate keywords with commas.</div>
         </div>
-        <details id="discovery-controls">
-          <summary>Review suggested concepts</summary>
-          <p class="fine-print">
-            Review suggested concepts before building relationships.
-          </p>
-          <button
-            type="button"
-            id="discover-concepts"
-            class="button secondary full"
-          >
-            Discover concepts with AI ✧
-          </button>
-        </details>
         <details class="concept-review">
           <summary>Refine concepts (optional)</summary>
           <div class="review-toolbar">

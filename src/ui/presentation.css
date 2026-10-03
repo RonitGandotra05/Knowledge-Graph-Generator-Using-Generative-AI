@@ -68,9 +68,29 @@ html[data-view="home"] .app-header .brand small {
 }
 #menu-toggle {
   margin: 0;
-  width: 38px;
-  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
   border-radius: 10px;
+}
+.menu-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 20px;
+}
+.menu-icon i {
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
 }
 .button {
   border-radius: 9px;
@@ -261,8 +281,7 @@ html[data-view="workspace"] main {
   line-height: 1.5;
   padding-block: 5px;
 }
-#workspace .concept-review,
-#workspace #discovery-controls {
+#workspace .concept-review {
   margin: 4px 0 0;
   border-top: 1px solid var(--border);
 }
@@ -1412,7 +1431,25 @@ html[data-view="home"] #menu-toggle {
 #app-menu {
   top: calc(100% - 4px);
   z-index: 30;
+  width: 240px;
   max-width: calc(100vw - 48px);
+}
+#app-menu button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  height: auto;
+  white-space: normal;
+}
+#app-menu #theme-toggle {
+  width: 100%;
+  height: auto;
+  min-height: 44px;
+  border-radius: 6px;
+  font-size: inherit;
+  text-align: left;
 }
 /* Reserve bottom space for the hosting badge, including on narrow screens. */
 #home .home-footer {

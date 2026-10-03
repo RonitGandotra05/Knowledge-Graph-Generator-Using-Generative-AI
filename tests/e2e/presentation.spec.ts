@@ -120,8 +120,14 @@ test("an active analysis continues on the homepage and reopens through ongoing h
   await page.locator("#analyze").click();
   await expect.poll(() => held).toBe(true);
   await expect
+    .poll(
+      async () =>
+        (await page.locator("#graph-root .graph-stage").boundingBox())!.height,
+    )
+    .toBeGreaterThanOrEqual(520);
+  await expect
     .poll(() => page.evaluate(() => document.documentElement.scrollHeight))
-    .toBeLessThanOrEqual(768);
+    .toBeGreaterThan(768);
   await page.locator(".brand").click();
   await expect(page.locator("#home")).toBeVisible();
   await expect(page.locator("#home-start")).toContainText("View live research");
@@ -144,8 +150,15 @@ test("an active analysis continues on the homepage and reopens through ongoing h
     "560 reported tokens",
   );
   await expect
+    .poll(
+      async () =>
+        (await page.locator("#graph-root .graph-stage").boundingBox())!.height,
+    )
+    .toBeGreaterThanOrEqual(520);
+  await expect
     .poll(() => page.evaluate(() => document.documentElement.scrollHeight))
-    .toBeLessThanOrEqual(768);
+    .toBeGreaterThan(768);
+  await page.locator("#graph-root .accessible-graph").scrollIntoViewIfNeeded();
   await expect(page.locator("#graph-root .accessible-graph")).toBeInViewport();
   await expect
     .poll(() =>

@@ -1200,7 +1200,7 @@ export class Workspace {
     this.goStep(3);
     if (!this.busy)
       requestAnimationFrame(() =>
-        $("#graph-result", this.root).scrollIntoView({
+        $("#graph-root", this.root).scrollIntoView({
           behavior: "smooth",
           block: "start",
         }),

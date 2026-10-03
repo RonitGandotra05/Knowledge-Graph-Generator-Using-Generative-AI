@@ -683,3 +683,47 @@
 .is-panning .pdf-preview-page {
   cursor: grabbing;
 }
+
+/* Keep the graph prominent in an ordinary browser window, even with many types. */
+.graph-viewer {
+  scroll-margin-top: 24px;
+}
+.graph-filter {
+  max-height: 96px;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  gap: 10px 15px;
+}
+.type-toggle {
+  flex-shrink: 0;
+}
+.graph-stage {
+  height: clamp(520px, 70svh, 900px);
+}
+.graph-export > div {
+  position: absolute;
+  margin-top: 0;
+}
+.graph-export:not([open]) > div {
+  display: none;
+}
+.graph-viewer:fullscreen {
+  display: flex;
+  flex-direction: column;
+}
+.graph-viewer:fullscreen .graph-body {
+  flex: 1;
+  min-height: 0;
+}
+.graph-viewer:fullscreen .graph-stage {
+  height: 100%;
+  min-height: 0;
+}
+@media (max-width: 760px) {
+  .graph-stage {
+    height: clamp(460px, 65svh, 680px);
+  }
+  .graph-filter {
+    max-height: 84px;
+  }
+}

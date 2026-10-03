@@ -8,6 +8,7 @@
   Browser-first · Any research field · Your AI provider · Offline exports
 </p>
 <p align="center">
+  <a href="https://evidence-atlas.netlify.app">Live website</a> ·
   <a href="#the-workspace">Explore</a> ·
   <a href="#run-locally">Run locally</a> ·
   <a href="docs/TESTING.md">Verification</a> ·
@@ -82,6 +83,8 @@ Requests run serially. Conservative minute/day budgets reserve estimated input p
 - **Automatic OCR:** page images stay local. English language data downloads on demand; the static host may record ordinary access logs.
 
 Files support PDF, DOCX, TXT, Markdown, CSV and TSV; text formats are treated as text. Limits are **10 files**, **30 MB per file**, and **500 pages per PDF**. Unreadable files/pages are listed explicitly and excluded from evidence; other readable content continues.
+
+Hosted on Netlify: [deployment details and safe redeployment](docs/DEPLOYMENT.md).
 
 ## Run locally
 

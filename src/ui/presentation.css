@@ -1667,3 +1667,21 @@ html[data-view="home"] #menu-toggle {
     gap: 8px;
   }
 }
+
+/* Keep the home flow content-driven at desktop sizes.  A fixed viewport
+   height lets the hero grid end before its copy does at some zoom levels,
+   which makes the feature strip slide underneath the CTA row. */
+@media (min-width: 901px) {
+  #home {
+    height: auto;
+  }
+
+  #home .hero {
+    flex: 0 0 auto;
+  }
+
+  #home .hero-copy,
+  #home .feature-strip article {
+    min-width: 0;
+  }
+}

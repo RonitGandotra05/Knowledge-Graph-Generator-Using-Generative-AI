@@ -140,13 +140,17 @@ test("after refresh, reopening saved work scrolls to the graph even when usage d
     mimeType: "application/json",
     buffer: Buffer.from(JSON.stringify(analysis)),
   });
-  await expect(page.locator("#analysis-meta")).toContainText("8 relationships");
+  await expect(page.locator("#analysis-meta")).toContainText(
+    "19 relationships",
+  );
   await page.locator("#save-analysis").click();
   await expect(page.locator("#history-items .history-card")).toHaveCount(1);
   await page.reload();
   await openHistory(page);
   await page.locator("#history-items [data-open]").click();
-  await expect(page.locator("#analysis-meta")).toContainText("8 relationships");
+  await expect(page.locator("#analysis-meta")).toContainText(
+    "19 relationships",
+  );
   const root = page.locator("#graph-root"),
     stage = root.locator(".graph-stage");
   await expect

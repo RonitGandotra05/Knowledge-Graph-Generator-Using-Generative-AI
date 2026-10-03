@@ -75,6 +75,9 @@ test("coordinated scaling, presets and every shape keep text inside nodes", asyn
 }) => {
   const root = page.locator("#demo-graph");
   await root.locator(".graph-customize summary").click();
+  await root.getByLabel("Overall graph size", { exact: true }).fill("100");
+  await root.getByLabel("Node size", { exact: true }).fill("100");
+  await root.getByLabel("Node text size", { exact: true }).fill("15");
   const before = await metrics(root);
   await root.getByLabel("Overall graph size", { exact: true }).fill("60");
   const smaller = await metrics(root);
@@ -129,6 +132,8 @@ test("concentric is compact and toggling settled physics preserves default densi
 }) => {
   const root = page.locator("#demo-graph"),
     physics = root.locator('[data-action="physics"]');
+  await physics.click();
+  await expect(root).toHaveAttribute("data-physics", "idle");
   const before = await metrics(root);
   await physics.click();
   await physics.click();
@@ -159,7 +164,7 @@ test("add concepts, notes and connections, rewire and delete from a friendly edi
   await expect(root.locator(".concept-notes")).toHaveText(
     "A note\n<script>never execute</script>",
   );
-  await expect(root.locator(".graph-count")).toContainText("10 concepts");
+  await expect(root.locator(".graph-count")).toContainText("19 concepts");
   await root.locator('[data-action="add-edge"]').click();
   await root.locator('[name="relationship"]').fill("my link");
   await root.locator('[name="explanation"]').fill("My description");
@@ -195,10 +200,10 @@ test("add concepts, notes and connections, rewire and delete from a friendly edi
   await root.locator('[data-action="delete-edge"]').click();
   await root.locator('[data-action="confirm-delete"]').click();
   await expect(root.locator(".graph-count")).toContainText(
-    "10 concepts · 8 relationships",
+    "19 concepts · 19 relationships",
   );
   await root.locator('[data-action="undo"]').click();
-  await expect(root.locator(".graph-count")).toContainText("9 relationships");
+  await expect(root.locator(".graph-count")).toContainText("20 relationships");
 });
 
 test("multi-select by list and canvas, cascading deletion and undo/redo", async ({
@@ -213,17 +218,17 @@ test("multi-select by list and canvas, cascading deletion and undo/redo", async 
     "2 concepts selected",
   );
   await root.locator('[data-action="delete-selected"]').click();
-  await expect(root.locator(".graph-count")).toContainText("7 concepts");
+  await expect(root.locator(".graph-count")).toContainText("16 concepts");
   await root.locator('[data-action="undo"]').click();
   await expect(root.locator(".graph-count")).toContainText(
-    "9 concepts · 8 relationships",
+    "18 concepts · 19 relationships",
   );
   await root.locator('[data-action="redo"]').click();
-  await expect(root.locator(".graph-count")).toContainText("7 concepts");
+  await expect(root.locator(".graph-count")).toContainText("16 concepts");
   await root.locator('[data-action="undo"]').click();
   await root.locator('[data-action="select-all"]').click();
   await expect(root.locator(".selection-bar span")).toContainText(
-    "9 concepts selected",
+    "18 concepts selected",
   );
   await root.locator('[data-action="clear-selection"]').click();
   await expect(root.locator('[data-action="delete-selected"]')).toBeDisabled();
@@ -238,18 +243,32 @@ test("multi-select by list and canvas, cascading deletion and undo/redo", async 
   });
   await page.mouse.up();
   await expect(root.locator(".selection-bar span")).toContainText(
-    "9 concepts selected",
+    "18 concepts selected",
   );
   await root.locator('[data-action="clear-selection"]').click();
   // A modifier click on a real rendered canvas node also selects it.
   await root.locator('[data-action="select-mode"]').click();
   await root.locator('[data-action="fit"]').click();
-  const p = await root
-    .locator(".graph-canvas")
-    .evaluate((el) => (el as any)._cyreg.cy.nodes()[0].renderedPosition());
-  await root
-    .locator(".graph-canvas")
-    .click({ position: p, modifiers: ["Shift"] });
+  await canvas.scrollIntoViewIfNeeded();
+  const p = await canvas.evaluate(async (el) => {
+    // Let the selection toolbar finish moving the canvas before reading coordinates.
+    await new Promise(requestAnimationFrame);
+    await new Promise(requestAnimationFrame);
+    const cy = (el as any)._cyreg.cy;
+    return cy
+      .nodes()
+      .filter((n: any) => {
+        const p = n.renderedPosition();
+        return (
+          p.x > 30 &&
+          p.y > 30 &&
+          p.x < cy.width() - 30 &&
+          p.y < cy.height() - 30
+        );
+      })[0]
+      .renderedPosition();
+  });
+  await canvas.click({ position: p, modifiers: ["Shift"] });
   await expect(root.locator(".selection-bar span")).toContainText(
     "1 concepts selected",
   );
@@ -368,7 +387,7 @@ test("customized personal graphs reopen offline, export again and recover from b
   offline.on("pageerror", (e) => errors.push(e.message));
   await offline.goto("file://" + path);
   await expect(offline.locator(".graph-count")).toContainText(
-    "10 concepts · 9 relationships",
+    "19 concepts · 20 relationships",
   );
   await offline.locator(".graph-customize summary").click();
   await expect(
@@ -411,7 +430,7 @@ test("customized personal graphs reopen offline, export again and recover from b
   await (await pending).saveAs(nextPath);
   await offline.goto("file://" + nextPath);
   await expect(offline.locator(".graph-count")).toContainText(
-    "10 concepts · 9 relationships",
+    "19 concepts · 20 relationships",
   );
   await offline.locator(".accessible-graph summary").click();
   await offline
@@ -433,7 +452,7 @@ test("customized personal graphs reopen offline, export again and recover from b
     .click();
   const root = page.locator("#graph-root");
   await expect(root.locator(".graph-count")).toContainText(
-    "10 concepts · 9 relationships",
+    "19 concepts · 20 relationships",
   );
   await root.locator(".graph-customize summary").click();
   await expect(

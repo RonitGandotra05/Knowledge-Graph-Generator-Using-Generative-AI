@@ -68,3 +68,42 @@ ATLAS_TEST_PORT=5183 ATLAS_NEJM_VISUAL=1 npx playwright test tests/e2e/compact-l
 
 The NEJM browser regression is opt-in and requires the local generated JSON;
 minimum-size sample regressions run without a key or PDF.
+
+## Public sample
+
+The homepage sample now uses the reviewed COVE trial graph from Baden et al.,
+_N Engl J Med_ 2021;384:403–416, DOI `10.1056/NEJMoa2035389`. Removing the eight
+remaining disconnected concepts leaves **18 concepts and 19 relationships**.
+Both blank-label and isolated-node checks run against the sample. The checked-in
+snapshot retains Gemini/model provenance, review edits, unchanged evidence quotes,
+source locations, and native PDF line rectangles. Unrelated aliases (such as
+Covid-19 as a synonym of the virus, or nasopharyngeal swab as a synonym of RT-PCR)
+and an author-affiliations source were also removed.
+
+The included PDF’s SHA-256 fingerprint matches the extraction. Opening the sample
+makes no AI requests. Desktop, mobile, light/dark, page-one and page-twelve source
+previews were tested and visually inspected. The sample opens with the reviewed
+compact concentric settings; all appearance controls remain available. Enabling
+physics on explicitly arranged layouts now only resolves overlaps, preserving
+compact contact instead of introducing global repulsion. Toolbar disclosures and
+selection bars refresh the canvas origin so pointer hits remain accurate after
+controls move the canvas.
+
+Rebuild the cached snapshot without making AI requests (requires the separately
+reviewed extraction generated above):
+
+```sh
+node scripts/update-nejm-sample.mjs
+npx prettier --write src/ui/demo-nejm.json
+```
+
+An alternate reviewed input and matching source PDF can be passed as arguments.
+The script refuses a PDF whose fingerprint does not match and requires locatable
+PDF evidence for every retained relationship. The public sample and its browser
+regressions work without those local evaluation artifacts or an API key.
+
+Final sample acceptance: 145 unit tests and 30 browser tests passed, along with
+the production build, formatting and SEO checks. The three opt-in tests for
+regenerating old OCR geometry, the raw evaluation artifact, and the separate
+scanned-paper evaluation were skipped. All retained concept and relationship
+quotes have locatable PDF highlights, including after JSON round trips.

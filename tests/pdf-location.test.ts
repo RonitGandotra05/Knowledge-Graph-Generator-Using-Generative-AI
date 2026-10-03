@@ -43,6 +43,15 @@ describe("PDF quote highlighting", () => {
       importAnalysis(jsonExport(demoAnalysis())),
     ]) {
       expect(analysis.papers![0].fingerprint).toMatch(/^[a-f0-9]{64}$/);
+      for (const node of analysis.graph.nodes) {
+        for (const ref of node.sources!) {
+          const source = analysis.sources!.find((p) => p.id === ref.passageId)!;
+          expect(
+            locatePDFQuote(source.pdfLines!, ref.quote).length,
+            `${node.id}:${ref.passageId}`,
+          ).toBeGreaterThan(0);
+        }
+      }
       for (const edge of analysis.graph.edges) {
         const source = analysis.sources!.find((p) => p.id === edge.passageId)!;
         expect(

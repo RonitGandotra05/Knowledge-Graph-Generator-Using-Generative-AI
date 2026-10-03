@@ -41,7 +41,7 @@ test("homepage leads to the unified workspace and preserves work across home and
   await page.locator("#home-demo").click();
   await expect(page.locator("#demo-section")).toBeVisible();
   await expect(page.locator("#demo-graph .graph-count")).toContainText(
-    "9 concepts",
+    "18 concepts",
   );
   await page.locator("#close-demo").click();
   await expect(page.locator("#home")).toBeVisible();

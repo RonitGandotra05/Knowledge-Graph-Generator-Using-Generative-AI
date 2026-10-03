@@ -422,7 +422,12 @@ export class GraphViewer {
       this.positionEvidence();
     });
     this.resize.observe($(".graph-stage", root));
-    const reposition = () => this.positionEvidence();
+    const reposition = () => {
+      // Toolbar disclosures can move the canvas without changing its size.
+      // Refresh Cytoscape’s cached origin so pointer hits follow the canvas.
+      this.cy.resize();
+      this.positionEvidence();
+    };
     window.addEventListener("scroll", reposition, {
       capture: true,
       signal: this.events.signal,
@@ -602,7 +607,9 @@ export class GraphViewer {
       n.toggleClass("multi-selected", this.multiSelection.has(n.id()));
     });
     const bar = $(".selection-bar", this.root);
+    const wasHidden = bar.hidden;
     bar.hidden = !this.selectionMode && !this.multiSelection.size;
+    if (bar.hidden !== wasHidden) this.cy.resize();
     $(".selection-bar span", this.root).textContent =
       `${this.multiSelection.size} concepts selected · Deletions can be undone`;
     $<HTMLButtonElement>(
@@ -1372,10 +1379,16 @@ export class GraphViewer {
           const dx = b.position("x") - a.position("x"),
             dy = b.position("y") - a.position("y");
           const distance = Math.max(1, Math.hypot(dx, dy));
-          const repulsion = Math.min(
-            5 * this.settings.graphScale!,
-            (2500 * this.settings.graphScale! ** 3) / (distance * distance),
-          );
+          // Explicit layouts preserve intentional contact and compact spacing.
+          // Their physics only resolves overlaps; global repulsion belongs to CoSE.
+          const repulsion =
+            this.settings.layout === "cose"
+              ? Math.min(
+                  5 * this.settings.graphScale!,
+                  (2500 * this.settings.graphScale! ** 3) /
+                    (distance * distance),
+                )
+              : 0;
           let fx = (dx / distance) * repulsion,
             fy = (dy / distance) * repulsion;
           const overlapX =

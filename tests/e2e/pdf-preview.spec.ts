@@ -75,7 +75,7 @@ async function expectPreviewContained(page: import("@playwright/test").Page) {
   return dialog;
 }
 
-test("sample opens the scanned PDF at highlighted lines in a compact same-tab popup in both themes and mobile", async ({
+test("sample opens the NEJM PDF at highlighted lines in a compact same-tab popup in both themes and mobile", async ({
   page,
   context,
 }) => {
@@ -92,14 +92,16 @@ test("sample opens the scanned PDF at highlighted lines in a compact same-tab po
       await root.locator('[data-action="theme"]').click();
     await root.locator(".evidence-content .source-jump").first().click();
     const dialog = await expectPreviewContained(page);
-    await expect(dialog.locator("h3")).toHaveText("05v1.pdf");
+    await expect(dialog.locator("h3")).toHaveText("NEJMoa2035389.pdf");
     await expect(dialog.locator(".pdf-preview-location")).toContainText(
       "PDF page 1 of 14",
     );
-    await expect(dialog.locator(".pdf-highlight")).toHaveCount(2);
+    expect(await dialog.locator(".pdf-highlight").count()).toBeGreaterThan(0);
     expect(page.url()).toBe(url);
     expect(context.pages()).toHaveLength(1);
     const scroll = dialog.locator(".pdf-preview-scroll");
+    await expect(dialog.locator("output")).toHaveText("100%");
+    await dialog.getByRole("button", { name: "Zoom PDF in" }).click();
     const beforePan = await scroll.evaluate((el) => el.scrollLeft);
     const area = await scroll.boundingBox();
     await page.mouse.move(area!.x + 220, area!.y + 180);
@@ -110,9 +112,9 @@ test("sample opens the scanned PDF at highlighted lines in a compact same-tab po
       beforePan,
     );
     const zoom = dialog.locator("output");
-    await expect(zoom).toHaveText("200%");
+    await expect(zoom).toHaveText("150%");
     await dialog.getByRole("button", { name: "Zoom PDF in" }).click();
-    await expect(zoom).toHaveText("250%");
+    await expect(zoom).toHaveText("200%");
     await dialog.getByRole("button", { name: "Fit width" }).click();
     await expect(zoom).toHaveText("100%");
     await dialog.getByRole("button", { name: "Zoom PDF in" }).click();

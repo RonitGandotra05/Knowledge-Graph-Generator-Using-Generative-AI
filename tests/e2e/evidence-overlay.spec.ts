@@ -40,41 +40,37 @@ test("evidence stays over the graph at normal zoom on desktop, mobile, fullscree
   await page.goto("/#sample");
   let root = page.locator("#demo-graph");
   const panel = root.locator(".evidence-panel");
-  await clickCanvasNode(root, "biomarkers");
+  await clickCanvasNode(root, "n1");
   await expect(panel).toBeVisible();
-  await expect(panel.locator("h3")).toHaveText("Microbial biomarkers");
+  await expect(panel.locator("h3")).toHaveText("mRNA-1273");
   await expect(panel).not.toContainText("unavailable");
   await expect(panel.locator(".paper-citation").first()).toContainText(
-    "Narang B",
+    "Baden LR",
   );
-  await expect(panel.locator("blockquote")).toContainText(
-    "microbial biomarkers",
-  );
+  await expect(panel.locator("blockquote")).toContainText("mRNA-1273");
   await expectContained(page, root);
   await panel.evaluate((el) => el.scrollTo(0, el.scrollHeight));
   await expect(
     root.getByRole("button", { name: "Close evidence", exact: true }),
   ).toBeInViewport();
   await panel.locator('[data-edge="e2"]').click();
-  await expect(panel.locator("blockquote")).toContainText(
-    "microbial biomarkers",
-  );
+  await expect(panel.locator("blockquote")).toContainText("mRNA-1273");
   await expect(panel.locator(".evidence-location")).toContainText(
-    "05v1.pdf · PDF page 1",
+    "NEJMoa2035389.pdf · PDF page 1",
   );
   await expectContained(page, root);
   await page.screenshot({ path: ".artifacts/evidence-overlay-desktop.png" });
   await page.keyboard.press("Escape");
   await expect(panel).toBeHidden();
   await root.locator('[data-action="fullscreen"]').click();
-  await clickCanvasNode(root, "biomarkers");
+  await clickCanvasNode(root, "n1");
   await expectContained(page, root);
   await root
     .getByRole("button", { name: "Close evidence", exact: true })
     .click();
   await root.locator('[data-action="fullscreen"]').click();
   await page.setViewportSize({ width: 390, height: 844 });
-  await clickCanvasNode(root, "biomarkers");
+  await clickCanvasNode(root, "n1");
   await expectContained(page, root);
   await page.screenshot({ path: ".artifacts/evidence-overlay-mobile.png" });
   await page.keyboard.press("Escape");
@@ -97,14 +93,14 @@ test("evidence stays over the graph at normal zoom on desktop, mobile, fullscree
   });
   await offline.goto("file://" + path);
   root = offline.locator("#viewer");
-  await clickCanvasNode(root, "biomarkers");
+  await clickCanvasNode(root, "n1");
   await expectContained(offline, root);
   await expect(root.locator(".evidence-panel")).not.toContainText(
     "unavailable",
   );
   await expect(root.locator(".paper-citation a").first()).toHaveAttribute(
     "href",
-    "https://doi.org/10.51248/v44i2.01",
+    "https://doi.org/10.1056/NEJMoa2035389",
   );
   await offline.screenshot({ path: ".artifacts/evidence-overlay-offline.png" });
   expect(remote).toEqual([]);

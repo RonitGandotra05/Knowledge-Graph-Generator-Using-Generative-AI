@@ -95,7 +95,7 @@ test("labels stay visible on their real curves at minimum sizing in every layout
     ]) {
       await root.getByLabel("Graph layout").selectOption(layout);
       const m = await labelMetrics(canvas);
-      expect(m.count).toBe(8);
+      expect(m.count).toBe(19);
       expect(m.missing, JSON.stringify(m.routes)).toEqual([]);
       expect(m.detached, shape + layout).toEqual([]);
       expect(m.collisions, shape + layout).toEqual([]);

@@ -28,7 +28,7 @@ describe("portable analyses", () => {
     a.settings.layout = "circle";
     a.settings.nodeShape = "circle";
     a.settings.physics = false;
-    a.settings.positions = { asd: { x: 120, y: 200 } };
+    a.settings.positions = { n1: { x: 120, y: 200 } };
     const restored = importAnalysis(jsonExport(a));
     expect(restored.graph.edges.length).toBe(a.graph.edges.length);
     expect(restored.graph.edges[0].evidence).toBe(

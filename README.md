@@ -38,7 +38,7 @@ The homepage and workspace are separate views. The workspace shows the complete 
 
 ## Graphs with room to think
 
-![Curated illustrative sample: individually colored circular concepts with visible labels and relationships](docs/screenshots/graph-dark.png)
+![Reviewed COVE trial sample with cited concepts and relationships](docs/screenshots/graph-dark.png)
 
 Distinct colors, softly shaded nodes, complete wrapped labels and collision separation make the graph easier to read. Choose circles or cards; drag nodes, switch layouts, search, filter, zoom, or use fullscreen. Optional damped physics briefly settles nearby nodes after a drag.
 
@@ -51,11 +51,11 @@ Click a node or relationship to inspect its source. Change a concept’s name, c
 
 ![Light workspace](docs/screenshots/workspace-light.png)
 
-![Light graph: curated illustrative sample](docs/screenshots/graph-light.png)
+![Light graph: reviewed COVE trial sample](docs/screenshots/graph-light.png)
 
 </details>
 
-The included nine-node sample is **manually curated and illustrative**. It is not presented as a live AI result. Measured live Groq results and comparisons with the original HTML graphs are recorded separately in [the evaluation report](docs/LIVE_GROQ_ANALYSIS.md).
+The included sample is a saved Gemini extraction of [Baden et al., _Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine_, NEJM 2021](https://doi.org/10.1056/NEJMoa2035389), reviewed against the paper. Its **18 connected concepts and 19 relationships** retain source passages, exact evidence quotes, page locations, and the paper’s DOI. Unsupported links and eight disconnected concepts were removed. Opening it makes no AI request; source previews open the included PDF at highlighted evidence. Measured live Groq results and comparisons with the original HTML graphs are recorded separately in [the evaluation report](docs/LIVE_GROQ_ANALYSIS.md).
 
 ## Your AI, a clear estimate
 

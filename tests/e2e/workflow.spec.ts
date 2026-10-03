@@ -114,7 +114,7 @@ test("complete workflow, evidence, exports, history, keys, layouts, and themes",
   await page.locator("#key-info").hover();
   await expect(page.locator("#key-privacy")).toBeVisible();
   await expect(page.locator("#key-privacy")).toContainText(
-    "No browser storage",
+    "Never saved. Cleared on refresh.",
   );
   await page.locator("#reveal-key").click();
   await expect(page.locator("#api-key")).toHaveAttribute("type", "text");
@@ -124,8 +124,8 @@ test("complete workflow, evidence, exports, history, keys, layouts, and themes",
   await page.locator("#check-key").click();
   await expect(page.locator("#status")).toContainText("Key accepted");
   await page.locator(".send-preview > summary").click();
-  await page.locator("#context-preview").click();
-  await expect(page.locator("#selected-passages")).toContainText(
+  await page.locator("#discovery-preview summary").click();
+  await expect(page.locator("#discovery-passages")).toContainText(
     "Autism spectrum disorder",
   );
   await page.locator("#analyze").click();
@@ -253,8 +253,9 @@ test("AI discovery, hybrid review, malformed responses, and provider failures", 
   await concepts(page);
   await page.locator("#api-key").fill("TEST-SECRET");
   await goBuild(page);
-  await page.locator("#discovery-controls summary").click();
-  await page.locator("#discover-concepts").click();
+  await page.locator("#analyze").click();
+  await expect(page.locator("#analysis-meta")).toContainText("1 relationships");
+  await goBuild(page);
   await page.locator(".concept-review summary").click();
   await expect(page.locator("#concept-count")).toContainText("selected");
   await page.locator("#select-none").click();
@@ -291,7 +292,7 @@ test("invalid files and responsive demo", async ({ page }) => {
   await page.reload();
   await menuClick(page, "#explore-demo");
   await expect(page.locator("#demo-graph .graph-count")).toContainText(
-    "9 concepts",
+    "18 concepts",
   );
   await mkdir("docs/screenshots", { recursive: true });
   await page.screenshot({
@@ -336,7 +337,12 @@ test("PDF text extraction and DOCX parsing", async ({ page }) => {
   });
   await expect(page.locator("#document-summary")).toContainText("1 pages");
   await concepts(page);
-  await expect(page.locator("#context-estimate")).not.toContainText("—");
+  await expect(page.locator("#discovery-passages")).toContainText(
+    "Autism spectrum disorder",
+  );
+  await expect(page.locator("#discovery-estimate")).toContainText(
+    "paper sections",
+  );
   const { Document, Packer, Paragraph } = await import("docx");
   const buffer = await Packer.toBuffer(
     new Document({
@@ -372,7 +378,7 @@ test("graph canvas zoom, drag, confidence, and fullscreen", async ({
   await menuClick(page, "#explore-demo");
   const canvas = page.locator("#demo-graph .graph-canvas");
   await expect(page.locator("#demo-graph .graph-count")).toContainText(
-    "9 concepts",
+    "18 concepts",
   );
   await canvas.scrollIntoViewIfNeeded();
   // The renderer ignores wheel events for 250 ms after a page scroll.
@@ -396,7 +402,9 @@ test("graph canvas zoom, drag, confidence, and fullscreen", async ({
     bounds.x + bounds.width / 2,
     bounds.y + bounds.height / 2,
   );
+  await page.keyboard.down("Control");
   await page.mouse.wheel(0, -200);
+  await page.keyboard.up("Control");
   await expect.poll(async () => (await state()).zoom).not.toBe(before.zoom);
   const current = await state();
   await page.mouse.move(
@@ -416,11 +424,11 @@ test("graph canvas zoom, drag, confidence, and fullscreen", async ({
   const slider = page.locator('#demo-graph [aria-label="Minimum confidence"]');
   await slider.fill("95");
   await expect(page.locator("#demo-graph .graph-count")).toContainText(
-    "0 relationships",
+    "18 relationships",
   );
   await page.locator('#demo-graph [data-action="reset"]').click();
   await expect(page.locator("#demo-graph .graph-count")).toContainText(
-    "8 relationships",
+    "19 relationships",
   );
   await page.locator('#demo-graph [data-action="fullscreen"]').click();
   await expect
@@ -537,7 +545,12 @@ test("uploaded research paper: OCR, matching, provenance, and context reduction"
   await expect(page.locator("#context-note")).toContainText(
     "All parsed sections",
   );
-  await expect(page.locator("#context-estimate")).not.toContainText("—");
+  await expect(page.locator("#discovery-passages")).toContainText(
+    "Autism spectrum disorder",
+  );
+  await expect(page.locator("#discovery-estimate")).toContainText(
+    "paper sections",
+  );
   await goBuild(page);
   await page.locator("#text-preview").click();
   await expect(page.locator("#extracted-text")).toContainText("Autism");

@@ -70,7 +70,10 @@ export const appShell = /* HTML */ `<header class="app-header">
       <div class="result-heading">
         <div>
           <h2>A sample research graph</h2>
-          <p>Curated from the uploaded paper. No AI request.</p>
+          <p>
+            Reviewed COVE trial graph · Baden et al., NEJM 2021. No AI request
+            to open.
+          </p>
         </div>
         <button id="close-demo" class="button secondary small">
           Back to my work

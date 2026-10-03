@@ -6,7 +6,6 @@ import "./graph/viewer.css";
 import { $, escapeHTML as esc, readableError } from "./ui/dom";
 import { Workspace } from "./ui/workspace";
 import { showInfo } from "./ui/dialogs";
-import { demoAnalysis } from "./ui/demo";
 import type { GraphViewer } from "./graph/viewer";
 import { history } from "./storage/history";
 import { drafts, type Draft } from "./storage/drafts";
@@ -92,14 +91,20 @@ async function openDemo(updateHash = true) {
   $("#close-demo").textContent =
     sampleReturn === "home" ? "Back to homepage" : "Back to my work";
   if (!demo) {
+    const [{ demoAnalysis }, { GraphViewer }] = await Promise.all([
+      import("./ui/demo"),
+      import("./graph/viewer"),
+    ]);
     const a = demoAnalysis();
     a.settings.theme = theme;
-    const { GraphViewer } = await import("./graph/viewer");
     demo = new GraphViewer($("#demo-graph"), a, () => {}, {
       load: async (paperId) => {
-        if (paperId !== "demo-paper") return null;
+        if (paperId !== "paper-1") return null;
         const response = await fetch(
-          new URL(import.meta.env.BASE_URL + "samples/05v1.pdf", location.href),
+          new URL(
+            import.meta.env.BASE_URL + "samples/NEJMoa2035389.pdf",
+            location.href,
+          ),
         );
         if (!response.ok) return null;
         return response.blob();

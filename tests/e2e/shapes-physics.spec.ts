@@ -34,19 +34,22 @@ test("both node shapes reserve their labels and remain separate in every layout"
               overlaps.push(nodes[i].id() + ":" + nodes[j].id());
           }
         const context = document.createElement("canvas").getContext("2d")!;
-        context.font = "600 15px system-ui";
+
         return {
           overlaps,
           shapes: nodes.map((n) => n.style("shape")),
           fits: nodes.every((n) => {
+            const font = parseFloat(n.style("font-size"));
+            context.font = `600 ${font}px system-ui`;
+            const padding = (font / 15) * 16;
             const lines = String(n.data("displayLabel")).split("\n"),
               width = Math.max(
                 ...lines.map((line) => context.measureText(line).width),
               ),
-              height = lines.length * 21;
+              height = lines.length * font * 1.4;
             return n.style("shape") === "ellipse"
-              ? Math.hypot(width, height) < n.width() - 16
-              : width < n.width() - 16 && height < n.height() - 16;
+              ? Math.hypot(width, height) < n.width() - padding
+              : width < n.width() - padding && height < n.height() - padding;
           }),
         };
       });
@@ -73,8 +76,8 @@ test("both node shapes reserve their labels and remain separate in every layout"
     expect(
       shape === "circle"
         ? (svg.match(/<circle /g) || []).length
-        : (svg.match(/rx="12"/g) || []).length,
-    ).toBe(9);
+        : (svg.match(/<rect[^>]*fill="url\(#node-fill/g) || []).length,
+    ).toBe(18);
     await root.locator(".graph-export summary").click();
   }
 });
@@ -87,6 +90,9 @@ test("physics separates collisions, pins the dragged node, settles and can be pa
   const root = page.locator("#demo-graph"),
     canvas = root.locator(".graph-canvas"),
     physics = root.locator('[data-action="physics"]');
+  await expect(physics).toHaveAttribute("aria-pressed", "false");
+  await physics.click();
+  await expect(root).toHaveAttribute("data-physics", "idle");
   await expect(physics).toHaveAttribute("aria-pressed", "true");
   await physics.click();
   await expect(physics).toHaveAttribute("aria-pressed", "false");
@@ -156,6 +162,14 @@ test("a dense 60-node graph preserves all labels, separates both shapes and offe
     const { GraphViewer } = await import(viewerPath),
       { demoAnalysis } = await import(demoPath);
     const analysis = demoAnalysis();
+    analysis.settings = {
+      theme: "dark",
+      layout: "cose",
+      nodeShape: "circle",
+      physics: true,
+      confidence: 0,
+      hiddenTypes: [],
+    };
     const seed = analysis.graph.nodes[0];
     analysis.graph.nodes = Array.from({ length: 60 }, (_, i) => ({
       ...seed,
@@ -169,6 +183,7 @@ test("a dense 60-node graph preserves all labels, separates both shapes and offe
       .map((n: { id: string }, i: number) => ({
         ...edge,
         id: `stress-edge-${i}`,
+        relationship: "occurs_in",
         source: "stress-0",
         target: n.id,
       }));

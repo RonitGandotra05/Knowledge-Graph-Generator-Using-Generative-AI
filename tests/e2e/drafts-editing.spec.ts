@@ -333,7 +333,7 @@ test("existing version-one history upgrades without losing saved graphs", async 
     "Existing research",
   );
   await page.locator("[data-open]").click();
-  await expect(page.locator("#analysis-meta")).toContainText("9 concepts");
+  await expect(page.locator("#analysis-meta")).toContainText("18 concepts");
   await page.locator("#new-analysis").click();
   await uploadPDF(page);
   await goFocus(page);

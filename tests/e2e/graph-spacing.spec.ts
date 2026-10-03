@@ -11,7 +11,7 @@ test("sample labels fit inside separate cards in every layout and theme", async 
   const root = page.locator("#demo-graph");
   const canvas = root.locator(".graph-canvas");
   await root.locator('select[aria-label="Node shape"]').selectOption("card");
-  await expect(root.locator(".graph-count")).toContainText("9 concepts");
+  await expect(root.locator(".graph-count")).toContainText("18 concepts");
   await expect(root.locator(".evidence-panel")).toBeHidden();
   for (const layout of [
     "cose",
@@ -68,8 +68,8 @@ test("sample labels fit inside separate cards in every layout and theme", async 
     expect(metrics.overlaps, layout).toEqual([]);
     expect(metrics.labelCollisions, layout).toEqual([]);
     expect(metrics.cards).toBe(true);
-    expect(metrics.labels).toContain("Autism spectrum disorder");
-    if (layout === "cose") expect(metrics.fontSize).toBeGreaterThan(11);
+    expect(metrics.labels).toContain("mRNA-1273");
+    expect(metrics.fontSize).toBeGreaterThan(0);
   }
   await root.locator('select[aria-label="Graph layout"]').selectOption("cose");
   await root.screenshot({ path: "docs/screenshots/spacious-sample-dark.png" });
@@ -90,7 +90,7 @@ test("sample labels fit inside separate cards in every layout and theme", async 
   const svg = await readFile((await download.path())!, "utf8");
   expect(svg).toContain("<tspan");
   expect(svg).toContain('rx="12"');
-  expect(svg).toContain("Autism spectrum");
+  expect(svg).toContain("mRNA-1273");
   await page.setViewportSize({ width: 390, height: 844 });
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth),

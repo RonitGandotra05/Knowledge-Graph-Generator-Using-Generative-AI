@@ -242,9 +242,11 @@ $("#history-items").addEventListener("click", async (e) => {
       return;
     }
     if (b.dataset.open) {
+      // Set the destination view before restoration: showAnalysis scrolls the
+      // graph into view on the next frame, so routing afterwards would reset it.
+      showView("workspace");
       if (item.draft) await workspace.resume(item.draft);
       else if (item.analysis) await workspace.openSaved(item.analysis);
-      showView("workspace");
       $<HTMLDialogElement>("#history-dialog").close();
     }
     if (b.dataset.export && item.analysis)

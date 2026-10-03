@@ -205,6 +205,29 @@ test("complete workflow, evidence, exports, history, keys, layouts, and themes",
   await openHistory(page);
   await page.locator("#history-items [data-open]").click();
   await expect(page.locator("#analysis-meta")).toContainText("1 relationships");
+  const restoredStage = page.locator("#graph-root .graph-stage");
+  const viewportHeight = page.viewportSize()?.height ?? 1000;
+  await expect
+    .poll(async () => {
+      const box = await restoredStage.boundingBox();
+      return Math.max(
+        0,
+        Math.min(viewportHeight, box!.y + box!.height) - Math.max(0, box!.y),
+      );
+    })
+    .toBeGreaterThan(300);
+  expect(await page.evaluate(() => scrollY)).toBeGreaterThan(0);
+  await page.locator("#analysis-usage summary").click();
+  await expect(page.locator("#analysis-usage .notice-list")).toBeVisible();
+  await expect
+    .poll(async () => {
+      const box = await restoredStage.boundingBox();
+      return Math.max(
+        0,
+        Math.min(viewportHeight, box!.y + box!.height) - Math.max(0, box!.y),
+      );
+    })
+    .toBeGreaterThan(200);
   await page.locator("#import-file").setInputFiles({
     name: "analysis.json",
     mimeType: "application/json",

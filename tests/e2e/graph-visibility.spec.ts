@@ -1,5 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { demoAnalysis } from "../../src/ui/demo";
+import { emptyUsage } from "../../src/providers/usage";
+import { openHistory } from "./helpers";
 
 for (const viewport of [
   { width: 1465, height: 746 },
@@ -107,3 +109,68 @@ for (const viewport of [
     }
   });
 }
+
+test("after refresh, reopening saved work scrolls to the graph even when usage details are expanded", async ({
+  page,
+}) => {
+  const viewport = { width: 1465, height: 746 };
+  await page.setViewportSize(viewport);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.addInitScript(() =>
+    localStorage.setItem("evidence-atlas-theme", "light"),
+  );
+  await page.goto("/#workspace");
+  const analysis = demoAnalysis();
+  analysis.settings.theme = "light";
+  analysis.usage = {
+    ...emptyUsage(),
+    calls: 8,
+    reportedCalls: 8,
+    inputTokens: 43951,
+    outputTokens: 7279,
+    totalTokens: 51230,
+    estimatedCostUSD: 0,
+    billing: "free",
+  };
+  await page.locator("#import-file").setInputFiles({
+    name: "restored-research.json",
+    mimeType: "application/json",
+    buffer: Buffer.from(JSON.stringify(analysis)),
+  });
+  await expect(page.locator("#analysis-meta")).toContainText("8 relationships");
+  await page.locator("#save-analysis").click();
+  await expect(page.locator("#history-items .history-card")).toHaveCount(1);
+  await page.reload();
+  await openHistory(page);
+  await page.locator("#history-items [data-open]").click();
+  await expect(page.locator("#analysis-meta")).toContainText("8 relationships");
+  const root = page.locator("#graph-root"),
+    stage = root.locator(".graph-stage");
+  await expect
+    .poll(async () => {
+      const box = await stage.boundingBox();
+      return Math.max(
+        0,
+        Math.min(viewport.height, box!.y + box!.height) - Math.max(0, box!.y),
+      );
+    })
+    .toBeGreaterThan(380);
+  expect(await page.evaluate(() => scrollY)).toBeGreaterThan(0);
+  await page.locator("#analysis-usage .receipt-details summary").click();
+  await expect(page.locator("#analysis-usage .notice-list")).toBeVisible();
+  await expect
+    .poll(async () => {
+      const box = await stage.boundingBox();
+      return Math.max(
+        0,
+        Math.min(viewport.height, box!.y + box!.height) - Math.max(0, box!.y),
+      );
+    })
+    .toBeGreaterThan(200);
+  await expect
+    .poll(async () => (await stage.boundingBox())!.height)
+    .toBeGreaterThanOrEqual(520);
+  await page.screenshot({
+    path: "output/evaluation/graph-visibility/refreshed-light.png",
+  });
+});

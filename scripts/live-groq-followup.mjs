@@ -52,7 +52,7 @@ try {
   await page.goto("http://127.0.0.1:5173/#workspace");
   await page
     .locator("#document-file")
-    .setInputFiles("/Users/ronitgandotra/Downloads/05v1.pdf");
+    .setInputFiles(process.env.ATLAS_TEST_PDF || ".artifacts/05v1.pdf");
   await page.waitForFunction(
     () =>
       document

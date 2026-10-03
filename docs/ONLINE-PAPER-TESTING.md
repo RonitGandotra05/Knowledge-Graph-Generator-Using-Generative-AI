@@ -1,6 +1,6 @@
 # Online research-paper testing
 
-Recorded 2026-10-02. **9 downloaded papers, 273 PDF pages, 903,074 extracted characters**, covering machine learning, scientific software, physics, biology, and ecology. Eleven corpus browser scenarios passed; see [machine-readable measurements and download SHA-256 hashes](online-paper-results.json).
+Recorded 2026-10-02. **9 downloaded papers, 273 PDF pages, 903,074 extracted characters**, covering machine learning, scientific software, physics, biology, and ecology. Eleven corpus browser scenarios passed; machine-readable measurements and download SHA-256 hashes stay in ignored `.artifacts/online-papers/online-paper-results.json`.
 
 ## Paper measurements
 

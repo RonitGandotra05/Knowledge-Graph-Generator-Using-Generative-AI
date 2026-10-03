@@ -1,7 +1,7 @@
 import { homePage } from "./home";
 export const appShell = /* HTML */ `<header class="app-header">
     <a class="brand" href="#home" aria-label="Evidence Atlas home"
-      ><img src="${import.meta.env.BASE_URL}favicon.svg" alt="" /><span
+      ><img src="./favicon.svg" alt="" width="34" height="34" /><span
         >evidence<span class="brand-light">atlas</span
         ><small>RESEARCH, CONNECTED</small></span
       ></a

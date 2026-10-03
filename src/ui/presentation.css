@@ -576,7 +576,7 @@ html[data-view="home"] main {
   color: var(--muted);
   font-style: normal;
 }
-#home .feature-strip h3 {
+#home .feature-strip h2 {
   font-size: 13px;
   margin: 7px 0 5px;
 }
@@ -592,7 +592,8 @@ html[data-view="home"] main {
 #home .footer-links {
   gap: 20px;
 }
-#home .footer-links button {
+#home .footer-links button,
+#home .footer-links a {
   font-size: 10px;
 }
 .research-visual {

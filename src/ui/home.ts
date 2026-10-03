@@ -9,8 +9,8 @@ export const homePage = /* HTML */ `<section
       </div>
       <h1>Your paper.<br />A new<br /><em>perspective.</em></h1>
       <p>
-        Connect the ideas in your research. Explore the relationships, follow
-        the evidence, and make the bigger picture yours.
+        Turn research papers into interactive knowledge graphs. Explore the
+        relationships, follow the evidence, and make the bigger picture yours.
       </p>
       <div class="hero-actions">
         <a class="button primary" href="#workspace"
@@ -72,28 +72,31 @@ export const homePage = /* HTML */ `<section
   <div class="feature-strip">
     <article>
       <i>01 / EXPLORE</i>
-      <h3>A paper. Or ten.</h3>
+      <h2>A paper. Or ten.</h2>
       <p>PDFs, local parsing and automatic OCR.</p>
     </article>
     <article>
       <i>02 / CONNECT</i>
-      <h3>Ideas, taking shape</h3>
+      <h2>Ideas, taking shape</h2>
       <p>Your graph grows as research is read.</p>
     </article>
     <article>
       <i>03 / VERIFY</i>
-      <h3>Proof, a click away</h3>
+      <h2>Proof, a click away</h2>
       <p>Quotes, paragraphs and source pages.</p>
     </article>
     <article>
       <i>04 / KEEP</i>
-      <h3>Made to be yours</h3>
+      <h2>Made to be yours</h2>
       <p>Edit, explore and export in either theme.</p>
     </article>
   </div>
   <footer class="home-footer">
     <span>Research, connected. Your API. Our fee: $0.</span>
     <div class="footer-links">
+      <a href="/guide/" target="_blank" rel="noopener"
+        >Research graph guide ↗</a
+      >
       <button data-info="privacy">Privacy</button
       ><button data-info="security">API keys</button
       ><button data-info="license">Code permissions</button>

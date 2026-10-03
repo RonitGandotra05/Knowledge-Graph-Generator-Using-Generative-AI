@@ -9,6 +9,7 @@
 </p>
 <p align="center">
   <a href="https://evidence-atlas.netlify.app">Live website</a> ·
+  <a href="https://evidence-atlas.netlify.app/guide/">Research graph guide</a> ·
   <a href="#the-workspace">Explore</a> ·
   <a href="#run-locally">Run locally</a> ·
   <a href="docs/TESTING.md">Verification</a> ·
@@ -84,7 +85,9 @@ Requests run serially. Conservative minute/day budgets reserve estimated input p
 
 Files support PDF, DOCX, TXT, Markdown, CSV and TSV; text formats are treated as text. Limits are **10 files**, **30 MB per file**, and **500 pages per PDF**. Unreadable files/pages are listed explicitly and excluded from evidence; other readable content continues.
 
-Hosted on Netlify: [deployment details and safe redeployment](docs/DEPLOYMENT.md).
+**Live:** [evidence-atlas.netlify.app](https://evidence-atlas.netlify.app/) · [PDF-to-graph guide](https://evidence-atlas.netlify.app/guide/)
+
+Push application changes to `main` to redeploy automatically after Netlify’s tests and build succeed. GitHub Actions also checks formatting, unit tests, SEO and the workspace. Documentation-only pushes skip a production deployment. See [deployment details](docs/DEPLOYMENT.md) and [search indexing](docs/SEO.md).
 
 ## Run locally
 

@@ -98,7 +98,7 @@ async function evaluate(name) {
     if (name === "baseline" || name === "final" || name === "corrected") {
       await page
         .locator("#document-file")
-        .setInputFiles("/Users/ronitgandotra/Downloads/05v1.pdf");
+        .setInputFiles(process.env.ATLAS_TEST_PDF || ".artifacts/05v1.pdf");
       await page.waitForFunction(
         () =>
           document

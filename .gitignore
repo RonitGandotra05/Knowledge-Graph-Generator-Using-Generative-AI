@@ -23,3 +23,6 @@ docs/screenshots/*
 
 # Local Netlify link and deployment state.
 .netlify/
+
+# Generated benchmark measurements are local, not source.
+docs/online-paper-results.json

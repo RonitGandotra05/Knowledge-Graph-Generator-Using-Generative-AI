@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<defs><radialGradient id="glow"><stop stop-color="#18382a"/><stop offset="1" stop-color="#090909"/></radialGradient></defs>
+<rect width="1200" height="630" fill="#090909"/>
+<rect x="18" y="18" width="1164" height="594" rx="24" fill="url(#glow)" stroke="#2b3930"/>
+<g font-family="Arial, sans-serif"><text x="70" y="102" fill="#a2e2c4" font-size="20" letter-spacing="4">EVIDENCE ATLAS</text>
+<text x="70" y="232" fill="#f3f1ec" font-size="64" font-weight="700">Your paper.</text><text x="70" y="310" fill="#f3f1ec" font-size="64" font-weight="700">A new perspective.</text>
+<text x="70" y="394" fill="#bec8bf" font-size="25">AI knowledge graphs for research.</text><text x="70" y="436" fill="#bec8bf" font-size="25">Every connection, closer to its evidence.</text>
+<text x="70" y="549" fill="#a2e2c4" font-size="21">CONCEPT → RELATIONSHIP → EVIDENCE</text>
+<g stroke="#6b9e86" stroke-width="3"><path d="M920 318L833 205M920 318L1054 229M920 318L1029 455M920 318L812 448"/></g>
+<g stroke="#293d32" stroke-width="9"><circle cx="920" cy="318" r="42" fill="#a2e2c4"/><circle cx="833" cy="205" r="24" fill="#b4a4f4"/><circle cx="1054" cy="229" r="28" fill="#7fb9ee"/><circle cx="1029" cy="455" r="28" fill="#edbd78"/><circle cx="812" cy="448" r="23" fill="#ec99bd"/></g>
+<g fill="#f3f1ec" font-size="18" text-anchor="middle"><text x="833" y="160">Methods</text><text x="1054" y="182">Findings</text><text x="920" y="387">Evidence</text><text x="1029" y="510">Sources</text><text x="812" y="497">Concepts</text></g></g></svg>

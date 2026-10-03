@@ -1,15 +1,87 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-view="home">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="theme-color" content="#0b1017" />
     <meta
       name="description"
-      content="Turn research papers into interactive, evidence-backed knowledge graphs. Local parsing. Your AI provider. No account."
+      content="Build editable AI knowledge graphs from up to 10 research PDFs. Trace relationships to source quotes and pages, then export interactive HTML or images."
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://evidence-atlas.netlify.app/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Evidence Atlas" />
+    <meta
+      property="og:title"
+      content="AI Knowledge Graph Generator for Research | Evidence Atlas"
+    />
+    <meta
+      property="og:description"
+      content="Connect ideas across research papers. Trace every relationship to its evidence and keep an editable graph."
+    />
+    <meta property="og:url" content="https://evidence-atlas.netlify.app/" />
+    <meta
+      property="og:image"
+      content="https://evidence-atlas.netlify.app/social-card.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Evidence Atlas: research papers connected through concepts, relationships and source evidence"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="AI Knowledge Graph Generator for Research | Evidence Atlas"
+    />
+    <meta
+      name="twitter:description"
+      content="Build editable research graphs with source quotes, page references and offline exports."
+    />
+    <meta
+      name="twitter:image"
+      content="https://evidence-atlas.netlify.app/social-card.png"
     />
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-    <title>Evidence Atlas · Research, connected</title>
+    <title>AI Knowledge Graph Generator for Research | Evidence Atlas</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://evidence-atlas.netlify.app/#website",
+            "url": "https://evidence-atlas.netlify.app/",
+            "name": "Evidence Atlas",
+            "inLanguage": "en"
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://evidence-atlas.netlify.app/#application",
+            "name": "Evidence Atlas",
+            "url": "https://evidence-atlas.netlify.app/",
+            "applicationCategory": "EducationalApplication",
+            "operatingSystem": "Web browser",
+            "description": "Generate editable knowledge graphs from research documents with quoted evidence, paragraph and page references. The application is free to use; AI provider charges may apply.",
+            "isAccessibleForFree": true,
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "featureList": [
+              "Up to 10 research documents",
+              "Local PDF parsing and automatic OCR",
+              "Evidence-linked concepts and relationships",
+              "Editable circular or rectangular nodes",
+              "Offline HTML, JSON, PNG and SVG exports"
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>

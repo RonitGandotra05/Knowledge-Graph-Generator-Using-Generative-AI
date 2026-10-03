@@ -6,7 +6,7 @@
 
 The final HTML works offline, preserves evidence and edits, and offers circular/card nodes, layout controls, dark/light themes and image exports. The homepage remains intact. The evaluation originally used a paginated workspace; the subsequent [workspace redesign](WORKSPACE-REDESIGN.md) now shows upload, focus and provider setup together on one page. The live measurements below are unchanged. New projects preserve ongoing drafts in menu history. Credentials remain memory-only.
 
-Evaluation date: 2026-10-03 (Asia/Kolkata). Canonical repository: `/Users/ronitgandotra/Desktop/Knowledge-Graph-Generator-Using-Generative-AI`.
+Evaluation date: 2026-10-03 (Asia/Kolkata). Canonical repository: `Knowledge-Graph-Generator-Using-Generative-AI`.
 
 ## Scope and credentials
 

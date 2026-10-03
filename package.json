@@ -5,13 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "node scripts/build-viewer.mjs && vite --host 127.0.0.1",
-    "build": "node scripts/build-viewer.mjs && tsc --noEmit && vite build",
+    "build": "node scripts/build-viewer.mjs && tsc --noEmit && vite build && node scripts/check-seo.mjs",
     "preview": "vite preview --host 127.0.0.1",
     "test": "vitest run",
     "test:e2e": "playwright test",
     "check": "tsc --noEmit",
-    "format": "prettier --write src tests scripts *.ts *.json index.html README.md docs/*.md",
-    "format:check": "prettier --check src tests scripts *.ts *.json index.html README.md docs/*.md",
+    "format": "prettier --write src tests scripts *.ts *.json index.html guide .github/workflows README.md docs/*.md",
+    "format:check": "prettier --check src tests scripts *.ts *.json index.html guide .github/workflows README.md docs/*.md",
     "pretest": "node scripts/build-viewer.mjs",
     "papers:fetch": "node scripts/fetch-test-papers.mjs",
     "test:papers": "ONLINE_PAPERS=1 playwright test tests/e2e/online-papers.spec.ts tests/e2e/paper-variants.spec.ts && node scripts/report-paper-tests.mjs"

@@ -18,7 +18,8 @@ try {
     localStorage.getItem("evidence-atlas-theme") === "light" ? "light" : "dark";
 } catch {}
 document.documentElement.dataset.theme = theme;
-$("#app").innerHTML = appShell;
+// Production and dev HTML already contain the homepage for browsers and crawlers.
+if (!$("#app").querySelector(".app-header")) $("#app").innerHTML = appShell;
 setupResearchScene();
 const workspace = new Workspace($("#workspace"), () => void renderHistory());
 let demo: GraphViewer | null = null;

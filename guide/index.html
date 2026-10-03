@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>
+      Research PDF to Knowledge Graph: A Practical Guide | Evidence Atlas
+    </title>
+    <meta
+      name="description"
+      content="Learn how to turn research PDFs into an editable AI knowledge graph, check quoted evidence, compare concepts across papers and export your results."
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://evidence-atlas.netlify.app/guide/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Evidence Atlas" />
+    <meta
+      property="og:title"
+      content="From Research PDF to Knowledge Graph | Evidence Atlas"
+    />
+    <meta
+      property="og:description"
+      content="A practical guide to evidence-linked research graphs: upload papers, connect your AI provider, review sources and export."
+    />
+    <meta
+      property="og:url"
+      content="https://evidence-atlas.netlify.app/guide/"
+    />
+    <meta
+      property="og:image"
+      content="https://evidence-atlas.netlify.app/social-card.png"
+    />
+    <meta
+      property="og:image:alt"
+      content="Evidence Atlas connects research concepts to their source evidence"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="From Research PDF to Knowledge Graph | Evidence Atlas"
+    />
+    <meta
+      name="twitter:description"
+      content="Build, verify, edit and export an evidence-linked research graph."
+    />
+    <meta
+      name="twitter:image"
+      content="https://evidence-atlas.netlify.app/social-card.png"
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./guide.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Research PDF to Knowledge Graph: A Practical Guide",
+        "url": "https://evidence-atlas.netlify.app/guide/",
+        "isPartOf": { "@id": "https://evidence-atlas.netlify.app/#website" },
+        "inLanguage": "en",
+        "description": "How to create, verify, edit and export an evidence-linked research knowledge graph using Evidence Atlas."
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#guide">Skip to guide</a>
+    <header>
+      <a class="brand" href="/">evidence<span>atlas</span></a
+      ><a class="button" href="/#workspace">Open workspace ↗</a>
+    </header>
+    <main id="guide">
+      <p class="eyebrow">RESEARCH, CONNECTED</p>
+      <h1>From research paper to knowledge graph.</h1>
+      <p class="intro">
+        A knowledge graph represents concepts as nodes and their relationships
+        as connections. Evidence Atlas helps you explore those connections
+        across research documents, with the original quotations close at hand.
+      </p>
+      <nav aria-label="On this page">
+        <a href="#build">Build a graph</a
+        ><a href="#evidence">Check the evidence</a
+        ><a href="#keep">Edit and export</a
+        ><a href="#questions">Common questions</a>
+      </nav>
+      <section id="build">
+        <h2>Turn PDFs into an AI knowledge graph</h2>
+        <ol>
+          <li>
+            <strong>Upload your papers.</strong> Add up to 10 documents in the
+            <a href="/#workspace">research workspace</a>. PDFs are parsed in
+            your browser. Scanned pages use automatic English OCR; unreadable
+            pages and excluded files are reported.
+          </li>
+          <li>
+            <strong>Add an optional focus.</strong> Describe your research
+            question or enter a few keywords. The AI uses this context to help
+            identify relevant concepts, alongside concepts discovered in the
+            paper.
+          </li>
+          <li>
+            <strong>Connect your provider.</strong> Choose OpenAI, Claude,
+            Gemini, Groq or a compatible API, then enter your model and key.
+            Review the estimated tokens, provider cost and duration before
+            starting.
+          </li>
+          <li>
+            <strong>Watch the graph grow.</strong> Concepts and supported
+            relationships appear as document sections are analyzed. Processing
+            is paced to the selected provider's limits.
+          </li>
+        </ol>
+        <p>
+          The tool works across research fields. A computer science paper might
+          connect a model to a training method; a materials paper might connect
+          a composition to a measured property. It does not require a biological
+          vocabulary.
+        </p>
+      </section>
+      <section id="evidence">
+        <h2>Follow relationships back to the source</h2>
+        <p>
+          Click a node or relationship to inspect the source document, paragraph
+          and quoted evidence. PDF references use the PDF page index, which can
+          differ from a page number printed inside the paper.
+        </p>
+        <p>
+          A quotation matching the extracted text does not establish that an AI
+          interpretation is correct. Read the surrounding paragraph, check the
+          relationship's direction and distinguish a reported association from a
+          causal claim. OCR can also introduce errors.
+        </p>
+        <p>
+          When comparing multiple papers, use the source references to see which
+          document supports each connection. Treat the graph as a way to
+          navigate the literature, rather than proof that every important
+          finding has been captured.
+        </p>
+      </section>
+      <section id="keep">
+        <h2>Edit your graph and keep an offline copy</h2>
+        <p>
+          Rename or recolor nodes, edit relationships, delete unwanted concepts,
+          and undo or redo changes. Original evidence remains attached and edits
+          are marked. Switch between circles and cards, drag nodes, use optional
+          physics, search, zoom or open fullscreen.
+        </p>
+        <p>
+          Export interactive HTML for an offline viewer, JSON to preserve graph
+          data, or PNG and SVG images. Choose the light or dark theme you want
+          before exporting.
+          <a href="/#sample">Explore the illustrative sample graph</a> to try
+          the controls without an API key.
+        </p>
+      </section>
+      <section id="questions">
+        <h2>Common questions</h2>
+        <h3>Is Evidence Atlas free?</h3>
+        <p>
+          The application charges $0. Your chosen AI provider may charge for API
+          usage.
+          <a
+            href="https://console.groq.com/docs/rate-limits"
+            target="_blank"
+            rel="noopener"
+            >Groq's published rate limits</a
+          >
+          describe its free tier; availability and account quotas can change. A
+          ChatGPT subscription does not include OpenAI API usage.
+        </p>
+        <h3>Are my API key and documents stored on this website?</h3>
+        <p>
+          Your API key stays in the tab's memory and is erased on refresh.
+          Uploaded files are parsed locally; selected excerpts go directly to
+          your AI provider when analysis starts. Parsed text, graphs and draft
+          checkpoints are saved in this browser's local history, without your
+          key or original files. Your provider has its own retention policy.
+        </p>
+        <h3>Can I leave the homepage while a graph is building?</h3>
+        <p>
+          Switching between the homepage and workspace keeps analysis running.
+          New graph saves the current project to History first. Refresh clears
+          the key and interrupts the active requests; reopen the saved draft and
+          re-enter your key to continue. Keep exports of important work.
+        </p>
+        <h3>Will it find every relationship in a paper?</h3>
+        <p>
+          No AI system can promise complete or error-free extraction. Coverage
+          reports show which passages and pages were processed, and source
+          evidence helps you review the result. Use your own research judgment
+          and the original documents to assess missing or uncertain findings.
+        </p>
+      </section>
+      <p class="callout">
+        Ready to connect your research?
+        <a class="button" href="/#workspace">Create your knowledge graph ↗</a>
+      </p>
+    </main>
+    <footer>
+      <a href="/">Evidence Atlas homepage</a
+      ><a
+        href="https://github.com/RonitGandotra05/Knowledge-Graph-Generator-Using-Generative-AI"
+        target="_blank"
+        rel="noopener"
+        >Project documentation ↗</a
+      ><span>Concept → Relationship → Evidence</span>
+    </footer>
+  </body>
+</html>

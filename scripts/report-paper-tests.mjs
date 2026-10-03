@@ -62,7 +62,7 @@ const report = {
   variants: { mixed, combined },
 };
 await writeFile(
-  new URL("docs/online-paper-results.json", root),
+  new URL(".artifacts/online-papers/online-paper-results.json", root),
   await format(JSON.stringify(report), { parser: "json" }),
 );
 const rows = papers
@@ -73,7 +73,7 @@ const rows = papers
   .join("\n");
 const markdown = `# Online research-paper testing
 
-Recorded ${report.recordedAt.slice(0, 10)}. **${report.paperCount} downloaded papers, ${report.totalPages} PDF pages, ${report.totalDocumentCharacters.toLocaleString("en-US")} extracted characters**, covering machine learning, scientific software, physics, biology, and ecology. Eleven corpus browser scenarios passed; see [machine-readable measurements and download SHA-256 hashes](online-paper-results.json).
+Recorded ${report.recordedAt.slice(0, 10)}. **${report.paperCount} downloaded papers, ${report.totalPages} PDF pages, ${report.totalDocumentCharacters.toLocaleString("en-US")} extracted characters**, covering machine learning, scientific software, physics, biology, and ecology. Eleven corpus browser scenarios passed; machine-readable measurements and download SHA-256 hashes stay in ignored \`.artifacts/online-papers/online-paper-results.json\`.
 
 ## Paper measurements
 

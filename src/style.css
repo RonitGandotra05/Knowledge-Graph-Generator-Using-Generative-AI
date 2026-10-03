@@ -132,7 +132,8 @@ fieldset {
 }
 .app-header nav a:hover,
 .app-header nav button:hover,
-.footer-links button:hover {
+.footer-links button:hover,
+.footer-links a:hover {
   color: var(--accent);
 }
 .header-right {
@@ -302,7 +303,7 @@ main {
   font-style: normal;
   color: var(--accent);
 }
-.feature-strip h3 {
+.feature-strip h2 {
   font-size: 13px;
   font-weight: 550;
   margin: 12px 0 8px;
@@ -1087,7 +1088,7 @@ dialog p {
     gap: 25px;
     padding: 25px 0;
   }
-  .feature-strip h3 {
+  .feature-strip h2 {
     font-size: 12px;
   }
   .feature-strip p {

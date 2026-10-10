@@ -10,6 +10,7 @@ Public website: [Evidence Atlas](https://evidence-atlas.netlify.app/). The [rese
 - The sitemap contains the homepage and guide. Workspace and sample hashes are application views, not separate indexable documents. Private drafts and uploaded documents have no public URLs.
 - The homepage and guide link to each other. The guide opens in another tab from the app so active research continues.
 - WebSite, SoftwareApplication and WebPage structured data describe actual features and application pricing. No reviews, star ratings or testimonials are invented.
+- Visible creator credits and author metadata identify Ronit Gandotra on both public pages. A consistent `Person` entity links his GitHub and LinkedIn profiles via `sameAs`; the website and application reference him as creator, and the application and guide identify him as author. The credit is included in the initial HTML, so it is readable without JavaScript.
 - Open Graph and Twitter metadata use the site's original 1200 × 630 sharing image.
 - Build checks enforce public HTML, canonical links, metadata, valid structured JSON, robots, sitemap and the share asset. Browser checks cover JavaScript disabled, mobile layout and preserved workspace state.
 

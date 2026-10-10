@@ -18,6 +18,15 @@ for (const path of ["/", "/guide/"]) {
   );
   assert.match(html, /<title>[^<]*Knowledge Graph[^<]*<\/title>/i);
   assert.match(html, /name="description"/);
+  assert.match(html, /name="author" content="Ronit Gandotra"/);
+  assert.match(html, /Created by/);
+  assert.match(html, /class="creator-name"[\s\S]*?>Ronit Gandotra<\/a/);
+  for (const profile of [
+    "https://github.com/RonitGandotra05",
+    "https://www.linkedin.com/in/ronitgandotra",
+  ]) {
+    assert(html.includes(`href="${profile}"`), `${path}: visible profile link`);
+  }
   assert.match(html, /name="robots" content="index, follow/);
   assert.match(html, /property="og:image"/);
   assert.match(html, /<h1[ >]/);
@@ -31,6 +40,17 @@ for (const path of ["/", "/guide/"]) {
   for (const [, json] of blocks) {
     const data = JSON.parse(json);
     assert.equal(data["@context"], "https://schema.org");
+    const entities = data["@graph"] || [data];
+    const person = entities.find((entity) => entity["@type"] === "Person");
+    assert.equal(person?.name, "Ronit Gandotra");
+    assert.equal(person["@id"], `${origin}/#creator`);
+    assert.deepEqual(person.sameAs, [
+      "https://github.com/RonitGandotra05",
+      "https://www.linkedin.com/in/ronitgandotra",
+    ]);
+    for (const entity of entities.filter((item) => item !== person)) {
+      assert.equal((entity.creator || entity.author)?.["@id"], person["@id"]);
+    }
     assert(
       !/aggregateRating|reviewRating/.test(json),
       "Do not fabricate ratings",

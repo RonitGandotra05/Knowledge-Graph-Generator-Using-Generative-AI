@@ -8,8 +8,10 @@
     </title>
     <meta
       name="description"
-      content="Learn how to turn research PDFs into an editable AI knowledge graph, check quoted evidence, compare concepts across papers and export your results."
+      content="Learn to turn research PDFs into editable AI knowledge graphs with Evidence Atlas by Ronit Gandotra. Check evidence, compare papers and export your results."
     />
+    <meta name="author" content="Ronit Gandotra" />
+    <link rel="author" href="https://github.com/RonitGandotra05" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href="https://evidence-atlas.netlify.app/guide/" />
     <meta property="og:type" content="website" />
@@ -52,12 +54,31 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "WebPage",
-        "name": "Research PDF to Knowledge Graph: A Practical Guide",
-        "url": "https://evidence-atlas.netlify.app/guide/",
-        "isPartOf": { "@id": "https://evidence-atlas.netlify.app/#website" },
-        "inLanguage": "en",
-        "description": "How to create, verify, edit and export an evidence-linked research knowledge graph using Evidence Atlas."
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "name": "Research PDF to Knowledge Graph: A Practical Guide",
+            "url": "https://evidence-atlas.netlify.app/guide/",
+            "isPartOf": {
+              "@id": "https://evidence-atlas.netlify.app/#website"
+            },
+            "inLanguage": "en",
+            "description": "How to create, verify, edit and export an evidence-linked research knowledge graph using Evidence Atlas.",
+            "author": {
+              "@id": "https://evidence-atlas.netlify.app/#creator"
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://evidence-atlas.netlify.app/#creator",
+            "name": "Ronit Gandotra",
+            "url": "https://github.com/RonitGandotra05",
+            "sameAs": [
+              "https://github.com/RonitGandotra05",
+              "https://www.linkedin.com/in/ronitgandotra"
+            ]
+          }
+        ]
       }
     </script>
   </head>
@@ -226,6 +247,34 @@
         rel="noopener"
         >Project documentation ↗</a
       ><span>Concept → Relationship → Evidence</span>
+      <div class="creator-credit">
+        <span
+          >Created by
+          <a
+            class="creator-name"
+            href="https://github.com/RonitGandotra05"
+            target="_blank"
+            rel="author noopener noreferrer"
+            >Ronit Gandotra</a
+          ></span
+        >
+        <nav class="creator-profiles" aria-label="Ronit Gandotra’s profiles">
+          <a
+            href="https://github.com/RonitGandotra05"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Ronit Gandotra on GitHub (opens in a new tab)"
+            >GitHub <span aria-hidden="true">↗</span></a
+          >
+          <a
+            href="https://www.linkedin.com/in/ronitgandotra"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Ronit Gandotra on LinkedIn (opens in a new tab)"
+            >LinkedIn <span aria-hidden="true">↗</span></a
+          >
+        </nav>
+      </div>
     </footer>
   </body>
 </html>

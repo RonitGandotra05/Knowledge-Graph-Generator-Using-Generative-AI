@@ -33,6 +33,28 @@ test("public research content and links are available without JavaScript", async
       "content",
       /index, follow/,
     );
+    const credit = page.locator(".creator-credit");
+    await expect(credit).toContainText("Created by Ronit Gandotra");
+    await expect(credit.locator(".creator-name")).toHaveAttribute(
+      "href",
+      "https://github.com/RonitGandotra05",
+    );
+    for (const [platform, url] of [
+      ["GitHub", "https://github.com/RonitGandotra05"],
+      ["LinkedIn", "https://www.linkedin.com/in/ronitgandotra"],
+    ]) {
+      const link = credit.getByRole("link", {
+        name: `Ronit Gandotra on ${platform} (opens in a new tab)`,
+        exact: true,
+      });
+      await expect(link).toHaveAttribute("href", url);
+      await expect(link).toHaveAttribute("target", "_blank");
+      await expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    }
+    await expect(page.locator('meta[name="author"]')).toHaveAttribute(
+      "content",
+      "Ronit Gandotra",
+    );
     const structured = await page
       .locator('script[type="application/ld+json"]')
       .allTextContents();
@@ -90,4 +112,29 @@ test("the rendered homepage hydrates once and keeps workspace state", async ({
     "Study networks and materials",
   );
   expect(errors).toEqual([]);
+});
+
+test("creator credit fits mobile and desktop in both app themes", async ({
+  page,
+}) => {
+  await page.goto("/");
+  for (const theme of ["dark", "light"]) {
+    await page.evaluate((value) => {
+      document.documentElement.dataset.theme = value;
+    }, theme);
+    for (const width of [390, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      const credit = page.locator(".creator-credit");
+      await credit.scrollIntoViewIfNeeded();
+      await expect(credit).toBeVisible();
+      await expect(credit.getByRole("navigation")).toBeVisible();
+      expect(
+        await page.evaluate(() => document.documentElement.scrollWidth),
+      ).toBeLessThanOrEqual(width);
+      await page.screenshot({
+        path: `test-results/creator-${theme}-${width}.png`,
+        fullPage: true,
+      });
+    }
+  }
 });

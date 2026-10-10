@@ -101,5 +101,33 @@ export const homePage = /* HTML */ `<section
       ><button data-info="security">API keys</button
       ><button data-info="license">Code permissions</button>
     </div>
+    <div class="creator-credit">
+      <span
+        >Created by
+        <a
+          class="creator-name"
+          href="https://github.com/RonitGandotra05"
+          target="_blank"
+          rel="author noopener noreferrer"
+          >Ronit Gandotra</a
+        ></span
+      >
+      <nav class="creator-profiles" aria-label="Ronit Gandotra’s profiles">
+        <a
+          href="https://github.com/RonitGandotra05"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Ronit Gandotra on GitHub (opens in a new tab)"
+          >GitHub <span aria-hidden="true">↗</span></a
+        >
+        <a
+          href="https://www.linkedin.com/in/ronitgandotra"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Ronit Gandotra on LinkedIn (opens in a new tab)"
+          >LinkedIn <span aria-hidden="true">↗</span></a
+        >
+      </nav>
+    </div>
   </footer>
 </section>`;
